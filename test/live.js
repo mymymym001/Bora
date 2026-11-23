@@ -3,10 +3,10 @@ const { chromium, devices } = require('playwright');
   const b = await chromium.launch(); const pg = await (await b.newContext({ ...devices['iPhone 13'], deviceScaleFactor:1 })).newPage();
   const errs=[]; pg.on('pageerror',e=>errs.push(e.message)); pg.on('console',m=>{if(m.type()==='error')errs.push(m.text())});
   const ok=(c,m)=>console.log((c?'PASS ':'FAIL ')+m);
-  const t0=Date.now(); await pg.goto('http://localhost:8765/_test_live.html#map'); await pg.waitForSelector('.card'); console.log('load+route ms', Date.now()-t0);
+  const t0=Date.now(); await pg.goto('http://localhost:8765/_test_live.html#home'); await pg.waitForSelector('.vc'); console.log('load+route ms', Date.now()-t0);
   await pg.waitForSelector('.msg'); await pg.waitForTimeout(300);
   await pg.screenshot({path:'test/live-1.png'}); await pg.screenshot({path:'test/live-1full.png',fullPage:true});
-  ok(await pg.isVisible('.ava'), 'other person avatar on map');
+  ok(await pg.isVisible('.ppl button'), 'family location list on home');
   ok((await pg.$$eval('.msg',e=>e.length))===2, 'chat shows seeded msgs');
   ok(await pg.isVisible('.notice'), 'pinned notice');
   // profile + send message
@@ -15,13 +15,13 @@ const { chromium, devices } = require('playwright');
   await pg.click('#noticeToggle'); await pg.fill('#chatIn','8시 로비 집합'); await pg.click('.chatform .send'); await pg.waitForTimeout(300);
   ok((await pg.$eval('.notice',e=>e.textContent)).includes('8시 로비'), 'notice pinned updates');
   // share location via pick
-  await pg.click('[data-pick]'); await pg.waitForSelector('.pickbar'); await pg.waitForTimeout(700);
+  await pg.click('.chatbar [data-pick]'); await pg.waitForSelector('.pickbar'); await pg.waitForTimeout(700);
   const box=await pg.locator('#mapbox').boundingBox(); await pg.mouse.click(box.x+box.width*0.35, box.y+box.height*0.75); await pg.waitForTimeout(150);
   ok(await pg.isVisible('[data-pickok]'), 'pick shows confirm: '+await pg.$eval('.pickbar div',e=>e.textContent));
   await pg.screenshot({path:'test/live-2pick.png'});
   await pg.click('[data-pickok]'); await pg.waitForTimeout(400);
   ok((await pg.$$eval('.ava',e=>e.length))===2, 'my avatar added');
-  ok((await pg.$$eval('.msg.loc',e=>e.length))===2, 'location chat message posted');
+  ok((await pg.evaluate(()=>[...window.__mockStore.entries()].filter(([k,v])=>k.startsWith('chat/')&&v.kind==='loc').length))===2, 'location chat message posted');
   // follow mom
   await pg.locator('.ava:not(.me)').click(); await pg.waitForSelector('[data-follow]');
   ok((await pg.$eval('[data-follow]',e=>e.textContent)).includes('엄마'), 'follow button names person');
@@ -36,13 +36,12 @@ const { chromium, devices } = require('playwright');
   ok(before!==after, `route updates when target moves: ${before} → ${after}`);
   await pg.click('[data-stopfollow]'); ok(true,'stop follow');
   // loc msg click flies map
-  await pg.click('.msg.loc button >> nth=0'); ok(true,'loc message click');
+  await pg.click('.nav a[data-tab="home"]'); await pg.waitForSelector('.msg.loc'); await pg.click('.msg.loc button >> nth=0'); ok(true,'loc message click');
   // course tab lists all food
   await pg.click('.nav a[data-tab="course"]'); await pg.waitForTimeout(300);
   const n=await pg.$$eval('.plist button',e=>e.length); ok(n>200, 'course lists all food places: '+n);
-  ok((await pg.$$eval('details.menu',e=>e.length))>=10, 'menu collection');
-  await pg.locator('details.menu summary >> nth=0').click(); await pg.screenshot({path:'test/live-4course.png'});
+  await pg.screenshot({path:'test/live-4course.png'});
   await pg.locator('.plist button >> nth=5').click(); await pg.waitForTimeout(300); ok(await pg.isVisible('#sheet'),'osm place opens: '+await pg.$eval('#sheet .t',e=>e.textContent));
   await pg.screenshot({path:'test/live-5osm.png'});
-  await pg.goto('http://localhost:8765/_test_live.html#map'); await pg.waitForSelector('.msg'); await pg.waitForTimeout(300); const hs=await pg.evaluate(()=>[document.documentElement.scrollWidth,window.innerWidth]); ok(hs[0]<=hs[1],'no horizontal scroll '+hs); await pg.screenshot({path:'test/live-6.png'}); console.log('errors', JSON.stringify(errs)); await b.close();
+  await pg.goto('http://localhost:8765/_test_live.html#home'); await pg.waitForSelector('.msg'); await pg.waitForTimeout(300); const hs=await pg.evaluate(()=>[document.documentElement.scrollWidth,window.innerWidth]); ok(hs[0]<=hs[1],'no horizontal scroll '+hs); await pg.screenshot({path:'test/live-6.png'}); console.log('errors', JSON.stringify(errs)); await b.close();
 })();

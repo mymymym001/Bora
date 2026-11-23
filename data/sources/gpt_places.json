@@ -1,0 +1,986 @@
+{
+ "places": [
+  {
+   "name": "Aria Cucina Italiana",
+   "ko": "아리아",
+   "cat": "음식점",
+   "lat": 11.961641,
+   "lon": 121.924672,
+   "address": "Beachfront, D’Mall, Station 2, Balabag, Malay",
+   "hours": "매일 10:00–24:00",
+   "menu": [
+    [
+     "알리오 올리오",
+     390,
+     "마늘과 고추를 곁들인 오일 파스타"
+    ],
+    [
+     "봉골레",
+     450,
+     "조개와 방울토마토 스파게티"
+    ],
+    [
+     "마르게리타",
+     490,
+     "토마토·바질·모차렐라 화덕 피자"
+    ],
+    [
+     "풍기 피자",
+     590,
+     "버섯과 모차렐라"
+    ],
+    [
+     "티라미수",
+     350,
+     "에스프레소와 마스카르포네 디저트"
+    ]
+   ],
+   "note": "해변 앞 디몰 입구. 7인은 피자와 파스타를 나누기 좋고 예약 시 인원을 지정할 수 있어요. 메뉴판은 VAT 12% 포함, 서비스료 10% 별도입니다.",
+   "sources": [
+    [
+     "공식 메뉴 · 가격 · 세금",
+     "https://www.aria.com.ph/menu.html"
+    ],
+    [
+     "공식 영업시간 · 주소",
+     "https://www.aria.com.ph/contact.html"
+    ],
+    [
+     "OpenStreetMap 지점",
+     "https://www.openstreetmap.org/node/14041027858"
+    ]
+   ],
+   "group": 7,
+   "service": 0.1,
+   "vat": "12% 포함",
+   "pricing": "매장 공식 메뉴",
+   "id": "v1"
+  },
+  {
+   "name": "Gerry’s Grill · Station 2",
+   "ko": "게리스 그릴 · 스테이션 2",
+   "cat": "음식점",
+   "lat": 11.957507,
+   "lon": 121.92691,
+   "address": "El Centro Resort, 2 White Beach Path, Station 2, Malay",
+   "hours": "매일 11:00–23:00",
+   "menu": [
+    [
+     "시즐링 시시그",
+     390,
+     "잘게 썬 돼지고기 철판 요리 · 레귤러"
+    ],
+    [
+     "돼지고기 BBQ",
+     275,
+     "숯불 꼬치 4개"
+    ],
+    [
+     "이니하우 나 푸싯",
+     605,
+     "오징어 구이 500g"
+    ],
+    [
+     "카레카레",
+     655,
+     "땅콩 소스로 끓인 소고기 요리"
+    ]
+   ],
+   "note": "엘 센트로 리조트의 2호점. 그릴 요리 여러 접시를 나누기 좋아요. 표시 가격은 브랜드 필리핀 메뉴로 이 지점 가격은 다를 수 있어요.",
+   "sources": [
+    [
+     "공식 지점·시간",
+     "https://portal.gerrysgrill.com/ph/"
+    ],
+    [
+     "브랜드 메뉴 · 지점 차이 가능",
+     "https://www.gerrysgrill.com/PH"
+    ],
+    [
+     "OpenStreetMap 지점",
+     "https://www.openstreetmap.org/node/11010336431"
+    ]
+   ],
+   "group": 7,
+   "pricing": "브랜드 필리핀 메뉴 참고",
+   "id": "v2"
+  },
+  {
+   "name": "Lemoni Café",
+   "ko": "레모니 카페",
+   "cat": "카페",
+   "lat": 11.961951,
+   "lon": 121.925083,
+   "address": "Stall 117, Phase 4, D’Mall, Balabag, Malay",
+   "hours": "매일 07:00–23:00",
+   "menu": [
+    [
+     "에그 베네딕트",
+     335,
+     "달걀을 얹은 브런치"
+    ],
+    [
+     "시나몬 바나나 팬케이크",
+     400,
+     "계피 향을 입혀 구운 바나나"
+    ],
+    [
+     "코코넛 팬케이크",
+     430,
+     "코코넛을 곁들인 팬케이크"
+    ]
+   ],
+   "note": "디몰 중앙의 브런치 카페. 아침 식사나 더운 낮에 쉬기 좋아요. 표시 가격은 보라카이 배달 메뉴이며 홀 가격과 차이가 날 수 있어요.",
+   "sources": [
+    [
+     "지점 주소 · 2026년 11월 제휴점 안내",
+     "https://www.chinabank.ph/10-percent-on-total-food-bill-at-lemoni-cafe-boracay"
+    ],
+    [
+     "메뉴 · 배달 가격",
+     "https://www.boracay.delivery/restaurant/lemon-i-cafe/"
+    ],
+    [
+     "OpenStreetMap 지점",
+     "https://www.openstreetmap.org/node/5414265879"
+    ]
+   ],
+   "group": 5,
+   "pricing": "보라카이 배달 메뉴 참고",
+   "id": "v3"
+  },
+  {
+   "name": "Real Coffee & Tea Café",
+   "ko": "리얼 커피",
+   "cat": "카페",
+   "lat": 11.960257,
+   "lon": 121.925384,
+   "address": "2/F Sea World, White Beach Path, Station 2, Balabag, Malay",
+   "hours": "07:00–19:00 · 지점 안내 기준",
+   "menu": [
+    [
+     "바나나 프렌치토스트",
+     230,
+     "바나나를 곁들인 프렌치토스트"
+    ],
+    [
+     "바나나 팬케이크",
+     265,
+     "바나나 팬케이크 한 접시"
+    ],
+    [
+     "에그 온 토스트",
+     210,
+     "토스트와 달걀 두 개"
+    ]
+   ],
+   "note": "해변 산책로 Sea World 건물 2층. 깔라만시 머핀이 유명하며 단체는 계단과 좌석을 고려하세요. 표는 배달 메뉴 참고가입니다.",
+   "sources": [
+    [
+     "매장 정보 · 영업시간",
+     "https://www.boracaytravelapp.com/food_detail.asp?seq=221"
+    ],
+    [
+     "배달 메뉴 · 가격",
+     "https://boracay.delivery/restaurant/real-coffee-boracay/"
+    ],
+    [
+     "OpenStreetMap 지점",
+     "https://www.openstreetmap.org/node/11006831154"
+    ]
+   ],
+   "group": 3,
+   "pricing": "보라카이 배달 메뉴 참고",
+   "id": "v4"
+  },
+  {
+   "name": "HaloMango · D’Mall",
+   "ko": "할로망고 · 디몰",
+   "cat": "카페",
+   "lat": 11.9628125,
+   "lon": 121.925859375,
+   "address": "XW7G+48H, D’Mall de Boracay, Balabag, Malay",
+   "hours": "매일 09:00–24:00",
+   "menu": [
+    [
+     "망고 홀릭 스몰",
+     180,
+     "생망고를 곁들인 디저트"
+    ],
+    [
+     "망고 아이스크림",
+     210,
+     "망고 아이스크림과 과육"
+    ]
+   ],
+   "note": "해변점과 구별되는 디몰 지점. 대기 중에는 먼저 크기를 확인하세요. 2026년 6월 방문 기록의 주문 가격입니다.",
+   "sources": [
+    [
+     "지점 위치코드 · 시간",
+     "https://www.waze.com/live-map/directions/ph/western-visayas/malay/halomango-dmall?to=place.ChIJlRhKuSI8pTMRO4T9oRxbfWU"
+    ],
+    [
+     "주문 가격 · 지점 안내",
+     "https://holiplo.com/en/boracay/p/halo-mango"
+    ]
+   ],
+   "group": 2,
+   "pricing": "2026년 6월 방문 기록",
+   "id": "v5"
+  },
+  {
+   "name": "Coco Mama · D’Mall",
+   "ko": "코코 마마 · 디몰",
+   "cat": "카페",
+   "lat": 11.962191,
+   "lon": 121.926398,
+   "address": "D’Mall Palengke, D’Mall Avenue, Station 2, Malay",
+   "hours": "매일 10:00–21:30",
+   "menu": [
+    [
+     "코코넛 아이스크림 2스쿱",
+     150,
+     "코코넛 껍질에 담아 주는 작은 사이즈"
+    ],
+    [
+     "코코넛 아이스크림 4스쿱",
+     250,
+     "중간 사이즈 · 망고 추가 별도"
+    ],
+    [
+     "코코넛 아이스크림 6스쿱",
+     350,
+     "큰 사이즈 · 망고 추가 별도"
+    ]
+   ],
+   "note": "디몰 시장 쪽 포장 디저트. 코코넛 과육과 찹쌀의 식감이 특징이에요. 2025년 2월 공개 방문가이며 당시 망고 추가는 ₱30. 주문 전 현장 가격표를 확인하세요.",
+   "sources": [
+    [
+     "지점 · 시간 · 구성",
+     "https://www.boracaytravelapp.com/food_detail.asp?seq=218"
+    ],
+    [
+     "2025년 2월 방문 가격",
+     "https://you.ctrip.com/food/boracay610/14908886.html"
+    ],
+    [
+     "디몰 지점 GPS",
+     "https://www.trip.com/moments/detail/boracay-island-610-142439047/"
+    ]
+   ],
+   "group": 2,
+   "pricing": "2025년 2월 방문 기록",
+   "id": "v6"
+  },
+  {
+   "name": "Smoke Resto",
+   "ko": "스모크 레스토 · 디몰 시장점",
+   "cat": "음식점",
+   "lat": 11.962243,
+   "lon": 121.926396,
+   "address": "Unit E, Block 19, Wet Market Section, D’Mall de Boracay, Station 2, Malay, Aklan",
+   "hours": "자료마다 개점 시간이 달라 현장 확인 · 심야 영업 미확인",
+   "menu": [
+    [
+     "비프 살피카오",
+     265,
+     "마늘과 칠리 소스로 볶은 소고기 · 배달 메뉴 기준"
+    ],
+    [
+     "비콜 익스프레스",
+     290,
+     "코코넛밀크·고추를 쓴 고기 요리 · 배달 메뉴 기준"
+    ],
+    [
+     "레촌 카왈리",
+     345,
+     "바삭하게 튀긴 삼겹살 · 배달 메뉴 기준"
+    ]
+   ],
+   "note": "Crafts 백화점 인근 시장 골목. 불라복 해변 지점과 구분하세요. 좌석이 적어 7명은 분산 착석할 수 있습니다. 표시 가격은 배달판 기본가로 매장 가격과 차이가 날 수 있습니다. 표시 단가는 배달 페이지에 기재된 Station 1 지점 기준으로, 디몰 시장점의 현장가는 미확인입니다.",
+   "sources": [
+    [
+     "지점·주소",
+     "https://www.arrivalguides.com/en/Travelguide/Boracay/dining/smoke-resto-95223"
+    ],
+    [
+     "두 지점 구분",
+     "https://www.boracaytravelapp.com/food_detail.asp?seq=70"
+    ],
+    [
+     "배달 메뉴",
+     "https://boracay.delivery/restaurant/smoke-boracay/"
+    ],
+    [
+     "시장점 좌표",
+     "https://www.openstreetmap.org/node/5241163221"
+    ]
+   ],
+   "group": 3,
+   "id": "v7"
+  },
+  {
+   "name": "Subo Boracay",
+   "ko": "수보 보라카이",
+   "cat": "음식점",
+   "lat": 11.955953,
+   "lon": 121.928528,
+   "address": "Calle Remedios, Station 3, Boracay Island, Malay, Aklan",
+   "hours": "매일 11:00–23:00",
+   "menu": [
+    [
+     "초리소 버거",
+     480,
+     "소고기 패티·치즈·구운 양파와 토마토를 넣은 버거, 감자칩 곁들임"
+    ],
+    [
+     "시식",
+     470,
+     "돼지고기를 식초와 양파로 양념하고 달걀·튀긴 마늘·깔라만시를 곁들인 철판 요리"
+    ],
+    [
+     "카레카레",
+     950,
+     "소 양을 부드럽게 익힌 땅콩 소스 스튜와 바고옹"
+    ],
+    [
+     "크리스피 파타",
+     1650,
+     "껍질을 바삭하게 익힌 돼지 족발과 두 종류의 소스"
+    ]
+   ],
+   "note": "스테이션 3 칼레 레메디오스의 전통 가옥 식당. 함께 덜어 먹는 메인과 문화 공연이 있어 가족 저녁에 적합합니다. 공연 시간과 7인 테이블은 예약할 때 확인하세요. 예약 +63 917 309 0738.",
+   "sources": [
+    [
+     "매장·시간·예약",
+     "https://suboboracay.co/"
+    ],
+    [
+     "공식 메뉴와 메뉴 사진",
+     "https://suboboracay.co/menu/"
+    ],
+    [
+     "메뉴판 가격",
+     "https://suboboracay.co/wp-content/uploads/2025/12/60-1.png"
+    ],
+    [
+     "지도 좌표",
+     "https://www.openstreetmap.org/node/4146151233"
+    ]
+   ],
+   "group": 7,
+   "id": "v8"
+  },
+  {
+   "name": "Nonie's",
+   "ko": "노니스 · 온두스 호텔",
+   "cat": "음식점",
+   "lat": 11.95252,
+   "lon": 121.93019,
+   "address": "Ondus Hotel Beachfront, Station 3, Sitio Ambulong, Manoc-Manoc, Boracay Island, Aklan",
+   "hours": "조식 뷔페 06:00–10:00 · 단품 10:00–22:00",
+   "menu": [
+    [
+     "치킨 포크 아도보",
+     620,
+     "닭고기와 삼겹살, 반숙 달걀, 흑미밥"
+    ],
+    [
+     "비프 카레카레",
+     670,
+     "소갈비·계절 채소·캐슈 소스와 흑미밥"
+    ],
+    [
+     "피시 앤 프론 커리",
+     720,
+     "생선과 새우를 넣은 커리와 흑미밥"
+    ],
+    [
+     "템페 카레카레",
+     550,
+     "고기 대신 직접 만든 템페를 넣은 채식 선택지"
+    ]
+   ],
+   "note": "이 안내는 Station X와 별개로 운영하는 스테이션 3 온두스 호텔 해변 지점 기준입니다. 실외 40석과 실내 프라이빗 공간 20석. 메뉴판 가격에 VAT 12% 포함, 서비스료 10% 별도. 핀은 온두스 호텔 건물 중심입니다.",
+   "servicePct": 10,
+   "vat": "12% 포함",
+   "sources": [
+    [
+     "공식 영업시간·예약",
+     "https://www.nonies.com.ph/"
+    ],
+    [
+     "공식 메뉴·세금·서비스료",
+     "https://www.nonies.com.ph/menu"
+    ],
+    [
+     "호텔 주소",
+     "https://ondus.com.ph/index.php/contact-ua/"
+    ],
+    [
+     "호텔 건물 좌표",
+     "https://www.openstreetmap.org/way/31781440"
+    ],
+    [
+     "지점 구분 공식 안내",
+     "https://www.nonies.com.ph/blog/nonies-new-home-station-3-boracay"
+    ]
+   ],
+   "group": 7,
+   "id": "v9",
+   "service": 0.1
+  },
+  {
+   "name": "LA-UD",
+   "ko": "라 우드 · 휴 호텔",
+   "cat": "음식점",
+   "lat": 11.956699,
+   "lon": 121.93073,
+   "address": "Ground Floor, Hue Hotels & Resorts Boracay, Station 2 Main Road, Malay, Aklan 5608",
+   "hours": "매일 06:00–22:00 · 뷔페 목–일 18:00–21:00",
+   "menu": [
+    [
+     "디너 뷔페",
+     899,
+     "목~일 한정, 호텔 공지 성인 1인 최종가(nett). 여행 날짜 적용 여부는 예약 시 확인."
+    ]
+   ],
+   "note": "초리 버거 슬라이더와 시그니처 해산물 피자도 판매합니다. 7인 예산은 전원 성인 뷔페 요금 가정이며 청소년 할인 적용 여부는 현장 기준입니다. 단품 세금·봉사료는 뷔페와 다를 수 있습니다. 예약 +63 917 803 1545.",
+   "sources": [
+    [
+     "호텔 공식 식당·시간",
+     "https://www.thehuehotel.com/hue-boracay-restaurant"
+    ],
+    [
+     "호텔 뷔페 최종가",
+     "https://www.thehuehotel.com/hue-boracay"
+    ],
+    [
+     "식당 주소·지점",
+     "https://www.tripadvisor.com.ph/Restaurant_Review-g294260-d21511573-Reviews-LA_UD_Restaurant_Boracay-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html"
+    ]
+   ],
+   "group": 7,
+   "id": "v10"
+  },
+  {
+   "name": "KUBO",
+   "ko": "쿠보 · 휴 호텔",
+   "cat": "음식점",
+   "lat": 11.956667,
+   "lon": 121.930476,
+   "address": "Ground Floor, Hue Hotels & Resorts Boracay, Station 2 Main Road, Malay, Aklan 5608",
+   "hours": "화–일 12:00–21:00 · 월요일 휴무",
+   "menu": [
+    [
+     "마이스 온 파이어",
+     null,
+     "불맛을 낸 구운 옥수수"
+    ],
+    [
+     "카르네 스큐어",
+     null,
+     "그릴에 구운 고기 꼬치"
+    ],
+    [
+     "네온 볼",
+     null,
+     "밝은색 반죽을 입혀 튀긴 메추리알"
+    ]
+   ],
+   "note": "휴 호텔 1층의 필리핀 길거리 음식 매장. 볼라복 로드의 동명 Kubo Resto Bar & Grill과 구분하세요. 7인 가족의 간식·포장에 적합합니다. 핀은 호텔 건물 중심입니다. 공개된 단품 가격은 확인되지 않았습니다.",
+   "sources": [
+    [
+     "호텔 공식 식당·시간",
+     "https://www.thehuehotel.com/hue-boracay-restaurant"
+    ],
+    [
+     "공식 대표 메뉴",
+     "https://www.thehuehotel.com/hue-boracay-hotel-blog/kubo-filipino-street-eats"
+    ],
+    [
+     "휴 호텔 건물",
+     "https://www.openstreetmap.org/relation/13703620"
+    ]
+   ],
+   "group": 4,
+   "id": "v11"
+  },
+  {
+   "name": "7-Eleven Calle Remedios",
+   "ko": "세븐일레븐 칼레 레메디오스",
+   "cat": "편의점",
+   "lat": 11.955643,
+   "lon": 121.928329,
+   "address": "Calle Remedios, Manoc-Manoc, Malay, Aklan",
+   "hours": "매일 24시간 · 지도 등록 기준",
+   "allDay": true,
+   "menu": [],
+   "note": "화이트 비치 남쪽 산책 중 생수·간식을 보충하기 좋은 편의점. 음료는 냉장고 가격표와 용량을 함께 보세요.",
+   "sources": [
+    [
+     "OpenStreetMap 매장 좌표",
+     "https://www.openstreetmap.org/node/4110757348"
+    ],
+    [
+     "거리별 점포 안내",
+     "https://philippines-streets.openalfa.com/streets/mangayat-st-calle-remedios-manoc-manoc-malay"
+    ]
+   ],
+   "group": 4,
+   "id": "v12"
+  },
+  {
+   "name": "Budget Mart D’Mall",
+   "ko": "버짓마트 디몰",
+   "cat": "편의점",
+   "lat": 11.9632416,
+   "lon": 121.9263247,
+   "address": "D’Mall, Boracay Main Road, Balabag, Malay, Aklan",
+   "hours": "08:00–24:00 지도 표기 · 자료 간 차이",
+   "allDay": false,
+   "menu": [],
+   "note": "디몰 메인로드 입구의 슈퍼마켓. 일행의 생수·간식을 한꺼번에 사기 좋습니다. 24시간이라는 안내도 있어 자정 이후에는 +63 36 288 5983으로 확인하세요.",
+   "sources": [
+    [
+     "OpenStreetMap 매장 좌표",
+     "https://www.openstreetmap.org/way/31929212"
+    ],
+    [
+     "주소·연락처",
+     "https://boracaydirectory.com/directory/restaurants/budget-mart-boracay"
+    ],
+    [
+     "영업시간 대조",
+     "https://mapcarta.com/W31929212"
+    ]
+   ],
+   "group": 7,
+   "id": "v13"
+  },
+  {
+   "name": "Watsons Station 2 Main Road",
+   "ko": "왓슨스 스테이션 2",
+   "cat": "약국",
+   "lat": 11.961699,
+   "lon": 121.927516,
+   "address": "Boracay Main Road, Station 2, Balabag, Malay, Aklan",
+   "hours": "08:00–24:00 지도 표기 · 자료 간 차이",
+   "allDay": false,
+   "menu": [],
+   "note": "스테이션 2 메인로드점. 디렉터리에는 24시간으로 등록돼 있습니다. 늦은 시간에는 +63 917 805 7345로 약사 근무와 재고를 먼저 확인하세요.",
+   "sources": [
+    [
+     "OpenStreetMap 매장 좌표",
+     "https://www.openstreetmap.org/node/13083761901"
+    ],
+    [
+     "현지 디렉터리·전화",
+     "https://boracaydirectory.com/directory/health-and-medicine/watson-pharmacy-station-2"
+    ],
+    [
+     "지도 영업시간",
+     "https://philippines-streets.openalfa.com/streets/boracay-main-road-station-1-balabag-malay"
+    ]
+   ],
+   "group": 4,
+   "id": "v14"
+  },
+  {
+   "name": "Farmacia ni Dok D’Mall",
+   "ko": "파르마시아 니 독 디몰",
+   "cat": "약국",
+   "lat": 11.962862,
+   "lon": 121.926081,
+   "address": "D’Mall Avenue, Balabag, Malay, Aklan",
+   "hours": "영업시간 미공개",
+   "allDay": false,
+   "menu": [],
+   "note": "디몰 안 약국. 메인로드 건너 볼라복 방면에도 동명 지점이 있으니 D’Mall Avenue를 확인하세요. 이 핀은 2026년 8월 19일 확인일이 기록된 점포입니다.",
+   "sources": [
+    [
+     "OpenStreetMap 매장 좌표",
+     "https://www.openstreetmap.org/node/11006732045"
+    ],
+    [
+     "주변 약국과 거리 이름",
+     "https://philippines-streets.openalfa.com/streets/boracay-main-road-station-1-balabag-malay"
+    ]
+   ],
+   "group": 3,
+   "id": "v15"
+  },
+  {
+   "name": "Exit Bar",
+   "ko": "엑시트 바",
+   "cat": "펍",
+   "lat": 11.962121,
+   "lon": 121.924389,
+   "address": "D’Mall beachfront, White Beach Path, Station 2, Balabag, Malay, Aklan",
+   "hours": "매일 17:00–다음 날 02:00",
+   "allDay": false,
+   "menu": [],
+   "note": "디몰 해변의 대나무 바. 저녁에는 음악과 술 중심이라 성인끼리 들를 때 적합합니다. 청소년 동반 입장 조건과 당일 음료 가격은 미확인입니다.",
+   "sources": [
+    [
+     "OpenStreetMap 매장 좌표",
+     "https://www.openstreetmap.org/way/1551679820"
+    ],
+    [
+     "시간·주소",
+     "https://www.trip.com/restaurant/philippines/boracay-island/detail/exit-bar-61237539/"
+    ]
+   ],
+   "group": 2,
+   "id": "v16"
+  },
+  {
+   "name": "Philbo Store",
+   "ko": "필보 스토어",
+   "cat": "편의점",
+   "lat": 11.962445,
+   "lon": 121.928509,
+   "address": "Balabag, Malay, Boracay Island, Aklan · 위치는 지도 핀 기준",
+   "hours": "매일 24시간 · 2026.07.22 지도 확인 기록",
+   "allDay": true,
+   "menu": [],
+   "note": "메인로드 동쪽의 작은 동네 가게. 야간 영업에 대한 최근 지도 조사 기록이 있습니다. 품목과 당일 재고는 현장에서 확인하세요.",
+   "sources": [
+    [
+     "OpenStreetMap 매장 좌표",
+     "https://www.openstreetmap.org/node/10112905065"
+    ]
+   ],
+   "group": 2,
+   "id": "v17"
+  },
+  {
+   "name": "Cyma Greek Taverna",
+   "ko": "시마 그릭 타베르나",
+   "cat": "음식점",
+   "lat": 11.9619891,
+   "lon": 121.9254259,
+   "address": "D’Mall, Station 2, Balabag, Malay",
+   "hours": "배달 플랫폼 09:00–22:00 · 홀 영업시간 변동 가능",
+   "menu": [
+    [
+     "로카 파스타 · 1인",
+     360,
+     "루콜라·토마토·파르메산 스파게티"
+    ],
+    [
+     "카카비아 · 1인",
+     465,
+     "사프란 생선 수프와 마늘빵"
+    ],
+    [
+     "치킨 기로스 · 런치",
+     325,
+     "그리스식 닭고기 랩"
+    ]
+   ],
+   "note": "파스타와 생선 수프에 나눔용 옵션이 있어요. 로카 파스타 나눔용 ₱590, 카카비아 나눔용 ₱875. 가격은 디몰 지점 배달 플랫폼 게시가로 홀 가격과 다를 수 있어요. 7인 한 테이블은 사전 문의하세요.",
+   "sources": [
+    [
+     "보라카이 지점 좌표",
+     "https://www.openstreetmap.org/node/6432709585"
+    ],
+    [
+     "지점 메뉴·가격·영업시간",
+     "https://boracay.delivery/ko/restaurant/cyma-greek-taverna/"
+    ],
+    [
+     "공식 레스토랑",
+     "https://cymarestaurants.com/front-page/"
+    ]
+   ],
+   "group": 7,
+   "pricing": "현지 배달 플랫폼 게시가 · 매장가 미확인",
+   "photoVenue": "Cyma",
+   "id": "v18"
+  },
+  {
+   "name": "Epic Boracay",
+   "ko": "에픽 보라카이",
+   "cat": "펍",
+   "lat": 11.9614487,
+   "lon": 121.9247627,
+   "address": "Block 5, D’Mall Beachfront, Station 2, Balabag, Malay",
+   "hours": "매일 07:00–다음 날 05:00 · 사업자 관리 페이지",
+   "menu": [],
+   "note": "낮에는 화이트 비치 앞 레스토랑, 밤에는 DJ 클럽으로 운영합니다. 청소년을 동반한다면 낮 식사가 적합해요. 야간 입장 조건과 행사 요금은 당일 매장에 확인하세요. 그릴 요리·파스타·샐러드를 판매하며 현재 메뉴별 매장가는 미확인입니다.",
+   "sources": [
+    [
+     "지점 좌표",
+     "https://www.openstreetmap.org/node/14058109886"
+    ],
+    [
+     "사업자 관리 안내·시간",
+     "https://www.tripadvisor.com.ph/Restaurant_Review-g294260-d1993394-Reviews-Epic_Boracay_Restaurant-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html"
+    ],
+    [
+     "공식 홈페이지",
+     "https://www.epicboracay.com/"
+    ]
+   ],
+   "group": 4,
+   "photoVenue": "Epic Boracay",
+   "id": "v19"
+  },
+  {
+   "name": "D’Talipapa Seafood Market",
+   "ko": "디탈리파파 수산시장",
+   "cat": "음식점",
+   "lat": 11.957983,
+   "lon": 121.9285022,
+   "address": "D’Talipapa Alley, Station 2, Balabag, Malay",
+   "hours": "점포별 상이 · 수산물 구매는 낮 시간 추천",
+   "menu": [],
+   "note": "시장 안에서 새우·게·오징어를 무게로 사고 팔루토 식당에 조리를 맡겨요. 식재료 가격과 조리비는 별도입니다. 7인은 주문 전 저울을 확인하고 100g·1kg 단위, 조리법별 요금, 밥·음료를 합산한 총액을 받아두세요. 핀은 시장 구역의 중심입니다.",
+   "sources": [
+    [
+     "시장 구역 지도",
+     "https://www.openstreetmap.org/relation/19233093"
+    ],
+    [
+     "시장 영업·팔루토 이용",
+     "https://holiplo.com/en/boracay/p/dtalipapa-seafood-market"
+    ]
+   ],
+   "group": 7,
+   "photoVenue": "D’Talipapa",
+   "id": "v20"
+  }
+ ],
+ "facts": {
+  "fx": {
+   "rate": 21.1,
+   "date": "2026-11-23",
+   "time": "09:21 필리핀 현지시각 · BSP 일일 기준환율",
+   "label": "1 PHP ≈ 21.10 KRW. 필리핀 중앙은행 고시 1 KRW = 0.0474 PHP의 역수를 소수 둘째 자리까지 반올림했습니다. 카드사 수수료와 환전소 스프레드는 별도.",
+   "source": "https://www.bsp.gov.ph/Lists/RERB/Attachments/2404/23Nov2026.pdf"
+  },
+  "etrike": {
+   "seats": 6,
+   "privateLow": 100,
+   "privateHigh": 150,
+   "capacityNote": "현지 보도상 승객 6인 기준. 차량별 허용 정원·짐 확인. 7인 일행은 2대 예상.",
+   "quoteNote": "일반적인 단거리 전세(special) 협상 참고 ₱100–150/대. 이 구간의 승인 요율은 차내 운임표에서 확인. 대기·시간대·호출 요금 별도일 수 있습니다.",
+   "sevenNote": "2대 참고 예산 ₱200–300 (약 4,220–6,330원).",
+   "shared": "합승(individual)은 인당, 전세(special)는 대당입니다. 목적지·차량 수·짐·최종총액을 탑승 전에 합의하세요.",
+   "official": "LGU 안내에 따른 BLTMPC 승인 운임표를 기준으로 합니다. 이 가이드에서 각 점포 ↔ 호텔의 2026년 공식 운임을 확인하지 못했습니다.",
+   "english": "To Henann Garden Resort, Station 2. Is that the total for both vehicles and all seven of us?",
+   "help": "Malay Transportation Office +63 949 703 5770 / +63 36 288 2385",
+   "sources": [
+    [
+     "현지 당국 운임 안내 보도",
+     "https://boracayinformer.com/malay-lgu-reminds-boracay-tourists-and-residents-be-aware-of-approved-e-trike-and-van-fares/"
+    ],
+    [
+     "단거리 금액 참고",
+     "https://ttdi.net/ph/boracay/getting-around/"
+    ],
+    [
+     "차량당 최대 6인 · 현지 사업자 안내",
+     "https://myboracayguide.com/boracay/activities/2-hours-land-tour"
+    ]
+   ]
+  },
+  "grab": {
+   "note": "보라카이 섬 내 GrabCar 호출을 확인할 수 없습니다. 현지 협력 운영사 Boracay Xpress는 E-Trike·멀티캡·밴을 안내합니다. 당일 배차·앱 견적은 변동됩니다.",
+   "sources": [
+    [
+     "공식 Boracay Xpress",
+     "https://www.xpress.ph/boracay-xpress"
+    ],
+    [
+     "보라카이 교통 안내",
+     "https://ttdi.net/ph/boracay/getting-around/"
+    ]
+   ]
+  },
+  "tax": {
+   "note": "일반 VAT는 12%. DTI 규정상 과세 대상 소매 표시가에 VAT가 포함되므로 예상액에 다시 12%를 더하지 마세요. 서비스 차지는 매장별로 다릅니다. 메뉴 하단의 포함 여부·요율을 확인하세요.",
+   "sources": [
+    [
+     "필리핀 DTI 가격표 규정 제2조",
+     "https://lpr.adb.org/sites/default/files/2024-07/philippines-dao-no-10-s-2006.PDF"
+    ],
+    [
+     "VAT 세율 · 국세법 제108조",
+     "https://lawphil.net/statutes/repacts/ra2024/pdf/ra_11976_2024.pdf"
+    ]
+   ]
+  },
+  "seafood": {
+   "note": "D’Talipapa에서는 재료와 조리를 따로 계산할 수 있습니다. 100g·kg·마리 중 가격 단위와 손질 전 중량을 확인하고, 재료비 + 조리비 + 소스·밥 + 서비스 차지로 총액을 합의하세요. 활어종·크기·조리 방식은 가격 차이의 이유가 될 수 있습니다.",
+   "example": "예시 계산: ₱120/100g × 800g ÷ 100g = ₱960. 조리비 ₱200을 별도로 합의했다면 총 ₱1,160. 현지 시세가 아닌 계산 예시입니다.",
+   "sources": [
+    [
+     "디탈리파파 시장 안내",
+     "https://holiplo.com/en/boracay/p/dtalipapa-seafood-market"
+    ]
+   ]
+  }
+ },
+ "photos": [
+  {
+   "file": "station-2.webp",
+   "venue": "White Beach",
+   "credit": "Patrickroque01",
+   "license": "CC BY-SA 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "https://commons.wikimedia.org/wiki/File:Boracay_White_Beach_Station_2_7_(Malay,_Aklan;_04-06-2024).jpg",
+   "caption": "스테이션 2 화이트 비치 · 2024년 촬영",
+   "modification": "원본을 축소하고 WebP 형식으로 변환"
+  },
+  {
+   "file": "paraw.webp",
+   "venue": "White Beach",
+   "credit": "Patrickroque01",
+   "license": "CC BY-SA 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "https://commons.wikimedia.org/wiki/File:Boracay_White_Beach_Station_2_sea_view,_paraw_sailboats_(Malay,_Aklan;_04-06-2024).jpg",
+   "caption": "화이트 비치 앞바다의 파라우 범선 · 2024년 촬영",
+   "modification": "원본을 축소하고 WebP 형식으로 변환"
+  },
+  {
+   "file": "sunset.webp",
+   "venue": "White Beach",
+   "credit": "Patrickroque01",
+   "license": "CC BY-SA 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source": "https://commons.wikimedia.org/wiki/File:Boracay_White_Beach_Station_2_sunset_2_(Malay,_Aklan;_04-06-2024).jpg",
+   "caption": "스테이션 2의 일몰 · 2024년 촬영",
+   "modification": "원본을 축소하고 WebP 형식으로 변환"
+  },
+  {
+   "file": "lobster.webp",
+   "venue": "D’Talipapa",
+   "credit": "Ray in Manila",
+   "license": "CC BY 2.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+   "source": "https://commons.wikimedia.org/wiki/File:Lobsters_for_sale_at_Talapipa_Market,_Boracay.jpg",
+   "caption": "디탈리파파 시장에서 판매하는 바닷가재",
+   "modification": "원본을 축소하고 WebP 형식으로 변환"
+  },
+  {
+   "file": "aria-pizza.webp",
+   "venue": "Aria",
+   "credit": "Table For Three, Please",
+   "license": "CC BY-NC 2.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by-nc/2.0/deed.en",
+   "source": "https://www.flickr.com/photos/9622917@N04/1249556460/",
+   "caption": "나폴리 피자 · 2007년 촬영",
+   "modification": "원본을 축소하고 WebP 형식으로 변환"
+  },
+  {
+   "file": "aria-salad.webp",
+   "venue": "Aria",
+   "credit": "Table For Three, Please",
+   "license": "CC BY-NC 2.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by-nc/2.0/deed.en",
+   "source": "https://www.flickr.com/photos/9622917@N04/1249559500/",
+   "caption": "고르곤졸라 지중해식 샐러드 · 2007년 촬영",
+   "modification": "원본을 축소하고 WebP 형식으로 변환"
+  },
+  {
+   "file": "aria-interior.webp",
+   "venue": "Aria",
+   "credit": "Table For Three, Please",
+   "license": "CC BY-NC 2.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by-nc/2.0/deed.en",
+   "source": "https://www.flickr.com/photos/9622917@N04/1248701965/",
+   "caption": "아리아 매장 내부 · 2007년 촬영",
+   "modification": "원본을 축소하고 WebP 형식으로 변환"
+  },
+  {
+   "file": "real-muffin.webp",
+   "venue": "Real Coffee",
+   "credit": "Shoot First, Eat Later",
+   "license": "CC BY-NC 2.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by-nc/2.0/deed.en",
+   "source": "https://www.flickr.com/photos/cricru/7716309392/",
+   "caption": "깔라만시 머핀 · 2012년 촬영",
+   "modification": "원본을 축소하고 WebP 형식으로 변환"
+  },
+  {
+   "file": "real-brownie.webp",
+   "venue": "Real Coffee",
+   "credit": "Shoot First, Eat Later",
+   "license": "CC BY-NC 2.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by-nc/2.0/deed.en",
+   "source": "https://www.flickr.com/photos/cricru/7716311470/",
+   "caption": "피넛버터 브라우니 · 2012년 촬영",
+   "modification": "원본을 축소하고 WebP 형식으로 변환"
+  },
+  {
+   "file": "real-box.webp",
+   "venue": "Real Coffee",
+   "credit": "The Pageman",
+   "license": "CC BY-SA 2.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/deed.en",
+   "source": "https://www.flickr.com/photos/the_pageman/8650251219/",
+   "caption": "깔라만시 머핀 포장 · 2013년 촬영",
+   "modification": "원본을 축소하고 WebP 형식으로 변환"
+  },
+  {
+   "file": "epic.webp",
+   "venue": "Epic Boracay",
+   "credit": "Frances Cacnio",
+   "license": "CC BY 2.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/deed.en",
+   "source": "https://www.flickr.com/photos/cheskaaaa/7425925120/",
+   "caption": "에픽 보라카이 · 2012년 촬영",
+   "modification": "원본을 축소하고 WebP 형식으로 변환"
+  },
+  {
+   "file": "lemon.webp",
+   "venue": "Lemoni Café",
+   "credit": "respiritu",
+   "license": "CC BY-SA 2.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/deed.en",
+   "source": "https://www.flickr.com/photos/respiritu/2170604337/",
+   "caption": "레모니 카페에서 식사하는 여행객 · 2007년 촬영",
+   "modification": "원본을 축소하고 WebP 형식으로 변환"
+  },
+  {
+   "file": "cyma.webp",
+   "venue": "Cyma",
+   "credit": "zt_kw",
+   "license": "CC BY 2.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/2.0/deed.en",
+   "source": "https://www.flickr.com/photos/zt_kw/3356937171/",
+   "caption": "시마 보라카이 · 2008년 촬영",
+   "modification": "원본을 축소하고 WebP 형식으로 변환"
+  }
+ ],
+ "embeds": {
+  "Nonie's": [
+   "https://www.instagram.com/p/DfCD9vtFEV5/",
+   "https://www.instagram.com/p/DfbgKS6jaU3/"
+  ],
+  "Subo Boracay": [
+   "https://www.instagram.com/p/DgFVIU6iKMs/",
+   "https://www.instagram.com/p/Df60NO-qSFV/",
+   "https://www.instagram.com/p/DfmrS-LpXsE/"
+  ],
+  "Smoke Resto": [
+   "https://www.instagram.com/p/DWu64qzCds2/",
+   "https://www.instagram.com/p/DXa0inyCQTx/"
+  ],
+  "Coco Mama": [
+   "https://www.instagram.com/p/DUINuDYEllm/"
+  ],
+  "LA-UD": [
+   "https://www.instagram.com/p/DfiyInYDZyl/"
+  ],
+  "HaloMango": [
+   "https://www.instagram.com/p/DVbqmjYj-CZ/"
+  ],
+  "Gerry’s Grill": [
+   "https://www.instagram.com/p/DgBrvMePjBk/",
+   "https://www.instagram.com/p/Df34_mghOMM/"
+  ]
+ }
+}

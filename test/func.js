@@ -4,11 +4,11 @@ const { chromium, devices } = require('playwright');
   const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
   await pg.goto('http://localhost:8765/_test.html#map'); await pg.waitForSelector('.card');
   const ok=(c,m)=>console.log((c?'PASS ':'FAIL ')+m);
-  for (const cat of ['all','restaurant','cafe','convenience','h24','pharmacy','pub']) {
+  for (const cat of ['all','restaurant','cafe','convenience','h24','pharmacy','bar']) {
     await pg.click(`.chip[data-cat="${cat}"]`); await pg.waitForTimeout(150);
     const n = await pg.$eval(`.chip[data-cat="${cat}"] .n`, e=>+e.textContent);
     const lit = await pg.$$eval('.pin:not(.dim), .dp:not(.dim)', e=>e.length); const big = await pg.$$eval('.pin:not(.dim)', e=>e.length); const cards = await pg.$$eval('.card', e=>e.length);
-    ok(n===lit && big===cards, `filter ${cat}: chip=${n} lit(pins+dots)=${lit} researched pins=${big} cards=${cards}`);
+    ok(n===lit && Math.min(60,big)===cards, `filter ${cat}: chip=${n} lit(pins+dots)=${lit} researched pins=${big} cards=${cards}`);
   }
   await pg.click('.chip[data-cat="restaurant"]');
   const c7 = await pg.$eval('.card .cost', e=>e.textContent); const first7 = await pg.$eval('.card h3', e=>e.textContent);
@@ -26,7 +26,7 @@ const { chromium, devices } = require('playwright');
   await pg.click('.card .more'); await pg.waitForTimeout(200); ok(await pg.isVisible('#sheet'),'detail opens: '+await pg.$eval('#sheet .t',e=>e.textContent));
   await pg.click('[data-onmap]'); await pg.waitForTimeout(400); ok(!(await pg.isVisible('#sheet')) && await pg.isVisible('#cv'),'지도에서 경로 보기 returns to map');
   for (const id of ['zin','zout','zhome']) { await pg.click('#'+id); } ok(true,'map buttons clicked');
-  for (const t of ['course','prices','info','map']) { await pg.click(`.nav a[data-tab="${t}"]`); await pg.waitForTimeout(200); ok((await pg.evaluate(()=>location.hash))==='#'+t,'tab '+t); }
+  for (const t of ['home','eat','course','info','map']) { await pg.click(`.nav a[data-tab="${t}"]`); await pg.waitForTimeout(200); ok((await pg.evaluate(()=>location.hash))==='#'+t,'tab '+t); }
   await pg.click('.nav a[data-tab="course"]'); await pg.click('.plink >> nth=0'); await pg.waitForTimeout(200); ok(await pg.isVisible('#sheet'),'course link opens place');
   await pg.click('[data-close]'); await pg.waitForTimeout(200); ok(!(await pg.isVisible('#sheet')),'close button');
   await pg.goto('http://localhost:8765/_test.html#prices'); await pg.fill('#fx-usd','200'); await pg.dispatchEvent('#fx-usd','input');

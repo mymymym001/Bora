@@ -1,0 +1,1493 @@
+[
+ {
+  "name": "Jonah's Fruit Shake & Snack Bar",
+  "ko_name": "조나스 (조나스 쉐이크)",
+  "category": "dessert",
+  "area": "Station 1, White Beach path (north end, toward Willy's Rock)",
+  "distance_from_henann_garden": "approx. 20-25 min walk north along the beach path, or a short e-trike ride",
+  "operating_evidence": "tripstore.kr KR blog (~Oct 2026 per search, '41일 전') mentions it; Trip.com listing active; operating since 1983",
+  "korean_review": "한국 블로그·익스피디아 브런치에서 '망고쉐이크 필수'로 소개, 인공감미료 적고 과일 맛이 진하다는 평. 줄이 길 수 있고 일부는 가격 대비 평범하다는 의견.",
+  "korean_popularity": "high",
+  "korean_sources": [
+   "https://brunch.co.kr/@expediakr/561",
+   "tripstore.kr 보라카이 맛집 리스트 오션뷰 BEST 5"
+  ],
+  "rating": {
+   "site": "Trip.com",
+   "score": 4.6,
+   "count": 149,
+   "seen": "search snippet 2026-11-23"
+  },
+  "hours": null,
+  "price_level": "$",
+  "typical_pp_php": [
+   150,
+   250
+  ],
+  "menu": [
+   {
+    "n": "Mango shake",
+    "ko": "망고쉐이크 (대표)",
+    "php": [
+     147,
+     200
+    ],
+    "src": "Wanderlog 'from PhP147' / reviewer '200 pesos for a mango shake'",
+    "yr": null
+   },
+   {
+    "n": "Mango smoothie",
+    "ko": "망고 스무디",
+    "php": 150,
+    "src": "blogger quoted in search results",
+    "yr": null
+   },
+   {
+    "n": "Chocolate banana shake",
+    "ko": "초코 바나나 쉐이크 (리뷰 호평)",
+    "php": null,
+    "src": "Trip.com reviews",
+    "yr": null
+   },
+   {
+    "n": "Banana shake",
+    "ko": "바나나 쉐이크",
+    "php": null,
+    "src": "thepoortraveler.net",
+    "yr": 2013
+   },
+   {
+    "n": "Snacks/sandwiches",
+    "ko": "간단한 스낵",
+    "php": null,
+    "src": "name of shop",
+    "yr": null
+   }
+  ],
+  "vat_service": null,
+  "seating_group7": "Small beachfront snack bar; 7 people better to take away and sit on beach",
+  "kid_friendly": true,
+  "best_time": "Morning (~9am, short queue per KR blog) or pre-sunset walk",
+  "recommended_order_for_7": "망고쉐이크 4 + 초코바나나 2 + 바나나 1, 테이크아웃해 해변 산책",
+  "official_url": null,
+  "facebook": null,
+  "address": "Station 1, White Beach Path, Balabag, Boracay",
+  "caveats": "No 2025-26 menu price seen; price range is from undated listings.",
+  "sources": [
+   "https://ph.trip.com/restaurant/philippines/boracay-island/detail/jonah-s-fruit-shake-and-snack-bar-490035",
+   "https://wanderlog.com/place/details/444306/jonahs-fruit-shake--snack-bar",
+   "https://abs-cbn.com/travel/itineraries/boracay-food-itinerary-2024/37640"
+  ]
+ },
+ {
+  "name": "Halomango (D'Mall)",
+  "ko_name": "할로망고",
+  "category": "dessert",
+  "area": "D'Mall entrance, Station 2",
+  "distance_from_henann_garden": "approx. 5 min walk",
+  "operating_evidence": "Ctrip/Trip.com listing (undated) shows 9:00-23:59; one Trip.com page flagged 'currently closed' - VERIFY on arrival",
+  "korean_review": "디몰 입구라 들르기 쉽고 망고 아이스크림·망고쉐이크·망고빙수가 대표. 다음카페 후기는 '쏘쏘', 줄이 길고 소프트아이스크림이 빨리 녹는다는 지적.",
+  "korean_popularity": "high",
+  "korean_sources": [
+   "tripstore.kr 보라카이 맛집 추천 리스트",
+   "m.cafe.daum.net/subdued20club 후기"
+  ],
+  "rating": {
+   "site": "Ctrip",
+   "score": 4.4,
+   "count": null,
+   "seen": "search snippet 2026-11-23"
+  },
+  "hours": "9:00-23:59 (Ctrip, undated)",
+  "price_level": "$",
+  "typical_pp_php": [
+   150,
+   300
+  ],
+  "menu": [
+   {
+    "n": "Mango ice cream",
+    "ko": "망고 아이스크림",
+    "php": 200,
+    "src": "tripstore.kr KR blog ('약 200페소')",
+    "yr": null
+   },
+   {
+    "n": "Mango shake",
+    "ko": "망고쉐이크",
+    "php": 150,
+    "src": "tripstore.kr KR blog ('약 150페소')",
+    "yr": null
+   },
+   {
+    "n": "Mango Ice Cup (mango halo-halo)",
+    "ko": "망고 소프트+얼음+망고",
+    "php": null,
+    "src": "Wanderlog review",
+    "yr": null
+   },
+   {
+    "n": "Couple ice (double serving)",
+    "ko": "2인용 망고빙수",
+    "php": 300,
+    "src": "Trip.com review",
+    "yr": null
+   },
+   {
+    "n": "Mango bingsu",
+    "ko": "망고 빙수",
+    "php": null,
+    "src": "Wanderlog",
+    "yr": null
+   },
+   {
+    "n": "Coconut smoothie",
+    "ko": "코코넛 스무디",
+    "php": null,
+    "src": "Ctrip",
+    "yr": null
+   }
+  ],
+  "vat_service": null,
+  "seating_group7": "Small shop, limited seats; take-out for 7",
+  "kid_friendly": true,
+  "best_time": "Afternoon heat break; avoid opening queue",
+  "recommended_order_for_7": "커플빙수 2 + 망고쉐이크 3 나눠먹기",
+  "official_url": null,
+  "facebook": null,
+  "address": "D'Mall, Station 2, Balabag",
+  "caveats": null,
+  "sources": [
+   "https://uk.trip.com/restaurant/philippines/boracay%20island/detail/Halomango-10562032",
+   "https://wanderlog.com/place/details/76454/halomango-dmall",
+   "https://gs.ctrip.com/html5/you/foods/610/4927458.html"
+  ]
+ },
+ {
+  "name": "Coco Mama",
+  "ko_name": "코코마마",
+  "category": "dessert",
+  "area": "D'Mall area Station 2 (+ Station 1 branch)",
+  "distance_from_henann_garden": "approx. 5 min walk (D'Mall branch)",
+  "operating_evidence": "Manila Bulletin 2026-02-04: marked 10 years on 2026-01-30",
+  "korean_review": "코코넛 껍질에 담아주는 코코넛 아이스크림이 보라카이 대표 디저트, 달지 않고 크리미. 줄이 길고 더위에 빨리 녹음, 해진 뒤 가면 덜 기다린다는 팁.",
+  "korean_popularity": "high",
+  "korean_sources": [
+   "m.cafe.daum.net 후기 (망고 섞인 코코넛 아이스크림 150p)",
+   "tripstore.kr (약 150페소)"
+  ],
+  "rating": null,
+  "hours": "10:00-21:30 (info site, undated)",
+  "price_level": "$",
+  "typical_pp_php": [
+   150,
+   250
+  ],
+  "menu": [
+   {
+    "n": "Coconut ice cream 2 scoops",
+    "ko": "코코넛 아이스크림 2스쿱",
+    "php": 150,
+    "src": "Trip.com review",
+    "yr": null
+   },
+   {
+    "n": "Coconut ice cream 4 scoops",
+    "ko": "4스쿱 (2인 나눔)",
+    "php": 250,
+    "src": "Trip.com review",
+    "yr": null
+   },
+   {
+    "n": "Coconut ice cream 6 scoops",
+    "ko": "6스쿱 (3인 나눔)",
+    "php": 350,
+    "src": "Trip.com review",
+    "yr": null
+   },
+   {
+    "n": "Mango add-on",
+    "ko": "망고 토핑 추가",
+    "php": 30,
+    "src": "Trip.com review",
+    "yr": null
+   },
+   {
+    "n": "Toppings (nuts/fruit/jelly)",
+    "ko": "견과·과일·젤리 토핑",
+    "php": null,
+    "src": "KR blog",
+    "yr": null
+   }
+  ],
+  "vat_service": null,
+  "seating_group7": "Counter/take-away; little seating",
+  "kid_friendly": true,
+  "best_time": "After sunset (shorter queue)",
+  "recommended_order_for_7": "6스쿱 1 + 4스쿱 1 (망고 추가) 나눠먹기",
+  "official_url": null,
+  "facebook": null,
+  "address": "D'Mall / Main Road, Station 2; branch at Station 1",
+  "caveats": null,
+  "sources": [
+   "https://mb.com.ph/2026/02/04/10-years-later-coco-mama-still-tastes-like-boracay",
+   "https://au.trip.com/restaurant/philippines/boracay%20island/detail/Coco%20Mama-28173102",
+   "https://happycow.net/reviews/coco-mama-station-1-boracay-328753"
+  ]
+ },
+ {
+  "name": "Mango Mama",
+  "ko_name": "망고마마",
+  "category": "dessert",
+  "area": "D'Mall Plaza, next to Cyma, Station 2",
+  "distance_from_henann_garden": "approx. 5 min walk",
+  "operating_evidence": "Opened 2023-10 (Manila Bulletin); Coco Mama offshoot cited in MB 2026-02 article",
+  "korean_review": "한국어 후기는 거의 없음. 영문 리뷰상 따뜻한 수만(찹쌀떡) 위 망고-코코 비건 아이스크림이 특징, 코코마마 대안.",
+  "korean_popularity": "low",
+  "korean_sources": [],
+  "rating": null,
+  "hours": null,
+  "price_level": "$",
+  "typical_pp_php": null,
+  "menu": [
+   {
+    "n": "Mango-coco ice cream on warm suman",
+    "ko": "따뜻한 수만 위 망고코코 아이스크림 2스쿱+망고+라틱",
+    "php": null,
+    "src": "Manila Bulletin",
+    "yr": 2023
+   },
+   {
+    "n": "Black rice ice cream on suman",
+    "ko": "흑미 아이스크림 버전",
+    "php": null,
+    "src": "Manila Bulletin",
+    "yr": 2023
+   }
+  ],
+  "vat_service": null,
+  "seating_group7": "Kiosk-style; take-away",
+  "kid_friendly": true,
+  "best_time": "Afternoon",
+  "recommended_order_for_7": "코코마마와 반반 나눠 맛비교",
+  "official_url": null,
+  "facebook": null,
+  "address": "D'Mall Plaza beside Cyma, Station 2",
+  "caveats": null,
+  "sources": [
+   "https://mb.com.ph/2023/10/14/look-mango-mama-from-the-makers-of-coco-mama-is-now-open"
+  ]
+ },
+ {
+  "name": "Ube Mama",
+  "ko_name": "우베마마",
+  "category": "dessert",
+  "area": "D'Mall Palengke, Station 2",
+  "distance_from_henann_garden": "approx. 5 min walk",
+  "operating_evidence": "Wanderlog listing; MB 2026-02 names it as Coco Mama offshoot",
+  "korean_review": "한국어 후기 거의 없음. 영문 후기상 우베(자색고구마) 비건 아이스크림이 코코마마보다 맛있다는 평도 있으나 가격이 비싸다는 불만.",
+  "korean_popularity": "low",
+  "korean_sources": [],
+  "rating": null,
+  "hours": null,
+  "price_level": "$$",
+  "typical_pp_php": [
+   280,
+   320
+  ],
+  "menu": [
+   {
+    "n": "Ube ice cream bowl",
+    "ko": "우베 아이스크림+코코넛크림+우베푸딩+팔리타우",
+    "php": [
+     280,
+     320
+    ],
+    "src": "Wanderlog/HappyCow reviews",
+    "yr": null
+   }
+  ],
+  "vat_service": null,
+  "seating_group7": "Take-out counter only, no dine-in",
+  "kid_friendly": true,
+  "best_time": "Afternoon",
+  "recommended_order_for_7": "2~3그릇 나눠 맛보기",
+  "official_url": null,
+  "facebook": null,
+  "address": "D'Mall Palengke, Station 2",
+  "caveats": null,
+  "sources": [
+   "https://wanderlog.com/place/details/6509059/ube-mama-boracay"
+  ]
+ },
+ {
+  "name": "Ice Flakes Boracay",
+  "ko_name": "아이스플레이크 (빙수)",
+  "category": "dessert",
+  "area": "D'Mall, Station 2",
+  "distance_from_henann_garden": "approx. 5 min walk",
+  "operating_evidence": "Klook voucher listing active (undated)",
+  "korean_review": "한국어 후기 확인 못함. 영문 후기상 저당·과일 100% 눈꽃빙수, 에어컨 있음, 코코넛 껍질에 서빙.",
+  "korean_popularity": "low",
+  "korean_sources": [],
+  "rating": {
+   "site": "Klook",
+   "score": 4.7,
+   "count": 90,
+   "seen": "search snippet 2026-11-23"
+  },
+  "hours": "13:00-20:00 daily (Klook)",
+  "price_level": "$",
+  "typical_pp_php": [
+   150,
+   250
+  ],
+  "menu": [
+   {
+    "n": "Halo-halo shaved ice",
+    "ko": "할로할로 빙수",
+    "php": 200,
+    "src": "dude4food blog",
+    "yr": 2022
+   },
+   {
+    "n": "Mango shaved ice",
+    "ko": "망고 빙수",
+    "php": null,
+    "src": "Wanderlog",
+    "yr": null
+   },
+   {
+    "n": "Ube shaved ice",
+    "ko": "우베 빙수",
+    "php": null,
+    "src": "Wanderlog",
+    "yr": null
+   },
+   {
+    "n": "Coconut shaved ice",
+    "ko": "코코넛 빙수",
+    "php": null,
+    "src": "Wanderlog",
+    "yr": null
+   }
+  ],
+  "vat_service": "Klook PHP500/1000 cash vouchers reportedly cheaper than on-site",
+  "seating_group7": "Air-conditioned indoor seating; size for 7 unverified",
+  "kid_friendly": true,
+  "best_time": "13:00-16:00 heat break",
+  "recommended_order_for_7": "망고·우베·할로할로·코코넛 각 1~2개 나눠먹기 (Klook 바우처 활용)",
+  "official_url": null,
+  "facebook": null,
+  "address": "D'Mall, Station 2",
+  "caveats": null,
+  "sources": [
+   "https://www.klook.com/activity/69205-ice-flakes-boracay",
+   "https://dude4food.blogspot.com/2022/12/flavors-of-boracay-ice-it-at-ice-flakes.html?m=1"
+  ]
+ },
+ {
+  "name": "Aria Gelato",
+  "ko_name": "아리아 젤라또",
+  "category": "dessert",
+  "area": "D'Mall beside Aria Cucina Italiana, Station 2",
+  "distance_from_henann_garden": "approx. 5 min walk",
+  "operating_evidence": "Tribune 2024-04 article; Trip.com listing",
+  "korean_review": "한국어 후기 확인 못함. 영문 후기상 양 넉넉하고 18가지 맛, 다른 곳보다 약간 비싸지만 합리적.",
+  "korean_popularity": "low",
+  "korean_sources": [],
+  "rating": {
+   "site": "guide listing (myboracayguide/Google-sourced)",
+   "score": 4.4,
+   "count": 85,
+   "seen": "search snippet 2026-11-23"
+  },
+  "hours": "11:00-23:30 (one source) / closes 20:30 (another) - conflicting",
+  "price_level": "$",
+  "typical_pp_php": [
+   110,
+   240
+  ],
+  "menu": [
+   {
+    "n": "Gelato single scoop",
+    "ko": "젤라또 1스쿱",
+    "php": 110,
+    "src": "Yoorekka magazine",
+    "yr": 2022
+   },
+   {
+    "n": "Gelato 2 scoops",
+    "ko": "2스쿱",
+    "php": 190,
+    "src": "Yoorekka magazine",
+    "yr": 2022
+   },
+   {
+    "n": "Gelato 3 scoops",
+    "ko": "3스쿱",
+    "php": 240,
+    "src": "Yoorekka magazine",
+    "yr": 2022
+   },
+   {
+    "n": "Gelato 500g pack",
+    "ko": "500g 포장",
+    "php": 600,
+    "src": "Yoorekka magazine",
+    "yr": 2022
+   }
+  ],
+  "vat_service": null,
+  "seating_group7": "Shares space with Aria restaurant",
+  "kid_friendly": true,
+  "best_time": "Evening D'Mall stroll",
+  "recommended_order_for_7": "500g 1팩 + 2스쿱 2개 나눠먹기",
+  "official_url": null,
+  "facebook": null,
+  "address": "D'Mall, Station 2 (tel 288-6223 per guide)",
+  "caveats": null,
+  "sources": [
+   "https://d3ppocuozxd02b.cloudfront.net/magazine/boracay-panay-island/2022/04/25/7-summer-food-stops-in-boracay-to-satisfy-your-food-cravings",
+   "https://tribune.net.ph/2024/04/20/ode-to-boracays-best-pizza-place"
+  ]
+ },
+ {
+  "name": "Henann Garden Resort mango shake (in-hotel)",
+  "ko_name": "헤난가든 망고쉐이크",
+  "category": "dessert",
+  "area": "Inside Henann Garden Resort, Station 2",
+  "distance_from_henann_garden": "0 (in hotel)",
+  "operating_evidence": "KR Daum cafe review (date unknown)",
+  "korean_review": "한국 여행카페 후기에 '헤난 가든 망고셰이크 유명하니 꼭 먹어봐'라는 추천. 가격·메뉴 정보는 확인 못함.",
+  "korean_popularity": "medium",
+  "korean_sources": [
+   "m.cafe.daum.net 보라카이 후기 (조나스 검색 결과 중)"
+  ],
+  "rating": null,
+  "hours": null,
+  "price_level": null,
+  "typical_pp_php": null,
+  "menu": [
+   {
+    "n": "Mango shake",
+    "ko": "리조트 망고쉐이크",
+    "php": null,
+    "src": "Daum cafe review",
+    "yr": null
+   }
+  ],
+  "vat_service": null,
+  "seating_group7": null,
+  "kid_friendly": true,
+  "best_time": "Pool time",
+  "recommended_order_for_7": "수영장에서 인원수대로 주문",
+  "official_url": null,
+  "facebook": null,
+  "address": null,
+  "caveats": "Single KR mention; hotel price/outlet unverified.",
+  "sources": []
+ },
+ {
+  "name": "Lemoni Café & Restaurant",
+  "ko_name": "레모니 카페 (레몬카페/레몬아이카페)",
+  "category": "cafe",
+  "area": "D'Mall Plaza, Station 2",
+  "distance_from_henann_garden": "approx. 5 min walk",
+  "operating_evidence": "Philippine Primer listing 2024-01; tripstore.kr KR blog 2026",
+  "korean_review": "디몰 에어컨 실내석이 쾌적, 레몬 팬케이크·레몬케이크·망고 스무디·코코넛 쉐이크 추천. 음식 품질·대기시간 불만 후기도 있음.",
+  "korean_popularity": "high",
+  "korean_sources": [
+   "tripstore.kr 디몰 실내 다이닝 브런치",
+   "https://brunch.co.kr/@expediakr/851 (레몬아이 카페 코코넛 쉐이크)"
+  ],
+  "rating": null,
+  "hours": null,
+  "price_level": "$$",
+  "typical_pp_php": [
+   100,
+   300
+  ],
+  "menu": [
+   {
+    "n": "Lemon pancake",
+    "ko": "레몬 팬케이크",
+    "php": null,
+    "src": "tripstore.kr",
+    "yr": null
+   },
+   {
+    "n": "Lemon cake",
+    "ko": "레몬 케이크 (호평)",
+    "php": null,
+    "src": "Wanderlog review",
+    "yr": null
+   },
+   {
+    "n": "Eggs Benedict",
+    "ko": "에그 베네딕트",
+    "php": null,
+    "src": "tripstore.kr",
+    "yr": null
+   },
+   {
+    "n": "Mango smoothie",
+    "ko": "망고 스무디",
+    "php": null,
+    "src": "tripstore.kr",
+    "yr": null
+   },
+   {
+    "n": "Coconut shake",
+    "ko": "코코넛 쉐이크 (일품)",
+    "php": null,
+    "src": "brunch expedia",
+    "yr": null
+   },
+   {
+    "n": "Mango cheesecake",
+    "ko": "망고 치즈케이크",
+    "php": null,
+    "src": "KR blog",
+    "yr": null
+   }
+  ],
+  "vat_service": null,
+  "seating_group7": "Indoor A/C dining room; 7 should be OK but book/arrive off-peak",
+  "kid_friendly": true,
+  "best_time": "Midday heat / brunch",
+  "recommended_order_for_7": "레몬케이크 2 + 팬케이크 2 + 망고스무디·코코넛쉐이크 인원수",
+  "official_url": null,
+  "facebook": null,
+  "address": "D'Mall Plaza, Station 2",
+  "caveats": "Per-person range from myboracayguide (undated); no item prices seen.",
+  "sources": [
+   "https://primer.com.ph/food/location/philippines/boracay/lemoni-cafe/",
+   "https://wanderlog.com/place/details/1257880",
+   "https://www.marketmanila.com/archives/lemoni-cafe-dmall-boracay-mm-rating-70100"
+  ]
+ },
+ {
+  "name": "Real Coffee & Tea Café",
+  "ko_name": "리얼커피 (깔라만시 머핀)",
+  "category": "cafe",
+  "area": "Station 2 beachfront, 2F Sea World bldg (near D'Mall)",
+  "distance_from_henann_garden": "approx. 5-10 min walk",
+  "operating_evidence": "Philippine Primer 2025-09-17",
+  "korean_review": "깔라만시 머핀이 기념품으로 유명(박스 구매), 사전예약 권장. 커피 자체는 '그냥 그렇다'는 평, 에어컨·와이파이 없음.",
+  "korean_popularity": "medium",
+  "korean_sources": [],
+  "rating": {
+   "site": "directory (Google-sourced)",
+   "score": 4.3,
+   "count": 1330,
+   "seen": "search snippet 2026-11-23"
+  },
+  "hours": "7:00-19:00 daily",
+  "price_level": "$",
+  "typical_pp_php": [
+   100,
+   250
+  ],
+  "menu": [
+   {
+    "n": "Calamansi muffin box of 6",
+    "ko": "깔라만시 머핀 6개 박스",
+    "php": 360,
+    "src": "Philippine Primer",
+    "yr": 2025
+   },
+   {
+    "n": "Calamansi muffin (each)",
+    "ko": "깔라만시 머핀 1개",
+    "php": [
+     60,
+     80
+    ],
+    "src": "Primer (derived) / Wanderlog review",
+    "yr": null
+   },
+   {
+    "n": "Iced Cafe Mocha",
+    "ko": "아이스 카페모카 (추천)",
+    "php": null,
+    "src": "directory reviews",
+    "yr": null
+   },
+   {
+    "n": "Iced Real Coffee",
+    "ko": "아이스 리얼커피",
+    "php": null,
+    "src": "shootfirsteatlater",
+    "yr": 2012
+   },
+   {
+    "n": "Peanut butter brownie",
+    "ko": "피넛버터 브라우니",
+    "php": null,
+    "src": "shootfirsteatlater",
+    "yr": 2012
+   }
+  ],
+  "vat_service": null,
+  "seating_group7": "Small upstairs cafe, no A/C; 7 tight - buy muffins to go",
+  "kid_friendly": true,
+  "best_time": "Morning (muffins sell out); order ahead",
+  "recommended_order_for_7": "머핀 6개 박스 2개(먹기+선물) + 아이스모카 몇 잔",
+  "official_url": null,
+  "facebook": null,
+  "address": "Station 2, Balabag (tel 288-5340 per guide)",
+  "caveats": null,
+  "sources": [
+   "https://primer.com.ph/food/location/philippines/boracay/real-coffee-and-tea-cafe",
+   "https://lakwatsero.com/spots/real-coffee-and-tea-cafe-of-boracay"
+  ]
+ },
+ {
+  "name": "Café del Sol",
+  "ko_name": "카페 델솔",
+  "category": "cafe",
+  "area": "D'Mall beachfront, Station 2",
+  "distance_from_henann_garden": "approx. 5 min walk",
+  "operating_evidence": "Philippine Primer 2025-10-08",
+  "korean_review": "화이트비치와 맞닿아 바다 보며 망고 치즈케이크+커피, 아이스커피 테이크아웃하기 좋음. 망고케이크 향이 진하다는 평, 음료는 평범.",
+  "korean_popularity": "high",
+  "korean_sources": [
+   "https://brunch.co.kr/@expediakr/851",
+   "waug.com 매거진",
+   "tripstore.kr"
+  ],
+  "rating": null,
+  "hours": "7:00-23:30 (myboracayguide)",
+  "price_level": "$$",
+  "typical_pp_php": [
+   300,
+   800
+  ],
+  "menu": [
+   {
+    "n": "Mango cheesecake",
+    "ko": "망고 치즈케이크 (대표)",
+    "php": null,
+    "src": "Primer/Trip.com",
+    "yr": 2025
+   },
+   {
+    "n": "Two drinks + cheesecake",
+    "ko": "음료2+치즈케이크 (방문자 지불액)",
+    "php": 500,
+    "src": "Wanderlog review",
+    "yr": null
+   },
+   {
+    "n": "Frappes",
+    "ko": "프라페",
+    "php": null,
+    "src": "guide",
+    "yr": null
+   },
+   {
+    "n": "Iced coffee",
+    "ko": "아이스커피 테이크아웃",
+    "php": null,
+    "src": "brunch expedia",
+    "yr": null
+   }
+  ],
+  "vat_service": null,
+  "seating_group7": "Beachfront terrace + indoor; 7 split across 2 tables likely",
+  "kid_friendly": true,
+  "best_time": "Late afternoon into sunset",
+  "recommended_order_for_7": "망고치즈케이크 3~4조각 + 프라페/아이스커피 인원수",
+  "official_url": null,
+  "facebook": null,
+  "address": "Beachfront, D'Mall, Station 2 (tel 288-5573)",
+  "caveats": null,
+  "sources": [
+   "https://primer.com.ph/food/location/philippines/boracay/cafe-del-sol",
+   "https://ae.trip.com/restaurant/philippines/boracay%20island/detail/Cafe%20Del%20Sol%20Boracay-17772093"
+  ]
+ },
+ {
+  "name": "The Sunny Side Café",
+  "ko_name": "써니사이드 카페",
+  "category": "cafe",
+  "area": "Station 3 beachfront (main) + Station 1 branch",
+  "distance_from_henann_garden": "Station 3: approx. 15 min walk south; Station 1 branch approx. 15-20 min north",
+  "operating_evidence": "Philippine Primer 2025-09-17",
+  "korean_review": "우베 팬케이크가 시그니처, 양 넉넉하고 하이체어 있어 가족에 좋음, 화이트비치 커피가 제일 낫다는 평. 일부 메뉴는 비싸고 기름지다는 의견.",
+  "korean_popularity": "high",
+  "korean_sources": [
+   "waug.com 매거진",
+   "https://brunch.co.kr/@expediakr/851"
+  ],
+  "rating": {
+   "site": "myboracayguide (Google-sourced)",
+   "score": 4.5,
+   "count": 1770,
+   "seen": "search snippet 2026-11-23"
+  },
+  "hours": "7:00-19:00 (Trip.com, may be outdated)",
+  "price_level": "$$",
+  "typical_pp_php": [
+   300,
+   800
+  ],
+  "menu": [
+   {
+    "n": "Ube & Cereal Milk Pancakes",
+    "ko": "우베&시리얼밀크 팬케이크 (2장+아이스크림)",
+    "php": 790,
+    "src": "Philippine Primer",
+    "yr": 2025
+   },
+   {
+    "n": "Bacon & Mango Grilled Cheese",
+    "ko": "베이컨망고 그릴드치즈",
+    "php": 590,
+    "src": "Philippine Primer",
+    "yr": 2025
+   },
+   {
+    "n": "Cakes & bars",
+    "ko": "케이크·바 디저트",
+    "php": [
+     95,
+     295
+    ],
+    "src": "Booky menu",
+    "yr": null
+   },
+   {
+    "n": "Coffee",
+    "ko": "커피 (KR 호평)",
+    "php": null,
+    "src": "brunch expedia",
+    "yr": null
+   }
+  ],
+  "vat_service": "5% service charge added (Booky)",
+  "seating_group7": "Beachfront tables; high chairs available; 7 can be seated, expect wait at peak brunch",
+  "kid_friendly": true,
+  "best_time": "Breakfast/brunch before 10am",
+  "recommended_order_for_7": "우베 팬케이크 2 + 그릴드치즈 2 + 케이크 2 + 커피·주스 인원수",
+  "official_url": null,
+  "facebook": null,
+  "address": "Station 3 beachfront, Angol; Station 1 branch",
+  "caveats": null,
+  "sources": [
+   "https://primer.com.ph/food/?p=13623",
+   "https://booky.ph/biz/the-sunny-side-cafe-boracay-station-1/menu",
+   "https://lifestyle.inquirer.net/?p=13239"
+  ]
+ },
+ {
+  "name": "Café Maruja",
+  "ko_name": "카페 마루자",
+  "category": "cafe",
+  "area": "Casa Pilar Beach Resort, Station 3 beachfront",
+  "distance_from_henann_garden": "approx. 15 min walk south",
+  "operating_evidence": "Wanderlog/Spinach.guide listings (undated); waug KR magazine",
+  "korean_review": "인스타 감성 인테리어(조개 샹들리에), 스무디볼 시그니처, 에어컨 실내+해변 라운지석. 가격이 높고 일부 메뉴 간이 약하다는 평.",
+  "korean_popularity": "medium",
+  "korean_sources": [
+   "waug.com/magazines/1351"
+  ],
+  "rating": {
+   "site": "Google Maps (via spinach.guide)",
+   "score": 4.5,
+   "count": 1414,
+   "seen": "search snippet 2026-11-23"
+  },
+  "hours": "Conflicting: 7:30-24:00 or 8:00-20:00",
+  "price_level": "$$",
+  "typical_pp_php": null,
+  "menu": [
+   {
+    "n": "Smoothie bowl",
+    "ko": "스무디볼 (시그니처)",
+    "php": null,
+    "src": "waug",
+    "yr": null
+   },
+   {
+    "n": "Maruja house burger",
+    "ko": "마루자 하우스 버거",
+    "php": null,
+    "src": "waug",
+    "yr": null
+   },
+   {
+    "n": "Buddha bowl",
+    "ko": "부다볼",
+    "php": null,
+    "src": "HappyCow",
+    "yr": null
+   },
+   {
+    "n": "Toasts/egg dishes",
+    "ko": "토스트·에그요리",
+    "php": null,
+    "src": "guide",
+    "yr": null
+   },
+   {
+    "n": "Berry/mango shake",
+    "ko": "베리·망고 쉐이크",
+    "php": null,
+    "src": "Wanderlog",
+    "yr": null
+   }
+  ],
+  "vat_service": null,
+  "seating_group7": "Indoor A/C + beachfront lounge; 7 workable",
+  "kid_friendly": true,
+  "best_time": "Brunch or sunset",
+  "recommended_order_for_7": "스무디볼 3 + 버거 2 + 쉐이크 인원수",
+  "official_url": null,
+  "facebook": null,
+  "address": "Casa Pilar Beach Resort, Station 3",
+  "caveats": null,
+  "sources": [
+   "https://wanderlog.com/place/details/1973223/cafe-maruja",
+   "https://spinach.guide/venues/cafe-maruja-8772/",
+   "https://www.waug.com/en/magazines/1351"
+  ]
+ },
+ {
+  "name": "Little Wave Café",
+  "ko_name": "리틀 웨이브 커피",
+  "category": "cafe",
+  "area": "Hue Hotel, Station X (main road, Station 2)",
+  "distance_from_henann_garden": "approx. 5-10 min walk",
+  "operating_evidence": "koffeeandkpop review 2023-02; no 2025-26 evidence seen",
+  "korean_review": "익스피디아 브런치에 '세련된 카페, 라떼아트 좋음'으로 소개. 영문 후기상 씨솔트크림 시그니처 호불호, 음식은 평범.",
+  "korean_popularity": "medium",
+  "korean_sources": [
+   "https://brunch.co.kr/@expediakr/422"
+  ],
+  "rating": null,
+  "hours": "8:00-18:00 (2021 guide)",
+  "price_level": "$$",
+  "typical_pp_php": null,
+  "menu": [
+   {
+    "n": "Death Cream",
+    "ko": "데스크림 (강추)",
+    "php": 290,
+    "src": "koffeeandkpop",
+    "yr": 2023
+   },
+   {
+    "n": "Little Wave (shaken espresso+sea salt cream)",
+    "ko": "시그니처 씨솔트크림 셰이큰 에스프레소",
+    "php": null,
+    "src": "guide",
+    "yr": null
+   },
+   {
+    "n": "Banana bread",
+    "ko": "바나나브레드",
+    "php": null,
+    "src": "Wanderlog",
+    "yr": null
+   },
+   {
+    "n": "Bacon",
+    "ko": "베이컨 메뉴",
+    "php": null,
+    "src": "Wanderlog",
+    "yr": null
+   }
+  ],
+  "vat_service": null,
+  "seating_group7": "Hotel-lobby cafe; 7 limited",
+  "kid_friendly": true,
+  "best_time": "Morning coffee",
+  "recommended_order_for_7": "어른은 시그니처 커피, 아이들은 바나나브레드",
+  "official_url": null,
+  "facebook": null,
+  "address": "Hue Hotels & Resorts, Station X, Boracay",
+  "caveats": "Operating status 2026 not verified.",
+  "sources": [
+   "https://koffeeandkpop.com/2023/02/07/cafe-review-little-wave/"
+  ]
+ },
+ {
+  "name": "Blackfish Coffee Bar",
+  "ko_name": "블랙피시 커피",
+  "category": "cafe",
+  "area": "Station 1, small alley off beach path",
+  "distance_from_henann_garden": "approx. 15-20 min walk north",
+  "operating_evidence": "coffeehan review (undated); Klook coffee guide",
+  "korean_review": "한국어 후기 확인 못함. 영문 후기상 깔끔·아늑한 스페셜티 커피, 오트라떼 호평, 가격 약간 높음, 시나몬번은 아쉬움.",
+  "korean_popularity": "low",
+  "korean_sources": [],
+  "rating": null,
+  "hours": "Conflicting: 9:30-22:30 or 7:30-23:00",
+  "price_level": "$$",
+  "typical_pp_php": [
+   140,
+   280
+  ],
+  "menu": [
+   {
+    "n": "Oat milk latte",
+    "ko": "오트밀크 라떼",
+    "php": 260,
+    "src": "coffeehan",
+    "yr": null
+   },
+   {
+    "n": "Cranberry cookie",
+    "ko": "크랜베리 쿠키",
+    "php": 160,
+    "src": "coffeehan",
+    "yr": null
+   },
+   {
+    "n": "Blackfish coffee",
+    "ko": "시그니처 커피",
+    "php": null,
+    "src": "Wanderlog",
+    "yr": null
+   },
+   {
+    "n": "Cinnamon bun",
+    "ko": "시나몬번",
+    "php": null,
+    "src": "Wanderlog",
+    "yr": null
+   }
+  ],
+  "vat_service": null,
+  "seating_group7": "Small; 7 tight",
+  "kid_friendly": null,
+  "best_time": "Morning",
+  "recommended_order_for_7": "라떼 인원수 + 쿠키 2~3",
+  "official_url": null,
+  "facebook": null,
+  "address": "Station 1, Balabag (alley)",
+  "caveats": null,
+  "sources": [
+   "https://www.coffeehan.com/blackfish-coffee-bar-boracay/"
+  ]
+ },
+ {
+  "name": "House Brew Café (The District)",
+  "ko_name": "하우스브루 카페",
+  "category": "cafe",
+  "area": "Ground floor, The District Boracay, Station 2 beachfront",
+  "distance_from_henann_garden": "approx. 5-10 min walk",
+  "operating_evidence": "Philippine Primer 2025-10-09",
+  "korean_review": "한국어 후기 확인 못함. 영문 후기상 해변뷰·편한 좌석, 블루베리 치즈케이크·치즈 엔사이마다 호평, 가격 높고 서비스 느림.",
+  "korean_popularity": "low",
+  "korean_sources": [],
+  "rating": {
+   "site": "listing (unspecified)",
+   "score": 3.1,
+   "count": 1025,
+   "seen": "search snippet 2026-11-23 (another site shows 8.1/10)"
+  },
+  "hours": "7:00-24:00 (hotel blog) / 7:00-22:00 (Klook)",
+  "price_level": "$$",
+  "typical_pp_php": [
+   200,
+   500
+  ],
+  "menu": [
+   {
+    "n": "Blueberry cheesecake",
+    "ko": "블루베리 치즈케이크",
+    "php": null,
+    "src": "review",
+    "yr": null
+   },
+   {
+    "n": "Cheesy ensaymada",
+    "ko": "치즈 엔사이마다",
+    "php": null,
+    "src": "Klook",
+    "yr": null
+   },
+   {
+    "n": "Iced mocha",
+    "ko": "아이스 모카",
+    "php": null,
+    "src": "Klook",
+    "yr": null
+   },
+   {
+    "n": "Gelato",
+    "ko": "젤라또",
+    "php": null,
+    "src": "review",
+    "yr": null
+   },
+   {
+    "n": "Panini / Buddha bowl",
+    "ko": "파니니·부다볼",
+    "php": null,
+    "src": "review",
+    "yr": null
+   }
+  ],
+  "vat_service": null,
+  "seating_group7": "Hotel cafe with comfy seating; 7 OK",
+  "kid_friendly": true,
+  "best_time": "Afternoon",
+  "recommended_order_for_7": "치즈케이크 2 + 엔사이마다 3 + 음료 인원수",
+  "official_url": null,
+  "facebook": null,
+  "address": "The District Boracay, Station 2",
+  "caveats": null,
+  "sources": [
+   "https://thedistrictboracay.com/blog/house-brew-cafe-newest-hangout-spot-in-boracay/",
+   "https://wanderlog.com/place/details/3255177/house-brew-cafe"
+  ]
+ },
+ {
+  "name": "Mañana Mexican Restaurant",
+  "ko_name": "마냐나 (망고쉐이크)",
+  "category": "dessert",
+  "area": "Station 1 front beach",
+  "distance_from_henann_garden": "approx. 15-20 min walk north",
+  "operating_evidence": "Foursquare listing only; no 2025-26 evidence seen - VERIFY",
+  "korean_review": "한국 브런치·카페 후기에서 '마냐나 망고쉐이크는 보라카이 최고'라는 평이 많음. 다른 후기는 신맛이 강하고 주문이 느리다고 지적.",
+  "korean_popularity": "high",
+  "korean_sources": [
+   "https://brunch.co.kr/@expediakr/822",
+   "m.cafe.daum.net 후기"
+  ],
+  "rating": null,
+  "hours": null,
+  "price_level": "$$",
+  "typical_pp_php": null,
+  "menu": [
+   {
+    "n": "Mango shake",
+    "ko": "망고쉐이크 (KR 인기)",
+    "php": null,
+    "src": "brunch expedia",
+    "yr": null
+   },
+   {
+    "n": "Tacos",
+    "ko": "타코",
+    "php": null,
+    "src": "brunch",
+    "yr": null
+   },
+   {
+    "n": "Burrito/fajita",
+    "ko": "브리토·화이타",
+    "php": null,
+    "src": "brunch",
+    "yr": null
+   }
+  ],
+  "vat_service": null,
+  "seating_group7": "Open-air restaurant (no A/C per 2012 review)",
+  "kid_friendly": true,
+  "best_time": "Lunch",
+  "recommended_order_for_7": "망고쉐이크 인원수 + 타코 플래터",
+  "official_url": null,
+  "facebook": null,
+  "address": "Station 1, Front Beach, Balabag",
+  "caveats": "KR reviews are ~2018-2020; current status unverified.",
+  "sources": [
+   "https://shootfirsteatlater.com/2012/08/05/lunch-at-manana-mexican-cuisine"
+  ]
+ },
+ {
+  "name": "Epic Boracay",
+  "ko_name": "에픽 보라카이",
+  "category": "bar",
+  "area": "Beachfront at D'Mall entrance, Station 2",
+  "distance_from_henann_garden": "approx. 5 min walk",
+  "operating_evidence": "Philippine Primer listing 2025-09-17",
+  "korean_review": "한국 여행글에서 루프탑/비치바 명소로 소개, 낮엔 가족식당·밤엔 클럽. 해피아워가 길어 선셋 칵테일 가성비 좋음, 심야엔 시끄러움.",
+  "korean_popularity": "medium",
+  "korean_sources": [
+   "triple.guide 보라카이의 밤"
+  ],
+  "rating": null,
+  "hours": "Conflicting: 7:00-04:00 or 6:30-24:00",
+  "price_level": "$$",
+  "typical_pp_php": [
+   300,
+   800
+  ],
+  "menu": [
+   {
+    "n": "Margarita",
+    "ko": "마가리타",
+    "php": 300,
+    "src": "Philippine Primer listing (may date from 2019)",
+    "yr": 2025
+   },
+   {
+    "n": "Epic Mudslide",
+    "ko": "에픽 머드슬라이드",
+    "php": 300,
+    "src": "Primer",
+    "yr": 2025
+   },
+   {
+    "n": "Sangria",
+    "ko": "상그리아",
+    "php": 290,
+    "src": "Primer",
+    "yr": 2025
+   },
+   {
+    "n": "Fresh Bar DIY cocktails",
+    "ko": "프레시바 DIY 칵테일",
+    "php": null,
+    "src": "hotels.com",
+    "yr": null
+   }
+  ],
+  "vat_service": "Happy hour from noon (to ~10pm per Culture Trip); discounts up to 50% claimed",
+  "seating_group7": "Large beachfront venue; good for 7 at sunset",
+  "kid_friendly": true,
+  "best_time": "Sunset 17:30-18:30 (kids OK early evening; club later)",
+  "recommended_order_for_7": "어른 해피아워 칵테일 1+1, 아이들 망고쉐이크, 안주 플래터",
+  "official_url": null,
+  "facebook": null,
+  "address": "Beachfront, D'Mall, Station 2",
+  "caveats": null,
+  "sources": [
+   "https://primer.com.ph/food/restaurant-type/bar-and-resto/epic",
+   "https://theculturetrip.com/articles/the-10-best-bars-in-boracay"
+  ]
+ },
+ {
+  "name": "Aplaya the Beach Bar",
+  "ko_name": "아플라야",
+  "category": "bar",
+  "area": "Station 1 White Beach (north end)",
+  "distance_from_henann_garden": "approx. 20 min walk north",
+  "operating_evidence": "Philippine Primer 2025-11-24",
+  "korean_review": "한국어 후기 거의 없음. 영문 후기상 일몰 좌석·망고 모히토·파이어쇼·라이브 어쿠스틱, 피자·포카치아 호평, 밤엔 댄스 분위기.",
+  "korean_popularity": "low",
+  "korean_sources": [],
+  "rating": {
+   "site": "Trip.com",
+   "score": 4.5,
+   "count": 15,
+   "seen": "search snippet 2026-11-23"
+  },
+  "hours": "Conflicting: 9:00-01:00 or 8:00-23:59",
+  "price_level": "$$",
+  "typical_pp_php": [
+   400,
+   800
+  ],
+  "menu": [
+   {
+    "n": "Mango mojito",
+    "ko": "망고 모히토 (추천)",
+    "php": null,
+    "src": "Rappler/Culture Trip",
+    "yr": null
+   },
+   {
+    "n": "Signature gin cocktail",
+    "ko": "진 베이스 시그니처",
+    "php": null,
+    "src": "Rappler",
+    "yr": null
+   },
+   {
+    "n": "Ham & Onion pizza",
+    "ko": "햄&어니언 피자",
+    "php": 580,
+    "src": "Philippine Primer",
+    "yr": 2025
+   },
+   {
+    "n": "Focaccia",
+    "ko": "포카치아",
+    "php": null,
+    "src": "Trip.com",
+    "yr": null
+   },
+   {
+    "n": "Mains",
+    "ko": "메인요리",
+    "php": [
+     400,
+     600
+    ],
+    "src": "Trip.com/hotels.com",
+    "yr": null
+   }
+  ],
+  "vat_service": "Happy hour 16:00-19:00 buy-1-take-1 on selected cocktails (Primer Nov 2025)",
+  "seating_group7": "Beachfront bean bags/tables; 7 OK if early",
+  "kid_friendly": true,
+  "best_time": "16:00-18:30 happy hour + sunset",
+  "recommended_order_for_7": "망고모히토 1+1 (어른), 아이 주스, 피자 2판 나눠먹기",
+  "official_url": null,
+  "facebook": null,
+  "address": "380 Station 1, Boracay (tel +63 36 288 2851)",
+  "caveats": null,
+  "sources": [
+   "https://primer.com.ph/food/restaurant-type/bar-and-resto/aplaya-boracay/",
+   "https://ae.trip.com/restaurant/philippines/boracay%20island/detail/Aplaya%20the%20Beach%20Bar%20%26%20Italian%20Food-17772067"
+  ]
+ },
+ {
+  "name": "Coco Bar",
+  "ko_name": "코코바",
+  "category": "bar",
+  "area": "White Beach between Station 1 and 2 (sources conflict)",
+  "distance_from_henann_garden": "approx. 10 min walk",
+  "operating_evidence": "Wanderlog listing (undated); triple.guide KR article",
+  "korean_review": "한국 여행글에서 화려한 인테리어, 해변 앞이라 선셋·밤 분위기 좋다고 소개. 10샷 '브레인트레인' 등 독한 메뉴 주의.",
+  "korean_popularity": "medium",
+  "korean_sources": [
+   "triple.guide/articles/e515ab3c-a9c7-4af4-9d64-009d1017fac0"
+  ],
+  "rating": null,
+  "hours": null,
+  "price_level": "$$",
+  "typical_pp_php": null,
+  "menu": [
+   {
+    "n": "Brain Train (10 shots)",
+    "ko": "브레인트레인 10샷",
+    "php": null,
+    "src": "Rappler",
+    "yr": null
+   },
+   {
+    "n": "Mixed cocktails",
+    "ko": "칵테일",
+    "php": null,
+    "src": "Rappler",
+    "yr": null
+   }
+  ],
+  "vat_service": "BOGO cocktails 16:00-20:00 per guide (undated)",
+  "seating_group7": "Wrap-around wooden bar stools; better for adults",
+  "kid_friendly": false,
+  "best_time": "Sunset happy hour",
+  "recommended_order_for_7": "어른만 해피아워 칵테일",
+  "official_url": null,
+  "facebook": null,
+  "address": "White Beach path, Station 1/2",
+  "caveats": null,
+  "sources": [
+   "https://www.rappler.com/life-and-style/travel/boracay-bars-booze",
+   "https://wanderlog.com/place/details/4532407/coco-bar"
+  ]
+ },
+ {
+  "name": "Exit Bar",
+  "ko_name": "엑시트 바",
+  "category": "bar",
+  "area": "Station 2",
+  "distance_from_henann_garden": "approx. 5-10 min walk",
+  "operating_evidence": "Wanderlog/Trip.com listings (undated)",
+  "korean_review": "한국어 후기 확인 못함. 영문 후기상 대나무 히피 분위기의 저렴한 로컬 바, 자정 무렵 붐빔.",
+  "korean_popularity": "low",
+  "korean_sources": [],
+  "rating": null,
+  "hours": "17:00-02:00",
+  "price_level": "$",
+  "typical_pp_php": null,
+  "menu": [
+   {
+    "n": "Cold beer",
+    "ko": "맥주",
+    "php": 60,
+    "src": "listing (undated)",
+    "yr": null
+   }
+  ],
+  "vat_service": null,
+  "seating_group7": "Small hole-in-the-wall; adults only realistically",
+  "kid_friendly": false,
+  "best_time": "Late night",
+  "recommended_order_for_7": "어른끼리 맥주",
+  "official_url": null,
+  "facebook": null,
+  "address": "Station 2, Balabag",
+  "caveats": null,
+  "sources": [
+   "https://wanderlog.com/place/details/477177/exit-bar"
+  ]
+ },
+ {
+  "name": "Spider House",
+  "ko_name": "스파이더하우스",
+  "category": "bar",
+  "area": "Diniwid Beach (north of Station 1, cliffside)",
+  "distance_from_henann_garden": "FARTHER: approx. 30-40 min walk or e-trike + short cliff path",
+  "operating_evidence": "myboracayguide listing (undated); KR blog 2016",
+  "korean_review": "한국 블로그에 '대박'이라는 2016년 호평, 절벽 위 조용한 선셋 칵테일. 계단·바위 지형이라 아이 동반 주의, 최신 후기 부족.",
+  "korean_popularity": "medium",
+  "korean_sources": [
+   "m.cafe.daum.net 2016 후기"
+  ],
+  "rating": null,
+  "hours": "Conflicting: 7:00-22:00 or 7:30-23:00",
+  "price_level": "$$",
+  "typical_pp_php": null,
+  "menu": [
+   {
+    "n": "Sunset cocktails",
+    "ko": "선셋 칵테일",
+    "php": null,
+    "src": "blog review",
+    "yr": null
+   }
+  ],
+  "vat_service": null,
+  "seating_group7": "Cliff decks; arrive early for sunset; 7 may be split",
+  "kid_friendly": null,
+  "best_time": "Arrive ~1h before sunset",
+  "recommended_order_for_7": "일찍 가서 자리 잡고 칵테일·쉐이크",
+  "official_url": null,
+  "facebook": null,
+  "address": "Diniwid Beach, Boracay",
+  "caveats": null,
+  "sources": [
+   "https://awesome.blog/?p=16",
+   "https://oyster.com/philippines/hotels/spider-house-resort"
+  ]
+ },
+ {
+  "name": "Sirena Clifftop Bar (Shangri-La)",
+  "ko_name": "시레나 (샹그릴라)",
+  "category": "bar",
+  "area": "Shangri-La Boracay, Barangay Yapak (far north)",
+  "distance_from_henann_garden": "FAR: approx. 20-30 min by e-trike/van",
+  "operating_evidence": "Shangri-La official dining page",
+  "korean_review": "한국어 후기 확인 못함. 비투숙객 이용 가능한 절벽 위 선셋 칵테일·타파스, 로맨틱하지만 비쌈, 일몰석 예약 권장.",
+  "korean_popularity": "low",
+  "korean_sources": [],
+  "rating": null,
+  "hours": "Bar 16:30-24:00; restaurant 17:00-23:00 (official)",
+  "price_level": "$$$",
+  "typical_pp_php": null,
+  "menu": [
+   {
+    "n": "Classic/signature cocktails",
+    "ko": "클래식·시그니처 칵테일",
+    "php": 380,
+    "src": "older Sirena beverage menu PDF (undated)",
+    "yr": null
+   },
+   {
+    "n": "Tapas",
+    "ko": "타파스",
+    "php": null,
+    "src": "hotels.com",
+    "yr": null
+   }
+  ],
+  "vat_service": "Hotel; service charge & VAT likely - unverified",
+  "seating_group7": "Reserve; cabanas PHP18,000 net",
+  "kid_friendly": true,
+  "best_time": "Sunset (reserve)",
+  "recommended_order_for_7": "예약 후 일몰 칵테일·목테일+타파스",
+  "official_url": "https://www.shangri-la.com/boracay/boracayresort/dining/restaurants/sirena/",
+  "facebook": null,
+  "address": "Shangri-La Boracay, Yapak",
+  "caveats": null,
+  "sources": [
+   "https://www.shangri-la.com/boracay/boracayresort/dining/restaurants/sirena/menu-wine"
+  ]
+ },
+ {
+  "name": "Battuta Bar & Cocktail Lounge",
+  "ko_name": "바투타 (스피크이지)",
+  "category": "bar",
+  "area": "Station 1, via secret wardrobe at Kasbah/Kasbar",
+  "distance_from_henann_garden": "approx. 15-20 min walk north",
+  "operating_evidence": "ABS-CBN article; Klook activity listing",
+  "korean_review": "한국어 후기 확인 못함. 옷장 비밀문 스피크이지, 재즈·버번 칵테일 'Nutty Silk Road' 인기. 어른 전용 분위기.",
+  "korean_popularity": "low",
+  "korean_sources": [],
+  "rating": null,
+  "hours": "18:00-01:00 (Evendo, unverified)",
+  "price_level": "$$$",
+  "typical_pp_php": null,
+  "menu": [
+   {
+    "n": "Nutty Silk Road",
+    "ko": "버번 베이스 베스트셀러",
+    "php": null,
+    "src": "Klook",
+    "yr": null
+   }
+  ],
+  "vat_service": null,
+  "seating_group7": "Intimate lounge; adults only realistically",
+  "kid_friendly": false,
+  "best_time": "After dinner",
+  "recommended_order_for_7": "어른 2~4명만 별도 방문",
+  "official_url": null,
+  "facebook": null,
+  "address": "Station 1 (Kasbah), Boracay",
+  "caveats": null,
+  "sources": [
+   "https://abs-cbn.com/food/drinks/battuta-first-speakeasy-in-boracay/37871",
+   "https://www.klook.com/activity/176081-battuta-bar-cocktail-lounge"
+  ]
+ },
+ {
+  "name": "Hobbit Tavern (former Hobbit House)",
+  "ko_name": "호빗 태번",
+  "category": "bar",
+  "area": "D'Mall, Station 2",
+  "distance_from_henann_garden": "approx. 5 min walk",
+  "operating_evidence": "myboracayguide listing (undated) - VERIFY",
+  "korean_review": "한국어 후기 확인 못함. 왜소증 직원이 운영하는 테마 바로 유명했던 곳, 리뉴얼 후 이름 변경. 셰퍼드파이 호평.",
+  "korean_popularity": "low",
+  "korean_sources": [],
+  "rating": null,
+  "hours": "10:00-01:00",
+  "price_level": "$$",
+  "typical_pp_php": null,
+  "menu": [
+   {
+    "n": "Shepherd's pie",
+    "ko": "셰퍼드 파이",
+    "php": null,
+    "src": "Wanderlog",
+    "yr": null
+   },
+   {
+    "n": "Tuna dish",
+    "ko": "참치 요리",
+    "php": null,
+    "src": "Wanderlog",
+    "yr": null
+   },
+   {
+    "n": "Beer/cocktails",
+    "ko": "맥주·칵테일",
+    "php": null,
+    "src": null,
+    "yr": null
+   }
+  ],
+  "vat_service": null,
+  "seating_group7": "Tavern seating; 7 OK",
+  "kid_friendly": true,
+  "best_time": "Evening",
+  "recommended_order_for_7": "파이·참치 나눠먹고 맥주",
+  "official_url": null,
+  "facebook": null,
+  "address": "D'Mall, Station 2 (tel 288-6687)",
+  "caveats": null,
+  "sources": [
+   "https://myboracayguide.com/boracay/restaurants/hobbit-tavern",
+   "https://lofficielph.com/culture/boracay-welcomes-the-reopening-of-this-iconic-beach-bar"
+  ]
+ }
+]
