@@ -399,6 +399,22 @@
    "license": "CC BY-SA 2.0",
    "page": "https://www.flickr.com/photos/42438955@N05/4594756202",
    "provider": "flickr"
+  },
+  "fried chicken": {
+   "src": "img/ov/dish-fried-chicken.jpg",
+   "title": "Korean Fried Chicken Wings",
+   "author": "powerplantop",
+   "license": "CC BY-NC-ND 2.0",
+   "page": "https://www.flickr.com/photos/40726522@N02/4028270156",
+   "provider": "flickr"
+  },
+  "wings": {
+   "src": "img/ov/dish-wings.jpg",
+   "title": "Melody's Teriyaki Chicken Wings",
+   "author": "avlxyz",
+   "license": "CC BY-SA 2.0",
+   "page": "https://www.flickr.com/photos/10559879@N00/497815837",
+   "provider": "flickr"
   }
  },
  "venue": {}
