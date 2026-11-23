@@ -5,7 +5,7 @@ const { chromium, devices } = require('playwright');
   await pg.goto('http://localhost:8765/_test_live.html#home'); await pg.waitForSelector('#likeRank .plist'); await pg.waitForTimeout(300);
   ok(await pg.evaluate(()=>document.documentElement.classList.contains('dark')),'default theme is dark');
   const rank=await pg.$eval('#likeRank',e=>e.innerText); ok(/^1\s*Subo/m.test(rank.replace(/\n/g,' ').trim())||rank.indexOf('Subo')<rank.indexOf('Aria'),'home family ranking: '+rank.replace(/\n+/g,' | ').slice(0,120));
-  const tabs=await pg.$$eval('.nav a',e=>e.map(x=>x.textContent.trim())); ok(tabs.length===7&&tabs[6]==='회화','7 tabs incl. 회화: '+tabs.join(','));
+  const tabs=await pg.$$eval('.nav a',e=>e.map(x=>x.textContent.replace(/[0-9+]/g,'').trim())); ok(tabs.length===7&&tabs[6]==='회화','7 tabs incl. 회화: '+tabs.join(','));
   await pg.screenshot({path:'test/l-home.png'});
   await pg.click('.nav a[data-tab="eat"]'); await pg.waitForSelector('#vlist .vc');
   // like Subo -> 4 likes = majority

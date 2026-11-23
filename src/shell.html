@@ -429,6 +429,40 @@ details.fold>:last-child{margin-bottom:14px}
 .pg-row{grid-template-columns:1fr auto;padding:8px 0}
 .pg-row .sub{grid-column:1/-1;margin-top:-2px}
 .sec-h{align-items:center}
+.nav a{position:relative}
+.nb{position:absolute;top:0;left:calc(50% + 6px);min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:#E0442E;color:#fff;font-size:10.5px;font-weight:700;line-height:17px;text-align:center}
+.mdel{border:0;background:none;color:var(--muted);font-size:11.5px;margin-left:6px;padding:0 2px;text-decoration:underline}
+.clock{display:flex;gap:12px;flex-wrap:wrap;align-items:baseline;font-size:13px;color:var(--muted);margin-top:2px}
+.clock b{color:var(--ink);font-size:14px}
+.tbtns{display:inline-flex;gap:6px}
+.themeb[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.sos{border:1.5px solid #E0442E;border-radius:var(--r);padding:12px 14px;display:grid;gap:8px;background:var(--surface)}
+.sos>b{color:#E0442E;font-size:16px}
+html.big #app,html.big .sheet .wrap,html.big .driver,html.big .nav{zoom:1.13}
+/* 다크 모드: Claude처럼 무채색 위에 코랄 포인트만 */
+:root.dark .pin-notice{background:var(--surface);border:1.5px solid var(--accent)}
+:root.dark .pin-notice.empty{border-style:dashed}
+:root.dark .pin-notice b{color:var(--accent)}
+:root.dark .pin-notice .next{background:var(--surface-2)}
+:root.dark .pin-notice .next span{background:var(--accent);color:var(--on-accent)}
+:root.dark .slot.tip,:root.dark .slot.fouru,:root.dark .slot.meal,:root.dark .slot.daytot{background:var(--surface)}
+:root.dark .slot.tip{box-shadow:inset 3px 0 0 var(--sun)}
+:root.dark .slot.fouru{box-shadow:inset 3px 0 0 var(--accent)}
+:root.dark .msg.notice-m .t{background:var(--surface-2);box-shadow:inset 3px 0 0 var(--accent)}
+:root.dark .msg.loc .t button{background:var(--surface-2);color:var(--ink)}
+:root.dark .chatbar .btn.loc{background:var(--surface-2);color:var(--ink)}
+:root.dark .chatform .nt[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+:root.dark .follow{background:var(--surface);border-color:var(--line)}
+:root.dark .follow .btn{background:var(--accent);color:var(--on-accent)}
+:root.dark .callout{background:var(--surface-2)}
+:root.dark .callout.ok{box-shadow:inset 3px 0 0 var(--ok)}
+:root.dark .callout.warn{box-shadow:inset 3px 0 0 var(--warn)}
+:root.dark .btn{background:var(--ink);color:var(--bg)}
+:root.dark .btn.alt{background:var(--surface-2);color:var(--ink)}
+:root.dark .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+:root.dark .seg button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+:root.dark .sos{border-color:var(--accent)}
+:root.dark .sos>b{color:var(--accent)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 @media (min-width:760px){.card{flex-basis:280px}}
 </style>

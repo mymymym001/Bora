@@ -20,7 +20,7 @@ const { chromium, devices } = require('playwright');
   await pg.reload(); await pg.waitForSelector('.vc'); ok(!(await pg.evaluate(()=>document.documentElement.classList.contains('dark'))),'light choice remembered');
   await pg.click('[data-themetoggle]'); ok(await pg.evaluate(()=>document.documentElement.classList.contains('dark')),'back to dark');
   // nav
-  const tabs=await pg.$$eval('.nav a',e=>e.map(x=>x.textContent.trim())); ok(tabs.join(',')==='홈,돈·정보,지출·예약,맛집,지도,코스,회화','nav: '+tabs.join(','));
+  const tabs=await pg.$$eval('.nav a',e=>e.map(x=>x.textContent.replace(/[0-9+]/g,'').trim())); ok(tabs.join(',')==='홈,돈·정보,지출·예약,맛집,지도,코스,회화','nav: '+tabs.join(','));
   // phrases pronunciation
   await pg.click('[data-phrases]'); await pg.waitForSelector('[data-phrase]'); ok((await pg.evaluate(()=>document.body.innerText)).includes('하우 머치 이즈 잇?'),'phrase pronunciation shown');
   await pg.click('[data-phrase="1-1"]'); const ph=await pg.$eval('#driver',e=>e.innerText); ok(/페소스/.test(ph)&&/보증금은 카드로/.test(ph),'hotel phrase: pesos + card deposit'); await pg.click('[data-closedriver]');
