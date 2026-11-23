@@ -367,6 +367,14 @@
    "license": "CC BY-NC-ND 2.0",
    "page": "https://www.flickr.com/photos/50813633@N00/8603720210",
    "provider": "flickr"
+  },
+  "kimchi": {
+   "src": "img/ov/dish-kimchi.jpg",
+   "title": "Kimchi jjigae.",
+   "author": "powerplantop",
+   "license": "CC BY-NC-ND 2.0",
+   "page": "https://www.flickr.com/photos/40726522@N02/9217326394",
+   "provider": "flickr"
   }
  },
  "venue": {}
