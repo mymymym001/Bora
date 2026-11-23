@@ -17,13 +17,14 @@
 
 
 :root.dark{
-  /* Claude 다크 모드 톤: 따뜻한 차콜 + 파란 포인트 */
-  --bg:#262624; --surface:#30302E; --surface-2:#3A3936; --ink:#F5F4EE; --muted:#A6A39A; --line:#45443F;
-  --accent:#6FA8F5; --accent-soft:#233349; --on-accent:#0F1724; --sun:#E8A955; --sun-soft:#463722;
-  --warn:#EE8A6A; --warn-soft:#4A2B22; --ok:#8CC79B; --ok-soft:#2C3B2F;
-  --sea:#22343A; --land:#2E2D2A; --sand:#46402F; --green:#2F3A2E; --pool:#2B5866; --road:#4A4844; --casing:#1F1E1D; --path:#625E52; --label:#D6D3CA; --halo:rgba(38,38,36,.88);
-  --c-restaurant:#E8845F; --c-cafe:#C9966A; --c-convenience:#6FA8DC; --c-pharmacy:#6CC48F; --c-pub:#B091DE; --follow:#B99BF0; --follow-soft:#3A3248; --c-money:#5CC6A6; --c-fruit:#E9C35A;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.3); color-scheme:dark }
+  /* 아이폰 다크 모드 톤: 차가운 무채색 + 파란 포인트, 카드와 배경 구분을 또렷하게 */
+  --bg:#0B0C0E; --surface:#1A1C20; --surface-2:#26292E; --ink:#F2F3F5; --muted:#A8ACB3; --line:#33363C;
+  --accent:#5EA2FF; --accent-soft:#16283F; --on-accent:#08162B; --sun:#F2A646; --sun-soft:#352B1A;
+  --warn:#FF8A70; --warn-soft:#3A1F1A; --ok:#5FD08A; --ok-soft:#15301F;
+  --sea:#0E2A36; --land:#1E2124; --sand:#3A3527; --green:#1F2B25; --pool:#1D5166; --road:#3A3E44; --casing:#0B0C0E; --path:#55524A; --label:#CDD2D8; --halo:rgba(11,12,14,.88);
+  --c-restaurant:#FF8A5C; --c-cafe:#D19A6A; --c-convenience:#62A8FF; --c-pharmacy:#5FD08A; --c-pub:#B794F4; --follow:#B794F4; --follow-soft:#2A2440; --c-money:#4FD1B0; --c-fruit:#F4C752;
+  --shadow:0 1px 0 rgba(255,255,255,.04) inset,0 6px 18px rgba(0,0,0,.45); color-scheme:dark }
+:root.dark .panel,:root.dark .vc,:root.dark .chat,:root.dark .day,:root.dark details.fold{border-color:var(--line);box-shadow:var(--shadow)}
 :root.dark .pin-notice{background:#3D2A23;border-color:#D97757}
 :root.dark .pin-notice b{color:#F0A58A}
 :root.dark .pin-notice .next{background:var(--surface)}
@@ -481,6 +482,17 @@ html.big #app,html.big .sheet .wrap,html.big .driver,html.big .nav{zoom:1.13}
   .vr .th{width:76px;height:76px}
   .mini{padding:7px 9px;font-size:12.5px}
 }
+.msg[style*="--uc"] .c{box-shadow:0 0 0 2.5px var(--uc)}
+.msg[style*="--uc"] .h b{color:var(--uc)}
+.msg[style*="--uc"] .t{background:color-mix(in srgb,var(--uc) 14%,var(--surface));border-left:3px solid var(--uc);border-radius:4px 12px 12px 12px;padding:5px 10px}
+.msg.notice-m[style*="--uc"] .t{background:color-mix(in srgb,var(--uc) 14%,var(--surface))}
+.ava[style*="--uc"] .f{border-color:var(--uc)}
+.msg.loc[style*="--uc"] .t{background:none;border-left:0;padding:0}
+:root.dark .msg.notice-m[style*="--uc"] .t{box-shadow:none}
+.msg.loc[style*="--uc"] .t button,:root.dark .msg.loc[style*="--uc"] .t button{background:color-mix(in srgb,var(--uc) 16%,var(--surface));border-left:3px solid var(--uc);color:var(--ink);border-radius:4px 10px 10px 10px}
+.colors{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px}
+.colors button{aspect-ratio:1;border-radius:50%;border:3px solid transparent;background:var(--sw);padding:0}
+.colors button[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 2px var(--bg) inset}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 @media (min-width:760px){.card{flex-basis:280px}}
 </style>

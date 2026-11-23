@@ -19,6 +19,8 @@ const COLK={restaurant:"restaurant",cafe:"cafe",dessert:"cafe",convenience:"conv
 const colorOf=c=>"var(--c-"+(COLK[c]||"restaurant")+")", iconOf=c=>ICON[{dessert:"cafe",bar:"pub"}[c]||c]||ICON.restaurant;
 const KINDLABEL={restaurant:"음식점",fast_food:"패스트푸드",cafe:"카페",ice_cream:"아이스크림",bar:"바",pub:"펍"};
 const TRIKE={cap:5,specialLo:100,specialHi:150,shared:25};
+const UCOLORS=[["#E5484D","빨강"],["#F76B15","주황"],["#E2A400","노랑"],["#30A46C","초록"],["#12A594","청록"],["#3E8CFF","파랑"],["#8E4EC6","보라"],["#D6409F","분홍"]];
+function ucolorOf(id,c){ if(c&&/^#[0-9A-Fa-f]{6}$/.test(c)) return c; let h=0; String(id||"").split("").forEach(ch=>h=(h*31+ch.charCodeAt(0))>>>0); return UCOLORS[h%UCOLORS.length][0]; }
 const CHARS=["🐢","🐬","🦀","🐙","🐠","🦩","🐳","🦜","🌴","🥥","🍍","🐚"];
 const WALK_MPM=67, TRIKE_MPM=250, STALE_MS=2*3600e3;
 
@@ -158,7 +160,7 @@ async function initLive(){
 const canPost=()=>LIVE.db&&LIVE.uid&&LIVE.canWrite!==false;
 async function postChat(kind,text,extra){
   if(!canPost()) return false;
-  try{ await LIVE.db.collection("chat").add(Object.assign({by:LIVE.uid,admin:LIVE.isOwner||undefined,nick:LIVE.me.nick||"가족",char:LIVE.me.char,kind,text:String(text).slice(0,500),at:Date.now()},extra||{})); return true; }
+  try{ await LIVE.db.collection("chat").add(Object.assign({by:LIVE.uid,admin:LIVE.isOwner||undefined,nick:LIVE.me.nick||"가족",char:LIVE.me.char,color:ucolorOf(LIVE.uid,LIVE.me.color),kind,text:String(text).slice(0,500),at:Date.now()},extra||{})); return true; }
   catch(e){ chatError(e); return false; }
 }
 function chatError(e){ const m=$("#chatMsg"); if(!m) return;
@@ -166,7 +168,7 @@ function chatError(e){ const m=$("#chatMsg"); if(!m) return;
 async function shareLocation(x,y){
   if(!canPost()) return;
   const label=nearLabel(x,y);
-  const doc={nick:LIVE.me.nick||"가족",char:LIVE.me.char,x:Math.round(x),y:Math.round(y),label,at:Date.now()};
+  const doc={nick:LIVE.me.nick||"가족",char:LIVE.me.char,color:ucolorOf(LIVE.uid,LIVE.me.color),x:Math.round(x),y:Math.round(y),label,at:Date.now()};
   try{ await LIVE.db.doc("people/"+LIVE.uid).set(doc); LIVE.people[LIVE.uid]=doc; if(MAP) MAP.setPeople();
     await postChat("loc",label+"에 있어요",{x:doc.x,y:doc.y,label}); }
   catch(e){ chatError(e); }
@@ -304,7 +306,8 @@ function msgHTML(m){
   let t=esc(m.text);
   if(m.kind==="loc"&&typeof m.x==="number") t='<button type="button" data-locx="'+m.x+'" data-locy="'+m.y+'">'+esc(m.label||"위치")+'에 있어요 · 지도에서 보기</button>';
   const del=mine&&canPost()?'<button type="button" class="mdel" data-msgdel="'+esc(m.id)+'" aria-label="메시지 삭제">삭제</button>':'';
-  return '<li class="msg'+(m.kind==="notice"?" notice-m":"")+(m.kind==="loc"?" loc":"")+(mine?" mine":"")+'"><span class="c">'+esc(m.char||"🙂")+'</span><div><div class="h"><b>'+esc(m.nick||"가족")+'</b>'+(m.admin?'<span class="badge ok">관리자</span> ':'')+(m.kind==="notice"?'<span class="badge sun">공지</span> ':'')+hhmm(m.at)+del+'</div><div class="t">'+t+'</div></div></li>';
+  const uc=ucolorOf(m.by,m.color);
+  return '<li style="--uc:'+uc+'" class="msg'+(m.kind==="notice"?" notice-m":"")+(m.kind==="loc"?" loc":"")+(mine?" mine":"")+'"><span class="c">'+esc(m.char||"🙂")+'</span><div><div class="h"><b>'+esc(m.nick||"가족")+'</b>'+(m.admin?'<span class="badge ok">관리자</span> ':'')+(m.kind==="notice"?'<span class="badge sun">공지</span> ':'')+hhmm(m.at)+del+'</div><div class="t">'+t+'</div></div></li>';
 }
 
 /* ---------- follow ---------- */
@@ -352,14 +355,15 @@ function openProfile(after,first){
   s.innerHTML='<div class="wrap"><div class="bar"><button type="button" data-close aria-label="닫기">✕</button><div class="t">내 캐릭터</div></div><div class="page" style="padding-top:0">'+
    (first?'<h2 style="margin:0">환영해요! 먼저 이름과 캐릭터를 정해요</h2>':'')+'<p class="lead">지도와 채팅에 이 캐릭터와 이름으로 보여요.</p><div class="field"><label for="nick">이름 (가족이 알아볼 수 있게)</label><input id="nick" maxlength="10" value="'+esc(me.nick)+'" placeholder="예: 엄마, 수복"></div>'+
    '<div class="chars" role="group" aria-label="캐릭터">'+CHARS.map(c=>'<button type="button" data-char="'+c+'" aria-pressed="'+(c===me.char)+'">'+c+'</button>').join("")+'</div>'+
+   '<div class="field"><span>내 색깔 (채팅 말풍선·지도 테두리에 표시돼요)</span><div class="colors" role="group" aria-label="내 색깔">'+UCOLORS.map(([c,n])=>'<button type="button" data-ucolor="'+c+'" aria-label="'+n+'" aria-pressed="'+(c===ucolorOf(LIVE.uid,me.color))+'" style="--sw:'+c+'"></button>').join("")+'</div></div>'+
    '<button type="button" class="btn" data-saveprofile>저장</button><p class="fine">위치는 직접 알릴 때만 공유돼요. 휴대폰 GPS는 이 페이지에서 쓸 수 없어서 지도를 눌러 알리는 방식이에요.</p></div></div>';
   s.hidden=false; document.body.style.overflow="hidden"; S._afterProfile=after||null;
 }
 async function saveProfile(){
   const nick=($("#nick").value||"").trim().slice(0,10); if(!nick){$("#nick").focus();return}
-  const ch=(document.querySelector(".chars [aria-pressed=true]")||{}).dataset; LIVE.me={nick,char:(ch&&ch.char)||LIVE.me.char,reg:true}; saveMe();
+  const ch=(document.querySelector(".chars [aria-pressed=true]")||{}).dataset; const co=(document.querySelector(".colors [aria-pressed=true]")||{}).dataset; LIVE.me={nick,char:(ch&&ch.char)||LIVE.me.char,color:(co&&co.ucolor)||ucolorOf(LIVE.uid,LIVE.me.color),reg:true}; saveMe();
   const mine=LIVE.uid&&LIVE.people[LIVE.uid];
-  if(mine&&canPost()){ try{ await LIVE.db.doc("people/"+LIVE.uid).update({nick:LIVE.me.nick,char:LIVE.me.char}); }catch(e){} }
+  if(mine&&canPost()){ try{ await LIVE.db.doc("people/"+LIVE.uid).update({nick:LIVE.me.nick,char:LIVE.me.char,color:LIVE.me.color}); }catch(e){} }
   closeSheet(); renderChat(); const a=S._afterProfile; S._afterProfile=null; if(a) a();
 }
 
@@ -548,6 +552,7 @@ document.addEventListener("click",e=>{
   if(T("[data-pickhotel]")){ S.pick=null; renderPick(); shareLocation(0,0); return; }
   if(T("[data-pickok]")){ const p=S.pick; S.pick=null; renderPick(); shareLocation(p.x,p.y); return; }
   if(T("[data-profile]")){ openProfile(); return; }
+  if(el=T("[data-ucolor]")){ document.querySelectorAll(".colors button").forEach(b=>b.setAttribute("aria-pressed",b===el)); return; }
   if(el=T("[data-char]")){ document.querySelectorAll(".chars button").forEach(b=>b.setAttribute("aria-pressed",b===el)); return; }
   if(T("[data-saveprofile]")){ saveProfile(); return; }
   if(T("[data-stopshare]")){ stopSharing(); S.person=null; renderFollow(); return; }
@@ -1259,7 +1264,7 @@ async function toggleLike(id){
   if(!LIVE.me.reg){ openProfile(()=>toggleLike(id)); return; }
   const cur=(LIVE.likes[LIVE.uid]&&LIVE.likes[LIVE.uid].ids)||[];
   const ids=cur.includes(id)?cur.filter(x=>x!==id):cur.concat([id]).slice(-200);
-  const doc={ids,nick:LIVE.me.nick,char:LIVE.me.char,at:Date.now()};
+  const doc={ids,nick:LIVE.me.nick,char:LIVE.me.char,color:ucolorOf(LIVE.uid,LIVE.me.color),at:Date.now()};
   LIVE.likes[LIVE.uid]=doc; refreshLikesUI(id);
   try{ await LIVE.db.doc("likes/"+LIVE.uid).set(doc); }catch(e){ alertMsg("찜을 저장하지 못했어요."); }
 }
@@ -1345,7 +1350,7 @@ function makeMap(box,cv,pinsEl){
     ids.forEach(id=>{ const p=ppl[id]; let o=avaMap[id];
       if(!o){const el=document.createElement("button"); el.type="button"; el.className="ava"; el.innerHTML='<span class="f"></span><span class="n"></span>';
         el.addEventListener("click",ev=>{ev.stopPropagation(); if(S.pick){ S.pick={x:o.p.x,y:o.p.y}; renderPick(); return; } openPerson(id);}); pinsEl.appendChild(el); o=avaMap[id]={el,p};}
-      o.p=p; o.el.querySelector(".f").textContent=p.char||"🙂";
+      o.p=p; o.el.querySelector(".f").textContent=p.char||"🙂"; o.el.style.setProperty("--uc",ucolorOf(id,p.color));
       const n=o.el.querySelector(".n"); n.textContent=(p.nick||"가족")+(id===LIVE.uid?" (나)":"")+" "; const sm=document.createElement("small"); sm.textContent=ago(p.at); n.appendChild(sm);
       o.el.classList.toggle("me",id===LIVE.uid); o.el.classList.toggle("old",Date.now()-p.at>STALE_MS);
       o.el.setAttribute("aria-label",(p.nick||"가족")+" 위치, "+ago(p.at));
