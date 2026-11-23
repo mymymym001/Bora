@@ -55,6 +55,150 @@
    "license": "CC BY 2.0",
    "page": "https://www.flickr.com/photos/29664345@N08/2838237064",
    "provider": "flickr"
+  },
+  "halo-halo": {
+   "src": "img/ov/dish-halo-halo.jpg",
+   "title": "Halo Halo @ the Lobby",
+   "author": "Daniel Y. Go",
+   "license": "CC BY-NC 2.0",
+   "page": "https://www.flickr.com/photos/84172943@N00/5734881933",
+   "provider": "flickr"
+  },
+  "bulalo": {
+   "src": "img/ov/dish-bulalo.jpg",
+   "title": "Bulalo (Sto. Tomas, Batangas)",
+   "author": "~MVI~ (warped)",
+   "license": "CC BY-NC 2.0",
+   "page": "https://www.flickr.com/photos/20119750@N00/6835064416",
+   "provider": "flickr"
+  },
+  "inasal": {
+   "src": "img/ov/dish-inasal.jpg",
+   "title": "Chicken Inasal",
+   "author": "simply anne",
+   "license": "CC BY-NC-ND 2.0",
+   "page": "https://www.flickr.com/photos/20358768@N00/8064732825",
+   "provider": "flickr"
+  },
+  "garlic rice": {
+   "src": "img/ov/dish-garlic-rice.jpg",
+   "title": "Lutong Bahay - Chorizo with hard boiled egg, tomatoes, grapes and garlic fried rice",
+   "author": "dbgg1979",
+   "license": "CC BY 2.0",
+   "page": "https://www.flickr.com/photos/11538141@N08/3963742479",
+   "provider": "flickr"
+  },
+  "tapa": {
+   "src": "img/ov/dish-tapa.jpg",
+   "title": "tapsilog",
+   "author": "nccaofficial",
+   "license": "CC BY-NC-SA 2.0",
+   "page": "https://www.flickr.com/photos/98584059@N05/18068115874",
+   "provider": "flickr"
+  },
+  "longganisa": {
+   "src": "img/ov/dish-longganisa.jpg",
+   "title": "Kiping & Longganisa Culinary Demo 8-28-2005 12-09-31 PM",
+   "author": "OURAWESOMEPLANET: PHILS #1 FOOD AND TRAVEL BLOG",
+   "license": "CC BY-NC-ND 2.0",
+   "page": "https://www.flickr.com/photos/58123287@N00/38145447",
+   "provider": "flickr"
+  },
+  "crispy pata": {
+   "src": "img/ov/dish-crispy-pata.jpg",
+   "title": "Crispy Pata - Rekados Filipino Food 28Aug06 - 3",
+   "author": "roland",
+   "license": "CC0 1.0",
+   "page": "https://www.flickr.com/photos/35034347371@N01/228857430",
+   "provider": "flickr"
+  },
+  "pasta": {
+   "src": "img/ov/dish-pasta.jpg",
+   "title": "Spaghetti Pasta",
+   "author": "nick.amoscato",
+   "license": "CC BY 2.0",
+   "page": "https://www.flickr.com/photos/91374488@N07/34360193162",
+   "provider": "flickr"
+  },
+  "carbonara": {
+   "src": "img/ov/dish-carbonara.jpg",
+   "title": "Spaghetti Carbonara",
+   "author": "su-lin",
+   "license": "CC BY-NC-ND 2.0",
+   "page": "https://www.flickr.com/photos/15157510@N00/309823464",
+   "provider": "flickr"
+  },
+  "lasagna": {
+   "src": "img/ov/dish-lasagna.jpg",
+   "title": "Lasagna in oven",
+   "author": "scriptingnews",
+   "license": "CC BY-SA 2.0",
+   "page": "https://www.flickr.com/photos/22221172@N00/325405581",
+   "provider": "flickr"
+  },
+  "burger": {
+   "src": "img/ov/dish-burger.jpg",
+   "title": "Hamburg 1971",
+   "author": "Heinrich Klaffs",
+   "license": "CC BY-NC-SA 2.0",
+   "page": "https://www.flickr.com/photos/47686431@N04/4414906236",
+   "provider": "flickr"
+  },
+  "fries": {
+   "src": "img/ov/dish-fries.jpg",
+   "title": "French Fries",
+   "author": "fritish",
+   "license": "CC BY-NC-SA 2.0",
+   "page": "https://www.flickr.com/photos/31752098@N03/3376336822",
+   "provider": "flickr"
+  },
+  "salad": {
+   "src": "img/ov/dish-salad.jpg",
+   "title": "Shrimp and Caper Salad with Farro",
+   "author": "esimpraim",
+   "license": "CC BY-NC-ND 2.0",
+   "page": "https://www.flickr.com/photos/35520437@N03/13670055833",
+   "provider": "flickr"
+  },
+  "gyros": {
+   "src": "img/ov/dish-gyros.jpg",
+   "title": "Gyros in Thebes",
+   "author": "Jonathan & Jill",
+   "license": "CC BY-NC 2.0",
+   "page": "https://www.flickr.com/photos/37941646@N00/3531836641",
+   "provider": "flickr"
+  },
+  "souvlaki": {
+   "src": "img/ov/dish-souvlaki.jpg",
+   "title": "Lamb giros in pita - Medallion Souvlaki and Cakes AUD9.50",
+   "author": "avlxyz",
+   "license": "CC BY-SA 2.0",
+   "page": "https://www.flickr.com/photos/10559879@N00/3464862583",
+   "provider": "flickr"
+  },
+  "curry": {
+   "src": "img/ov/dish-curry.jpg",
+   "title": "Indian curries and assorted deep-fried... stuff",
+   "author": "Jackie L Chan",
+   "license": "CC BY 2.0",
+   "page": "https://www.flickr.com/photos/35034364511@N01/224086352",
+   "provider": "flickr"
+  },
+  "tom yum": {
+   "src": "img/ov/dish-tom-yum.jpg",
+   "title": "Tom Yum Soup",
+   "author": "c3lsius_bb",
+   "license": "CC BY-ND 2.0",
+   "page": "https://www.flickr.com/photos/30657483@N00/1101130182",
+   "provider": "flickr"
+  },
+  "green curry": {
+   "src": "img/ov/dish-green-curry.jpg",
+   "title": "Thai Green Curry",
+   "author": "Indrek Torilo",
+   "license": "CC BY-NC 2.0",
+   "page": "https://www.flickr.com/photos/65258648@N02/10489386036",
+   "provider": "flickr"
   }
  },
  "venue": {}
