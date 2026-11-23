@@ -1,0 +1,729 @@
+[
+ {
+  "name": "Henann Garden Resort",
+  "category": "lodging_anchor",
+  "address": "Station 2, Brgy. Balabag, Boracay Island, Malay, Aklan 5608",
+  "lat": 11.95974,
+  "lon": 121.9272,
+  "coord_source": "Mapcarta page mapcarta.com/32808832, which cites OpenStreetMap way 1286532548 (seen via web search 2026-11-23, OSM page not opened). Cross-check: boracaydirectory.com/item/henann-garden-resort gives 11.95919,121.92778 (~70 m away)",
+  "coord_confidence": "medium",
+  "google_maps_search_url": "https://www.google.com/maps/search/?api=1&query=Henann+Garden+Resort+Boracay",
+  "official_url": "https://henann.com/boracay/henanngarden/"
+ },
+ {
+  "name": "D'Mall de Boracay (main beachfront entrance area)",
+  "category": "landmark_anchor",
+  "address": "D'Mall, Station 2, Brgy. Balabag, Boracay",
+  "lat": 11.96304,
+  "lon": 121.92618,
+  "coord_source": "Mapcarta mapcarta.com/N12809154201 (OpenStreetMap node 12809154201, 'D'Mall', shopping centre on D'mall Avenue). This is the OSM point for D'Mall, not necessarily a mapped entrance. Waze place page gives about 11.962,121.927",
+  "coord_confidence": "medium (exact entrance not verified)",
+  "google_maps_search_url": "https://www.google.com/maps/search/?api=1&query=D'Mall+Boracay"
+ },
+ {
+  "name": "Gerry's Grill (Gerry's Restaurant and Bar), Boracay Station 2",
+  "category": "restaurant",
+  "still_operating": true,
+  "operating_evidence": "The official gerrysgrill.com/ph branch list includes 'Boracay Station 1' and 'Boracay Station 2'. ClickTheCity and several 2026-dated aggregators show it as open. Checked via search 2026-11-23. There is also a Station 1 branch at Mito's Place",
+  "address": "2 White Beach Path, Station 2, Boracay (beachfront). The official portal lists 'Gerry's Boracay 2' at El Centro Resort, Station 2; whether these are the same site is unconfirmed",
+  "lat": 11.95757,
+  "lon": 121.92666,
+  "coord_source": "Waze live-map place for 'Gerry's Grill - Station 2 Boracay' (Google place id ChIJq1AnIxg8pTMR7D0HcFU4EFw), seen in search snippet. ClickTheCity gives 11.95756,121.92704",
+  "coord_confidence": "medium",
+  "distance_from_henann_garden_m_approx": 250,
+  "google_rating": null,
+  "google_review_count": null,
+  "other_rating": "Not verified. Aggregators disagree (Evendo 4.2/2,429; Wanderlog 4.6/5,507). Platform unclear, so not used",
+  "opening_hours": "11:00-23:00 daily (official portal); ClickTheCity says 10:00-23:00",
+  "menu": [
+   {
+    "item": "Sizzling Sisig (Junior / Regular)",
+    "price_php": "220 / 390",
+    "desc_ko": "잘게 다진 돼지 얼굴·귀 부위를 양파·고추와 볶아 뜨거운 철판에 내는 대표 안주",
+    "source": "Booky.ph menu for Gerry's Grill SM Mall of Asia (Manila branch, undated)",
+    "price_year": "circa 2025",
+    "note": "Manila branch price. Boracay may differ. Other listings show 265-455"
+   },
+   {
+    "item": "Inihaw na Pusit (Junior / Regular 500g)",
+    "price_php": "335 / 605",
+    "desc_ko": "통오징어 숯불구이, 간장·식초 소스에 찍어 먹음",
+    "source": "Booky.ph SM Mall of Asia; ₱605 also on foodmenu.ph (June 2025)",
+    "price_year": "2025",
+    "note": "not Boracay-specific"
+   },
+   {
+    "item": "Inihaw na Liempo",
+    "price_php": "from 320",
+    "desc_ko": "간장·마늘에 재운 삼겹살 숯불구이",
+    "source": "foodpanda delivery listings (other branches)",
+    "price_year": "2025",
+    "note": "delivery price, may include markup"
+   },
+   {
+    "item": "Crispy Pata (Large)",
+    "price_php": "1145",
+    "desc_ko": "돼지 족발을 삶은 뒤 통째로 튀겨 껍질이 바삭한 요리",
+    "source": "foodpanda Gerry's Grill SM City San Pablo",
+    "price_year": "2025",
+    "note": "delivery price, low confidence; another listing shows from ₱1,040"
+   },
+   {
+    "item": "Inihaw na Tuna Belly",
+    "price_php": "420",
+    "desc_ko": "참치 뱃살 숯불구이",
+    "source": "phmenusking.org aggregator (2025)",
+    "price_year": "2025",
+    "note": "aggregator, low confidence; other sources show 295-504"
+   }
+  ],
+  "menu_source_note": "I found no Boracay-branch menu. All prices come from other Philippine branches or aggregators. Use them only as a guide",
+  "vat_included": null,
+  "service_charge": "Booky's MOA listing says '8% service charge' (Manila). Boracay not verified",
+  "typical_cost_per_person_php": "400-700 if shared family-style (estimate)",
+  "fair_vs_pricey": "Sisig 220-400 and grilled squid 500-650 are normal for a chain. Over ₱800 for a regular sisig would be pricey",
+  "group_of_7_notes": "Large chain dining room with big shared platters (good for 3-4 each). Call ahead for a beachfront table at sunset: listed numbers are +63 998 846 7616 and (036) 288-1458/59, which conflict across sources",
+  "photos": [
+   {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/4/48/Sizzling_Sisig.jpg",
+    "file_page": "https://commons.wikimedia.org/wiki/File:Sizzling_Sisig.jpg",
+    "author": "Ej Afable",
+    "license": "CC BY-SA 4.0",
+    "note": "generic dish photo, not this restaurant. URL built from Commons MD5 path rule, not fetched"
+   }
+  ],
+  "official_url": "https://www.gerrysgrill.com/ph/",
+  "google_maps_search_url": "https://www.google.com/maps/search/?api=1&query=Gerry's+Grill+Station+2+Boracay"
+ },
+ {
+  "name": "Smoke Resto (D'Mall)",
+  "category": "restaurant",
+  "still_operating": true,
+  "operating_evidence": "The Klook guide updated 5 May 2025 lists it with hours 7:00-22:30. Booky.ph has a D'Mall menu page. A 2025 guide says the smaller branch is open 24 hours",
+  "address": "Main branch: Unit E Blk 19, Wet Market Section, D'Mall, Station 2 (inside a small alley). Sources say there are 2 branches in D'Mall, one behind Andok's and one at the D'Mall wet market. One older source also mentions a Bulabog branch",
+  "lat": 11.9623,
+  "lon": 121.92638,
+  "coord_source": "Restaurant Guru / Trip.com structured data (11.9623038,121.9263834). Tripadvisor d1758999 gives 11.962176,121.926414 and boracaydirectory gives 11.96222,121.92641",
+  "coord_confidence": "medium-high (main branch)",
+  "distance_from_henann_garden_m_approx": 300,
+  "google_rating": null,
+  "google_review_count": null,
+  "other_rating": "Trip.com 4.3 (195 reviews), search snippet 2026-11-23",
+  "opening_hours": "7:00-22:30 (Klook, May 2025). One branch reportedly 24h (unverified)",
+  "menu": [
+   {
+    "item": "Bulalo (Small / Large)",
+    "price_php": "295 / 515",
+    "desc_ko": "소 사골·정강이를 옥수수·배추와 푹 끓인 맑은 소고기 국",
+    "source": "Booky.ph Smoke Resto D'Mall menu (undated)",
+    "price_year": "unknown (likely 2023-2025)"
+   },
+   {
+    "item": "Sizzling Bulalo",
+    "price_php": "350",
+    "desc_ko": "소 정강이 살과 골수를 그레이비와 철판에 낸 대표 메뉴",
+    "source": "rjdexplorer.com blog (undated)",
+    "price_year": "unknown",
+    "note": "older posts show 290. boracay.delivery shows 515 (likely large or with delivery markup)"
+   },
+   {
+    "item": "Sinigang (Small / Large)",
+    "price_php": "300 / 515",
+    "desc_ko": "타마린드로 새콤하게 끓인 고기·채소 국",
+    "source": "Booky.ph D'Mall menu",
+    "price_year": "unknown"
+   },
+   {
+    "item": "Bangus ala Pobre",
+    "price_php": "215",
+    "desc_ko": "마늘에 재운 밀크피시(방구스) 튀김",
+    "source": "Booky.ph D'Mall menu",
+    "price_year": "unknown"
+   },
+   {
+    "item": "Veggie Omelette",
+    "price_php": "170",
+    "desc_ko": "채소 오믈렛 (아침 메뉴)",
+    "source": "Booky.ph D'Mall menu",
+    "price_year": "unknown"
+   }
+  ],
+  "vat_included": true,
+  "vat_note": "Booky page says 'prices include 12% VAT, subject to change'",
+  "service_charge": null,
+  "typical_cost_per_person_php": "200-350 (Klook May 2025)",
+  "fair_vs_pricey": "₱300 for a small bulalo is fair for Boracay. Resort restaurants charge ₱700-850 for the same dish",
+  "group_of_7_notes": "Small, casual and often crowded. Seating 7 together may take a wait or a split across 2 tables. Cash is safest. Best for a quick, cheap Filipino lunch",
+  "photos": [
+   {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/e/e2/Bulalo%2C_Pamana._%28Philippines%29.jpg",
+    "file_page": "https://commons.wikimedia.org/wiki/File:Bulalo,_Pamana._(Philippines).jpg",
+    "author": "Yvette Tan (Flickr: Gloss Girl)",
+    "license": "CC BY 2.0",
+    "note": "generic bulalo photo, not this restaurant. URL built, not fetched"
+   }
+  ],
+  "official_url": null,
+  "google_maps_search_url": "https://www.google.com/maps/search/?api=1&query=Smoke+Resto+D'Mall+Boracay"
+ },
+ {
+  "name": "Subo Boracay",
+  "category": "restaurant",
+  "still_operating": true,
+  "operating_evidence": "Philippine Primer feature dated 2025-12-01 (address, hours and prices). Tripadvisor listing d25412625 has 2026 reviews. Note: an older Tripadvisor entry d8075014 is marked CLOSED; that is the earlier listing",
+  "address": "Calle Remedios, Station 3 side (Station 2/3 border), Boracay. It is NOT in D'Mall. Some guides wrongly say 'near D'Mall entrance'",
+  "lat": 11.95595,
+  "lon": 121.92853,
+  "coord_source": "OpenStreetMap node 4146151233 'Subo Filipino' (11.9559529,121.9285280), seen in search. Tripadvisor and Trip.com geo agree within ~10 m",
+  "coord_confidence": "high",
+  "distance_from_henann_garden_m_approx": 450,
+  "google_rating": null,
+  "google_review_count": null,
+  "other_rating": "Tripadvisor 4.8 (732 reviews), search snippet 2026-11-23, not page-verified",
+  "opening_hours": "12:00-23:00 (Primer, Dec 2025)",
+  "phone": "0917-309-0738",
+  "menu": [
+   {
+    "item": "Crispy Pata",
+    "price_php": "1650",
+    "desc_ko": "돼지 족발을 통째로 튀겨 껍질이 바삭한 요리, 여럿이 나눠 먹는 메뉴",
+    "source": "Philippine Primer, 2025-12-01",
+    "price_year": "2025"
+   },
+   {
+    "item": "Bulalo",
+    "price_php": "850",
+    "desc_ko": "소 정강이·골수 맑은 국",
+    "source": "Philippine Primer, 2025-12-01",
+    "price_year": "2025"
+   },
+   {
+    "item": "Bagnet Pakbet",
+    "price_php": "720",
+    "desc_ko": "바삭한 삼겹살 튀김(바그넷)과 여주·가지·호박을 새우젓에 볶은 일로카노 채소요리",
+    "source": "Philippine Primer, 2025-12-01",
+    "price_year": "2025"
+   },
+   {
+    "item": "Seafood Kare-Kare",
+    "price_php": "780",
+    "desc_ko": "해산물과 채소를 땅콩 소스에 끓인 스튜, 새우젓을 곁들임",
+    "source": "awesome.blog, Nov 2017",
+    "price_year": "2017",
+    "note": "outdated price"
+   },
+   {
+    "item": "Paru-Paro (butterflied grilled chicken)",
+    "price_php": null,
+    "desc_ko": "펼쳐서 불에 구운 닭고기",
+    "source": "awesome.blog 2017 (mentioned, no price)",
+    "price_year": "n/a"
+   }
+  ],
+  "vat_included": null,
+  "service_charge": null,
+  "typical_cost_per_person_php": "600-1,000 for shared mains (estimate from 2025 prices)",
+  "fair_vs_pricey": "₱1,650 crispy pata is upper-mid. Chains charge about ₱1,000-1,150. It is fair for a heritage-cuisine restaurant with a show",
+  "group_of_7_notes": "Old-house dining room. Evening Filipino cultural dance performances by staff are popular with families and teens. Reserve for dinner in Nov-Apr because tables fill fast",
+  "photos": [
+   {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/6/61/Crispy_pata_1.JPG",
+    "file_page": "https://commons.wikimedia.org/wiki/File:Crispy_pata_1.JPG",
+    "author": "BrokenSphere",
+    "license": "CC BY-SA 3.0 (credit '© BrokenSphere / Wikimedia Commons')",
+    "note": "generic dish, not this restaurant. URL built, not fetched"
+   }
+  ],
+  "official_url": null,
+  "google_maps_search_url": "https://www.google.com/maps/search/?api=1&query=Subo+Boracay+Calle+Remedios"
+ },
+ {
+  "name": "Aria Cucina Italiana (D'Mall)",
+  "category": "restaurant",
+  "still_operating": true,
+  "operating_evidence": "The official site aria.com.ph has a current menu page and a 2024 menu PDF. Tripadvisor has 2026 reviews. It turned 21 in June 2024 (Philstar)",
+  "address": "Beachfront, D'Mall, Station 2, Boracay",
+  "lat": 11.9618,
+  "lon": 121.92423,
+  "coord_source": "boracaydirectory.com/item/aria-cucina-italiana-boracay (11.961799762746,121.92423083518), seen in search",
+  "coord_confidence": "medium",
+  "distance_from_henann_garden_m_approx": 400,
+  "google_rating": null,
+  "google_review_count": null,
+  "other_rating": null,
+  "opening_hours": "10:00-24:00 daily. 10:00-01:00 in super-peak season (official site)",
+  "phone": "(036) 288-5573; reservations@aria.com.ph",
+  "menu": [
+   {
+    "item": "Pizza Margherita (wood-fired)",
+    "price_php": "490",
+    "desc_ko": "토마토소스·모차렐라·바질 화덕 피자",
+    "source": "aria.com.ph AriaMenu2024.pdf",
+    "price_year": "2024"
+   },
+   {
+    "item": "Pizza Quattro Formaggi",
+    "price_php": "690",
+    "desc_ko": "페코리노·페타·파르메산·모차렐라 4가지 치즈 피자",
+    "source": "aria.com.ph/menu.html and 2024 PDF",
+    "price_year": "2024"
+   },
+   {
+    "item": "Pizza Famiglia",
+    "price_php": "2100",
+    "desc_ko": "세 가지 맛을 한 판에 올린 대형 패밀리 피자",
+    "source": "aria.com.ph AriaMenu2024.pdf",
+    "price_year": "2024"
+   },
+   {
+    "item": "Lasagna alla Bolognese",
+    "price_php": "590",
+    "desc_ko": "볼로네제 고기 소스 라자냐",
+    "source": "aria.com.ph/menu.html and 2024 PDF",
+    "price_year": "2024"
+   },
+   {
+    "item": "Cacio e Pepe",
+    "price_php": "390",
+    "desc_ko": "페코리노 치즈와 후추만으로 맛을 낸 로마식 파스타",
+    "source": "aria.com.ph AriaMenu2024.pdf",
+    "price_year": "2024"
+   },
+   {
+    "item": "Tiramisu",
+    "price_php": "350",
+    "desc_ko": "마스카르포네·에스프레소 층 디저트",
+    "source": "aria.com.ph/menu.html and 2024 PDF",
+    "price_year": "2024"
+   },
+   {
+    "item": "Aria Gelato on a stick",
+    "price_php": "110",
+    "desc_ko": "아리아 직영 젤라또 (막대형)",
+    "source": "aria.com.ph/ariagelato",
+    "price_year": "2024"
+   }
+  ],
+  "vat_included": true,
+  "service_charge": "10% service charge added (menu PDF: 'Prices include 12% VAT but exclude 10% service charge')",
+  "typical_cost_per_person_php": "600-1,000 incl. 10% SC (estimate)",
+  "fair_vs_pricey": "₱490-690 wood-fired pizza is fair for beachfront D'Mall. Over ₱800 for a single pizza would be pricey",
+  "group_of_7_notes": "Beachfront tables with queues on evenings (2026 reviews). Reserve by email or phone for 7. The Pizza Famiglia suits sharing. Pizza and pasta are easy for a teen",
+  "photos": [
+   {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/b/b7/D%27mall_Boracay_-_panoramio_-_Tuderna.jpg",
+    "file_page": "https://commons.wikimedia.org/wiki/File:D'mall_Boracay_-_panoramio_-_Tuderna.jpg",
+    "author": "Tuderna (Panoramio)",
+    "license": "CC BY 3.0",
+    "note": "D'Mall area photo, not Aria specifically. URL built, not fetched"
+   }
+  ],
+  "official_url": "https://www.aria.com.ph/",
+  "google_maps_search_url": "https://www.google.com/maps/search/?api=1&query=Aria+Cucina+Italiana+Boracay"
+ },
+ {
+  "name": "Nonie's (now at Ondus Hotel, Station 3)",
+  "category": "restaurant",
+  "still_operating": true,
+  "operating_evidence": "Official site nonies.com.ph/visit (Ondus Hotel, Station 3) and a Manila Times press release dated 2026-05-24 about the new location. The site says the move was in 2024 and Ondus opened in Sept 2024; the dates conflict. It is NO LONGER at Station X / Hue Hotel, Station 2, so older listings are outdated",
+  "address": "Ondus Hotel, beachfront, Station 3, Boracay, Malay, Aklan 5608",
+  "lat": 11.95249,
+  "lon": 121.9301,
+  "coord_source": "Ondus Boracay hotel coordinates from Klook (11.9524926,121.930097) and Trivago, which agree. This is the hotel's location, not a restaurant-specific pin",
+  "coord_confidence": "medium",
+  "distance_from_henann_garden_m_approx": 870,
+  "google_rating": null,
+  "google_review_count": null,
+  "other_rating": null,
+  "opening_hours": "Breakfast buffet 6:00-10:00; à la carte 10:00-22:00; happy hour 14:00-18:00 (official site)",
+  "phone": "0912 394 8948 (older listing)",
+  "menu": [
+   {
+    "item": "Chicken Pork Adobo",
+    "price_php": "620",
+    "desc_ko": "간장·식초에 졸인 닭고기 아도보에 72시간 조리한 바삭한 삼겹살을 곁들임",
+    "source": "nonies.com.ph/menu (undated)",
+    "price_year": "unknown (current site)"
+   },
+   {
+    "item": "Smoothie Bowl (Mango Banana / Berry Chia)",
+    "price_php": "420",
+    "desc_ko": "망고·바나나 또는 베리·치아씨드 스무디볼",
+    "source": "nonies.com.ph/menu",
+    "price_year": "unknown"
+   },
+   {
+    "item": "Beef Bistek",
+    "price_php": "520",
+    "desc_ko": "간장·깔라만시 소스에 조린 소 양지, 물소 치즈와 채소",
+    "source": "Philippine Primer (~2019)",
+    "price_year": "2019",
+    "note": "outdated"
+   },
+   {
+    "item": "Tempeh Kare Kare",
+    "price_php": "500",
+    "desc_ko": "템페와 채소를 캐슈 소스에 끓인 비건 까레까레",
+    "source": "Philippine Primer (~2019)",
+    "price_year": "2019",
+    "note": "outdated"
+   },
+   {
+    "item": "Pineapple Pandan Pancakes",
+    "price_php": "420",
+    "desc_ko": "파인애플과 판단잎 향 팬케이크",
+    "source": "Philippine Primer (~2019)",
+    "price_year": "2019",
+    "note": "outdated"
+   }
+  ],
+  "vat_included": true,
+  "service_charge": "10% service charge (official menu: 'inclusive of 12% VAT · subject to 10% service charge')",
+  "typical_cost_per_person_php": "600-900 incl. SC (estimate)",
+  "fair_vs_pricey": "₱500-650 healthy mains are typical for Boracay's 'café-bistro' tier. Not cheap, but fair for the quality",
+  "group_of_7_notes": "Hotel restaurant with buffet breakfast. Large groups are easier at breakfast or lunch. Vegan and gluten-free options. About a 10-15 min beach walk south of Henann Garden",
+  "photos": [],
+  "official_url": "https://www.nonies.com.ph/",
+  "google_maps_search_url": "https://www.google.com/maps/search/?api=1&query=Nonie's+Ondus+Hotel+Boracay"
+ },
+ {
+  "name": "LA-UD Restaurant (Hue Hotels & Resorts)",
+  "category": "restaurant",
+  "still_operating": true,
+  "operating_evidence": "The Hue Hotel official restaurant page (thehuehotel.com/hue-boracay-restaurant) lists it with hours. A Boracay Sun News day-pass guide (~2026) mentions La-Ud",
+  "address": "Ground floor, Hue Hotels & Resorts, Station X, Main Road, Station 2, Boracay",
+  "lat": 11.95667,
+  "lon": 121.93053,
+  "coord_source": "Hue Hotels & Resorts coordinates: skytravel.jp structured data (11.956673,121.930527) and hotelcontact.net (11.956654,121.930528) agree. boracaydirectory gives a conflicting 11.9612,121.9247, which I rejected. Hotel-level pin",
+  "coord_confidence": "medium",
+  "distance_from_henann_garden_m_approx": 500,
+  "google_rating": null,
+  "google_review_count": null,
+  "other_rating": null,
+  "opening_hours": "6:00-22:00 daily (official Hue page). Older listings say 7-21 or 10-22",
+  "menu": [
+   {
+    "item": "Aklanon's Best set menu (Set 1: atsara, bas-uy, inubarang manok, bandi sorbetes, buko juice)",
+    "price_php": "from 800 per person",
+    "desc_ko": "아클란 향토 코스: 파파야 절임, 돼지 간·내장 볶음, 바나나 줄기 넣은 닭국, 코코넛·우베 아이스크림",
+    "source": "ABS-CBN article (2023)",
+    "price_year": "2023",
+    "note": "may be outdated"
+   },
+   {
+    "item": "Set 2: tinu-om, chicken binakol, pork adobo sa gata, nilupak na saging",
+    "price_php": "from 800 per person (same set price)",
+    "desc_ko": "잎에 싸서 찐 닭국, 코코넛물 닭국, 코코넛밀크 돼지 아도보, 으깬 바나나 디저트",
+    "source": "ABS-CBN (2023)",
+    "price_year": "2023"
+   },
+   {
+    "item": "Weekend dinner buffet (Thu-Sun)",
+    "price_php": "799 promo (regular 899)",
+    "desc_ko": "목~일 저녁 뷔페",
+    "source": "thehuehotel.com Hue Boracay page (undated)",
+    "price_year": "2025-2026 (undated)"
+   }
+  ],
+  "vat_included": null,
+  "service_charge": null,
+  "typical_cost_per_person_php": "800-900 (set or buffet)",
+  "fair_vs_pricey": "₱800-900 buffet is mid-range for Boracay hotel buffets",
+  "group_of_7_notes": "Hotel dining room beside the pool. Easy for 7 with a reservation. The buffet suits mixed tastes. Phone listed on Wanderlog: +63 917 803 1545",
+  "photos": [],
+  "official_url": "https://www.thehuehotel.com/hue-boracay-restaurant",
+  "google_maps_search_url": "https://www.google.com/maps/search/?api=1&query=LA-UD+Restaurant+Hue+Hotel+Boracay"
+ },
+ {
+  "name": "KUBO (Hue Hotels & Resorts, Station X)",
+  "category": "restaurant",
+  "disambiguation": "'KUBO' here means the Filipino street-food stall at Hue Hotel (Station X Entertainment Center, Station 2), which fits the Station 2 context. A separate 'Kubo Resto Bar & Grill' exists on Bulabog Road (Tripadvisor ~3.1/27, mixed reviews) on the opposite, east side of the island",
+  "still_operating": true,
+  "operating_evidence": "Hue official restaurant page lists KUBO hours. Trip.com shows the same hours",
+  "address": "Ground floor, Station X Entertainment Center, Hue Hotels & Resorts, Station 2, Boracay",
+  "lat": 11.95667,
+  "lon": 121.93053,
+  "coord_source": "Same hotel-level coordinates as LA-UD (Hue Hotels)",
+  "coord_confidence": "medium (hotel-level)",
+  "distance_from_henann_garden_m_approx": 500,
+  "google_rating": null,
+  "google_review_count": null,
+  "other_rating": null,
+  "opening_hours": "12:00-21:00, Tuesday-Sunday (closed Monday)",
+  "menu": [
+   {
+    "item": "Grilled corn",
+    "price_php": null,
+    "desc_ko": "숯불에 구운 옥수수",
+    "source": "thehuehotel.com KUBO blog",
+    "price_year": "n/a"
+   },
+   {
+    "item": "Karne / isaw skewers",
+    "price_php": null,
+    "desc_ko": "고기 꼬치와 닭 내장(이사우) 꼬치구이",
+    "source": "thehuehotel.com",
+    "price_year": "n/a"
+   },
+   {
+    "item": "Kwek-kwek",
+    "price_php": null,
+    "desc_ko": "메추리알에 주황색 튀김옷을 입혀 튀긴 길거리 간식",
+    "source": "thehuehotel.com",
+    "price_year": "n/a"
+   },
+   {
+    "item": "Char-grilled balut",
+    "price_php": null,
+    "desc_ko": "부화 직전 오리알 구이 (도전 음식)",
+    "source": "thehuehotel.com",
+    "price_year": "n/a"
+   },
+   {
+    "item": "Turon de leche",
+    "price_php": null,
+    "desc_ko": "바나나·잭프루트를 춘권피에 싸서 튀기고 캐러멜·연유를 바른 디저트",
+    "source": "thehuehotel.com",
+    "price_year": "n/a"
+   }
+  ],
+  "menu_source_note": "No prices were found anywhere. A Hue day pass (₱899, of which ₱800 is consumable at La-Ud, Flamingo Social or KUBO) was reported by Boracay Sun News",
+  "vat_included": null,
+  "service_charge": null,
+  "typical_cost_per_person_php": null,
+  "fair_vs_pricey": "Typical Boracay street-food skewers cost ₱20-60 each outside hotels. Hotel stall prices are unknown",
+  "group_of_7_notes": "Casual lounge or takeaway in banana leaves. Good as a snack stop, not a full sit-down dinner for 7",
+  "photos": [],
+  "official_url": "https://www.thehuehotel.com/hue-boracay-hotel-blog/kubo-filipino-street-eats",
+  "google_maps_search_url": "https://www.google.com/maps/search/?api=1&query=Hue+Hotels+and+Resorts+Boracay"
+ },
+ {
+  "name": "Mang Inasal (D'Mall)",
+  "category": "restaurant",
+  "budget": true,
+  "still_operating": true,
+  "operating_evidence": "The official manginasal.ph/locations page lists 'Unit 118 Phase 4 Dmall Brgy Balabag Boracay Island'. Checked via search 2026-11-23",
+  "address": "Unit 118, Phase 4, D'Mall, Balabag, Boracay (near the D'Mall Ferris wheel per a review)",
+  "lat": 11.96192,
+  "lon": 121.92505,
+  "coord_source": "Trip.com structured data (11.9619247,121.9250525). Tripadvisor d2042119 gives 11.961965,121.9251",
+  "coord_confidence": "medium-high",
+  "distance_from_henann_garden_m_approx": 340,
+  "google_rating": null,
+  "google_review_count": null,
+  "other_rating": "Tripadvisor 4.0 (132 reviews), search snippet",
+  "opening_hours": "Conflicting (10:00-19:00 vs 9:00-23:00). Unverified",
+  "menu": [
+   {
+    "item": "PM1 Chicken Inasal Paa Large + 1 rice",
+    "price_php": "~149",
+    "desc_ko": "식초·깔라만시·레몬그라스·안나토에 재운 닭다리 숯불구이 + 밥",
+    "source": "unofficial aggregators (2026)",
+    "price_year": "2026",
+    "note": "aggregator range 139-168"
+   },
+   {
+    "item": "Paa Large with unli-rice",
+    "price_php": "~179",
+    "desc_ko": "닭다리 구이 + 밥 무제한",
+    "source": "aggregators (2026)",
+    "price_year": "2026"
+   },
+   {
+    "item": "Pecho Large with unli-rice",
+    "price_php": "~209",
+    "desc_ko": "닭가슴·날개 부위 구이 + 밥 무제한",
+    "source": "aggregators (2026)",
+    "price_year": "2026"
+   },
+   {
+    "item": "Halo-halo",
+    "price_php": null,
+    "desc_ko": "빙수에 단팥·젤리·과일·우베·연유를 섞은 필리핀 빙수",
+    "source": "menu item, price not verified",
+    "price_year": "n/a"
+   }
+  ],
+  "vat_included": "Fast-food chain menu prices in PH are normally VAT-inclusive (general practice, not branch-verified)",
+  "service_charge": "none expected (fast food)",
+  "typical_cost_per_person_php": "150-250",
+  "fair_vs_pricey": "Under ₱200 for a chicken + unlimited rice meal is the budget baseline in Boracay",
+  "group_of_7_notes": "Fast-food style counter ordering. Tables for 7 can be pushed together off-peak. Cheapest reliable meal near D'Mall",
+  "photos": [
+   {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Chicken_Inasal.JPG",
+    "file_page": "https://commons.wikimedia.org/wiki/File:Chicken_Inasal.JPG",
+    "author": "Elmer B. Domingo",
+    "license": "CC BY-SA 3.0",
+    "note": "generic chicken inasal (Bacolod), not this branch. URL built, not fetched"
+   }
+  ],
+  "official_url": "https://www.manginasal.ph/locations",
+  "google_maps_search_url": "https://www.google.com/maps/search/?api=1&query=Mang+Inasal+D'Mall+Boracay"
+ },
+ {
+  "name": "Andok's (D'Mall)",
+  "category": "restaurant",
+  "budget": true,
+  "still_operating": null,
+  "operating_evidence": "Tripadvisor d1770537 and Trip.com list it. Andok's own store list was not found, so 2026 status is not independently confirmed",
+  "address": "Units 5-6, Block 11, D'Mall, Balabag, Boracay",
+  "lat": 11.9619,
+  "lon": 121.92494,
+  "coord_source": "Tripadvisor d1770537 structured geo (11.961903,121.92494). ClickTheCity gives 11.96198,121.92522; Trip.com 11.96313,121.92465 (outlier)",
+  "coord_confidence": "medium",
+  "distance_from_henann_garden_m_approx": 345,
+  "google_rating": null,
+  "google_review_count": null,
+  "other_rating": "Tripadvisor 3.7 (291 reviews), search snippet",
+  "opening_hours": null,
+  "menu": [
+   {
+    "item": "Litson Manok (whole)",
+    "price_php": "~449",
+    "desc_ko": "향신료에 재운 통닭 숯불 로티세리",
+    "source": "aggregators (2026)",
+    "price_year": "2026",
+    "note": "low confidence, sources range 396-720"
+   },
+   {
+    "item": "Liempo",
+    "price_php": "~368",
+    "desc_ko": "통삼겹 숯불 로티세리",
+    "source": "aggregators (2026)",
+    "price_year": "2026",
+    "note": "low confidence"
+   },
+   {
+    "item": "Dokito meal",
+    "price_php": "~107-115",
+    "desc_ko": "닭고기 한 조각 + 밥 세트",
+    "source": "aggregators/foodpanda (2026)",
+    "price_year": "2026",
+    "note": "low confidence"
+   }
+  ],
+  "vat_included": "likely included (chain practice, unverified)",
+  "service_charge": "none expected",
+  "typical_cost_per_person_php": "150-250",
+  "fair_vs_pricey": "A whole roast chicken under ₱500 is a cheap way to feed a group",
+  "group_of_7_notes": "Good for takeaway (whole chickens and liempo) to eat at the resort. Limited seating",
+  "photos": [],
+  "official_url": null,
+  "google_maps_search_url": "https://www.google.com/maps/search/?api=1&query=Andok's+D'Mall+Boracay"
+ },
+ {
+  "name": "D'Talipapa Seafood Market (paluto)",
+  "category": "restaurant",
+  "subtype": "wet market + paluto (cook-your-catch) eateries",
+  "still_operating": true,
+  "operating_evidence": "Boracay Sun News: the rebuilt market had its soft opening 2026-03-18 and grand opening 2026-05-01, with most previous vendors back. The old market closed after a 2017 fire. Tripadvisor/Wanderlog 'closed' flags reflect the old market",
+  "address": "South Station 2, between White Beach path and Main Road, about 500 m south of D'Mall",
+  "lat": 11.95817,
+  "lon": 121.92884,
+  "coord_source": "Tripadvisor d338330 structured geo (11.958167,121.92884). Airial gives 11.95849,121.92832. Pre-rebuild listings, so exact footprint of the new building is not verified",
+  "coord_confidence": "medium-low",
+  "distance_from_henann_garden_m_approx": 250,
+  "google_rating": null,
+  "google_review_count": null,
+  "other_rating": null,
+  "opening_hours": null,
+  "menu": [
+   {
+    "item": "Paluto cooking fee (per dish)",
+    "price_php": "~100-200",
+    "desc_ko": "시장에서 산 해산물을 근처 식당에 맡겨 원하는 방식으로 요리해 주는 비용",
+    "source": "boracaybeach.guide (undated)",
+    "price_year": "unknown",
+    "note": "rates vary by stall"
+   },
+   {
+    "item": "Paluto cooking fee (per kg, as reported by diners)",
+    "price_php": "~150-250 per kg",
+    "desc_ko": "무게 기준 조리비 (버터갈릭·구이·찜 등)",
+    "source": "Tripadvisor reviews (various years)",
+    "price_year": "unknown"
+   },
+   {
+    "item": "Garlic butter shrimp (paluto style)",
+    "price_php": null,
+    "desc_ko": "마늘 버터 새우 볶음",
+    "source": "common paluto option, no verified price",
+    "price_year": "n/a"
+   },
+   {
+    "item": "Grilled fish / squid (paluto style)",
+    "price_php": null,
+    "desc_ko": "생선·오징어 숯불구이",
+    "source": "common paluto option",
+    "price_year": "n/a"
+   },
+   {
+    "item": "Sinigang na hipon / isda (paluto)",
+    "price_php": null,
+    "desc_ko": "새우·생선 타마린드 신 국",
+    "source": "common paluto option",
+    "price_year": "n/a"
+   }
+  ],
+  "menu_source_note": "Raw seafood prices per kilo change daily and I found no verified 2026 prices. Ask for the per-kg price and the cooking fee before buying or weighing. Cash only",
+  "vat_included": null,
+  "service_charge": "Some paluto eateries may add rice/drinks/service. Confirm before ordering",
+  "typical_cost_per_person_php": "600-1,200 depending on seafood chosen (estimate)",
+  "fair_vs_pricey": "Settle the per-kg price and cooking fee before weighing. Tourists are sometimes quoted higher prices (reviews). Lobster and lapu-lapu are the expensive picks; shrimp, squid and fish are better value",
+  "group_of_7_notes": "Best 'experience' meal for a group of 7: pick seafood together, then a paluto eatery seats you at a long table. Go at lunch to avoid crowds",
+  "photos": [],
+  "official_url": null,
+  "google_maps_search_url": "https://www.google.com/maps/search/?api=1&query=D'Talipapa+Boracay"
+ },
+ {
+  "name": "Dos Mestizos",
+  "category": "restaurant",
+  "still_operating": null,
+  "operating_evidence": "The official site dosmestizos.com lists hours 11am-11pm and a menu. Not confirmed with a dated 2026 source",
+  "address": "Station 2, near Calle Remedios / Main Road, Boracay",
+  "lat": 11.95577,
+  "lon": 121.92865,
+  "coord_source": "boracaydirectory.com/directory/restaurants/dos-mestizos-boracay (11.955772,121.9286476), seen in search",
+  "coord_confidence": "medium-low",
+  "distance_from_henann_garden_m_approx": 470,
+  "google_rating": null,
+  "google_review_count": null,
+  "other_rating": null,
+  "opening_hours": "11:00-23:00 daily (official site). Other listings differ",
+  "menu": [
+   {
+    "item": "Paella Valenciana (M / L / XL)",
+    "price_php": "1,850-2,500",
+    "desc_ko": "해산물·닭고기·초리소를 넣은 스페인식 사프란 쌀요리 (대형은 5-8인분)",
+    "source": "boracay.delivery (~2022)",
+    "price_year": "~2022",
+    "note": "outdated"
+   },
+   {
+    "item": "Paella Negra (M-XL)",
+    "price_php": "2,280-3,990",
+    "desc_ko": "오징어 먹물로 지은 검은 해산물 파에야",
+    "source": "boracay.delivery (~2022)",
+    "price_year": "~2022",
+    "note": "outdated"
+   },
+   {
+    "item": "Paella de Verduras (M-XL)",
+    "price_php": "1,150-1,850",
+    "desc_ko": "채소 파에야",
+    "source": "boracay.delivery (~2022)",
+    "price_year": "~2022",
+    "note": "outdated"
+   }
+  ],
+  "vat_included": null,
+  "service_charge": null,
+  "typical_cost_per_person_php": "700-1,200 (estimate)",
+  "fair_vs_pricey": "₱2,000-2,500 for an XL paella shared by 6-8 people is fair. More than ₱3,500 for a non-squid-ink paella would be pricey",
+  "group_of_7_notes": "Large paellas sized for 5-8 people suit a group of 7. Paella takes 30-45 min, so order ahead. Phone +63 36 288 5786 (Tripadvisor)",
+  "photos": [],
+  "official_url": "https://www.dosmestizos.com/",
+  "google_maps_search_url": "https://www.google.com/maps/search/?api=1&query=Dos+Mestizos+Boracay"
+ }
+]

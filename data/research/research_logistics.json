@@ -1,0 +1,308 @@
+{
+  "_meta": {
+    "researched_on": "2026-11-23",
+    "trip": "보라카이 2026-11-24~28, 7인(성인6+청소년1), 헤난 가든 리조트(스테이션2), TW-125 KLO 12:55 도착 / TW-126 KLO 13:55 출발, 4U 픽업",
+    "method": "WebSearch 결과 스니펫 기반. WebFetch는 이 세션 네트워크 제한으로 henann.com, thepoortraveler.net, travelocity.com 접근 불가(원문 직접 열람 못함). 따라서 모든 수치는 검색 결과에 인용된 문구 기준이며, 'source_date' 가 null이면 원문 게시일 미확인.",
+    "caveat": "공식 말레이(Malay) LGU e-트라이크 요금표 원문은 찾지 못함. 블로그/OTA 수치는 참고용."
+  },
+
+  "1_etrike_fares": {
+    "official_fare_matrix": null,
+    "official_fare_matrix_note": "말레이 LGU/BLTMPC(보라카이 육상교통 협동조합) 공식 요금표 원문은 확인 못함. 관련 조례: Malay Ordinance No.342-2015(개정 383-2018, Municipal Traffic Code), No.348(Driver's Accreditation Code).",
+    "official_sources": [
+      {"url": "https://www.rappler.com/?p=231539", "date": null, "note": "말레이 의원이 e-트라이크 바가지 근절 촉구, 교통 조례 명시"},
+      {"url": "https://panaynews.net/?p=321724", "date": null, "note": "최저요금 P10→P15 인상 요청 기사(결과 미확인)"}
+    ],
+    "shared_fare_per_person_php": {
+      "value": "약 15~30페소(구간별)",
+      "detail": "항구 기준 합승: 스테이션1 30, 스테이션3 20, Fairways/CityMall 35 (The Poor Traveler). 최저 15/최대 약 50 (여행 사이트). 스테이션2 출발 합승 25.",
+      "sources": [
+        {"url": "https://www.thepoortraveler.net/?p=54646", "date": null},
+        {"url": "https://www.thepoortraveler.net/boracay-travel-guide/", "date": null},
+        {"url": "https://boranavi.com/articles/boracay-transportation-tricks-tricycles-boats-guide", "date": "2025 (제목 기준)"}
+      ]
+    },
+    "special_trip_php": {
+      "station2_to_station1": "약 150페소(블로그 수치 기반 추정, 명시 수치 아님)",
+      "station2_to_station3": null,
+      "station2_to_bulabog": "e-트라이크 아닌 일반 트라이시클 기준 80~120페소 (출처 1곳)",
+      "to_dtalipapa": "헤난가든에서 도보 약 5분 → 탈 필요 없음",
+      "to_diniwid": "약 250페소(항구 기준 요금표, The Poor Traveler)",
+      "to_puka_beach": "약 300~350페소(Yapak 350, 콘도 요금표 300). 합승 시 1인 50페소",
+      "to_cagban_port": "약 150페소(항구↔스테이션2 차터)",
+      "general_range": "차터(스페셜) 100~400페소, 거리별",
+      "hourly_etrike_tour": "시간당 500페소, 최대 4인 (Puka/Diniwid/Bulabog 포함)",
+      "sources": [
+        {"url": "https://www.thepoortraveler.net/boracay-travel-guide/", "date": null},
+        {"url": "https://www.thepoortraveler.net/?p=54646", "date": null},
+        {"url": "https://visitboracay.com/boracay/travel/getting-around", "date": "2024 (제목 기준)"},
+        {"url": "https://boranavi.com/articles/boracay-transportation-tricks-tricycles-boats-guide", "date": "2025"},
+        {"url": "https://joansfootprints.com/2026/05/19/complete-boracay-diy-travel-guide-for-first-timers-itinerary-budget/", "date": "2026-05-19"}
+      ]
+    },
+    "max_passengers_per_etrike": {
+      "value": "약 6명(운전자 제외) – 제조사 스펙/언론. 단 e-트라이크 투어는 '최대 4인' 기준",
+      "sources": [
+        {"url": "https://www.sunstar.com.ph/more-articles/tags-e-trike-boracay-environmental-problem-proged", "date": null, "note": "약 6명"},
+        {"url": "https://newsbytes.ph/2018/09/06/doe-donates-50-e-trikes-to-boracay-as-govt-imposes-e-trike-only-policy/", "date": "2018-09-06", "note": "6~8명"},
+        {"url": "https://visitboracay.com/boracay/travel/getting-around", "date": "2024", "note": "투어 최대 4인"}
+      ]
+    },
+    "etrikes_needed_for_7": "2대 권장 (1대 정원 약 6명이라 7명은 초과, 투어 기준 4인이면 4+3으로 2대)",
+    "fare_sticker_note": "차량 내 공식 요금 스티커 부착 여부는 출처로 확인 못함(null). Xpress 앱이 BLTMPC와 e-트라이크 예약 플랫폼 제휴(2024) — https://www.xpress.ph/blog/innovative-transportation-solutions-xpress-partners-with-boracay-for-sustainable-and-organized-e-trike-services",
+    "tip_ko": "탑승 전 '스페셜/합승' 여부와 총액(1대당인지 1인당인지) 확인. 합승 원하면 'shared ride' 라고 먼저 말하기."
+  },
+
+  "2_grab": {
+    "ride_hailing_available": false,
+    "verdict_ko": "보라카이 섬 내 Grab 차량/트라이크 호출은 사실상 불가. 개인차량 섬 반입 금지, 미터 택시 없음. 이동은 e-트라이크·도보·HOHO 버스.",
+    "grab_food": "가능 — Grab Food 배달은 섬 대부분에서 작동한다는 가이드, 2025-06 Grab 'Dine Out'(최대 20% 할인) 보라카이 출시",
+    "other_options": "Hop-On Hop-Off 버스(Southwest Tours), Xpress 앱 e-트라이크 예약",
+    "sources": [
+      {"url": "https://boranavi.com/articles/boracay-transportation-tricks-tricycles-boats-guide", "date": "2025"},
+      {"url": "https://islandseeker.co/boracay-getting-around", "date": "2026 (제목 기준)"},
+      {"url": "https://beachynest.com/getting-around-boracay/", "date": null},
+      {"url": "https://abs-cbn.com/lifestyle/2025/6/20/grab-launches-dine-out-feature-in-boracay-to-boost-culinary-tourism-0637", "date": "2025-06-20"},
+      {"url": "https://www.klook.com/activity/139581", "date": null, "note": "HOHO 셔틀"}
+    ]
+  },
+
+  "3_walking": {
+    "white_beach_walkable": true,
+    "white_beach_note_ko": "화이트비치 약 4km, 해변 산책로(Beach Walk)로 스테이션1~3 연결. 전체 도보 약 45분~1시간.",
+    "white_beach_sources": [
+      {"url": "https://myboracayguide.com/boracay/map", "date": null},
+      {"url": "https://www.hostelworld.com/blog/?p=1305135", "date": null},
+      {"url": "https://viatravelers.com/neighborhoods/whitebeachboracay/", "date": null}
+    ],
+    "distances_from_henann_garden": {
+      "estimate_type": "OTA(예약사이트) 지도 기반 직선거리 추정치 — OSM/구글맵 직접 측정 아님",
+      "to_dmall": "약 0.6~0.9km, 도보 6~11분",
+      "to_dtalipapa": "도보 약 5분",
+      "to_station1_willys_rock": "약 1.4~1.8km (도보 약 20~25분, 시간은 거리로 환산한 추정)",
+      "to_station3": "약 1km",
+      "to_cagban_port": "도로 약 3.5km, 차량 약 16분",
+      "sources": [
+        {"url": "https://www.sembo.com/places/balabag-malay-philippines/hotels/195199/henann-garden-resort", "date": null},
+        {"url": "https://hotels.com/ho359417/henann-garden-resort-boracay-island-philippines", "date": null},
+        {"url": "https://traveloka.com/en-ph/hotel/philippines/henann-garden-resort-1000000359417", "date": null},
+        {"url": "https://www.agoda.com/henann-garden-resort/hotel/boracay-island-ph.html", "date": null},
+        {"url": "https://www.kayak.com/Boracay-Hotels-Henann-Garden-Resort.366057.ksp", "date": null},
+        {"url": "https://www.makemytrip.com/hotels-international/philippines/boracay-hotels/henann_garden_resort-details.html", "date": null}
+      ]
+    }
+  },
+
+  "4_henann_garden": {
+    "address": "Station 2, Barangay Balabag, Boracay Island, Malay, Aklan 5608, Philippines",
+    "phone": "+63 36 288 6672 (OTA/이벤트장 리스트 기준)",
+    "coordinates": null,
+    "coordinates_note": "OSM/구글맵 좌표를 검색으로 확인 못함 — 지도 앱에서 'Henann Garden Resort' 검색 권장",
+    "rooms": "273실 (henann.com 공식 개요)",
+    "check_in": "15:00",
+    "check_out": "12:00",
+    "grand_room": {
+      "size": "약 40㎡, 퀸 1 + 싱글 1 (공식 페이지)",
+      "occupancy": "기본 2인, 최대 3인",
+      "extra_person_fee_php": "3번째 인원 1,232페소 net/객실/박 (조식 포함)",
+      "source_note": "Henann 예약 사이트 문구: 'Grand Room Occupancy: 2 persons only (Maximum occupancy of 3 persons. Extra charge for the 3rd person at Php 1,232 net per room per night with breakfast.'",
+      "sources": [
+        {"url": "https://www.henann.com/boracay/henanngarden/stay/rooms-and-suites/grand-room", "date": null},
+        {"url": "https://reservations.henann.com/454/henann-garden-resort-", "date": null}
+      ]
+    },
+    "extra_bed_php": "롤어웨이/엑스트라 베드 1,232페소/일, 유아용 침대 350페소/일 (Travelocity OTA)",
+    "breakfast": "예약 요금에 따라 포함 여부 다름. 별도 구매 시 성인 약 1,232페소/아동 약 616페소(Travelocity), 다른 OTA는 649페소/06:00~10:00로 표기 → 수치 불일치, 현장 확인",
+    "pools": "야외 수영장 4개 + 키즈풀, 스윔업 바, 운영 08:00~22:00 (Expedia/Skyscanner OTA)",
+    "airport_shuttle_hotel": "호텔 공항 셔틀 1인 왕복 1,900페소 (OTA 기준, 4U 이용하므로 참고용)",
+    "money_exchange_in_hotel": "헤난가든에서도 환전 가능, 외부보다 환율 낮지만 차이 크지 않음 (trvlogue)",
+    "tip_ko": "그랜드룸 3인 초과 불가 → 7인이면 객실 구성(2+2+3 등) 확인. 체크인 시 추가인원 1명 = 1,232페소/박(조식 포함) 예상, 현장 재확인.",
+    "sources": [
+      {"url": "https://henann.com/boracay/henanngarden/", "date": null},
+      {"url": "https://www.travelocity.com/Boracay-Island-Hotels-Henann-Garden-Resort.h3890315.Hotel-Information", "date": null},
+      {"url": "https://www.expedia.com/es/Boracay-Island-Hoteles-Henann-Garden-Resort.h3890315.Informacion-Hotel", "date": null},
+      {"url": "https://ph.trip.com/hotels/boracay-hotel-detail-713444/henann-garden-resort-boracay", "date": null},
+      {"url": "https://www.trvlogue.com/ko/boracay-money-exchange-rates", "date": "2026"}
+    ]
+  },
+
+  "5_transfer": {
+    "kalibo_to_boracay_duration": "육로 약 2시간(약 68km) + 카티클란 항 수속/보트 10~15분 + 섬 내 이동 → 총 약 2.5~3시간",
+    "route": "KLO → (밴) 카티클란 제티 포트 → (보트) 카그반(Cagban) 항 → (차량/e-트라이크) 호텔",
+    "fees_php": {
+      "terminal_fee": 150,
+      "environmental_fee_foreigner": 300,
+      "environmental_fee_filipino": 150,
+      "boat_fare": "약 50 (출처 간 불일치, 확인 필요)",
+      "per_person_total_estimate_foreigner": "약 500페소 (150+300+50, 계산값)",
+      "payment_note": "2025년부터 카티클란 항 요금 캐시리스 결제 도입(Shangri-La 안내) — 현장 결제수단 확인"
+    },
+    "confirm_with_4u_ko": "4U 패키지에 터미널피·환경세·보트비 포함 여부, 짐 운반, 카그반→호텔 구간 포함 여부를 반드시 4U에 확인.",
+    "return_timing": {
+      "flight": "TW-126 KLO 13:55 (국제선)",
+      "airport_arrival_target": "10:55 전후 (국제선 3시간 전 권장)",
+      "leave_hotel_by_ko": "약 07:30~08:00 호텔 출발 권장 (계산값). 최종 픽업 시각은 4U 안내 따를 것.",
+      "basis": "국제선 3시간 전 도착 권장(Traveloka) + 이동 약 2.5~3시간"
+    },
+    "sources": [
+      {"url": "https://mb.com.ph/2025/1/30/mayor-frasco-misinformed-no-increase-in-boracay-fees", "date": "2025-01-30"},
+      {"url": "https://www.dailyguardian.com.ph/blog/excessive-charges-all-fees-in-boracay-under-review-dot-6-says2sdzxc", "date": null},
+      {"url": "https://www.shangri-la.com/en/boracay/boracayresort/about/map-directions", "date": null},
+      {"url": "https://www.nomadlawyer.org/boracay-philippines-sustainable-tourism-station-guide-2026", "date": "2026"},
+      {"url": "https://klook.com/en-PH/blog/caticlan-to-boracay-island-transfers", "date": null},
+      {"url": "https://movenpick.accor.com/en/asia/philippines/boracay/resort-spa-boracay/location.html", "date": null},
+      {"url": "https://www.traveloka.com/en-en/flight/airport/KLO", "date": null}
+    ]
+  },
+
+  "6_money": {
+    "php_per_usd": {
+      "value": 63.85,
+      "date": "2026-11-23",
+      "source": "taxcalculator.com.ph (BSP 가중평균 63.8520 인용; BSP 기준 63.80 on 11-20)",
+      "url": "https://taxcalculator.com.ph/exchange-rates/usd-to-php",
+      "cross_check": "OFX 63.33 (2026-11-18) https://www.ofx.com/en-us/exchange-rates/php/"
+    },
+    "krw_per_php": {
+      "value": 20.91,
+      "date": "2026-11-16",
+      "source": "exchange-rates.org (1 KRW = 0.04783 PHP)",
+      "url": "https://www.exchange-rates.org/converter/krw-php/949"
+    },
+    "quick_math_ko": "100달러 ≈ 6,385페소(시장환율, 환전소는 이보다 낮음). 1,000페소 ≈ 약 20,900원.",
+    "where_to_exchange": [
+      {"name": "Nikko Forex", "note": "비교 중 환율 최고(2026 trvlogue). 메인 도로에서 살짝 안쪽, 간판 작음, 기존 2곳 중 1곳 폐업 → 위치 재확인"},
+      {"name": "Golden Forex (화이트비치)", "note": "디몰 환전소보다 약간 나음"},
+      {"name": "V.B. Queen's (디몰)", "note": "디몰 내에선 나은 편"},
+      {"name": "M. Lhuillier (디몰)", "note": "Wise 안내"},
+      {"name": "헤난가든 리조트 프런트", "note": "가능, 외부보다 약간 낮음"}
+    ],
+    "tips_ko": [
+      "구김·낙서·훼손 없는 신권 달러 지참(구권/손상권 거절·저율 가능)",
+      "100달러권이 소액권보다 환율 유리한 것이 일반적(출처 확인은 일반 동남아 관행 수준, 보라카이 특정 출처 null)",
+      "'No commission' 문구 업체 주의, 시장환율 미리 확인",
+      "창구 앞에서 바로 세어보고 떠나기",
+      "공항·호텔은 대체로 환율 불리"
+    ],
+    "atm": "BDO: 해외발급카드 1회 250페소 + 본국 카드사 수수료, 1회 최대 25,000페소. 해외카드 한도가 4,000페소 수준으로 낮게 걸렸다는 후기도. 디몰 ATM 성수기 현금 소진 가능, 과거 디몰 ATM 스키밍 적발 사례.",
+    "card_acceptance": "대형 레스토랑·리조트·큰 상점은 카드 가능(일부 카드 수수료 추가). 노점·소형 상점·e-트라이크는 현금. GCash QR 가능한 곳도 있음.",
+    "sources": [
+      {"url": "https://www.trvlogue.com/ko/boracay-money-exchange-rates", "date": "2026"},
+      {"url": "https://www.trvlogue.com/en/boracay-money-exchange-rates", "date": "2026"},
+      {"url": "https://wise.com/gb/currency-exchange/boracay", "date": null},
+      {"url": "https://thesmartlocal.ph/scams-in-the-philippines/", "date": null},
+      {"url": "https://www.bdo.com.ph/personal/digital/atm", "date": null},
+      {"url": "https://wise.com/gb/blog/atms-in-the-philippines", "date": null},
+      {"url": "https://newsinfo.inquirer.net/452229/cops-uncover-atm-fraud-in-boracay/amp", "date": null},
+      {"url": "https://4stogo.com/blog/posts/atms-and-card-acceptance-on-the-island", "date": null}
+    ]
+  },
+
+  "7_bills_tipping": {
+    "vat_12": "VAT 12%는 메뉴가에 포함된 곳도, 별도 부과하는 곳도 있음. 메뉴 하단 'VAT inclusive/exclusive' 표기 확인.",
+    "service_charge": "보통 10%, 의무 아님(업체 자율). RA 11360에 따라 직원에게 분배.",
+    "tipping_ko": "서비스차지가 붙었으면 추가 팁 불필요. 없으면 10% 내외 또는 소액(20~100페소 등은 관행 추정, 출처 없음) 팁.",
+    "sources": [
+      {"url": "https://lifestyle.inquirer.net/?p=9338", "date": null},
+      {"url": "https://lifestyle.inquirer.net/?p=12695", "date": null},
+      {"url": "https://philstar.com/business/2024/06/19/2363792/tip-or-not-tip", "date": "2024-06-19"},
+      {"url": "https://newportworldresorts.com/blog-articles/tipping-philippines-guide-travelers", "date": null}
+    ]
+  },
+
+  "8_dtalipapa_paluto": {
+    "how_it_works_ko": "1) 시장 좌판에서 생물 해산물을 kg 단위로 구매 → 2) 근처 '파루토' 식당에 가져가 kg당 조리비 내고 원하는 요리법(갈릭버터, 칠리, 구이, 시니강 등)으로 조리 → 3) 밥·음료는 식당에서 별도 주문.",
+    "prices_php_per_kg": {
+      "prawns": "250~500",
+      "lapu_lapu": null,
+      "crab": "약 400",
+      "lobster": "600~800 (다른 출처 750)",
+      "scallops": null,
+      "mussels_oysters": "50 이하(오래된 출처)",
+      "note": "출처 날짜 대부분 불명확/오래됨. 시즌·흥정·외국인 여부에 따라 크게 변동."
+    },
+    "cooking_fee_php_per_kg": "약 100~250 (블로그 150, 트립어드바이저 150~250+, 골목 안쪽 100 업소 존재 언급)",
+    "status_note": "Wanderlog에 D'Talipapa 일부 파루토 업소 폐업/이전 언급 → 현장 확인",
+    "anti_overcharge_ko": [
+      "구매 전 kg당 가격 먼저 확정",
+      "눈앞에서 저울 달기(물 빼고), 무게 직접 확인",
+      "조리비가 kg당인지, 요리법별 다른지 먼저 확인",
+      "삐끼(호객꾼)가 데려가는 가게는 커미션 포함 가능 → 직접 고르기",
+      "영수증/메모로 가격 남기기"
+    ],
+    "sources": [
+      {"url": "https://www.boracayinsider.com/talipapa-market-in-boracay/", "date": "약 2025 (게시 약 1년 전)"},
+      {"url": "https://beachynest.com/boracay-island-food/", "date": null},
+      {"url": "https://visitboracay.com/boracay/travel-guides/food-dining/boracay-seafood-guide-freshest-catch", "date": null},
+      {"url": "https://www.tripadvisor.com/ShowTopic-g294260-i6038-k5801228-D_Talipapa_Seafood_Price-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html", "date": null},
+      {"url": "https://edpuno.com/2017/08/where-to-eat-seafood-in-boracay-d-talipapa-at-station-2.html", "date": "2017-08"},
+      {"url": "https://4stogo.com/blog/posts/local-favorites-dtalipapa-smoke-resto-real-coffee-and-tea-cafe", "date": null},
+      {"url": "https://extensionembed.wanderlog.com/place/details/1465131", "date": null}
+    ]
+  },
+
+  "9_weather_time": {
+    "season_ko": "11월 말 = 아미한(북동 계절풍) 시작기. 서쪽 화이트비치는 바람이 막혀 잔잔, 동쪽 불라복(Bulabog) 비치는 바람·파도 강해 카이트서핑 시즌.",
+    "sunset_nov25": "약 17:25 (11/15 17:24, 11/30 17:25 계산표 기준)",
+    "timezone": "필리핀 PHT UTC+8, 한국보다 1시간 느림 (한국 13:00 = 필리핀 12:00)",
+    "sources": [
+      {"url": "https://rove.me/to/philippines/kitesurfing-boracay", "date": null},
+      {"url": "https://uk.hotels.com/go/philippines/boracay-weather", "date": null},
+      {"url": "https://www.easeweather.com/asia/philippines/western-visayas/boracay-island/sun-moon", "date": null},
+      {"url": "https://timeanddate.com/astronomy/@7302402", "date": null}
+    ]
+  },
+
+  "10_emergency": {
+    "national_emergency": "911 (보라카이에서도 911로 경찰 지원 요청 가능 — PRO-6, 2025-06)",
+    "boracay_tourist_police": null,
+    "boracay_tourist_police_note": "공식 번호 확인 못함. 2018년 BTAC 해체 후 Malay 경찰서 산하 보라카이 지서 체제. 비공식 출처(tabiji)에 +63 2 524-1660 표기 있으나 미검증 → 사용 비권장, 911 이용.",
+    "korean_embassy_manila": {
+      "main": "+63-2-8856-9210",
+      "emergency_24h": "+63-917-817-5703 (비자 문의 불가)",
+      "address": "122 Upper McKinley Road, McKinley Town Center, Fort Bonifacio, Taguig City 1200 (jobstreet 기업정보 기준)",
+      "url": "https://overseas.mofa.go.kr/ph-en/index.do"
+    },
+    "consular_call_center": {
+      "paid": "+82-2-3210-0404",
+      "toll_free": "+800-2100-0404 (현지 국제전화 접속번호 뒤)",
+      "hours": "24시간 연중무휴, 카카오톡 상담 가능",
+      "url": "https://www.ytn.co.kr/_ln/0103_202407081433262726"
+    },
+    "sources": [
+      {"url": "https://mb.com.ph/2025/06/29/western-visayas-top-cop-pushes-911-in-boracay", "date": "2025-06-29"},
+      {"url": "https://www.mofa.go.kr/ph-en/index.do", "date": null},
+      {"url": "https://m.boannews.com/html/detail.html?idx=53997", "date": null},
+      {"url": "https://www.korea.kr/news/policyNewsView.do?newsId=148680485", "date": null},
+      {"url": "https://www.philstar.com/the-freeman/region/2018/09/27/1855030/pro-6-states-readiness-boracay-re-opening", "date": "2018-09-27"}
+    ]
+  },
+
+  "11_scams_safety": {
+    "common_scams_ko": [
+      "e-트라이크: 합승인데 스페셜(전세) 요금 청구, 단거리 5~10배 요금 → 탑승 전 총액 확정",
+      "환전소: 소액권 바꿔치기, 조작 계산기, 숨은 수수료 → 창구 앞에서 세기, 디몰 등 정식 업체 이용",
+      "호객꾼: 카그반 항 e-트라이크 줄/해변에서 할인 아일랜드호핑 권유 → DOT 인증 업체/검증된 플랫폼 예약",
+      "렌탈(스쿠터 등) 기존 파손 덮어씌우기 → 사용 전 사진",
+      "ATM 스키밍 과거 디몰 사례 → 은행 지점 부착 ATM 이용",
+      "소매치기·도난 주의(경찰 경고)"
+    ],
+    "fair_prices_reference": {
+      "island_hopping_with_helmet_dive_lunch": "약 US$58~61/인 (Expedia/Trip.com 패키지, 날짜 미상)",
+      "helmet_diving_standalone": "약 US$21/인, 20분 (Expedia)",
+      "island_hopping_with_parasailing": "약 US$41~72/인 (리스트·시점별 상이)",
+      "island_entrance_fees": "매직 아일랜드 250페소, 크리스탈 코브 300페소, 스노클링 100페소 (보통 투어가 미포함)",
+      "note": "OTA 가격, 현장 직거래가는 null(미검증). 포함 항목(점심·픽업·입장료) 비교 필요."
+    },
+    "sources": [
+      {"url": "https://www.rappler.com/?p=231539", "date": null},
+      {"url": "https://tabiji.ai/scams/boracay/", "date": "2026-04 (업데이트)"},
+      {"url": "https://thesmartlocal.ph/scams-in-the-philippines/", "date": null},
+      {"url": "https://newsinfo.inquirer.net/1047654/boracay-police-warn-tourists-beware-of-thieves-secure-your-belongings", "date": null},
+      {"url": "https://mirror.pia.gov.ph/news/2023/08/02/beware-deal-only-with-dot-accredited-boracay-establishments", "date": "2023-08-02"},
+      {"url": "https://www.expedia.com/things-to-do/boracay-island-hopping-parasailing-sharedtour.a47903828.activity-details", "date": null},
+      {"url": "https://us.trip.com/things-to-do/detail/94761455", "date": null},
+      {"url": "https://www.travelocity.com/things-to-do/boracay-island-and-beach-hopping-boat-tour-with-snorkeling.a4565752.activity-details", "date": null}
+    ]
+  }
+}

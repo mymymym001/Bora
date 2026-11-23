@@ -1,0 +1,669 @@
+n262114190|Seraph Hotel|hotel|11.95930,121.92884||
+n262114191|Boracay Beach Resort|hotel|11.95916,121.92893||
+n262114205|Tropical Guest House|guest_house|11.95266,121.93058||
+n262114232|Villa Criselda Resort|hotel|11.95814,121.92819||
+n262114246|Villa Paula Beach House|guest_house|11.95772,121.92753||d'talipapa alley
+n262114249|il Partico Beach House|guest_house|11.95792,121.92777||
+n298305717|Tambisaan Jetty Port|ferry_terminal|11.94923,121.94738||
+n300782871|Villa Sunset|hotel|11.95681,121.92876||
+n357752068|BPI|atm|11.96156,121.92488||
+n358256558|Sanctuary Cafe|cafe|11.95298,121.93134||
+n358670720|Balabag|suburb|11.96840,121.92003||
+n1264519792|VTA|travel_agency|11.95059,121.93140||
+n1362259558|La Bella Casa de Boracay|hostel|11.96877,121.92003||San Juan Street
+n1448657591|Boracay Travellers|information|11.95169,121.93028||Beach Front, Station 3
+n2311404983|Bamboo Beach Resort|hotel|11.95480,121.92894||
+n2622267346|MGB Cottages|hotel|11.95754,121.92775||
+n2689119096|Hannah Hotel|hotel|11.96854,121.92065||Santo Rosario Street
+n3057138531|Andok's|fast_food|11.95346,121.93208||
+n3057138532|Metrobank|bank|11.95722,121.93070||Ambulong Street
+n3507891436|Kingdom of Boracay|fast_food|11.96874,121.92233||
+n3521384095|Import Shop|convenience|11.95773,121.93030||
+n3521384096|Cork Wine Bar|bar|11.95886,121.92922||
+n3521384097|Pi Pi Xia|restaurant|11.95961,121.92883||
+n3521384103|Fat Jimmy's|hotel|11.96162,121.92577||
+n3864257757|Go-Diving Scuba Studio|scuba_diving|11.95203,121.93041|08:00-21:00|Boat Station 3 Road
+n4110754259|Julie's|bakery|11.95190,121.93291||
+n4110757083|La Fiesta at Mandarin Bay|restaurant|11.95784,121.92678||
+n4110757347|G&C Medicine Center|pharmacy|11.95231,121.93046||
+n4110757348|7-Eleven|convenience|11.95564,121.92833|24/7|Calle Remedios
+n4146151233|Subo|restaurant|11.95595,121.92853|Mo-Su 12:00-23:00|Calle Remedios
+n4179669191|Boracay Backpackers|hostel|11.96443,121.92415|24/7|
+n4333617100|Frendz Resort Hostel|hostel|11.96421,121.92493||
+n4345491192|Sander's White Duplexes|hotel|11.95634,121.92826||
+n4392914189|Golden India Spa|hotel|11.95275,121.93088||
+n4406936299|Serene La Playa|hotel|11.96496,121.92343||
+n4430397889|McDonald's|fast_food|11.96300,121.92643|24/7|Boracay Main Road
+n4430656989|Steam Punk Cafe|restaurant|11.96191,121.92520|Mo-Su 11:00-23:00|D'mall Avenue
+n4430661389|I ♥ Backyard BBQ|restaurant|11.96176,121.92529||
+n4480992490|Boracay Beach House|hotel|11.95737,121.92715||
+n4515257512|Andok's|fast_food|11.96189,121.92486||
+n4598048790|YB Hostel|hostel|11.96363,121.92582||
+n4617707389|Amigos Beach Resort|hotel|11.95719,121.92838||
+n4659798494|Galleria De Boracay|hostel|11.95400,121.93100||
+n4659802291|Tom N Toms|cafe|11.96240,121.92708||
+n4662945489|Kingfisher Gym|fitness_centre|11.95489,121.93415||
+n4680227989|Uncle John's|convenience|11.95707,121.93055||Ambulong Street
+n4681513297|928 Cafe & Grill|restaurant|11.96032,121.92536||
+n4681515114|7-Eleven|convenience|11.95210,121.93013|24/7|
+n4681561890|Filipino Buffet|restaurant|11.95591,121.92790||
+n4681569389|Mongolian Buffet|restaurant|11.95621,121.92773||
+n4691702104|Caticlan|ferry_terminal|11.92774,121.94867||
+n4714794089|The Rabbit Hole|guest_house|11.96441,121.92804|24/7|
+n4776289421|Bed, Bunk & Breakfast|hostel|11.96537,121.92492||Bulabog Road
+n4810756523|KESAM DIVE|dive_centre|11.96452,121.92293|Mo-Su 08:00-17:00|
+n4887588822|Island Mall Old Talipapa|attraction|11.95392,121.93116||
+n4887598122|Budget Mart|convenience|11.95404,121.93143||
+n4907291521|Nonie’s|restaurant|11.95689,121.93028|Mo-Su 09:00-22:00|Calle Remedios
+n4908254922|Little Wave|cafe|11.95695,121.93045||
+n4970500821|Jamba Juice|fast_food|11.95370,121.92932||
+n4997029523|SNA travel Agency|travel_agency|11.95893,121.92917||Boracay Main Road
+n4997029525|Jadea Store|convenience|11.96538,121.92645||
+n4997029527|Tod's Lomi House and Resto|restaurant|11.96246,121.92707||Zone V Bolabog
+n4999891025|Caleo|guest_house|11.96312,121.92776||Bolabog Road Zone 5-A
+n5070829422|Boracay Grace Hotel|hotel|11.95059,121.93471||
+n5070846321|Convenience Store|supermarket|11.95066,121.93453||
+n5071484126|Ambulong Seventh Day Adventist Church|place_of_worship|11.95265,121.93488||Ambulong Street
+n5073096921|Gustoy Gustos|cafe|11.95585,121.92872||Calle Remedios
+n5105522223|Island Chicken Inasal|restaurant|11.96891,121.91945||
+n5202936323|Halomango-Tree|ice_cream|11.96189,121.92606||D'Mall Palenke
+n5239284127|Boracay Holiday resort|hotel|11.95907,121.92852||
+n5241163221|Smoke Resto|fast_food|11.96224,121.92640||
+n5243747224|Hostel Avenue|hostel|11.96186,121.92454||
+n5413473221|Cez Manor|guest_house|11.95696,121.92767||
+n5414265879|Lemoni Cafe and Restaurant|cafe|11.96195,121.92508|Mo-Su 07:00-23:00|D'mall D Boracay
+n5414266894|Station X|mall|11.95696,121.93064||
+n5475891522|Waszann|laundry|11.96495,121.92470||
+n5504268827|The Central Inn|hostel|11.96331,121.92807||Bolabog Road Zone 5-A
+n5567010425|Alliyah's Beach Resort|hotel|11.95636,121.92955||
+n6160809890|CoCo Fresh Tea & Juice|cafe|11.95694,121.93039||Sunset Road
+n6175673007|Boracay Travellodge|beach_resort|11.95738,121.92811||
+n6196958387|Abozza Resort|hotel|11.95725,121.93062||
+n6371497085|The Sitio Boracay|hotel|11.96893,121.92027||San Juan Street
+n6388106889|Shore Time Cafe|cafe|11.96699,121.92085|24/7|
+n6388106890|Andok's|fast_food|11.96706,121.92079||
+n6388425651|M Lhuillier|pawnbroker|11.95356,121.93200||
+n6388822224|Boracay Island Brew|cafe|11.95204,121.93325||Ambulong Street
+n6395292164|Chris and Arie Barber shop|hairdresser|11.95322,121.93194||
+n6397702486|Andok's|fast_food|11.96416,121.92628||
+n6432709585|Cyma Greek Taverna|restaurant|11.96199,121.92543||
+n6556671585|Villarica|pawnbroker|11.95219,121.93315||Ambulong Street
+n6559346086|Eva’s Homemade Pizza & Resto Bar|restaurant|11.95783,121.92958|24/7|Ambulong Street
+n6559346087|Eva’s Homemade Pizza & Resto Bar|restaurant|11.95318,121.93184|24/7|Ambulong Street
+n7177701685|Boracay Reproductive Health Center|clinic|11.96086,121.92774|Mo-Fr 8:00-17:00|
+n7256808085|Eriko’s House|hotel|11.96050,121.92584||
+n8221949418|Seafood grill|bar|11.95700,121.92794||
+n8241860617|Tres Amigos|restaurant|11.96181,121.92479||
+n8503447022|Дешёвая вкусная кафешка|cafe|11.95255,121.93062||
+n8947524465|Boat Station 1|neighbourhood|11.96480,121.92207||
+n9547624541|Yellow Cab Pizza|fast_food|11.95370,121.92932||
+n9654109885|Hama|restaurant|11.96220,121.92526||D'mall
+n9654109890|Kabayan Spa|massage|11.96302,121.92584||D'mall Avenue
+n9654109891|Jollibee|fast_food|11.96120,121.92504|Mo-Su 07:00-23:00|
+n9654109892|Chowking|fast_food|11.96131,121.92512||
+n10038002451|Red Coco Coffee Bar|cafe|11.96215,121.92431|Mo-Su 07:00-24:00|
+n10054904407|La Pearl|bar|11.96273,121.92896||
+n10054905184|Sulu Plaza Thai Food|restaurant|11.95194,121.93018||
+n10054913562|J20 Cafe|fast_food|11.95254,121.93271||Ambulong Street
+n10054925659|Sugba De Boracay Restobar|restaurant|11.95721,121.92816||
+n10054974313|Sulu Plaza|hotel|11.95201,121.93025||
+n10055024094|Bun Bun|fast_food|11.96521,121.92672||
+n10055171968|Carenderia PJDS|fast_food|11.95652,121.93198||
+n10055215633|Dagsaan Carenderia|fast_food|11.95727,121.92910|Tu-Su 11:00-21:00|
+n10057328664|Bells and Blooms|gift|11.96282,121.92591||D'mall Avenue
+n10057341067|Bamboo Shades|optician|11.96177,121.92563||
+n10059934810|Almon Ink|tattoo|11.96157,121.92508||
+n10059996699|Eljo Cellphone Repair|mobile_phone|11.96283,121.92670||
+n10060094289|Moksha Stop|convenience|11.96764,121.92743||
+n10060095126|Bogart Cellphone repair and accessories|mobile_phone|11.95321,121.93227||
+n10060110179|Street Hair Braid|tailor|11.95609,121.92855||
+n10060216193|Kezhia Store|convenience|11.96388,121.92319||
+n10060224407|Nikko Fruit Store|farm|11.96209,121.92633||
+n10062685399|Jomer Fruit Stand|farm|11.95598,121.93130||
+n10062685628|Mavicamz Produce|farm|11.95637,121.93203||
+n10062685720|Gem sweet store|farm|11.95618,121.93176||
+n10062745421|Rich B Seafoods|seafood|11.95649,121.93199||
+n10062749897|Ramilyn Store|farm|11.95634,121.93198||
+n10062755227|Sari Sari PJDS|convenience|11.95652,121.93195||
+n10076090236|Sari-Sari Rosel|convenience|11.95648,121.93193||
+n10076090746|Sari-Sari Amigos|convenience|11.95625,121.93187||
+n10076105745|Sari-Sari Johanna|convenience|11.96292,121.92769||
+n10076118599|Sari-Sari Cristy|convenience|11.95642,121.93202||
+n10076120209|Sari-Sari Jemerlyn|convenience|11.95331,121.93184||
+n10076128462|Sari-Sari Jewill|convenience|11.96506,121.92408||
+n10076131175|Mathlex Fashion House|second_hand|11.96461,121.92532||Main Road
+n10076536213|Whiskey's Cafe|restaurant|11.96461,121.92870|Mo-Su,PH 07:00-22:00|
+n10076545971|Kyrs'a Variety Store|convenience|11.95319,121.93227||
+n10076581465|Ocean Bay Hotel|hotel|11.96555,121.92259||
+n10076581466|Emerald Island Hotel|hotel|11.96551,121.92266||
+n10082153932|Donenoo Korean BBQ|restaurant|11.96527,121.92345||
+n10099375212|MIT Flowers and Souvenirs|gift|11.96288,121.92600||D'mall Avenue
+n10099420860|Sari Sari PrekingTon|convenience|11.96241,121.92799||
+n10099454219|Kim Cellphone Accesories|cell_phones|11.95609,121.93134||
+n10099454220|Cell Phone Accessories Store|yes|11.95607,121.93136||
+n10099454221|Sab and Sum Store|convenience|11.95606,121.93138||
+n10099454222|Jalal Variety Store|convenience|11.95604,121.93139||
+n10099454223|Acraman Cell Accessories|convenience|11.95602,121.93140||
+n10099507269|Agimat Crafts Store|gift|11.95280,121.92973||
+n10099538928|Hadiya Souvenir Shop|gift|11.95494,121.92896||
+n10099538929|Anima Souvenir Shop|gift|11.95486,121.92893||
+n10099538930|Albarakah Souvenir Shop|gift|11.95485,121.92906||
+n10099538931|JRTW Collection|gift|11.95483,121.92902||
+n10099538932|NJ Souvenir Shop|gift|11.95476,121.92899||
+n10099538933|Nashrenz Souvenir Shop|gift|11.95478,121.92905||
+n10099538934|Malou Souvenir|gift|11.95464,121.92893||
+n10099538935|Salnash Souvenir|gift|11.95452,121.92893||
+n10099560552|Souveniers by Je Ann|gift|11.95326,121.93185||
+n10099868245|Beach Souvenir|gift|11.95130,121.93038||
+n10099915972|Dod's Toto Store|convenience|11.95653,121.93427||
+n10099953928|Lacandula Store|convenience|11.95692,121.93417||
+n10099959017|Sweet Fruit Store|greengrocer|11.95485,121.93377||
+n10099969969|Shanghai Eatery|fast_food|11.95428,121.93150||
+n10112888812|Tech Nor Cellphone Repair Shop|mobile_phone|11.95228,121.93310||Ambulong Street
+n10112905065|Philbo Store|convenience|11.96245,121.92851|24/7|
+n10112913297|Usman Store|convenience|11.95969,121.92574||
+n10112940659|Roadway Store|convenience|11.95361,121.93194||
+n10112943284|Norjanah Souvenir Shop|convenience|11.95422,121.93135||
+n10112955381|Maricel Store|convenience|11.95987,121.93108||
+n10115416693|Gemma's Pizza|fast_food|11.96323,121.92786||
+n10117610715|Inkzomia Tattoo|tattoo|11.96499,121.92376||
+n10117695462|Noreen RTW & Souvenir Shop|gift|11.95373,121.93078||
+n10117710588|Hedjara Clothes Store|clothes|11.95406,121.93134||
+n10138941309|John David Store|convenience|11.96959,121.92177||
+n10139003835|Cell phone repair shop|cell_phones|11.95309,121.93237||
+n10139003836|A and F Souvenir Shop|gift|11.95426,121.93140||
+n10139003837|Edna Store|convenience|11.96901,121.92030||
+n10139004055|Hamen Keychain Carving|gift|11.95433,121.92877||
+n10139004878|Cali Souvenir Store|gift|11.95426,121.92889||
+n10139012296|Mikesan Souvenir Store|gift|11.95450,121.92880||
+n10139018152|Nahara Souvenir Shop|gift|11.95440,121.92881||
+n10139025626|Rayrose souvenir|gift|11.95430,121.92894||
+n10139046023|Boracay Keychain Carving|gift|11.95443,121.92878||
+n10139046124|Jham souvenir store|gift|11.95443,121.92883||
+n10139051117|All items for 20 Store|variety_store|11.95437,121.92881||
+n10139051586|Rayhan's Travel and tours Boracay|travel_agency|11.95675,121.92747||
+n10164650867|Jasmine Souvenir Shop|convenience|11.95672,121.92756||
+n10164744612|Chukista Ink|tattoo|11.96203,121.92437||
+n10164747029|St. Vincent Aquirre Rooms|guest_house|11.95653,121.92996||Calle Remedios
+n10164752943|Agimat Crafts VHub 1|gift|11.95446,121.92880||
+n10164753645|Rob and Fred resort|hotel|11.95634,121.93005||
+n10164764989|Here & Now|gift|11.96282,121.92602||D'mall Avenue
+n10164774442|Alex and Alzea Store|convenience|11.96737,121.92668||
+n10164777194|Tambayan Bar and Resturaunt|restaurant|11.96780,121.92738||
+n10164796190|Guiseppe Pizzeria|restaurant|11.95173,121.93029||
+n10222738153|Jumare Hairbraid|hairdresser|11.95564,121.92799||
+n10222738245|Eleven J Pasalubong shop (dried Fruits)|greengrocer|11.95379,121.93093||
+n10222740043|A@H souvenir|gift|11.95555,121.92864||
+n10222750672|Shawarmalike-kum|fast_food|11.95672,121.93001||
+n10222777979|Meze Kitchen|restaurant|11.96478,121.92711||
+n10239467341|Totally Bananas|cafe|11.96527,121.92654|24/7|
+n10239541065|Erus Hotel and Spa|restaurant|11.95489,121.93161||
+n10239541066|Huey Ying Music Restaurant|restaurant|11.95487,121.93161||
+n10239589530|Momo Ramen|restaurant|11.96497,121.92770|Mo-Su,PH 11:00-03:00|
+n10242182189|Congas|restaurant|11.96471,121.92704|Mo-Su,PH 10:30-22:00|
+n10246080434|Royal Indian Curry House Boracay|restaurant|11.96407,121.92303||
+n10656548267|Wander Skye|gift|11.96188,121.92470||
+n10656550903|Aplaya|restaurant|11.96415,121.92294||
+n10656580327|Tropical Nomad|gift|11.96253,121.92547||D'mall Avenue
+n10656580328|Hungry Monkey|restaurant|11.96260,121.92567||
+n10743308878|Hennan Palm Beach Resort|hotel|11.95669,121.92792||
+n10831323268|K-Kitchen|restaurant|11.95108,121.93051||
+n10831323271|LMJ Salon|beauty|11.95476,121.92889|10:00-18:00|
+n10831323272|Good Life|massage|11.95377,121.92919||
+n10831323273|Cafe Maruja|cafe|11.95359,121.92930||
+n10831323274|Golden Phoenix|resort|11.95321,121.92952||
+n10901663710|Eurotel|hotel|11.95884,121.92776||
+n10908162317|Ocean Dive Supply|sports|11.96307,121.92612||
+n10917558105|Aquaventure Whitetip Dive Supply|sports|11.96155,121.92505||
+n10917568405|Carenderia local food|restaurant|11.95192,121.93053||
+n10963370605|CoCo Fresh Tea & Juice|cafe|11.96251,121.92555||
+n10976210505|Shine Up Beauty Salon|hairdresser|11.95248,121.93278||Ambulong Street
+n11006728471|Halomango|ice_cream|11.96279,121.92597||D'mall Avenue
+n11006728472|Islands Souvenir|gift|11.96163,121.92523||
+n11006728473|Quency|bakery|11.96277,121.92582||D'mall Avenue
+n11006728474|LBC|post_office|11.96332,121.92627||
+n11006728475|Thai Basil|restaurant|11.96302,121.92623||D'mall Avenue
+n11006728476|Fiesta!|gift|11.96299,121.92621||D'mall Avenue
+n11006728477|Litte Taj|restaurant|11.96158,121.92475|Mo-Su 11:00-23:00|
+n11006728478|The Body Shop|cosmetics|11.96150,121.92497||
+n11006728479|Happy Planet|clothes|11.96303,121.92613||D'mall Avenue
+n11006728480|Filigrenasia|jewelry|11.96290,121.92614||D'mall Avenue
+n11006732043|Mang Inasal|fast_food|11.96194,121.92499||
+n11006732044|Super Sub|restaurant|11.96276,121.92593||D'mall Avenue
+n11006732045|Farmacia ni Dok|pharmacy|11.96286,121.92608||D'mall Avenue
+n11006752272|Ice Flakes|ice_cream|11.96180,121.92476||
+n11006752273|Aria Gelato|ice_cream|11.96178,121.92473||
+n11006831153|Paraiso Bar & Grill|restaurant|11.96097,121.92509||
+n11006831154|Real Coffee|cafe|11.96026,121.92538||
+n11006831155|Halomango|ice_cream|11.96044,121.92526||
+n11006831156|Jocon Minimart|convenience|11.96105,121.92497||
+n11006831157|E. S. Pascual Store|convenience|11.96039,121.92529||
+n11006831159|Kelana|restaurant|11.96022,121.92540||
+n11006831160|Kawayan Kitchen|kiosk|11.96030,121.92536||
+n11006942478|La Plaza|restaurant|11.96153,121.92543||
+n11006942479|Gratitude|nightclub|11.96145,121.92484||
+n11006942480|M Lhuillier|pawnbroker|11.96188,121.92596||
+n11006942483|Fruitas|fast_food|11.96203,121.92626||
+n11006942484|I ♥ BORACAY|attraction|11.96334,121.92653||
+n11006960074|Mang Inasal|fast_food|11.96133,121.92522||
+n11006960076|Eastman Spa|massage|11.96117,121.92505||
+n11007359058|Ralph’s Wine & Spirits|alcohol|11.96168,121.92506||
+n11007359059|BSikleta|bicycle|11.96203,121.92615||
+n11007359060|PCSO|lottery|11.96425,121.92643|Mo-Su,PH 08:00-20:00|
+n11007359061|Island Bowls|fast_food|11.96311,121.92637||D'mall Avenue
+n11007359062|Milk Fridge|cafe|11.96251,121.92674||
+n11007698088|Dragon Crepes|fast_food|11.96168,121.92497||
+n11007698089|Tsokolateria|cafe|11.96161,121.92491||
+n11007698090|V. B. Queen’s Money Changer|bureau_de_change|11.96185,121.92491||
+n11007783986|Pan De Boracay|bakery|11.96368,121.92607|24/7|
+n11007783987|New Era|fashion_accessories|11.96147,121.92495||
+n11007783988|Spicebird|restaurant|11.96185,121.92477||
+n11007783989|Footzeez|massage|11.96293,121.92617||D'mall Avenue
+n11009586374|TGP|pharmacy|11.96348,121.92621||
+n11009586375|Queen Bee|restaurant|11.96188,121.92495||
+n11009586376|Olé|restaurant|11.96200,121.92496||
+n11009631635|Uswag Arts & Crafts|fashion_accessories|11.96195,121.92491||
+n11009681743|Sapphire|restaurant|11.96286,121.92384||
+n11009681746|Gerry’s Grill|restaurant|11.96346,121.92341||
+n11010336424|KFC|fast_food|11.95932,121.92585||
+n11010336427|Haven Bistro|restaurant|11.95712,121.92711||
+n11010336430|Potato Corner|fast_food|11.95912,121.92598||
+n11010336431|Gerry’s Grill|restaurant|11.95751,121.92691||
+n11010365484|Nigi Nigi Nu Noos Nu Nu Noos Sports Bar|bar|11.95694,121.92726||
+n11010640766|Sip Happens|alcohol|11.96185,121.92722||
+n11010640767|R&B Milk Tea|cafe|11.95909,121.92598||
+n11010640770|Charlh’s Seafood Grill & Restaurant|restaurant|11.95737,121.92705||
+n11010640771|Palawan Pawnshop|pawnbroker|11.96378,121.92692|Mo-Su,PH 08:00-17:30|
+n11010681668|Euro Mart|convenience|11.95880,121.92768||
+n11010708288|Bliss Wash Laundromat|laundry|11.96420,121.92637||
+n11011483313|Cebuana Lhuillier|pawnbroker|11.95441,121.93163||
+n11189562438|Mandarin Premier White Sand|hotel|11.95230,121.93036|24/7|
+n11462159522|Ditto|restaurant|11.96544,121.92301||
+n11462405728|Cabanna|clothes|11.96241,121.92533||
+n11462528603|Crystal Shack|gift|11.96248,121.92552||
+n11462528604|Ana Bun-Sik|fast_food|11.96265,121.92560||
+n11462528605|D'Amour|gift|11.96263,121.92557||
+n11462528606|My Crepes|fast_food|11.96258,121.92554||
+n11462528608|Showdown|amusement_arcade|11.96246,121.92550||
+n11462528609|Bogarte|clothes|11.96244,121.92547||
+n11462528610|Country Jeans|clothes|11.96242,121.92544||
+n11462528611|Nautilus|clothes|11.96238,121.92540||
+n11522102969|Jonah’s|cafe|11.96244,121.92411||
+n11536423769|HaloMango|ice_cream|11.96047,121.92534|Mo-Su 09:00-00:00|Beachfront Path
+n11539145870|Butang|fitness_centre|11.95928,121.92879||Boracay Main Road
+n11736796669|Islabada|laundry|11.96613,121.92576||Bulabog Road
+n11932732331|Wave Bar & Lounge|nightclub|11.95830,121.92649||
+n11932732332|Peri Peri Charcoal Chicken and Sauce Bar|fast_food|11.95843,121.92670||
+n11932740294|El Centro Fruit Shakes|fast_food|11.95763,121.92681||
+n11932740403|Henann Regency Resort & Spa|resort|11.95883,121.92732|24/7|Station 2 Road
+n12098510407|Merly's Place Cottages|apartment|11.95356,121.93189||
+n12130745258|Falafel Boracay|fast_food|11.96299,121.92608||D'mall Avenue
+n12209029547|RCBC|bank|11.96540,121.92300||
+n12238440000|GMarket | GCafe & Bakery|cafe|11.95367,121.93170|Mo-Su 07:00-21:00|Ambulong Street
+n12288305272|Montoya Grill Station Boracay|restaurant|11.95371,121.93172|Mo-Su 10:00-22:00|Ambulong Street
+n12373851465|LK Beauty Salon|beauty|11.95181,121.93335|Mo-Fr 08:00-23:00|
+n12415986597|Healthree Foods|greengrocer|11.95366,121.93174|Mo-Sa 10:00-20:00; Su 10:00-15:00|
+n12428340501|Backbeach Burgers|restaurant|11.96407,121.92601|Mo-Su 11:30-23:00|Main Road
+n12428340502|Island Izakaya|restaurant|11.95508,121.93161|Mo-Su 12:00-22:00|
+n12519335323|GMarket|bakery|11.95379,121.93163|Mo-Su 08:00-20:30|Ambulong Street
+n12531763533|Metrobank|bank|11.96536,121.92319||
+n12532790601|True Home Restaurant|restaurant|11.96774,121.92001||
+n12535517280|Boat Station 3|neighbourhood|11.95201,121.92978||
+n12535517281|Boat Station 2|neighbourhood|11.95998,121.92518||
+n12809079001|Chubby Crab PH|restaurant|11.96401,121.92615|Mo-Su 11:00-22:00|Main Road
+n12809145101|Percy Seafood|restaurant|11.96836,121.91956|Mo-Su 07:00-22:00|Station1 Beachfront
+n12809154201|D'Mall|mall|11.96304,121.92618||D'mall Avenue
+n12901226211|Wetland № 3|neighbourhood|11.96599,121.92502||
+n12901255206|Zone 4|city_block|11.96851,121.92056||
+n12901423959|Manggayad|quarter|11.95788,121.92998||
+n12901423973|BDO|bank|11.95761,121.93016||
+n12952200799|Alcobendas-Garcia Dental Clinic|dentist|11.95666,121.93105|Mo-Sa 09:00-17:00|Ambulong Street
+n12961569928|Chimney Cake|ice_cream|11.96167,121.92729|Mo-Su 13:00-00:00|Boracay Main Road
+n12977813201|Calypso Beach and Dive Resort|hotel|11.95526,121.92825||Station 3, White Beach Path
+n12977998502|Aquarius Terraces Boutique Resort|hotel|11.96943,121.91991||Balabag Plaza, Bulabog Beach
+n13078443917|Muchos|restaurant|11.96392,121.92311|Mo-Su 10:00-22:00|
+n13083753501|Bluefin Specialty Coffee & Brunch|cafe|11.96479,121.92833|Mo-Su 08:00-19:00|
+n13083761901|Watsons|pharmacy|11.96170,121.92752|Mo-Su 08:00-00:00|
+n13091356601|Zugba Grill House|restaurant|11.96437,121.92657|Mo-Su 11:00-15:30; Mo-Su 17:30-22:30|Road 1-A
+n13295938103|7-Eleven|convenience|11.96403,121.92602||Main Road
+n13354748501|Bem Bem's Mini Mart|convenience|11.96299,121.92732||
+n13518302719|7-Eleven|convenience|11.95417,121.93163||
+n13518302721|Mangrove Boardwalk|attraction|11.95639,121.93451||
+n13518691278|Jammers|restaurant|11.96158,121.92467||
+n13697364201|Café del Sol|restaurant|11.96169,121.92459||
+n13700242902|Kolai Mangyan Fudhaus|restaurant|11.96713,121.92075||
+n13700252001|The Sunny Side Cafe|cafe|11.95311,121.92969||
+n13700252002|Lavada Queen|laundry|11.95319,121.93212||
+n13704750501|Sunny side cafe|cafe|11.95314,121.92954||
+n13811012301|Fiesta Souvenir Cafe|cafe|11.96356,121.92332||
+n13992416849|Levantin Restaurant|restaurant|11.96386,121.92970|Mo-Su 06:00-22:00|Bulabog Promenade
+n14007440717|The Monkey Tree Cafe and Bar|restaurant|11.96422,121.92945|Mo-Su,PH 07:00-21:30|
+n14007440718|Kitecenter at Banana Bay|wingfoiling_school|11.96417,121.92950|Oct-Apr: Mo-Su,PH 06:00-18:00|Bulabog Promenade
+n14019250401|Hey Jude Bulabog Beachfront Residence|chalet|11.96490,121.92889||Sesame Street
+n14019736002|By Da Way|restaurant|11.96941,121.92673|Tu-Su 09:00-21:00|
+n14023855488|I ♥ BORACAY|attraction|11.96567,121.92868||
+n14023855489|Leaning Coconut Tree|attraction|11.96489,121.92930||
+n14029913501|Turbowash|laundry|11.95767,121.92757||
+n14031017801|Scandi Medical Clinic and Diagnostic Center|clinic|11.96252,121.92807|Mo-Su 08:00-17:00|
+n14031030501|Pig Out Bistro|restaurant|11.96533,121.92334|Mo-Su 07:00-22:00|
+n14031038107|Kumangasan Resto|restaurant|11.96432,121.92649|Mo-Su 10:00-23:00|
+n14038726301|Gyukatsu|restaurant|11.96434,121.92654||
+n14038745076|Jimuel's|copyshop|11.96390,121.92590|Mo-Su 06:00-00:00|Main Road
+n14038797565|Two Brown Boys|bar|11.96463,121.92692||Road 1-A
+n14038830092|Bulabog|quarter|11.96617,121.92783||
+n14038891801|Kaede|restaurant|11.96150,121.93138|Mo-Su 11:00-21:00|
+n14039026801|Zuzu|restaurant|11.96089,121.92920|Mo-Su 18:00-00:00|
+n14041027601|Heidiland Deli|deli|11.96231,121.92535||
+n14041027768|Hobbit House|restaurant|11.96223,121.92515||
+n14041027858|Aria|restaurant|11.96164,121.92467||
+n14045063770|St. Angelique|dentist|11.96469,121.92702||
+n14045063771|Soo Gifts 'n Fashion|gift|11.96481,121.92718||
+n14045063772|Hello My Foot Spa|massage|11.96485,121.92721||
+n14045063773|JT's Manukan Grille|restaurant|11.96487,121.92725||
+n14045212203|Amihan Home|hotel|11.95967,121.93016||
+n14045273639|Rohanns Money Changer and Payment Center|payment_centre|11.96442,121.92666||
+n14045273640|Spa Ilias|massage|11.96440,121.92662||
+n14045303491|Eski Express|fast_food|11.96373,121.92696|24/7|
+n14045303492|Canadian|wholesale|11.96386,121.92687||
+n14045303494|Snow Coffee|cafe|11.96410,121.92670||
+n14045303495|Green Coco|gift|11.96406,121.92674||
+n14045303496|OK Billiard Cafe|cafe|11.96407,121.92686||
+n14045303497|Eskinita|restaurant|11.96376,121.92696||
+n14045303498|Deborah K-Hopping|travel_agency|11.96366,121.92703||
+n14045303499|King Shrimp|restaurant|11.96364,121.92706||
+n14045303500|All-In|restaurant|11.96360,121.92707||
+n14045336101|Bolca|restaurant|11.96350,121.92712||
+n14045336102|Spa Wars|massage|11.96340,121.92719||
+n14048108291|Blue Lotus|bakery|11.96511,121.92761|Mo-Sa 05:30-18:00|
+n14057998960|Studio A Coffee & Buns|fast_food|11.96477,121.92840||
+n14057998961|Bluefin|dive_centre|11.96479,121.92831||
+n14057998962|Isle Veggies Store|greengrocer|11.96474,121.92783||
+n14057998963|Tunamazing Express|frozen_food|11.96476,121.92782||
+n14057998964|Hanoi Pho|restaurant|11.96462,121.92714||
+n14057998965|Cafe Spatula|cafe|11.96460,121.92711||
+n14057998967|El Chen|bureau_de_change|11.96430,121.92649||
+n14058056484|Oh Gelato|ice_cream|11.96372,121.92604||
+n14058056485|Waszann Wear|laundry|11.96376,121.92601||
+n14058056486|Meze Wrap|restaurant|11.96373,121.92601||
+n14058056487|Pickapearl|jewelry|11.96380,121.92598||
+n14058056488|Tiger Foot Spa|massage|11.96382,121.92595||
+n14058109875|Blue Horizons|travel_agency|11.96321,121.92611||
+n14058109876|Farmacia Alenjen|pharmacy|11.96284,121.92594||
+n14058109878|C&C|restaurant|11.96213,121.92507||
+n14058109879|Jeepney Stop|restaurant|11.96204,121.92502||
+n14058109886|Epic|nightclub|11.96145,121.92476||
+n14058109887|Happy Planet|clothes|11.96129,121.92485||
+n14058307460|Farmacia ni Dok|pharmacy|11.96279,121.92704||
+n14058458701|Leve|restaurant|11.95734,121.92914|Mo-Su,PH 07:00-21:00|
+n14070345934|Boracay Alert Medical Clinic and Diagnostics|clinic|11.96003,121.92855||
+n14071757964|LJ Pharmacy|pharmacy|11.96096,121.92804||
+n14074580802|Janda Indian Cuisine|restaurant|11.95718,121.92911|Mo-Su 08:00-22:00|
+n14074875480|Gota|cafe|11.95719,121.92895||
+n14079909948|Hello Spa|massage|11.96377,121.92749||
+n14079909949|Sophie's Basicleta Bike Rentals|bicycle_rental|11.96380,121.92740||
+n14089664839|WaterColors Beach Café Bar|restaurant|11.96786,121.91993|Mo-Su 07:30-23:00|
+n14089664840|Big Mama's Pizza|restaurant|11.96782,121.91996||
+n14089664849|El Toro Loco|restaurant|11.96791,121.91988|Mo-Su 08:00-22:00|
+n14089664850|37 Degrees Coffee|cafe|11.96805,121.91982||
+n14089664861|Kolai Mangyan|restaurant|11.96863,121.91930||
+n14089664862|Chichas & Pica|restaurant|11.96857,121.91935||
+n14090962249|Balabag Plaza|square|11.96826,121.92014||
+n14101956455|Tooth Fairy Dental Clinic|dentist|11.96411,121.92592|Mo-Sa 09:00-18:00|
+n14104609477|Cafe Got Soul|restaurant|11.96710,121.92057||
+n14104609478|New Wave Divers|dive_centre|11.96668,121.92091||
+n14104609479|Cafe Uno Boracay|bar|11.96671,121.92089||
+n14104609490|Jonah's Fruit Shakes|fast_food|11.96658,121.92098||
+n14105164449|Yes FM Boracay|studio|11.96524,121.92654||
+n14105164450|Easy Rock Boracay|studio|11.96525,121.92653||
+n14114295033|Saboria|restaurant|11.96180,121.92453|Mo-Su 06:00-01:00|
+n14114295051|Katabom|convenience|11.96196,121.92441||
+n14114295052|Aurora Hostel Inn|hostel|11.96191,121.92452||
+n14114295053|Asyenda Inasal|restaurant|11.96188,121.92445||
+n14124023801|Sandy's Minimart|supermarket|11.95662,121.93108||
+n14124025201|Boracay Mini-Mart|supermarket|11.95539,121.93163|Mo-Su 07:00-20:00|
+n14128769900|Club Tropicana|nightclub|11.96412,121.92300||
+n14128770505|islands souvenirs|gift|11.96369,121.92328||
+n14141088433|Mezcaleria|restaurant|11.96737,121.92056||
+n14141342849|7-Eleven|convenience|11.96721,121.92069||
+n14141490068|Obama Grill|restaurant|11.96695,121.92088||
+n14141842474|Lugar Bonito|hotel|11.96691,121.92092||
+n14141842477|Diamond Water Edge Resort|hotel|11.96673,121.92104||
+n14144012470|My Station Hotel|hotel|11.96534,121.92269||
+n14144069906|Jony's Boutique Hotel|hotel|11.96537,121.92333||
+n14157173454|Salsa|restaurant|11.96494,121.92338|Mo-Su 12:00-22:00|
+n14157173459|Silong Cafe|cafe|11.96513,121.92349|Mo-Su 08:00-20:00|
+n14157173467|Florista|florist|11.96495,121.92399|Mo-Su 08:00-22:00|
+n14157204565|Jonah's Fruit Shakes|fast_food|11.96511,121.92400||
+n14158756230|Phin & Pho|restaurant|11.96894,121.91968|Mo-Su: 10:00-22:00|
+n14159194280|Eastwest|bank|11.96475,121.92502||
+n14166218453|English Bakery|bakery|11.96548,121.92476||
+n14188431593|Cool Stay Inn|hotel|11.96620,121.92612||
+n14188767863|Bale Mi|apartment|11.96702,121.92722||
+n14188767881|Ozzy's Bar & Restaurant|restaurant|11.96635,121.92608|Mo-Su 08:00-03:00|
+n14190652780|Lanterna|restaurant|11.96666,121.92717||
+n14209040801|Angel Wish Seafood|restaurant|11.95832,121.92865|Mo-Su 10:00-22:00|
+n14210791703|Jopines Store|general|11.96478,121.92494|Mo-Su 07:00-18:00|
+n14234453901|One Shot|restaurant|11.96238,121.92690|Mo-Su 10:00-23:00|Boracay Main Road
+n14234938102|Wishing U Malatang|restaurant|11.96427,121.92557||
+n14234938103|Lighthouse Inn|hotel|11.96415,121.92550||
+n14234986307|Le Salon de Boracay|beauty|11.96416,121.92568||
+n14234986308|Tosta Chon|restaurant|11.96423,121.92561||
+n14237790057|Blake's Wings & Steaks|restaurant|11.96780,121.91999||
+n14241096297|BPI|bank|11.96357,121.92613|Mo-Fr 09:00-16:30|
+n14241157776|Ke Lai Ju|restaurant|11.96365,121.92607|Mo-Su 10:00-22:00|
+n14241157777|Teb an Z|restaurant|11.96393,121.92588|24/7|
+n14245526571|Posecion Clinics|dentist|11.96422,121.92582||
+n14245526585|Blue Lotus|hotel|11.96386,121.92557||
+n14245526587|Island Spirit Spa|massage|11.96410,121.92593||
+n14245528835|Shore Time Hotel Annex|hotel|11.96349,121.92618||
+n14298734555|Cafe Shine|cafe|11.96445,121.92669|Mo-Su: 08:00-20:00|
+n14298734556|Bora Club|bar|11.96407,121.92622||
+n14348783201|Harder's|restaurant|11.96485,121.92667||
+w4279178|Wetland № 4|water|11.96342,121.92671||
+w4279249|White Beach|beach|11.95808,121.92506||
+w31780053|Sea Wind|hotel|11.97024,121.91832||
+w31780055|Estacia Uno|hotel|11.96908,121.91893||
+w31780056|Willy's Rock|islet|11.96812,121.91857||
+w31780057|Seaworthy Boutique Hotel|hotel|11.96844,121.91956||
+w31780060|V Boutique Hotel|hotel|11.96796,121.91989||
+w31780061|WaterColors Boracay Dive Resort|hotel|11.96789,121.91996||Boracay Main Road
+w31780067|Club Paraw|nightclub|11.96722,121.92042||
+w31780372|Mayas Filipino & Mexican Cuisine|restaurant|11.96629,121.92121||
+w31780509|Royal Park Hotel|hotel|11.96527,121.92238||
+w31780511|Astoria Boracay|hotel|11.96506,121.92275||Boracay Main Road
+w31780516|The Muse|hotel|11.96437,121.92308||
+w31780522|Zuzuni|hotel|11.96393,121.92318||
+w31780524|Starbucks|cafe|11.96345,121.92346||
+w31780530|Crystal Sand|hotel|11.96285,121.92402||
+w31780533|Sun Village Central|restaurant|11.96206,121.92445||
+w31780534|Bamboo Bungalows|hotel|11.96236,121.92490||
+w31780999|Boracay Uptown|mall|11.96109,121.92514||
+w31781004|Shenna's Resort|hotel|11.96048,121.92536||
+w31781012|Summer Place|pub|11.96004,121.92564||
+w31781013|Deparis Resort|hotel|11.95980,121.92580||
+w31781014|Le Soleil de Boracay|hotel|11.95997,121.92579||
+w31781015|Boracay Mandarin|hotel|11.95954,121.92597||
+w31781016|Boracay Peninsula Resort|hotel|11.95931,121.92618||
+w31781017|Shakey's|restaurant|11.95907,121.92604||
+w31781018|OM Boracay|nightclub|11.95903,121.92620||
+w31781019|Henann Resort Regency and Spa|resort|11.95883,121.92673||
+w31781022|El Centro|hotel|11.95772,121.92691||
+w31781025|Zuchero Cafe|restaurant|11.95726,121.92715||
+w31781026|Eclipse Rooms and Restaurant|hotel|11.95717,121.92721||
+w31781027|Nigi Nigi Nu Noos Nu Nu Noos|hotel|11.95700,121.92736||
+w31781029|Ice Flakes|ice_cream|11.95685,121.92742||
+w31781030|Don Vito|restaurant|11.95930,121.92591||
+w31781031|Nigi Nigi Too|hotel|11.95618,121.92786||
+w31781033|Alice Boracay Resort|hotel|11.95575,121.92810||
+w31781034|Tourist Information Centre|information|11.95553,121.92827||
+w31781035|Boracay Tourist Police|police|11.95573,121.92847||Calle Remedios
+w31781037|Sensi|restaurant|11.95521,121.92835||
+w31781039|Serge's Palace Resort|hotel|11.95501,121.92855||
+w31781040|Andok's|fast_food|11.95487,121.92855||
+w31781041|Pizza da Baffo Resort|hotel|11.95477,121.92860||
+w31781042|Tyangs|restaurant|11.95494,121.92843||
+w31781043|Pirate's Arm|pub|11.95466,121.92867||
+w31781046|Casa Pilar|hotel|11.95379,121.92925||
+w31781437|La Isla Bonita|hotel|11.95289,121.92996||
+w31781438|Crown Regency Resort|hotel|11.95269,121.92997||
+w31781440|Ondus Boracay|hotel|11.95252,121.93015||Station 3
+w31781441|Queens Beach Resort|hotel|11.95233,121.93011||
+w31781442|TGH|restaurant|11.95211,121.93020||
+w31781445|Dive Gurus|dive_centre|11.95167,121.93042||
+w31781447|Boracay Ocean Club Resort|hotel|11.95107,121.93067||
+w31781448|Arwana Hotel and Restaurant|hotel|11.95055,121.93096||
+w31781449|Marzon Beach Resort|hotel|11.95081,121.93074||
+w31781450|Tita Magz|restaurant|11.95046,121.93102||
+w31781451|Sandal's Inn|hotel|11.95037,121.93105||
+w31781452|Angol Point Beach Resort|hotel|11.95014,121.93126||
+w31929050|Museo de Roberty y Gloria Tirol|museum|11.97004,121.91843||
+w31929059|Holy Rosary Parish Church|place_of_worship|11.96846,121.92043||
+w31929061|Balabag Barangay Hall|townhall|11.96846,121.91997||
+w31929070|Jinjiang Inn|hotel|11.96516,121.92323||Boracay Main Road
+w31929072|Ja-Puno Japanese-Filipino Restaurant|restaurant|11.96486,121.92315||
+w31929076|Boracay National High School|school|11.96511,121.92559||Bulabog Road
+w31929077|Nonet's Place|guest_house|11.96591,121.92577||
+w31929212|Budget Mart|supermarket|11.96316,121.92625|Mo-Su 08:00-00:00|Boracay Main Road
+w31929674|Hangin Kite Center|kiteboarding|11.96569,121.92838||
+w31929679|7-Stones|hotel|11.96438,121.92885||
+w31929680|Levantin Boracay|hotel|11.96374,121.92946||
+w31929684|Danaru Spa|massage|11.96538,121.92721||
+w31929688|Lake Town Korean BBQ|restaurant|11.96396,121.92689|Mo-Su,PH 11:00-23:00|
+w31929693|Balabag Elementary School|school|11.96477,121.92582||Boracay Main Road
+w31929703|Palengke Market|marketplace|11.96205,121.92620||
+w31929704|Grand Boracay Resort|hotel|11.96245,121.92614||
+w31929707|The Tides Boracay|hotel|11.96218,121.92549||
+w31929809|Paradiso Beach House|hotel|11.96486,121.92292||
+w31950804|Mandala Spa and Villas|hotel|11.95074,121.93324||
+w31950806|Gasul|gas|11.95710,121.93091||
+w31950807|PNB|bank|11.95772,121.92998||Ambulong Street
+w31950809|Nirvana Beach Resort|hotel|11.96170,121.92689||
+w31952821|Bloomfield Academy|school|11.96282,121.92758||
+w31952828|Greenyard Windsurfing|windsurfing|11.96032,121.93255||
+w31953007|Kingfisher Farm|hotel|11.95493,121.93444||
+w31953010|Lava Stone Spa|hotel|11.95466,121.93386||
+w31974238|Faith Retreat and Conf Center|hostel|11.95315,121.93133||
+w31974239|Faith Retreat and Conf Center|hostel|11.95284,121.93149||
+w31974241|Roxon Apartments|hotel|11.95227,121.93060||
+w31974242|A-rock|hotel|11.95217,121.93114||
+w31974244|Turtle Inn|hotel|11.95195,121.93186||
+w31974246|M&E Guest House|guest_house|11.95257,121.93084||
+w31974248|Kingdom Hall of Jehovah's Witnesses|place_of_worship|11.95195,121.93144||
+w31974250|Nikko's|hotel|11.95195,121.93122||
+w31974252|Desserees Place|hotel|11.95173,121.93094||
+w31974253|Melinda's Garden|hotel|11.95083,121.93111||
+w31974255|Escurel Inn|hotel|11.95056,121.93122||
+w31974256|Treffpunkt|biergarten|11.95060,121.93152||
+w31974257|Roy's Rendezvous|hotel|11.95097,121.93155||
+w31974258|Dave's Straw Hat Inn|hotel|11.95075,121.93176||
+w31974259|The Orchids|hotel|11.95097,121.93170||
+w31974261|Bora Bora Inn|hotel|11.95084,121.93197||
+w31974262|Ocean Breeze Inn|hotel|11.95120,121.93160||
+w31974265|Villa Romero|hotel|11.95239,121.93058||
+w31974448|Sababi Exotic Foods|restaurant|11.95832,121.92837||
+w31999319|Dos Mestizos Restaurant|restaurant|11.95582,121.92859|Mo-Su 10:00-00:00|Calle Remedios
+w32455168|Deep Chill Ice|Ice plant|11.95576,121.92870||
+w32455408|Roque's Place|hotel|11.95648,121.92981||
+w32455417|Boracay Tropics|hotel|11.95725,121.93024||
+w32455573|Orchids Family Villas|hotel|11.95119,121.93244||
+w32457227|Holiday Homes|hotel|11.95427,121.93061||
+w32457236|Paradise Garden|hotel|11.95517,121.93034||
+w32457249|Tonglen Beach Resort|hotel|11.95549,121.93135||
+w32457251|Crystal Ocean|hotel|11.95623,121.92973||
+w32457254|Saint Vincent's Cottages|hotel|11.95610,121.92984||
+w46249774|Habagat Kite Village|hotel|11.96194,121.93111||
+w46250020|The Lazy Dog|guest_house|11.96467,121.92878||Sesame Street
+w116565361|Le Soleil de Boracay|hotel|11.95447,121.93134||
+w116565365|Trafalgar Cottages|hotel|11.95414,121.93123||Old Talipapa Path
+w136705578|Bonzai Resort|motel|11.95660,121.92857||
+w217504702|Morenos|guest_house|11.95078,121.93127||
+w217504732|Massage|massage|11.95077,121.93141||
+w217504783|The Blue Bar|bar|11.95068,121.93087||
+w217921527|AKY|fuel|11.95070,121.93484||
+w217923972|Kurt nad Mugz|guest_house|11.95055,121.93163||
+w268836532|Casa Alonso Boracay|hotel|11.96890,121.92095||Santo Rosario Street
+w316240419|Talipapa Bukid|marketplace|11.95639,121.93178||
+w345414597|Aqua|hotel|11.96174,121.93007||
+w345475962|Crown Regency Courtyard Resort|hotel|11.95756,121.92998||Ambulong Street
+w345475965|Azelea Boracay|hotel|11.95986,121.92827||
+w370212796|Gracia's Inn|guest_house|11.95076,121.93161||
+w399811499|Greenstop|convenience|11.95196,121.93025|24/7|
+w399811500|WaterColors Boracay Diving Adventures - South|dive_centre|11.95184,121.93026|07:30-21:30|
+w495005789|Kandingon|islet|11.96044,121.93436||
+w502111554|Paradise Hotel Convention Center|events_venue|11.95478,121.93000||
+w502111558|Paradise Hotel Lobby|reception_desk|11.95453,121.93110||
+w502864526|Iglesia ni Cristo, Lokal ng Boracay|place_of_worship|11.96587,121.92607||
+w502864553|Isla Kitesurfing and Wingfoiling School|kiteboarding|11.96650,121.92789||
+w502865984|Jeffrey’s Hotel|hotel|11.96378,121.92702||
+w502867223|Babosam Hotel|hotel|11.96574,121.92696||
+w682146986|Mecasa|hotel|11.96486,121.92764||
+w682147049|Jasper's|restaurant|11.96243,121.92686||
+w682147056|Feliz Hotel|hotel|11.96158,121.92558||
+w682148103|Shore Time|hotel|11.96709,121.92088||
+w682180089|Boracay Breeze Resort|hotel|11.96884,121.92021||
+w682181901|Indila Hotel|beauty|11.95750,121.92920||
+w682182706|Lime Hotel|hotel|11.95969,121.92896||
+w682183779|The District|hotel|11.96280,121.92438||
+w682184157|Giulius Boracay Italian Resort|hotel|11.96312,121.92546||
+w682185702|Ferra Premiere Hotel|hotel|11.96539,121.92677||
+w682208162|Calma Cafe  & Restaurant|restaurant|11.96029,121.93271||
+w682816850|Mindas canteen|fast_food|11.95031,121.93414||
+w684303331|Meat/Seafood|marketplace|11.95644,121.93185||
+w684303396|St Gabriel Medical Center|hospital|11.95174,121.93315||
+w692776246|Ferra Hotel and Garden Suites|hotel|11.96583,121.92655||
+w692776269|Iron Throne Gym|fitness_centre|11.96367,121.92846||
+w801492903|Bloom|hotel|11.96193,121.92817||
+w965989173|Hap Chan Seafood Restaurant|restaurant|11.95851,121.92634||
+w965989176|Sea Breeze Cafe|restaurant|11.95810,121.92658||
+w1050937200|Balabag Wetland Park|park|11.96336,121.92687||Boracay Main Road
+w1160406527|Paradise Hotel Breakfast|restaurant|11.95484,121.93081||
+w1161976164|Alice In Wonderland|hotel|11.95587,121.92836||
+w1285458082|Stayhere Boracay|hostel|11.96372,121.92749||
+w1286532527|Christina's|restaurant|11.95864,121.92629||
+w1286532528|Mesa Filipino Moderne|restaurant|11.95881,121.92622||
+w1286532547|Mandarin Bay Resort & Spa|resort|11.95828,121.92758||
+w1286532548|Henann Garden Resort|resort|11.95949,121.92699||
+w1311718802|Starfire Resort|hotel|11.95247,121.93036||
+w1392335398|La Carmela de Boracay|hotel|11.95576,121.92915|Mo-Su 09:00-18:00|
+w1393756373|Henann Lagoon Resort|hotel|11.95843,121.92903||Ambulong Street
+w1536141423|Galaxy|nightclub|11.95961,121.93319||
+w1536844963|Cathy's Bistro|restaurant|11.96662,121.92784|Mo-Su 07:00-21:00|
+w1537389673|Pirate Bar|bar|11.96441,121.92896|Mo-Su,PH 06:00-22:00|
+w1537828911|Palassa Private Residences|hotel|11.96437,121.92932||
+w1537830292|Banana Bay|hotel|11.96410,121.92930||
+w1544361436|Jhul's Hotel|hotel|11.96612,121.92596||
+w1546862486|Niu Ohana|restaurant|11.96408,121.92952||
+w1547092662|Red Coco Inn de Boracay|hotel|11.96080,121.92835||Boracay Main Road
+w1547092664|Agos Boracay Rooms and Beds|hotel|11.96103,121.92828||
+w1547093111|Savemore|supermarket|11.96061,121.92851||
+w1547384062|Jollibee|fast_food|11.96189,121.92697||
+w1547600802|Villa Lourdes Resort|hotel|11.96244,121.92653||
+w1548036486|True Home Hotel|guest_house|11.96778,121.92006||
+w1548036487|Sunny Side Cafe|restaurant|11.96735,121.92032||
+w1548036488|Smooth Boracay Cafe & Lounge|restaurant|11.96693,121.92067|Sa-Su 07:00-23:00|Beachfront, Station 1
+w1548036489|Mai Tai Beach Bar|bar|11.96654,121.92100||
+w1548060546|Ciriaco Tirol Hospital|hospital|11.96082,121.92773||
+w1550733253|Jony's Beach Resort|hotel|11.96648,121.92146||
+w1551679820|Exit Bar|bar|11.96212,121.92439||
+w1551679821|Red Coconut|hotel|11.96231,121.92433||
+w1551679824|Red Coconut Restaurant|restaurant|11.96224,121.92426||
+w1551921472|Seabird Resort|hotel|11.96258,121.92473||
+w1551921473|El Fuego|hotel|11.96272,121.92455||Main Road
+w1552000818|The Piccolo|hotel|11.96344,121.92543||
+w1552518756|Sunvilla|hotel|11.96361,121.92341||
+w1552518765|Casa Fiesta|hotel|11.96461,121.92267||
+w1552911673|La Fiesta Resort|hotel|11.96377,121.92324||
+w1552911674|Ban's Beach Resort|hotel|11.96461,121.92320||
+w1553074686|Coast|hotel|11.95762,121.92719||
+w1553534923|Muni-Muni|restaurant|11.96352,121.92340||
+w1554212651|Casa Mezcaleria|hotel|11.96747,121.92075||
+w1556568326|Bolabog Beach Resort|hotel|11.96828,121.92712||
+w1556712622|Ralph's place|hotel|11.96908,121.92647||
+w1559804403|Chill Out Hostel|hostel|11.96631,121.92638||
+w1559827153|Happyness|hostel|11.96628,121.92653||
+w1561264834|Patio Pacific Gym|sports_centre|11.96470,121.92409||
+w1563805379|Boracay Haven Suites|hotel|11.96407,121.92521||
+w1567497462|Paddles Up Pickleball Academy|pitch|11.96137,121.93118||
+w1567497463|Timog|hotel|11.96151,121.93133||
+w1567497464|Wind Rider's Inn|hotel|11.96169,121.93125||
+w1567522602|Aissatou Resort|hotel|11.96193,121.93111||
