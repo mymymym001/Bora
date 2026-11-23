@@ -152,16 +152,66 @@ def route(p):
     r["air"] = round(dist(P0, H))
     return r
 
+# ---------- 그래프 내보내기 (브라우저에서 다익스트라) ----------
+idx = {}; gx = []; edges = []
+def ni(n):
+    if n not in idx: idx[n] = len(idx); gx.extend(round(v) for v in coord[n])
+    return idx[n]
+seen = set()
+for a, lst in gw.items():
+    for b, d in lst:
+        k = (min(a, b), max(a, b))
+        if k in seen: continue
+        seen.add(k)
+        trike_ok = any(v == b for v, _ in gt.get(a, []))
+        edges.extend((ni(a), ni(b), 1 if trike_ok else 0))
+layers["graph"] = dict(xy=gx, e=edges, entry=ni(hw_node))
+
+# ---------- OSM 음식점 전체 ----------
+import xml.etree.ElementTree as ET
+CUR_OSM = set()
+for p in PLACES:
+    import re
+    m = re.search(r"OSM (node|way) (\d+)", p.get("coordSrc", ""))
+    if m: CUR_OSM.add(m.group(1)[0] + m.group(2))
+CUISINE = {"filipino": "필리핀", "italian": "이탈리안", "pizza": "피자", "seafood": "해산물", "korean": "한식", "japanese": "일식",
+           "chinese": "중식", "burger": "버거", "chicken": "치킨", "coffee_shop": "커피", "ice_cream": "아이스크림", "indian": "인도",
+           "thai": "태국", "mexican": "멕시칸", "greek": "그리스", "american": "미국식", "spanish": "스페인", "barbecue": "바비큐",
+           "regional": "지역요리", "international": "다국적", "vegan": "비건", "vegetarian": "채식", "asian": "아시안", "steak_house": "스테이크",
+           "sandwich": "샌드위치", "breakfast": "브런치", "cake": "케이크", "dessert": "디저트", "juice": "주스", "bubble_tea": "버블티",
+           "ramen": "라멘", "sushi": "스시", "french": "프렌치", "german": "독일", "middle_eastern": "중동", "kebab": "케밥", "bakery": "베이커리",
+           "noodle": "국수", "vietnamese": "베트남", "mediterranean": "지중해", "tea": "차", "lebanese": "레바논", "russian": "러시아", "western": "양식"}
+CATMAP = {"restaurant": "restaurant", "fast_food": "restaurant", "cafe": "cafe", "ice_cream": "cafe", "bar": "pub", "pub": "pub"}
+r = ET.parse(os.path.join(ROOT, "data", "raw", "osmapi.xml")).getroot()
+nodes = {n.get("id"): (float(n.get("lat")), float(n.get("lon"))) for n in r.iter("node")}
+others = []
+for e in r:
+    if e.tag not in ("node", "way"): continue
+    t = {x.get("k"): x.get("v") for x in e.findall("tag")}
+    if t.get("amenity") not in CATMAP or not t.get("name"): continue
+    key = e.tag[0] + e.get("id")
+    if key in CUR_OSM: continue
+    if e.tag == "node": lat, lon = nodes[e.get("id")]
+    else:
+        pts = [nodes[nd.get("ref")] for nd in e.findall("nd") if nd.get("ref") in nodes]
+        if not pts: continue
+        lat = sum(p[0] for p in pts) / len(pts); lon = sum(p[1] for p in pts) / len(pts)
+    cu = [CUISINE.get(c.strip().lower(), c.strip()) for c in t.get("cuisine", "").split(";") if c.strip()]
+    X, Y = xy(lat, lon)
+    others.append(dict(id="o" + key, name=t["name"], cat=CATMAP[t["amenity"]], kind=t["amenity"], cuisine=", ".join(cu[:3]),
+                       hours=t.get("opening_hours", ""), h24=t.get("opening_hours", "") == "24/7", x=round(X), y=round(Y),
+                       lat=round(lat, 6), lon=round(lon, 6), osm=("node " if e.tag == "node" else "way ") + e.get("id")))
+print("osm others:", len(others))
+
 places = []
 for p in PLACES:
     q = dict(p); q["x"], q["y"] = [round(v) for v in xy(p["lat"], p["lon"])]
-    q["route"] = route(p); places.append(q)
-    print("%-16s air %4dm  walk %4dm %2dmin  trike %4dm" % (p["id"], q["route"]["air"], q["route"]["walk"]["m"], q["route"]["walk"]["min"], q["route"]["trike"]["m"]))
+    places.append(q)
 
 lm = [dict(l, **dict(zip(("x", "y"), [round(v) for v in xy(l["lat"], l["lon"])]))) for l in LANDMARKS]
 os.makedirs(OUT, exist_ok=True)
 json.dump(layers, open(os.path.join(OUT, "map.json"), "w"), separators=(",", ":"))
-data = dict(hotel=dict(HOTEL, x=0, y=0, entry=[round(ENTRY[0]), round(ENTRY[1])]), places=places, landmarks=lm, unplaced=UNPLACED, fx=FX,
+data = dict(hotel=dict(HOTEL, x=0, y=0, entry=[round(ENTRY[0]), round(ENTRY[1])]), places=places, others=others, landmarks=lm, unplaced=UNPLACED, fx=FX,
             built="2026-11-23", speeds=dict(walk_kmh=4, trike_kmh=15))
 json.dump(data, open(os.path.join(OUT, "data.json"), "w"), ensure_ascii=False, separators=(",", ":"))
 print("map.json %.0f KB, data.json %.0f KB" % (os.path.getsize(os.path.join(OUT, "map.json"))/1024, os.path.getsize(os.path.join(OUT, "data.json"))/1024))

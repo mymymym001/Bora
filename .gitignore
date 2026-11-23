@@ -1,3 +1,3 @@
-site/_test.html
+site/_test*.html
 test/*.png
 node_modules/

@@ -7,8 +7,8 @@ const { chromium, devices } = require('playwright');
   for (const cat of ['all','restaurant','cafe','convenience','h24','pharmacy','pub']) {
     await pg.click(`.chip[data-cat="${cat}"]`); await pg.waitForTimeout(150);
     const n = await pg.$eval(`.chip[data-cat="${cat}"] .n`, e=>+e.textContent);
-    const lit = await pg.$$eval('.pin:not(.dim)', e=>e.length); const cards = await pg.$$eval('.card', e=>e.length);
-    ok(n===lit && n===cards, `filter ${cat}: chip=${n} pins=${lit} cards=${cards}`);
+    const lit = await pg.$$eval('.pin:not(.dim), .dp:not(.dim)', e=>e.length); const big = await pg.$$eval('.pin:not(.dim)', e=>e.length); const cards = await pg.$$eval('.card', e=>e.length);
+    ok(n===lit && big===cards, `filter ${cat}: chip=${n} lit(pins+dots)=${lit} researched pins=${big} cards=${cards}`);
   }
   await pg.click('.chip[data-cat="restaurant"]');
   const c7 = await pg.$eval('.card .cost', e=>e.textContent); const first7 = await pg.$eval('.card h3', e=>e.textContent);
