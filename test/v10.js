@@ -28,7 +28,7 @@ const { chromium, devices } = require('playwright');
   await pg.goto('http://localhost:8765/_test_live.html#ledger'); await pg.waitForSelector('[data-expadd]');
   await pg.click('[data-expadd]'); await pg.fill('#ex-what','망고 쉐이크'); await pg.fill('#ex-amt','520'); await pg.fill('#ex-qty','2'); await pg.selectOption('#ex-menu',{label:'망고 쉐이크'}); await pg.waitForTimeout(100);
   ok(/조금 비쌈/.test(await pg.$eval('#ex-conv',e=>e.innerText)),'live judge in form (₱260 each > ₱250 → '+(await pg.$eval('#ex-conv',e=>e.innerText))+')'); await pg.click('[data-expsave]'); await pg.waitForTimeout(400);
-  await pg.click('[data-expadd]'); await pg.fill('#ex-what','시시그'); await pg.fill('#ex-amt','900'); await pg.selectOption('#ex-menu',{label:'시시그'}); await pg.click('#ex-shared'); await pg.click('[data-expsave]'); await pg.waitForTimeout(400);
+  await pg.click('[data-expadd]'); await pg.fill('#ex-what','시시그'); await pg.fill('#ex-amt','900'); await pg.selectOption('#ex-menu',{label:'시시그'}); await pg.click('[data-expsave]'); await pg.waitForTimeout(400);
   await pg.click('[data-expadd]'); await pg.fill('#ex-what','기념품 자석'); await pg.fill('#ex-amt','5'); await pg.click('[data-cur="USD"]'); await pg.selectOption('#ex-cat','쇼핑·기념품'); await pg.click('[data-expsave]'); await pg.waitForTimeout(400);
   const tbl=await pg.$eval('#lbody',e=>e.innerText); console.log('  table:', tbl.replace(/\n+/g,' | ').slice(0,420));
   ok((await pg.$$eval('table.xt tbody tr',e=>e.length))===3,'3 rows in table');
@@ -40,7 +40,7 @@ const { chromium, devices } = require('playwright');
   await pg.click('[data-ltab="book"]'); ok((await pg.$eval('#lbody',e=>e.innerText)).includes('Subo 저녁'),'custom booking added'); await pg.screenshot({path:'test/v-book.png'});
   // info: exchange plan, no seafood market
   await pg.goto('http://localhost:8765/_test_live.html#info'); await pg.waitForSelector('.pg-row'); const inf=await pg.evaluate(()=>document.body.innerText);
-  ok(/달러 → 페소 환전 계획/.test(inf)&&/₱4,928/.test(inf),'exchange plan'); ok(!/디탈리파파\)/.test(inf)&&!/해산물 kg당/.test(inf),'seafood market panel removed');
+  ok(/예산 · 환전 계획/.test(inf)&&/₱4,928/.test(inf),'exchange plan'); ok(!/디탈리파파\)/.test(inf)&&!/해산물 kg당/.test(inf),'seafood market panel removed');
   await pg.locator('h3:has-text("환전 계획")').scrollIntoViewIfNeeded(); await pg.screenshot({path:'test/v-fx.png'});
   // course tips, no talipapa in eat
   await pg.goto('http://localhost:8765/_test_live.html#course'); await pg.waitForSelector('.slot.tip'); ok((await pg.$$eval('.slot.tip',e=>e.length))>=8,'schedule tips: '+(await pg.$$eval('.slot.tip',e=>e.length)));

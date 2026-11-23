@@ -78,8 +78,8 @@ function routeBetween(a,b){ // a → b
 }
 
 /* ================= money ================= */
-const php=v=>"₱"+Math.round(v).toLocaleString("en-US");
-const krw=v=>"₩"+(Math.round(v*D.fx.krw_per_php/100)*100).toLocaleString("ko-KR");
+const php=v=>(v<-0.5?"−":"")+"₱"+Math.abs(Math.round(v)).toLocaleString("en-US");
+const krw=v=>{ const w=Math.round(v*D.fx.krw_per_php/100)*100; return (w<0?"−":"")+"₩"+Math.abs(w).toLocaleString("ko-KR"); };
 function rng(a,b,f){return a===b?f(a):f(a)+"–"+f(b).replace(/^[₱₩]/,"")}
 function priceOf(m){return m==null?null:Array.isArray(m)?m:[m,m]}
 function groupCost(p,n){ if(!p.pp) return null; const k=n*(p.sc?1+p.sc:1); return [p.pp[0]*k,p.pp[1]*k]; }
@@ -136,6 +136,7 @@ async function initLive(){
       LIVE.exp=snap.docs.map(d=>Object.assign({id:d.id},d.data())).filter(e=>typeof e.php==="number"&&e.what);
       const ep=$("#expPanel"); if(ep) ep.outerHTML=expHomeHTML(); if((location.hash||"").slice(1)==="ledger"&&$("#sheet").hidden&&LTAB==="exp"){ const y=window.scrollY; renderLedger(); window.scrollTo(0,y); }
     },()=>{}));
+    LIVE.unsub.push(db.collection("fx").onSnapshot(snap=>{ LIVE.fx=snap.docs.map(d=>Object.assign({id:d.id},d.data())).filter(f=>f&&+f.usd>0&&+f.php>0); const ep=$("#expPanel"); if(ep) ep.outerHTML=expHomeHTML(); if((location.hash||"").slice(1)==="ledger"&&$("#sheet").hidden&&LTAB==="exp") renderLedger(); },()=>{}));
     LIVE.unsub.push(db.collection("likes").onSnapshot(snap=>{ const o={}; snap.docs.forEach(d=>{const v=d.data(); if(v&&Array.isArray(v.ids)) o[d.id]=v;}); LIVE.likes=o;
       document.querySelectorAll("[data-likebox]").forEach(el=>{ const p=BYID[el.dataset.likebox]; if(p) el.innerHTML=likeBtn(p); });
       const lr=$("#likeRank"); if(lr) lr.innerHTML=likeRankHTML(5); const h=(location.hash||"#home").slice(1); if(h==="eat"&&(S.sort==="likes"||S.ecat==="mine"||S.ecat==="fam")) drawEat(); },()=>{}));
@@ -530,6 +531,11 @@ document.addEventListener("click",e=>{
   if(T("[data-expall]")){ openExpAll(); return; }
   if(el=T("[data-expdel]")){ const id=el.dataset.expdel; LIVE.db.doc("expenses/"+id).delete().then(()=>{ setTimeout(()=>{ if((location.hash||"").slice(1)==="ledger"&&$("#sheet").hidden) renderLedger(); else openExpAll(); },150); }).catch(()=>{}); return; }
   if(el=T("[data-orderexp]")){ const p=BYID[el.dataset.orderexp], t=orderTotals(p); $("#driver").hidden=true; openExpForm({what:dname(p),amt:Math.round(t.tot)}); return; }
+  if(T("[data-fxadd]")){ openFxForm(); return; }
+  if(T("[data-fxsave]")){ saveFx(); return; }
+  if(el=T("[data-fxdel]")){ LIVE.db.doc("fx/"+el.dataset.fxdel).delete().catch(()=>{}); return; }
+  if(T("[data-freeadd]")){ openFreeForm(); return; }
+  if(T("[data-freesave]")){ saveFree(); return; }
   if(el=T("[data-like]")){ toggleLike(el.dataset.like); return; }
   if(T("[data-famsort]")){ S.sort="likes"; S.ecat="fam"; save(); }
   if(T("[data-bookadd]")){ openBookForm(); return; }
@@ -797,12 +803,10 @@ LIVE.exp=[];
 function expTotals(){ const by={}; let tot=0; LIVE.exp.filter(e=>e.shared!==false&&e.shared!==undefined?true:e.shared===undefined).forEach(e=>{ const v=+e.php||0; tot+=v; by[e.payer||"?"]=(by[e.payer||"?"]||0)+v; }); return {tot,by,share:tot/S.n}; }
 function expHomeHTML(){
   if(LIVE.status==="off") return "";
-  const t=expTotals(), recent=LIVE.exp.slice(-3).reverse();
-  return '<div class="panel" id="expPanel"><h3>지출 <span class="fine">'+LIVE.exp.length+'건</span></h3>'+
-    (LIVE.exp.length?'<dl class="kv num"><dt>쓴 돈 합계</dt><dd><b>'+php(LIVE.exp.reduce((a,e)=>a+(+e.php||0),0))+'</b> ('+krw(LIVE.exp.reduce((a,e)=>a+(+e.php||0),0))+')</dd><dt>공동 경비 1인 부담</dt><dd>'+php(t.share)+' ('+krw(t.share)+')</dd></dl>'+
-      '<div class="plist">'+recent.map(e=>'<div class="erow"><span>'+esc(e.what)+'<br><span class="sub">'+esc(e.payer)+' 냄 · '+hhmm(e.at)+'</span></span><b class="num">'+php(e.php)+'</b></div>').join("")+'</div>'
-     :'<p class="fine">각자 산 것과 가격을 적으면 지출·예약 탭에 표로 정리되고, 적정 가격인지 평가해 줘요.</p>')+
-    '<div class="btns">'+(canPost()?'<button type="button" class="btn" data-expadd>지출 기록</button>':'')+'<a class="btn alt" style="text-decoration:none" href="#ledger">지출 표 보기</a>'+'</div></div>';
+  const recent=LIVE.exp.slice(-3).reverse();
+  return '<div class="panel" id="expPanel"><h3>공금 · 지출 <span class="fine">'+HOLDER+' 보관</span></h3>'+purseHTML(true)+
+    (recent.length?'<div class="plist">'+recent.map(e=>'<div class="erow"><span>'+esc(e.what)+'<br><span class="sub">'+esc(e.payer)+' · '+esc(e.src||"공금")+' · '+hhmm(e.at)+'</span></span><b class="num">'+php(e.php)+'</b></div>').join("")+'</div>':'')+
+    '<div class="btns">'+(canPost()?'<button type="button" class="btn" data-expadd>지출 적기</button>':'')+'<a class="btn alt" style="text-decoration:none" href="#ledger">지출 표 · 예산</a></div></div>';
 }
 function openExpForm(pre){
   if(!canPost()) return; if(!LIVE.me.nick){ openProfile(()=>openExpForm(pre)); return; }
@@ -815,10 +819,10 @@ function openExpForm(pre){
    '<div class="field"><label for="ex-amt">금액 (전체)</label><input id="ex-amt" inputmode="decimal" value="'+esc(pre.amt||"")+'" placeholder="0"></div>'+
    '<div class="sorts" role="group" aria-label="통화" id="ex-cur">'+["PHP","USD","KRW"].map(c=>'<button type="button" data-cur="'+c+'" aria-pressed="'+(c==="PHP")+'">'+({PHP:"₱ 페소",USD:"$ 달러",KRW:"₩ 원"}[c])+'</button>').join("")+'</div>'+
    '<div class="field"><label for="ex-qty">개수</label><input id="ex-qty" inputmode="numeric" value="'+esc(pre.qty||1)+'"></div>'+
-   '<div class="field"><label for="ex-cat">분류</label><select id="ex-cat" class="sel">'+EXP_CATS.map(c=>'<option'+(c===(pre.cat||"식사·음료")?' selected':'')+'>'+c+'</option>').join("")+'</select></div>'+
+   '<div class="field"><label for="ex-cat">분류</label><select id="ex-cat" class="sel">'+EXP_CATS.map(c=>'<option'+(c===(pre.cat||"식사")?' selected':'')+'>'+c+'</option>').join("")+'</select></div>'+
+   '<div class="field"><span>돈 출처</span><div class="sorts" role="group" id="ex-src"><button type="button" data-src="공금" aria-pressed="'+((pre.src||"공금")==="공금")+'">공금 (아빠 지갑)</button><button type="button" data-src="자유경비" aria-pressed="'+(pre.src==="자유경비")+'">내 자유경비</button></div></div>'+
    '<div class="field"><label for="ex-menu">메뉴 종류 (고르면 적정 가격인지 평가해요)</label><select id="ex-menu" class="sel"><option value="">선택 안 함</option>'+G.map((g,gi)=>'<optgroup label="'+esc(g.g)+'">'+g.rows.map((r,ri)=>'<option value="'+gi+'-'+ri+'">'+esc(r.m)+'</option>').join("")+'</optgroup>').join("")+'</select></div>'+
-   '<div class="field"><label for="ex-payer">낸 사람</label><input id="ex-payer" maxlength="10" value="'+esc(pre.payer||LIVE.me.nick)+'"></div>'+
-   '<label class="toggle"><input type="checkbox" id="ex-shared"'+(pre.shared?' checked':'')+'> 공동 경비 (가족이 나눠 낼 돈 — 정산에 포함)</label>'+
+   '<div class="field"><label for="ex-payer">쓴 사람 (누가 샀나요)</label><input id="ex-payer" maxlength="10" value="'+esc(pre.payer||LIVE.me.nick)+'"></div>'+
    '<p class="fine" id="ex-conv"></p><button type="button" class="btn" data-expsave>저장</button><p class="fine">환율 기준: 1 USD = ₱'+D.fx.php_per_usd.toFixed(2)+', ₱1 = ₩'+D.fx.krw_per_php.toFixed(2)+'. 모든 기록은 페소로 바꿔 합산해요.</p></div></div>';
   s.hidden=false; document.body.style.overflow="hidden";
   const upd=()=>{ const a=parseFloat(($("#ex-amt").value||"").replace(/,/g,""))||0, c=document.querySelector("#ex-cur [aria-pressed=true]").dataset.cur; const p=c==="PHP"?a:c==="USD"?a*D.fx.php_per_usd:a/D.fx.krw_per_php;
@@ -826,13 +830,14 @@ function openExpForm(pre){
     $("#ex-conv").innerHTML=a?"= "+php(p)+" ("+krw(p)+")"+(j?' · <span class="badge '+j.cls+'">'+j.t+'</span> '+esc(j.note):""):""; return {a,c,p}; };
   ["ex-amt","ex-qty"].forEach(id=>$("#"+id).addEventListener("input",upd)); $("#ex-menu").addEventListener("change",upd);
   $("#ex-cur").addEventListener("click",e=>{const b=e.target.closest("[data-cur]"); if(!b) return; document.querySelectorAll("#ex-cur button").forEach(x=>x.setAttribute("aria-pressed",x===b)); upd();});
+  $("#ex-src").addEventListener("click",e=>{const b=e.target.closest("[data-src]"); if(!b) return; document.querySelectorAll("#ex-src button").forEach(x=>x.setAttribute("aria-pressed",x===b));});
   S._expUpd=upd; upd();
 }
 async function saveExp(){
   const what=($("#ex-what").value||"").trim().slice(0,40), payer=($("#ex-payer").value||"").trim().slice(0,10), {a,c,p}=S._expUpd();
   if(!what){$("#ex-what").focus();return} if(!(a>0)){$("#ex-amt").focus();return} if(!payer){$("#ex-payer").focus();return}
-  const v={by:LIVE.uid,payer,what,where:($("#ex-where").value||"").trim().slice(0,30),amt:a,cur:c,php:Math.round(p*100)/100,qty:Math.max(1,parseInt($("#ex-qty").value)||1),cat:$("#ex-cat").value,menu:$("#ex-menu").value||"",shared:$("#ex-shared").checked,at:Date.now()};
-  try{ await LIVE.db.collection("expenses").add(v); closeSheet(); const j=judge(v); postChat("msg","[지출] "+payer+" · "+what+" "+php(p)+(j?" ("+j.t+")":""));
+  const v={by:LIVE.uid,payer,what,where:($("#ex-where").value||"").trim().slice(0,30),amt:a,cur:c,php:Math.round(p*100)/100,qty:Math.max(1,parseInt($("#ex-qty").value)||1),cat:$("#ex-cat").value,menu:$("#ex-menu").value||"",src:(document.querySelector("#ex-src [aria-pressed=true]")||{dataset:{src:"공금"}}).dataset.src,at:Date.now()};
+  try{ await LIVE.db.collection("expenses").add(v); closeSheet(); const j=judge(v); postChat("msg","[지출] "+payer+" · "+what+" "+php(p)+" · "+v.src+(j?" ("+j.t+")":""));
     const h=(location.hash||"#home").slice(1)||"home"; if(h==="home") renderHome(); else if(h==="ledger") renderLedger(); }
   catch(e){ $("#ex-conv").textContent="저장하지 못했어요. 편집자 권한이 있는지 확인하세요."; }
 }
@@ -877,7 +882,7 @@ const DAYS=[
     ["09:20","인천 T1 출발 · 티웨이 TW-125 (출발 90분 전 체크인)"],
     ["12:55","칼리보(KLO) 도착 · 입국심사·수하물"],
     ["tip","화장실: 밴으로 약 2시간 이동해요. 4U 차량 타기 전에 공항에서 꼭 다녀오세요. 물도 한 병씩."],
-    ["tip","환전: 체크인 때 추가 인원비 ₱4,928을 페소로 낼 거라면 약 $100만 먼저 바꾸세요 (칼리보 공항 또는 호텔 프런트). 나머지는 섬에서 비교 후 환전."],
+    ["tip","환전 1차: 칼리보 공항 도착 후 약 $200만 바꾸세요 — 이동 중 점심, 체크인 추가비 ₱4,928, 첫날 저녁 몫. 나머지는 섬에서 비교 후 환전."],
     ["4U","4u-arrive"],
     ["이동","4U 밴 약 2시간 → 카티클란 항 → 보트 10~15분 → 카그반 항 → 호텔 (총 2.5~3시간 예상)"],
     ["tip","카티클란 항 터미널에서 대기할 때 화장실 들르기 — 보트·섬 도착 후 호텔까지 바로 이동해요."],
@@ -887,10 +892,10 @@ const DAYS=[
     ["17:25","화이트비치 일몰"],
     ["tip","일몰 20~30분 전 해변에 자리 잡기. 저녁 먹으러 나가기 전에 호텔에서 화장실·선크림 정리."],
     ["meal","dinner"],["memo"]]},
-  {k:"d2",d:"11.25",w:"수",title:"2일차",items:[["아침","호텔 조식 (06:00–10:00 · 포함 여부는 예약 확인)"],["tip","환전 2차: 디몰 근처 환전소 2~3곳 환율을 비교하고 바꾸기 (돈·정보 탭 환전 계획 참고)."],["meal","lunch"],["tip","해변·디몰엔 공중화장실이 많지 않아요. 식당·카페에 들렀을 때 다녀오는 게 좋아요."],["meal","dinner"],["memo"]]},
+  {k:"d2",d:"11.25",w:"수",title:"2일차",items:[["아침","호텔 조식 (06:00–10:00 · 포함 여부는 예약 확인)"],["tip","환전 2차: 디몰 근처 환전소 2~3곳 환율을 비교하고 약 $600 바꾸기. 환전하면 지출·예약 탭에 ‘+ 환전’으로 기록해 주세요."],["meal","lunch"],["tip","해변·디몰엔 공중화장실이 많지 않아요. 식당·카페에 들렀을 때 다녀오는 게 좋아요."],["meal","dinner"],["memo"]]},
   {k:"d3",d:"11.26",w:"목",title:"3일차",items:[["아침","호텔 조식"],["tip","아일랜드 호핑 등 배를 타면 배 위엔 화장실이 없거나 불편해요. 출발 전에 꼭 다녀오고 멀미약은 30분 전에."],["meal","lunch"],["meal","dinner"],["memo"]]},
-  {k:"d4",d:"11.27",w:"금",title:"4일차",items:[["아침","호텔 조식"],["tip","남은 페소 확인: 내일은 공항까지 쓸 곳이 거의 없어요. 오늘 기념품(말린 망고 등)·팁으로 쓰기."],["meal","lunch"],["meal","dinner"],["memo"],["밤","짐 정리 · 4U 픽업 시간 재확인 · 생과일은 한국에 못 가져가요"]]},
-  {k:"d5",d:"11.28",w:"토",title:"귀국일",items:[["06:30","조식 · 체크아웃 준비 (체크아웃 12:00 전) · 보증금 카드 승인 취소 확인"],["tip","화장실: 공항까지 약 2.5~3시간 이동해요. 로비에서 출발 직전에 다녀오세요."],["4U","4u-depart"],["이동","호텔 → 카그반 항 → 보트 → 카티클란 → 밴 약 2시간 → 칼리보 공항"],["tip","칼리보 공항 출국장 들어가기 전 화장실·간식 해결. 남은 페소는 공항 매점에서 쓰기 (재환전은 손해)."],["13:55","칼리보 출발 · 티웨이 TW-126 (국제선 3시간 전 도착 권장)"],["19:05","인천 T1 도착"]]}
+  {k:"d4",d:"11.27",w:"금",title:"4일차",items:[["아침","호텔 조식"],["tip","공항세 ₱6,300 (₱900×7)을 먼저 따로 떼어 두고 남은 페소를 확인하세요. 모자라면 3차 환전(최대 $400). 남는 돈은 오늘 기념품·팁으로."],["meal","lunch"],["meal","dinner"],["memo"],["밤","짐 정리 · 4U 픽업 시간 재확인 · 생과일은 한국에 못 가져가요"]]},
+  {k:"d5",d:"11.28",w:"토",title:"귀국일",items:[["06:30","조식 · 체크아웃 준비 (체크아웃 12:00 전) · 보증금 카드 승인 취소 확인"],["tip","화장실: 공항까지 약 2.5~3시간 이동해요. 로비에서 출발 직전에 다녀오세요."],["4U","4u-depart"],["이동","호텔 → 카그반 항 → 보트 → 카티클란 → 밴 약 2시간 → 칼리보 공항"],["tip","칼리보 공항에서 공항세 ₱900×7=₱6,300을 페소 현금으로 내요 (떼어 둔 돈). 출국장 들어가기 전 화장실·간식 해결."],["13:55","칼리보 출발 · 티웨이 TW-126 (국제선 3시간 전 도착 권장)"],["19:05","인천 T1 도착"]]}
 ];
 const FOURU={"4u-arrive":{title:"4U 단독 픽업 (도착)",hint:"만나는 곳: 칼리보 공항 도착 출구 · 4U 안내 기준",def:"12:55 도착 후"},
   "4u-depart":{title:"4U 단독 픽업 (귀국)",hint:"만나는 곳: 헤난 가든 로비 · 계산상 07:30–08:00 출발 권장",def:"시간 미정"}};
@@ -1022,8 +1027,83 @@ function openSchedPick(){
   s.hidden=false; s.scrollTop=0; document.body.style.overflow="hidden"; S._sched=list;
 }
 
+/* ================= 공금 예산 (아빠 보관) ================= */
+const CASH_USD=4000, FX_CAP_USD=1200, HOLDER="아빠";
+const BUDGET=[
+  {k:"extra",label:"호텔 1인 추가비",php:4928,cats:["숙소 추가비"],note:"11/24 체크인 때 페소 현금 (₱1,232×4박)"},
+  {k:"airport",label:"칼리보 공항세",php:6300,cats:["공항세"],note:"11/28 공항에서 ₱900×7 — 미리 떼어 두기"},
+  {k:"meal",label:"식사 (점심·저녁, 조식 포함)",php:30800,cats:["식사"],note:"점심 ~₱450 + 저녁 ~₱650 / 인"},
+  {k:"snack",label:"간식·음료",php:7000,cats:["간식·음료"],note:"인당 하루 ₱250"},
+  {k:"trike",label:"교통 (트라이크)",php:2400,cats:["교통(트라이크 등)"],note:"2대 × 하루 2번 × 4일"},
+  {k:"leisure",label:"레저 (최소)",php:3500,cats:["레저(투어·마사지)"],note:"예: 마사지 한 번"},
+  {k:"free",label:"자유경비 지급 (상한)",php:14000,cats:["자유경비 지급"],note:"$222 상한 · 날마다 유동, 안 주는 날도 있음",cap:true},
+  {k:"tip",label:"팁·기타·쇼핑",php:3000,cats:["팁·기타","쇼핑·기념품","환전 수수료"],note:""}
+];
+const BUDGET_TOTAL=BUDGET.reduce((a,b)=>a+b.php,0);
+LIVE.fx=[];
+function catBucket(c){ const m={"식사·음료":"식사","간식·디저트":"간식·음료","투어·액티비티":"레저(투어·마사지)","마사지·스파":"레저(투어·마사지)","숙소·호텔":"숙소 추가비","환전·수수료":"환전 수수료","기타":"팁·기타"}; return m[c]||c||"팁·기타"; }
+function purse(){
+  const ex=LIVE.fx.reduce((a,f)=>({usd:a.usd+(+f.usd||0),php:a.php+(+f.php||0)}),{usd:0,php:0});
+  const common=LIVE.exp.filter(e=>(e.src||"공금")==="공금"), freeSpent=LIVE.exp.filter(e=>e.src==="자유경비");
+  const spent=common.reduce((a,e)=>a+(+e.php||0),0);
+  const byCat={}; common.forEach(e=>{ const c=catBucket(e.cat); byCat[c]=(byCat[c]||0)+(+e.php||0); });
+  return {exUsd:ex.usd,exPhp:ex.php,spent,left:ex.php-spent,usdLeft:CASH_USD-ex.usd,byCat,freeSpent:freeSpent.reduce((a,e)=>a+(+e.php||0),0)};
+}
+function purseHTML(compact){
+  const p=purse(), capLeft=FX_CAP_USD-p.exUsd;
+  let head='<dl class="kv num"><dt>남은 페소 (공금)</dt><dd><b>'+php(p.left)+'</b> ('+krw(p.left)+')</dd><dt>환전한 돈</dt><dd>$'+p.exUsd.toLocaleString()+' → '+php(p.exPhp)+' · 상한까지 $'+Math.max(0,capLeft).toLocaleString()+'</dd><dt>남은 달러</dt><dd>$'+p.usdLeft.toLocaleString()+'</dd><dt>공금 지출</dt><dd>'+php(p.spent)+' / 예산 '+php(BUDGET_TOTAL)+'</dd></dl>';
+  const warn=p.left<0?'<div class="callout warn"><b>공금이 마이너스예요</b>환전 기록이 빠졌거나 부족해요. 환전했다면 ‘+ 환전’으로 기록해 주세요.</div>':'';
+  if(compact) return head+warn;
+  head+=warn;
+  return head+'<div class="tbl" style="margin-top:8px"><table><thead><tr><th>예산 항목</th><th class="r">사용 / 예산</th></tr></thead><tbody>'+BUDGET.map(b=>{
+      const used=b.cats.reduce((a,c)=>a+(p.byCat[c]||0),0), pct=Math.min(100,Math.round(used/b.php*100)), over=used>b.php;
+      return '<tr><td><b>'+esc(b.label)+'</b><br><span class="src">'+esc(b.note)+'</span><div class="bar"><i style="width:'+pct+'%;background:'+(over?"var(--warn)":"var(--accent)")+'"></i></div></td><td class="r num">'+php(used)+'<br><span class="src">/ '+php(b.php)+(over?' · 초과':' · 남음 '+php(b.php-used))+'</span></td></tr>'; }).join("")+'</tbody></table></div>';
+}
+function fxListHTML(){
+  if(!LIVE.fx.length) return '<p class="fine">아직 환전 기록이 없어요.</p>';
+  return LIVE.fx.slice().sort((a,b)=>a.at-b.at).map(f=>'<div class="erow"><span><b>$'+Number(f.usd).toLocaleString()+' → '+php(f.php)+'</b> <span class="sub">(₱'+(f.php/f.usd).toFixed(2)+'/$)</span><br><span class="sub">'+esc(f.where||"")+' · '+manilaDateLabel(f.at)+' '+hhmm(f.at)+' · '+esc(f.nick||"")+'</span></span>'+(f.by===LIVE.uid?'<button type="button" class="tiny" data-fxdel="'+esc(f.id)+'">삭제</button>':'')+'</div>').join("");
+}
+function openFxForm(){
+  if(!canPost()) return; const s=$("#sheet"), p=purse();
+  s.innerHTML='<div class="wrap"><div class="bar"><button type="button" data-close aria-label="닫기">✕</button><div class="t">환전 기록</div></div><div class="page" style="padding-top:0">'+
+   '<p class="lead">상한 $'+FX_CAP_USD.toLocaleString()+' 중 $'+p.exUsd.toLocaleString()+' 환전함 · 남은 상한 $'+Math.max(0,FX_CAP_USD-p.exUsd).toLocaleString()+'</p>'+
+   '<div class="field"><label for="fx-u">바꾼 달러</label><input id="fx-u" inputmode="decimal" placeholder="예: 600"></div>'+
+   '<div class="field"><label for="fx-p">받은 페소</label><input id="fx-p" inputmode="decimal" placeholder="예: 37,800"></div>'+
+   '<div class="field"><label for="fx-w">어디서</label><input id="fx-w" maxlength="30" placeholder="예: 칼리보 공항, 디몰 환전소"></div>'+
+   '<p class="fine" id="fx-r"></p><button type="button" class="btn" data-fxsave>저장</button></div></div>';
+  s.hidden=false; document.body.style.overflow="hidden";
+  const upd=()=>{ const u=parseFloat(($("#fx-u").value||"").replace(/,/g,""))||0, pp=parseFloat(($("#fx-p").value||"").replace(/,/g,""))||0;
+    $("#fx-r").textContent=u&&pp?"환율 ₱"+(pp/u).toFixed(2)+"/$ (시장 환율 ₱"+D.fx.php_per_usd.toFixed(2)+")"+(u+p.exUsd>FX_CAP_USD?" · 상한 $"+FX_CAP_USD+"을 넘어요":""):""; };
+  ["fx-u","fx-p"].forEach(id=>$("#"+id).addEventListener("input",upd));
+}
+async function saveFx(){
+  const u=parseFloat(($("#fx-u").value||"").replace(/,/g,""))||0, pp=parseFloat(($("#fx-p").value||"").replace(/,/g,""))||0;
+  if(!(u>0)){$("#fx-u").focus();return} if(!(pp>0)){$("#fx-p").focus();return}
+  const v={usd:u,php:pp,where:($("#fx-w").value||"").trim().slice(0,30),by:LIVE.uid,nick:LIVE.me.nick||"",at:Date.now()};
+  try{ await LIVE.db.collection("fx").add(v); closeSheet(); postChat("msg","[환전] $"+u+" → "+php(pp)+" (₱"+(pp/u).toFixed(2)+"/$)"+(v.where?" · "+v.where:"")); afterMoney(); }catch(e){ $("#fx-r").textContent="저장하지 못했어요."; }
+}
+function openFreeForm(){
+  if(!canPost()) return; const s=$("#sheet"), paid=LIVE.exp.filter(e=>catBucket(e.cat)==="자유경비 지급").reduce((a,e)=>a+(+e.php||0),0);
+  s.innerHTML='<div class="wrap"><div class="bar"><button type="button" data-close aria-label="닫기">✕</button><div class="t">자유경비 지급</div></div><div class="page" style="padding-top:0">'+
+   '<p class="lead">상한 '+php(14000)+' 중 '+php(paid)+' 지급함 · 남은 상한 '+php(Math.max(0,14000-paid))+'. 안 주는 날은 기록하지 않으면 돼요.</p>'+
+   '<div class="field"><label for="fr-a">1인당 금액 (페소)</label><input id="fr-a" inputmode="numeric" placeholder="예: 500"></div>'+
+   '<div class="field"><label for="fr-n">받는 사람 수</label><input id="fr-n" inputmode="numeric" value="'+S.n+'"></div>'+
+   '<div class="field"><label for="fr-m">메모 (선택)</label><input id="fr-m" maxlength="30" placeholder="예: 11/25 자유시간"></div>'+
+   '<p class="fine" id="fr-t"></p><button type="button" class="btn" data-freesave>지급 기록</button></div></div>';
+  s.hidden=false; document.body.style.overflow="hidden";
+  const upd=()=>{ const a=parseInt($("#fr-a").value)||0, n=parseInt($("#fr-n").value)||0; $("#fr-t").textContent=a&&n?"합계 "+php(a*n)+" ("+krw(a*n)+")"+(paid+a*n>14000?" · 상한을 넘어요":""):""; };
+  ["fr-a","fr-n"].forEach(id=>$("#"+id).addEventListener("input",upd));
+}
+async function saveFree(){
+  const a=parseInt($("#fr-a").value)||0, n=parseInt($("#fr-n").value)||0; if(!(a>0)){$("#fr-a").focus();return} if(!(n>0)){$("#fr-n").focus();return}
+  const m=($("#fr-m").value||"").trim().slice(0,30);
+  const v={by:LIVE.uid,payer:HOLDER,what:"자유경비 "+php(a)+" × "+n+"명"+(m?" · "+m:""),amt:a*n,cur:"PHP",php:a*n,qty:1,cat:"자유경비 지급",src:"공금",menu:"",at:Date.now()};
+  try{ await LIVE.db.collection("expenses").add(v); closeSheet(); postChat("msg","[자유경비] 1인 "+php(a)+" × "+n+"명 지급"); afterMoney(); }catch(e){ $("#fr-t").textContent="저장하지 못했어요."; }
+}
+function afterMoney(){ const h=(location.hash||"#home").slice(1)||"home"; if(h==="ledger") renderLedger(); else if(h==="home") renderHome(); else if(h==="info") renderInfo(); }
+
 /* ================= 지출·예약 탭 ================= */
-const EXP_CATS=["식사·음료","간식·디저트","교통(트라이크 등)","쇼핑·기념품","투어·액티비티","마사지·스파","숙소·호텔","환전·수수료","기타"];
+const EXP_CATS=["식사","간식·음료","교통(트라이크 등)","레저(투어·마사지)","쇼핑·기념품","숙소 추가비","공항세","팁·기타","환전 수수료"];
 const TRIP_DAYS=["11/24","11/25","11/26","11/27","11/28"];
 function manilaDateLabel(ms){ const d=new Date(ms+8*3600e3); return (d.getUTCMonth()+1)+"/"+d.getUTCDate(); }
 function pgFind(key){ if(!key) return null; const [gi,ri]=String(key).split("-").map(Number); const g=(EXTRA.priceGuide||[])[gi]; return g&&g.rows[ri]?{g:g.g,r:g.rows[ri]}:null; }
@@ -1044,17 +1124,18 @@ function renderLedger(){
 function expTableHTML(writable){
   const ex=LIVE.exp.slice().sort((a,b)=>a.at-b.at);
   const tot=ex.reduce((s,e)=>s+(+e.php||0),0);
-  const byP={}, byC={}; ex.forEach(e=>{ byP[e.payer||"?"]=(byP[e.payer||"?"]||0)+(+e.php||0); const c=e.cat||"기타"; byC[c]=(byC[c]||0)+(+e.php||0); });
+  const who={}; ex.filter(e=>catBucket(e.cat)!=="자유경비 지급").forEach(e=>{ const k=e.payer||"?"; who[k]=who[k]||{c:0,f:0}; if(e.src==="자유경비") who[k].f+=(+e.php||0); else who[k].c+=(+e.php||0); });
   const days={}; ex.forEach(e=>{ const d=manilaDateLabel(e.at); (days[d]=days[d]||[]).push(e); });
-  let h='<p class="lead">각자 산 것을 적으면 날짜별 표로 정리하고, 메뉴 종류를 고른 항목은 보라카이 적정 가격과 비교해 평가해요.</p>'+
-   (writable?'<button type="button" class="btn" data-expadd style="width:100%">+ 지출 적기</button>':'<p class="fine">지출 기록은 편집자로 초대받은 가족만 할 수 있어요.</p>');
-  if(!ex.length) return h+'<div class="empty" style="margin-top:10px">아직 기록이 없어요.</div>';
-  h+='<div class="panel num"><h3>합계</h3><dl class="kv"><dt>전체</dt><dd><b>'+php(tot)+'</b> ('+krw(tot)+')</dd>'+Object.entries(byP).sort((a,b)=>b[1]-a[1]).map(([n,v])=>'<dt>'+esc(n)+'</dt><dd>'+php(v)+' ('+krw(v)+')</dd>').join("")+'</dl>'+
-     '<div class="fine" style="margin-top:6px">'+Object.entries(byC).sort((a,b)=>b[1]-a[1]).map(([c,v])=>esc(c)+' '+php(v)).join(" · ")+'</div>'+
-     (ex.some(e=>e.shared)?'<button type="button" class="btn alt" data-expall style="margin-top:8px">공동 경비 정산 보기</button>':'')+'</div>';
-  Object.keys(days).forEach(d=>{ const list=days[d], dt=list.reduce((s,e)=>s+(+e.php||0),0);
-    h+='<div class="panel"><h3>'+esc(d)+' <span class="fine num">'+php(dt)+' · '+krw(dt)+'</span></h3><div class="tbl"><table class="xt"><thead><tr><th>품목 · 평가</th><th class="r">금액</th></tr></thead><tbody>'+
-      list.map(e=>{ const j=judge(e); return '<tr><td><b>'+esc(e.what)+'</b>'+(e.qty>1?' ×'+e.qty:'')+' '+(j?'<span class="badge '+j.cls+'">'+j.t+'</span><br><span class="src">'+esc(j.note)+'</span>':'')+'<br><span class="src">'+esc(e.payer||"")+' · '+hhmm(e.at)+' · '+esc(e.cat||"기타")+(e.shared?' · 공동':'')+(e.where?' · '+esc(e.where):'')+'</span>'+(e.by===LIVE.uid?' <button type="button" class="tiny" data-expdel="'+esc(e.id)+'">삭제</button>':'')+'</td>'+
+  let h='<div class="panel"><h3>공금 지갑 <span class="fine">'+HOLDER+' 보관 · 환전 상한 $'+FX_CAP_USD.toLocaleString()+'</span></h3>'+purseHTML(false)+
+   (writable?'<div class="btns" style="margin-top:8px"><button type="button" class="btn" data-expadd>+ 지출</button><button type="button" class="btn alt" data-fxadd>+ 환전</button><button type="button" class="btn alt" data-freeadd>+ 자유경비 지급</button></div>':'<p class="fine">기록은 편집자로 초대받은 가족만 할 수 있어요.</p>')+'</div>'+
+   '<div class="panel"><h3>환전 기록</h3>'+fxListHTML()+'</div>';
+  if(!ex.length) return h+'<div class="empty">아직 지출 기록이 없어요. 누가 무엇을 얼마에 샀는지 모두 적어 주세요.</div>';
+  h+='<div class="panel num"><h3>누가 얼마 썼나</h3><div class="tbl"><table><thead><tr><th>쓴 사람</th><th class="r">공금</th><th class="r">자유경비</th></tr></thead><tbody>'+
+     Object.entries(who).sort((a,b)=>(b[1].c+b[1].f)-(a[1].c+a[1].f)).map(([n,v])=>'<tr><td>'+esc(n)+'</td><td class="r">'+php(v.c)+'</td><td class="r">'+php(v.f)+'</td></tr>').join("")+'</tbody></table></div>'+
+     '<p class="fine">전체 기록 '+php(tot)+' ('+krw(tot)+'). 자유경비로 산 것은 이미 지급한 돈이라 공금에서 다시 빼지 않아요.</p></div>';
+  Object.keys(days).forEach(d=>{ const list=days[d], dt=list.filter(e=>(e.src||"공금")==="공금").reduce((s,e)=>s+(+e.php||0),0);
+    h+='<div class="panel"><h3>'+esc(d)+' <span class="fine num">공금 '+php(dt)+' · '+krw(dt)+'</span></h3><div class="tbl"><table class="xt"><thead><tr><th>품목 · 평가</th><th class="r">금액</th></tr></thead><tbody>'+
+      list.map(e=>{ const j=judge(e); return '<tr><td><b>'+esc(e.what)+'</b>'+(e.qty>1?' ×'+e.qty:'')+' '+(j?'<span class="badge '+j.cls+'">'+j.t+'</span><br><span class="src">'+esc(j.note)+'</span>':'')+'<br><span class="src">'+esc(e.payer||"")+' · '+hhmm(e.at)+' · '+esc(catBucket(e.cat))+' · <b>'+esc(e.src||"공금")+'</b>'+(e.where?' · '+esc(e.where):'')+'</span>'+(e.by===LIVE.uid?' <button type="button" class="tiny" data-expdel="'+esc(e.id)+'">삭제</button>':'')+'</td>'+
         '<td class="r num"><b>'+php(e.php)+'</b><br><span class="src">'+krw(e.php)+(e.cur&&e.cur!=="PHP"?'<br>'+esc(e.cur)+' '+Number(e.amt).toLocaleString():'')+'</span></td></tr>'; }).join("")+'</tbody></table></div></div>'; });
   return h;
 }
@@ -1067,6 +1148,7 @@ function fixedBookings(){
     {d:"11/24",t:a&&a.text||"12:55 도착 후",kind:"픽업",name:"4U 단독 픽업 (칼리보 공항 → 헤난 가든)",ppl:7,memo:"터미널피·환경세·보트비 포함 여부 확인",pay:"4U에 확인"},
     {d:"11/24",t:"15:00~",kind:"숙소",name:"헤난 가든 리조트 · 그랜드룸 3개 · 4박",ppl:7,memo:"체크인 때 1명 추가 등록: 1박 ₱1,232 × 4박 = ₱4,928 → 페소 현금으로 낼 예정 · 보증금은 카드",pay:"객실 결제 완료 · 추가비 현장(페소)"},
     {d:"11/28",t:d&&d.text||"시간 미정 (07:30–08:00 권장)",kind:"픽업",name:"4U 단독 픽업 (헤난 가든 → 칼리보 공항)",ppl:7,memo:"로비 집합",pay:"4U에 확인"},
+    {d:"11/28",t:"공항 도착 후",kind:"공항",name:"칼리보 공항세 ₱900 × 7명 = ₱6,300",ppl:7,memo:"페소 현금 · 미리 떼어 둔 돈으로",pay:"현장 (페소)"},
     {d:"11/28",t:"13:55",kind:"항공",name:"티웨이 TW-126 칼리보 → 인천 T1 (19:05 도착)",ppl:7,memo:"국제선 3시간 전 공항 도착 권장",pay:"결제 완료"}];
 }
 function bookHTML(writable){
@@ -1101,25 +1183,17 @@ function alertMsg(t){ const m=$("#chatMsg"); if(m){m.textContent=t;m.hidden=fals
 
 /* ================= 환전 계획 ================= */
 function exchangePlanHTML(){
-  const fx=D.fx, extra=1232*4;
-  let lo=0,hi=0; DAYS.forEach(d=>{const t=dayTotal(d); lo+=t[0]; hi+=t[1];});
-  const meals=[lo*S.n,hi*S.n], port=500*S.n, trike=150*2*8, snack=200*S.n*4;
-  const need=[extra+meals[0]+trike+snack, extra+meals[1]+port+trike+snack];
-  const usd=need.map(v=>Math.ceil(v/fx.php_per_usd/50)*50);
-  return '<div class="panel"><h3>달러 → 페소 환전 계획</h3>'+
-   '<div class="tbl"><table><tbody>'+
-   '<tr><td>호텔 1인 추가비 (체크인 때 페소 현금)</td><td class="r num"><b>'+php(extra)+'</b><br><span class="src">≈ $'+Math.ceil(extra/fx.php_per_usd)+'</span></td></tr>'+
-   '<tr><td>식비 (코스 탭 점심·저녁 '+S.n+'명 예상)</td><td class="r num">'+rng(meals[0],meals[1],php)+'</td></tr>'+
-   '<tr><td>항구 요금 (4U 포함이면 0) 1인 약 ₱500</td><td class="r num">0–'+php(port).slice(1)+'</td></tr>'+
-   '<tr><td>트라이크 (2대 × 하루 2번 × 4일, 넉넉히)</td><td class="r num">'+php(trike)+'</td></tr>'+
-   '<tr><td>간식·음료 (인당 하루 ₱200 × 4일)</td><td class="r num">'+php(snack)+'</td></tr>'+
-   '<tr><td><b>필요한 페소 (예상)</b></td><td class="r num"><b>'+rng(need[0],need[1],php)+'</b><br><span class="src">'+rng(need[0],need[1],krw)+'</span></td></tr>'+
-   '<tr><td><b>바꿀 달러</b> (1 USD = ₱'+fx.php_per_usd.toFixed(2)+')</td><td class="r num"><b>$'+usd[0].toLocaleString()+'–'+usd[1].toLocaleString()+'</b></td></tr></tbody></table></div>'+
-   '<ul class="clean" style="margin-top:8px"><li><b>1차 (도착 당일):</b> 체크인 때 추가비 ₱4,928을 페소로 내려면 <b>체크인 전에 약 $100</b>를 바꿔야 해요. 호텔 프런트에서도 환전돼요(환율은 밖보다 조금 불리, 한국 블로그). 칼리보 공항 환전소는 보통 환율이 좋지 않아 이 정도만 바꾸는 걸 추천해요.</li>'+
-   '<li><b>2차 (11/25 이후):</b> 나머지는 디몰 근처 환전소에서 환율을 비교해 바꾸세요. 한 번에 다 바꾸지 말고 2–3번 나눠서.</li>'+
-   '<li>보증금(incidental deposit)은 카드로 — 체크아웃 때 승인 취소돼요. 해외결제 가능한 카드인지 확인하세요.</li>'+
-   '<li>남은 페소는 귀국 전날까지 쓰거나 공항 가기 전에 다시 달러로 바꾸세요 (재환전은 손해가 커요).</li></ul>'+
-   '<p class="fine">식비는 코스 탭에서 정한 식당·예산에 따라 바뀌어요. 쇼핑·투어·마사지는 포함하지 않았어요.</p></div>';
+  const fx=63, p=purse();
+  return '<div class="panel"><h3>예산 · 환전 계획 (공금, '+HOLDER+' 보관)</h3>'+
+   '<div class="tbl"><table><tbody>'+BUDGET.map(b=>'<tr><td>'+esc(b.label)+'<br><span class="src">'+esc(b.note)+'</span></td><td class="r num"><b>'+php(b.php)+'</b><br><span class="src">≈ $'+Math.round(b.php/fx)+'</span></td></tr>').join("")+
+   '<tr><td>항구 요금 (터미널피·환경세·보트)</td><td class="r num">₱0<br><span class="src">4U 포함</span></td></tr>'+
+   '<tr><td><b>합계 (자유경비는 상한)</b></td><td class="r num"><b>'+php(BUDGET_TOTAL)+'</b><br><span class="src">≈ $'+Math.round(BUDGET_TOTAL/fx).toLocaleString()+' · '+krw(BUDGET_TOTAL)+'</span></td></tr></tbody></table></div>'+
+   '<div class="callout ok"><b>환전 상한 $'+FX_CAP_USD.toLocaleString()+' · 나머지 약 $'+(CASH_USD-FX_CAP_USD).toLocaleString()+'는 달러로 보관 (비상금 포함)</b>예산 합계 약 $'+Math.round(BUDGET_TOTAL/fx).toLocaleString()+'에 여유분을 더한 금액이에요. 환율은 환전소 기준 ₱63/$로 계산했어요.</div>'+
+   '<ul class="clean" style="margin-top:8px"><li><b>1차 · 11/24 칼리보 공항 도착 후 $200</b> — 이동 중 점심, 체크인 추가비 ₱4,928, 첫날 저녁. 공항 환율은 좋지 않아 첫날 몫만.</li>'+
+   '<li><b>2차 · 11/25 $600</b> — 디몰 근처 환전소 2~3곳 비교 후.</li>'+
+   '<li><b>3차 · 11/27 필요하면 최대 $400</b> — 그때까지 쓴 돈을 보고 결정. <b>공항세 ₱6,300은 먼저 떼어 두기.</b></li>'+
+   '<li>보증금은 카드로. 남은 페소는 재환전하면 손해라 공항에서 간식 등으로 쓰기.</li></ul>'+
+   '<p class="fine">지금까지 환전 $'+p.exUsd.toLocaleString()+' → '+php(p.exPhp)+' · 남은 페소 '+php(p.left)+'. 기록은 지출·예약 탭에서.</p></div>';
 }
 
 /* ================= 찜 (가고 싶어요) ================= */
