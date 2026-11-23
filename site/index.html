@@ -199,6 +199,8 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px;font-size:14px}
 .driver .saybig .say.alt{background:#fff;color:#0B5FD6}
 .toast{position:fixed;left:16px;right:16px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:60;background:#111;color:#fff;border-radius:12px;padding:12px 14px;font-size:15px;text-align:center}
 
+.tbl tr.bgrp th{text-align:left;font-size:13px;font-weight:700;color:var(--accent);padding:14px 2px 6px;border-bottom:1px solid var(--line);background:none}
+.tbl tr.bgrp:first-child th{padding-top:2px}
 /* nav */
 .nav{position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--surface);border-top:1px solid var(--line);
   padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));display:grid;grid-template-columns:repeat(7,1fr)}
@@ -1697,14 +1699,14 @@ function openSchedPick(){
 /* ================= 공금 예산 ================= */
 const CASH_USD=1200, FX_CAP_USD=1200, HOLDER="공금";
 const BUDGET=[
-  {k:"extra",label:"호텔 1인 추가비",php:4928,cats:["숙소 추가비"],note:"11/24 체크인 때 페소 현금 (₱1,232×4박)"},
-  {k:"airport",label:"칼리보 공항세",php:6300,cats:["공항세"],note:"11/28 공항에서 ₱900×7 — 미리 떼어 두기"},
+  {k:"extra",when:"d1",label:"호텔 1인 추가비",php:4928,cats:["숙소 추가비"],note:"체크인 때 페소 현금 (₱1,232×4박)"},
   {k:"meal",label:"식사 (점심·저녁, 조식 포함)",php:30800,cats:["식사"],note:"점심 ~₱450 + 저녁 ~₱650 / 인"},
   {k:"snack",label:"간식·음료",php:7000,cats:["간식·음료"],note:"인당 하루 ₱250"},
   {k:"trike",label:"교통 (트라이크)",php:2400,cats:["교통(트라이크 등)"],note:"2대 × 하루 2번 × 4일"},
   {k:"leisure",label:"레저 (최소)",php:3500,cats:["레저(투어·마사지)"],note:"예: 마사지 한 번"},
   {k:"free",label:"자유경비 지급 (상한)",php:14000,cats:["자유경비 지급"],note:"$222 상한 · 날마다 유동, 안 주는 날도 있음",cap:true},
-  {k:"tip",label:"팁·기타·쇼핑",php:3000,cats:["팁·기타","쇼핑·기념품","환전 수수료"],note:""}
+  {k:"tip",label:"팁·기타·쇼핑",php:3000,cats:["팁·기타","쇼핑·기념품","환전 수수료"],note:""},
+  {k:"airport",when:"d5",label:"칼리보 공항세",php:6300,cats:["공항세"],note:"출국 때 공항에서 ₱900×7 — 미리 떼어 두기"}
 ];
 const BUDGET_TOTAL=BUDGET.reduce((a,b)=>a+b.php,0);
 LIVE.fx=[];
@@ -1909,8 +1911,9 @@ function alertMsg(t){ const m=$("#chatMsg"); if(m){m.textContent=t;m.hidden=fals
 function exchangePlanHTML(){
   const fx=63, p=purse();
   return '<div class="panel"><h3>예산 · 환전 계획</h3>'+
-   '<div class="tbl"><table><tbody>'+BUDGET.map(b=>'<tr><td>'+esc(b.label)+'<br><span class="src">'+esc(b.note)+'</span></td><td class="r num"><b>'+php(b.php)+'</b><br><span class="src">≈ $'+Math.round(b.php/fx)+'</span></td></tr>').join("")+
-   '<tr><td>항구 요금 (터미널피·환경세·보트)</td><td class="r num">₱0<br><span class="src">4U 포함</span></td></tr>'+
+   '<div class="tbl"><table><tbody>'+[["d1","11/24 (화) · 도착일"],["daily","11/24 ~ 11/28 · 여행 중 매일"],["d5","11/28 (토) · 출국일"]].map(([g,h])=>
+      '<tr class="bgrp"><th colspan="2">'+h+'</th></tr>'+(g==="d1"?'<tr><td>항구 요금 (터미널피·환경세·보트)<br><span class="src">칼리보 → 카티클란 이동 중</span></td><td class="r num">₱0<br><span class="src">4U 포함</span></td></tr>':'')+
+      BUDGET.filter(b=>(b.when||"daily")===g).map(b=>'<tr><td>'+esc(b.label)+(b.note?'<br><span class="src">'+esc(b.note)+'</span>':'')+'</td><td class="r num"><b>'+php(b.php)+'</b><br><span class="src">≈ $'+Math.round(b.php/fx)+'</span></td></tr>').join("")).join("")+
    '<tr><td><b>합계 (자유경비는 상한)</b></td><td class="r num"><b>'+php(BUDGET_TOTAL)+'</b><br><span class="src">≈ $'+Math.round(BUDGET_TOTAL/fx).toLocaleString()+' · '+krw(BUDGET_TOTAL)+'</span></td></tr></tbody></table></div>'+
    '<div class="callout ok"><b>가져온 돈 $'+CASH_USD.toLocaleString()+' 기준</b>예산 합계 약 $'+Math.round(BUDGET_TOTAL/fx).toLocaleString()+' + 여유분. 환율은 환전소 기준 ₱63/$로 계산했어요.</div>'+
    '<ul class="clean" style="margin-top:8px"><li><b>1차 · 11/24 칼리보 공항 도착 후 $200</b> — 이동 중 점심, 체크인 추가비 ₱4,928, 첫날 저녁. 공항 환율은 좋지 않아 첫날 몫만.</li>'+
