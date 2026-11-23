@@ -12,7 +12,7 @@ const { chromium, devices } = require('playwright');
   ok(await pg.isVisible('[data-noticeedit]'),'non-owner family can edit notice');
   await pg.click('[data-noticeedit]'); await pg.fill('#nt-text','저녁 7시 로비'); await pg.click('[data-noticesave]'); await pg.waitForTimeout(400);
   ok((await pg.$eval('#pin',e=>e.innerText)).includes('하숙'),'notice shows writer name');
-  const order=await pg.evaluate(()=>{const p=document.querySelector('#pin').getBoundingClientRect().top, g=document.querySelector('#scenic').getBoundingClientRect().top, c=document.querySelector('#chat').getBoundingClientRect().top; return p<c&&p<g;}); ok(order,'notice at top, above chat and photos');
+  const order=await pg.evaluate(()=>{const p=document.querySelector('#pin').getBoundingClientRect().top, g=document.querySelector('#scenic').getBoundingClientRect().top, c=document.querySelector('#chat').getBoundingClientRect().top; return g<p&&p<c;}); ok(order,'sea photo above notice, notice above chat');
   await pg.screenshot({path:'test/v-home.png'});
   // theme
   await pg.click('[data-themetoggle]'); await pg.waitForTimeout(200);

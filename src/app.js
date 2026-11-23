@@ -597,8 +597,10 @@ document.addEventListener("click",e=>{
   if(el=T("[data-textsave]")){ const k=el.dataset.textsave, t=($("#pt-text").value||"").trim().slice(0,400); planSet(k,{text:t}).then(w=>afterPlanSave(w,t?(k.startsWith("4u")?"[4U] "+FOURU[k].title+": "+t:"[일정 메모] "+t.slice(0,60)):"")); return; }
   if(el=T("[data-dishimg]")){ const d=DISHP[el.dataset.dishimg]; VIEW.list=[{src:d.src,cap:"대표 이미지("+(GLOSS[el.dataset.dishimg]||el.dataset.dishimg)+") · 이 매장 메뉴 사진 아님 · 사진: "+(d.author||"")+" · "+(d.license||""),page:d.page}]; openViewer(0); return; }
   if(T("[data-gofx]")){ location.hash="info"; return; }
-  if(el=T("[data-sos]")){ const [en,ko,pr]=SOS[0]; const d=$("#driver"); d.innerHTML='<p class="big">'+esc(en)+'</p><p class="mid" style="color:#B8532F;font-weight:700">'+esc(pr)+'</p><p class="ko2" style="font-size:16px">'+esc(ko)+'<br>긴급번호 911 · 티롤 병원 (036) 288-3041</p><button type="button" data-closedriver>닫기</button>'; d.hidden=false; return; }
+  if(el=T("[data-sos]")){ const [en,ko,pr]=SOS[0]; const d=$("#driver"); d.innerHTML='<p class="big">'+esc(en)+'</p><p class="mid" style="color:#B8532F;font-weight:700">'+esc(pr)+'</p><p class="ko2" style="font-size:16px">'+esc(ko)+'<br>긴급번호 911 · 티롤 병원 (036) 288-3041</p><div class="saybig"><button type="button" class="say" data-sayen="'+esc(en)+'">'+SPK+'<span>영어로 듣기</span></button></div><button type="button" data-closedriver>닫기</button>'; d.hidden=false; return; }
   if(T("[data-phrases]")){ openPhrases(); return; }
+  if(el=T("[data-sayen]")){ sayEN(el.dataset.sayen,false,el); return; }
+  if(el=T("[data-say]")){ const p=phraseAt(el.dataset.say); sayEN(p[0],!!el.dataset.slow,el); return; }
   if(el=T("[data-phrase]")){ showPhrase(el.dataset.phrase); return; }
   if(el=T("[data-gotoperson]")){ const id=el.dataset.gotoperson; location.hash="map"; setTimeout(()=>{ if(MAP){ openPerson(id); const p=LIVE.people[id]; if(p) MAP.flyTo(p.x,p.y); } },80); return; }
   if(el=T(".qty [data-dq]")){ const b=el.closest(".qty"); changeQty(b.dataset.pid,b.dataset.item,+el.dataset.dq); return; }
@@ -922,8 +924,22 @@ const PHRASES=[
   ["환전·쇼핑",[["What is your rate for US dollars today?","오늘 달러 환율이 얼마예요?","왓 이즈 유어 레이트 포 유에스 달러스 투데이?"],["Small bills, please.","작은 단위 지폐로 주세요.","스몰 빌스, 플리즈."],["How much is this?","이거 얼마예요?","하우 머치 이즈 디스?"],["Can you give me a discount?","조금 깎아 주실 수 있나요?","캔 유 기브 미 어 디스카운트?"],["Please write the price.","가격을 적어 주세요.","플리즈 라이트 더 프라이스."],["Where is the restroom?","화장실이 어디예요?","웨어 이즈 더 레스트룸?"]]],
   ["트라이크·길",[["Please take us to Henann Garden Resort, Station 2.","헤난 가든 리조트(스테이션 2)로 가 주세요.","플리즈 테이크 어스 투 헤난 가든 리조트, 스테이션 투."],["How much in total for the whole trike?","트라이크 1대 전체 요금이 얼마예요?","하우 머치 인 토털 포 더 홀 트라이크?"],["We are seven. We need two trikes.","7명이라 2대가 필요해요.","위 아 세븐. 위 니드 투 트라이크스."],["Where is D'Mall?","디몰이 어디예요?","웨어 이즈 디몰?"]]]
 ];
-function phrasesBody(){ return '<p class="lead">문장을 누르면 크게 떠요. 직원에게 화면을 보여 주세요. 파란 글씨는 한국어로 읽는 발음이에요.</p>'+
-   PHRASES.map(([cat,list],ci)=>'<div class="panel"><h3>'+cat+'</h3><div class="plist">'+list.map(([en,ko,pr],i)=>'<button type="button" data-phrase="'+ci+'-'+i+'" style="grid-template-columns:1fr auto"><span><span class="nm">'+esc(ko)+'</span><br><span class="sub">'+esc(en)+'</span><br><span class="sub" style="color:var(--accent)">'+esc(pr)+'</span></span><span class="w">크게 ›</span></button>').join("")+'</div></div>').join(""); }
+const SPK='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>';
+function phraseRow(ci,i,en,ko,pr){ const k=ci+'-'+i; return '<div class="prow"><button type="button" class="ptxt" data-phrase="'+k+'"><span class="pko">'+esc(ko)+'</span><span class="pen">'+esc(en)+'</span><span class="ppr">'+esc(pr)+'</span><span class="pbig">크게 보기 ›</span></button><button type="button" class="say" data-say="'+k+'" aria-label="영어로 듣기: '+esc(en)+'">'+SPK+'<span>듣기</span></button></div>'; }
+function toast(m){ let t=document.querySelector('.toast'); if(!t){ t=document.createElement('div'); t.className='toast'; t.setAttribute('role','status'); document.body.appendChild(t);} t.textContent=m; clearTimeout(toast._t); toast._t=setTimeout(()=>t.remove(),3200); }
+let ENVOICE=null;
+function pickVoice(){ try{ const v=speechSynthesis.getVoices().filter(x=>/^en[-_]/i.test(x.lang)); ENVOICE=v.find(x=>/en[-_]US/i.test(x.lang)&&/samantha|google|natural|siri/i.test(x.name))||v.find(x=>/en[-_]US/i.test(x.lang))||v[0]||null; }catch(e){} }
+try{ if(window.speechSynthesis){ pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; } }catch(e){}
+function sayEN(text,slow,btn){
+  if(!window.speechSynthesis||!window.SpeechSynthesisUtterance){ toast("이 휴대폰 브라우저는 읽어 주기를 지원하지 않아요. 화면을 보여 주세요."); return; }
+  try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.lang=ENVOICE?ENVOICE.lang:"en-US"; if(ENVOICE) u.voice=ENVOICE; u.rate=slow?0.7:0.92; u.pitch=1;
+    document.querySelectorAll(".say.on").forEach(b=>b.classList.remove("on")); if(btn) btn.classList.add("on");
+    u.onend=u.onerror=()=>{ if(btn) btn.classList.remove("on"); };
+    speechSynthesis.speak(u); }catch(e){ toast("소리를 재생하지 못했어요. 무음 모드인지 확인해 주세요."); }
+}
+function phraseAt(k){ const [ci,i]=k.split("-").map(Number); return PHRASES[ci][1][i]; }
+function phrasesBody(){ return '<p class="lead">문장을 누르면 크게 떠요. 직원에게 화면을 보여 주세요. 파란 글씨는 한국어로 읽는 발음이에요. <b>🔊</b>를 누르면 휴대폰이 영어로 읽어 줘요.</p>'+
+   PHRASES.map(([cat,list],ci)=>'<div class="panel"><h3>'+cat+'</h3><div class="plist phl">'+list.map(([en,ko,pr],i)=>phraseRow(ci,i,en,ko,pr)).join("")+'</div></div>').join(""); }
 function renderTalk(){ $("#app").innerHTML='<div class="page"><div class="hrow"><h2>회화 카드</h2>'+themeBtn()+'</div>'+
   '<div class="sos"><b>긴급 상황</b><dl class="kv num"><dt>필리핀 긴급번호</dt><dd><b>911</b></dd><dt>티롤 병원 응급실 (24시간)</dt><dd>(036) 288-3041 · 호텔에서 도보 약 '+(BYID.tirol&&BYID.tirol.route?BYID.tirol.route.walk.min:6)+'분</dd><dt>대사관 긴급</dt><dd>+63-917-817-5703</dd><dt>영사콜센터 (24시간)</dt><dd>+82-2-3210-0404</dd></dl>'+
   '<div class="btns"><button type="button" class="btn" data-sos="0">도와주세요 카드</button><button type="button" class="btn alt" data-open="tirol">병원 길찾기</button></div></div>'+phrasesBody()+'</div>'; }
@@ -931,11 +947,11 @@ const SOS=[["Please help us! We need a doctor.","도와주세요! 의사가 필�
 function openPhrases(){ location.hash="talk"; return;
   const s=$("#sheet");
   s.innerHTML='<div class="wrap"><div class="bar"><button type="button" data-close aria-label="닫기">✕</button><div class="t">보여 주는 회화 카드</div></div><div class="page" style="padding-top:0"><p class="lead">문장을 누르면 크게 떠요. 직원에게 화면을 보여 주세요.</p>'+
-   PHRASES.map(([cat,list],ci)=>'<div class="panel"><h3>'+cat+'</h3><div class="plist">'+list.map(([en,ko,pr],i)=>'<button type="button" data-phrase="'+ci+'-'+i+'" style="grid-template-columns:1fr auto"><span><span class="nm">'+esc(ko)+'</span><br><span class="sub">'+esc(en)+'</span><br><span class="sub" style="color:var(--accent)">'+esc(pr)+'</span></span><span class="w">크게 ›</span></button>').join("")+'</div></div>').join("")+'</div></div>';
+   PHRASES.map(([cat,list],ci)=>'<div class="panel"><h3>'+cat+'</h3><div class="plist phl">'+list.map(([en,ko,pr],i)=>phraseRow(ci,i,en,ko,pr)).join("")+'</div></div>').join("")+'</div></div>';
   s.hidden=false; s.scrollTop=0; document.body.style.overflow="hidden";
 }
-function showPhrase(k){ const [ci,i]=k.split("-").map(Number); const [en,ko,pr]=PHRASES[ci][1][i]; const d=$("#driver");
-  d.innerHTML='<p class="big">'+esc(en)+'</p><p class="mid" style="color:#0B7A83;font-weight:700">'+esc(pr)+'</p><p class="ko2" style="font-size:16px">'+esc(ko)+'</p><button type="button" data-closedriver>닫기</button>'; d.hidden=false; }
+function showPhrase(k){ const [en,ko,pr]=phraseAt(k); const d=$("#driver");
+  d.innerHTML='<p class="big">'+esc(en)+'</p><p class="mid" style="color:#0B7A83;font-weight:700">'+esc(pr)+'</p><p class="ko2" style="font-size:18px">'+esc(ko)+'</p><div class="saybig"><button type="button" class="say" data-say="'+k+'">'+SPK+'<span>영어로 듣기</span></button><button type="button" class="say alt" data-say="'+k+'" data-slow="1">'+SPK+'<span>천천히</span></button></div><button type="button" data-closedriver>닫기</button>'; d.hidden=false; sayEN(en,false,d.querySelector(".say")); }
 
 /* ================= editable course (plan) ================= */
 const MEAL_LABEL={breakfast:"아침",lunch:"점심",dinner:"저녁"};
@@ -1084,7 +1100,7 @@ function openSchedPick(){
   const s=$("#sheet"), list=schedEntries();
   s.innerHTML='<div class="wrap"><div class="bar"><button type="button" data-close aria-label="닫기">✕</button><div class="t">다음 일정 지정</div></div><div class="page" style="padding-top:0">'+
    '<div class="panel"><h3>직접 쓰기</h3><div class="field"><label for="sc-time">언제</label><input id="sc-time" maxlength="24" placeholder="예: 11/25 15:00"></div><div class="field"><label for="sc-text">무엇</label><input id="sc-text" maxlength="60" placeholder="예: 디몰 할로망고 앞에서 만나기"></div><button type="button" class="btn" data-schedcustom>다음 일정으로 지정</button></div>'+
-   '<div class="panel"><h3>우리 일정에서 고르기</h3><div class="plist">'+list.map((e,i)=>'<button type="button" data-schedset="'+i+'" style="grid-template-columns:1fr auto"><span><span class="nm">'+esc(e.text)+'</span><br><span class="sub">'+esc(e.time)+'</span></span><span class="w">지정 ›</span></button>').join("")+'</div></div></div></div>';
+   '<div class="panel"><h3>우리 일정에서 고르기</h3><div class="plist phl">'+list.map((e,i)=>'<button type="button" data-schedset="'+i+'" style="grid-template-columns:1fr auto"><span><span class="nm">'+esc(e.text)+'</span><br><span class="sub">'+esc(e.time)+'</span></span><span class="w">지정 ›</span></button>').join("")+'</div></div></div></div>';
   s.hidden=false; s.scrollTop=0; document.body.style.overflow="hidden"; S._sched=list;
 }
 
