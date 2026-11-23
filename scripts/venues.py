@@ -251,6 +251,41 @@ for c, v in V.items():
     v.pop("key", None)
     out.append(v)
 json.dump(out, open(os.path.join(R, "site", "venues.json"), "w"), ensure_ascii=False, separators=(",", ":"))
+# 7) Openverse 사진: 매장 사진(제목에 매장명+Boracay 확인된 것만) + 대표 음식 이미지
+OV = load("openverse.json", {"dish": {}, "venue": {}}) or {"dish": {}, "venue": {}}
+DISHP = OV.get("dish", {})
+DKEYS = sorted(DISHP.keys(), key=len, reverse=True)
+CUIS_DISH = [("한식|korean", ["samgyeopsal", "bibimbap", "bulgogi", "kimchi"]), ("일식|japanese", ["sushi", "ramen", "tempura"]), ("이탈리안|피자|italian|pizza", ["pizza", "pasta", "lasagna"]),
+             ("그리스|greek|중동|meze", ["gyros", "hummus", "souvlaki"]), ("인도|indian", ["curry", "biryani", "naan"]), ("태국|thai", ["pad thai", "tom yum", "green curry"]),
+             ("멕시칸|mexican", ["taco", "burrito", "nachos"]), ("스페인|파에야|타파스", ["paella"]), ("해산물|새우|seafood|crab|shrimp", ["shrimp", "crab", "fish"]), ("버거|burger", ["burger", "fries"]),
+             ("치킨|닭|inasal|chicken", ["inasal", "fried chicken"]), ("마라탕|malatang", ["malatang", "noodle"]), ("중식|chowking", ["fried rice", "dumpling", "noodle"]), ("포케|poke", ["poke"]),
+             ("필리핀|filipino", ["sisig", "adobo", "lechon", "pancit", "sinigang"]), ("젤라또|아이스크림|ice", ["ice cream", "gelato"]), ("카페|커피|coffee|cafe|브런치|베이커리", ["coffee", "pancake", "muffin", "latte"]),
+             ("바|펍|bar|pub", ["cocktail", "beer"]), ("과일|fruit|shake", ["mango shake", "mango", "juice"]), ("양식|그릴|grill", ["steak", "bbq", "burger"])]
+def dish_of(text):
+    t = (text or "").lower()
+    for k in DKEYS:
+        if re.search(r"(^|[^a-z])" + re.escape(k) + r"([^a-z]|$)", t): return k
+    return None
+for v in out:
+    vid = v["id"]
+    for ph in (OV.get("venue", {}).get(v["name"]) or []):
+        if not any(p["src"] == ph["src"] for p in v["photos"]): v["photos"].append(dict(ph, caption=(ph.get("title") or "")[:60]))
+    if v["cat"] in ("money", "pharmacy", "convenience"): continue
+    key = None
+    for n in (v.get("best") or []):
+        key = dish_of(n)
+        if key: break
+    if not key:
+        hay = ((v.get("cuisine") or "") + " " + v["name"] + " " + (v.get("ko") or "") + " " + v["cat"]).lower()
+        for pat, keys in CUIS_DISH:
+            if re.search(pat, hay):
+                avail = [k for k in keys if k in DISHP]
+                if avail: key = avail[sum(map(ord, vid)) % len(avail)]; break
+    if not key and v["cat"] in ("cafe", "dessert") and "coffee" in DISHP: key = "coffee"
+    if not key and "buffet" in DISHP: key = "sisig" if "sisig" in DISHP else None
+    if key and key in DISHP: v["rep"] = dict(DISHP[key], dish=key)
+with open(os.path.join(R, "site", "venues.json"), "w") as fh: json.dump(out, fh, ensure_ascii=False, separators=(",", ":"))
+print("venues with real photos", sum(1 for v in out if v["photos"]), "with rep", sum(1 for v in out if v.get("rep")), "/ food", sum(1 for v in out if v["cat"] not in ("money", "pharmacy", "convenience")))
 EXTRA = dict(scenic=SCENIC,
     changers=[dict(name=c.get("name"), ko=c.get("ko_name"), loc=c.get("location"), rate=c.get("usd_rate_notes"), krw=c.get("takes_krw"), tips=c.get("tips"), kr=c.get("korean_review"))
               for c in (mf.get("changers") or []) if re.search(r"Nikko|Golden|Salamat|Henann", c.get("name") or "")],
@@ -258,7 +293,7 @@ EXTRA = dict(scenic=SCENIC,
     fruitTips=[f.get("tips") for f in (mf.get("fruit") or []) if f.get("tips")][:3],
     mangoPrice="D'Mall 과일가게 망고 1kg ₱150–200 (한국 여행사 블로그, 날짜 미상)")
 json.dump(EXTRA, open(os.path.join(R, "site", "extra.json"), "w"), ensure_ascii=False, separators=(",", ":"))
-json.dump(dict(menus=menus, gloss=GLOSS), open(os.path.join(R, "site", "menus.json"), "w"), ensure_ascii=False, separators=(",", ":"))
+json.dump(dict(menus=menus, gloss=GLOSS, dishPhotos=DISHP), open(os.path.join(R, "site", "menus.json"), "w"), ensure_ascii=False, separators=(",", ":"))
 from collections import Counter
 print("hours parsed", sum(1 for v in out if v.get("H")), "/", len(out))
 print("venues", len(out), Counter(v["cat"] for v in out), "with xy", sum(1 for v in out if "x" in v), "with menu", sum(1 for v in out if v["hasMenu"]),

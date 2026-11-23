@@ -27,7 +27,7 @@ const { chromium, devices } = require('playwright');
   await pg.click('[data-onmap]'); await pg.waitForTimeout(400); ok(!(await pg.isVisible('#sheet')) && await pg.isVisible('#cv'),'지도에서 경로 보기 returns to map');
   for (const id of ['zin','zout','zhome']) { await pg.click('#'+id); } ok(true,'map buttons clicked');
   for (const t of ['home','eat','course','info','map']) { await pg.click(`.nav a[data-tab="${t}"]`); await pg.waitForTimeout(200); ok((await pg.evaluate(()=>location.hash))==='#'+t,'tab '+t); }
-  await pg.click('.nav a[data-tab="course"]'); await pg.click('.plink >> nth=0'); await pg.waitForTimeout(200); ok(await pg.isVisible('#sheet'),'course link opens place');
+  await pg.click('.nav a[data-tab="course"]'); await pg.click('.plist button >> nth=0'); await pg.waitForTimeout(200); ok(await pg.isVisible('#sheet'),'course link opens place');
   await pg.click('[data-close]'); await pg.waitForTimeout(200); ok(!(await pg.isVisible('#sheet')),'close button');
   await pg.goto('http://localhost:8765/_test.html#prices'); await pg.fill('#fx-usd','200'); await pg.dispatchEvent('#fx-usd','input');
   ok((await pg.inputValue('#fx-php'))==='12,782','USD 200 → PHP '+await pg.inputValue('#fx-php')+' / KRW '+await pg.inputValue('#fx-krw'));

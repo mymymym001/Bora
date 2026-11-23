@@ -335,6 +335,19 @@ details.menu summary span{font-weight:400;color:var(--muted);font-size:12.5px}
 .osheet button.sec{background:#e9e9e9;color:#111}
 .erow{display:flex;justify-content:space-between;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding:8px 0;font-size:14px}
 .erow .sub{font-size:12px;color:var(--muted)}
+.slot.meal{background:color-mix(in srgb,var(--accent-soft) 45%,transparent)}
+.slot .bud{font-size:13px;margin:4px 0}
+.slot .tiny{border:0;background:var(--accent);color:var(--on-accent);border-radius:9px;padding:5px 10px;font-size:12.5px;font-weight:700;margin-top:4px}
+.slot.fouru{background:var(--sun-soft)}
+.slot.daytot{font-size:13.5px;background:var(--surface-2)}
+.dish.wph{grid-template-columns:58px 1fr auto}
+.ith{width:58px;height:58px;border:0;padding:0;border-radius:10px;overflow:hidden;position:relative;background:var(--surface-2);align-self:start;margin-top:2px}
+.ith img{width:100%;height:100%;object-fit:cover;display:block}
+.ith i{position:absolute;left:0;right:0;bottom:0;font-style:normal;font-size:9.5px;color:#fff;background:rgba(0,0,0,.5);text-align:center}
+.ith.none{display:block}
+.vc .cover{border:0;padding:0;border-radius:12px;overflow:hidden;aspect-ratio:16/8;max-width:100%;position:relative;background:var(--surface-2);margin:-2px -2px 2px}
+.vc .cover img{width:100%;height:100%;object-fit:cover;display:block}
+.vc .cover i{position:absolute;right:6px;bottom:6px;font-style:normal;font-size:11px;color:#fff;background:rgba(0,0,0,.55);padding:1px 7px;border-radius:6px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 @media (min-width:760px){.card{flex-basis:280px}}
 </style>
@@ -490,6 +503,10 @@ async function initLive(){
     LIVE.unsub.push(db.collection("expenses").orderBy("at","asc").limit(500).onSnapshot(snap=>{
       LIVE.exp=snap.docs.map(d=>Object.assign({id:d.id},d.data())).filter(e=>typeof e.php==="number"&&e.what);
       const ep=$("#expPanel"); if(ep) ep.outerHTML=expHomeHTML();
+    },()=>{}));
+    LIVE.unsub.push(db.collection("plan").onSnapshot(snap=>{
+      const o={}; snap.docs.forEach(d=>{const v=d.data(); if(v) o[d.id]=v;}); LIVE.plan=o;
+      const h=(location.hash||"#home").slice(1)||"home"; if($("#sheet").hidden&&!(document.activeElement&&document.activeElement.closest&&document.activeElement.closest("#chat"))){ const y=window.scrollY; if(h==="course") renderCourse(); else if(h==="home") renderHome(); window.scrollTo(0,y); }
     },()=>{}));
     LIVE.unsub.push(db.collection("chat").orderBy("at","desc").limit(120).onSnapshot(snap=>{
       LIVE.chat=snap.docs.map(d=>Object.assign({id:d.id},d.data())).reverse();
@@ -696,13 +713,19 @@ async function saveProfile(){
 
 /* ================= detail sheet ================= */
 let photoUnsub=null, VIEW={list:[],i:0};
-function photosOf(p){ return (p.photos||[]).map(x=>({src:x.src,cap:(x.caption?x.caption+" · ":"")+"사진: "+(x.author||"")+" · "+(x.license||""),page:x.page})); }
+function photosOf(p){ const a=(p.photos||[]).map(x=>({src:x.src,cap:(x.caption?x.caption+" · ":"")+"사진: "+(x.author||"")+" · "+(x.license||""),page:x.page}));
+  if(p.rep) a.push({src:p.rep.src,cap:"대표 이미지("+(GLOSS[p.rep.dish]||p.rep.dish)+") · 이 매장 사진 아님 · 사진: "+(p.rep.author||"")+" · "+(p.rep.license||""),page:p.rep.page,rep:true});
+  return a; }
+function coverOf(p){ if(p.photos&&p.photos.length) return {src:p.photos[0].src,rep:false}; if(p.rep) return {src:p.rep.src,rep:true}; return null; }
+let DISHP={}, DKEYS=[];
+function dishKey(name){ const t=(name||"").toLowerCase(); for(const k of DKEYS){ const i=t.indexOf(k); if(i<0) continue; const a=t[i-1], b=t[i+k.length]; if((!a||!/[a-z]/.test(a))&&(!b||!/[a-z]/.test(b))) return k; } return null; }
 function renderGallery(p,family){
   const el=$("#gal"); if(!el) return;
   const list=photosOf(p).concat(family);
   VIEW.list=list;
-  el.innerHTML=list.length?'<div class="gal">'+list.map((x,i)=>'<button type="button" data-view="'+i+'" aria-label="사진 크게 보기"><img src="'+esc(x.src)+'" alt="'+esc(p.name)+' 사진" loading="lazy"><span class="cap">'+esc(x.cap)+'</span></button>').join("")+'</div>'
-    :'<div class="photo"><div><b>아직 사진이 없어요</b>여행 중 찍은 사진을 올리면 가족 모두가 볼 수 있어요.<br><a href="'+esc(gmapsOf(p))+'" target="_blank" rel="noopener">구글 지도에서 실제 사진 보기 ↗</a></div></div>';
+  const dl=p.links&&p.links.delivery?'<p class="fine">이 식당의 실제 메뉴 사진은 <a href="'+esc(p.links.delivery)+'" target="_blank" rel="noopener">배달 앱 메뉴판 ↗</a>에서 볼 수 있어요 (사용 허가가 없어 여기로 가져오지 않았어요).</p>':'';
+  el.innerHTML=(list.length?'<div class="gal">'+list.map((x,i)=>'<button type="button" data-view="'+i+'" aria-label="사진 크게 보기"><img src="'+esc(x.src)+'" alt="'+esc(p.name)+' 사진" loading="lazy"><span class="cap">'+esc(x.cap)+'</span></button>').join("")+'</div>'
+    :'<div class="photo"><div><b>아직 사진이 없어요</b>여행 중 찍은 사진을 올리면 가족 모두가 볼 수 있어요.<br><a href="'+esc(gmapsOf(p))+'" target="_blank" rel="noopener">구글 지도에서 실제 사진 보기 ↗</a></div></div>')+dl;
 }
 const gmapsOf=p=>p.links&&p.links.gmaps?p.links.gmaps:"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(p.name+" Boracay");
 function openPlace(id){
@@ -784,17 +807,6 @@ function showDriver(){
 
 /* ================= other pages ================= */
 function plink(id,label){return '<button type="button" class="plink" data-open="'+esc(id)+'">'+esc(label)+'</button>'}
-function renderCourse(){
-  const days=COURSE();
-  const groups=[["restaurant","음식점"],["cafe","카페·디저트"],["bar","바·펍"]];
-  const food=ALL.filter(isFood).sort((a,b)=>a.route.walk.m-b.route.walk.m);
-  $("#app").innerHTML='<div class="page"><h2>추천 코스</h2><p class="lead">예약된 일정이 아니라 헤난 가든 기준 동선으로 짠 추천안이에요. 장소 이름을 누르면 메뉴판과 호텔 복귀 길이 열려요.</p>'+
-   days.map(d=>'<section class="day"><header><b class="num">'+d[0]+' ('+d[1]+')</b><span>'+d[2]+'</span></header>'+d[3].map(s=>'<div class="slot"><time>'+s[0]+'</time><div>'+s[1]+'</div></div>').join("")+'</section>').join("")+
-   '<div class="panel"><h3>메뉴판 · 주문은 맛집 탭에서</h3><p class="fine">'+VEN.filter(p=>p.hasMenu).length+'곳의 메뉴판을 검색하고, 담아서 주문서를 직원에게 보여 줄 수 있어요.</p><a class="btn" style="text-decoration:none" href="#eat">맛집 탭 열기</a></div>'+
-   '<h2 id="allfood">지도에 있는 식당·카페 전체</h2><p class="lead">스테이션 1~3 OpenStreetMap 등록 음식점·카페·바 '+food.length+'곳, 가까운 순서예요. 구글 지도 데이터는 가져올 수 없어서 상세 화면의 ‘구글 지도’ 버튼으로 최신 정보를 확인하세요.</p>'+
-   groups.map(([c,l])=>{const arr=food.filter(p=>matches(p,c)); return '<div class="panel"><h3>'+l+' <span class="fine">'+arr.length+'곳</span></h3><div class="plist">'+
-     arr.map(p=>'<button type="button" data-open="'+esc(p.id)+'" style="--pc:'+colorOf(p.cat)+'"><span class="dot"></span><span><span class="nm">'+esc(p.name)+'</span>'+(p.osm?'':' <span class="badge ok">조사함</span>')+(p.krPop>=2?' <span class="badge">한국인 후기</span>':'')+'<br><span class="sub">'+esc(p.osm?[KINDLABEL[p.kind],p.cuisine,p.hours].filter(Boolean).join(" · "):[p.ko,p.cuisine].filter(Boolean).join(" · "))+'</span></span><span class="w num">도보 '+p.route.walk.min+'분</span></button>').join("")+'</div></div>';}).join("")+'</div>';
-}
 function renderPrices(){
   const fx=D.fx, n=S.n;
   const rows=VEN.filter(p=>p.pp&&isFood(p)&&!p.ppEst).map(p=>({p,g:groupCost(p,n)})).sort((a,b)=>a.g[0]-b.g[0]);
@@ -886,6 +898,15 @@ document.addEventListener("click",e=>{
   if(T("[data-expall]")){ openExpAll(); return; }
   if(el=T("[data-expdel]")){ const id=el.dataset.expdel; LIVE.db.doc("expenses/"+id).delete().then(()=>{ setTimeout(openExpAll,150); }).catch(()=>{}); return; }
   if(el=T("[data-orderexp]")){ const p=BYID[el.dataset.orderexp], t=orderTotals(p); $("#driver").hidden=true; openExpForm({what:dname(p),amt:Math.round(t.tot)}); return; }
+  if(el=T("[data-pickmeal]")){ openMealPicker(el.dataset.pickmeal,el.dataset.meal); return; }
+  if(el=T("[data-mealvenue]")){ const p=BYID[el.dataset.mealvenue], slot=el.dataset.slot; planSet(slot,{venue:p.id}).then(w=>afterPlanSave(w,"[일정] "+slot.replace(/^d(\d)-/,(m,n)=>DAYS[n-1].d+" ").replace("lunch","점심").replace("dinner","저녁")+" → "+dname(p))); return; }
+  if(el=T("[data-mealsave]")){ const slot=el.dataset.mealsave, text=($("#pm-text").value||"").trim().slice(0,40), bud=parseInt(($("#pm-bud").value||"").replace(/[^0-9]/g,""))||0; if(!text&&!bud){$("#pm-text").focus();return}
+    planSet(slot,{text,budget:bud}).then(w=>afterPlanSave(w,"[일정] "+slot.replace(/^d(\d)-/,(m,n)=>DAYS[n-1].d+" ").replace("lunch","점심").replace("dinner","저녁")+" → "+(text||"예산 ₱"+bud))); return; }
+  if(el=T("[data-mealclear]")){ const slot=el.dataset.mealclear; (canPost()?LIVE.db.doc("plan/"+slot).delete().catch(()=>{}):Promise.resolve()).then(()=>{ delete LIVE.plan[slot]; const l=planLocal(); delete l[slot]; try{localStorage.setItem("bora-plan",JSON.stringify(l))}catch(e){} afterPlanSave("local"); }); return; }
+  if(el=T("[data-edit4u]")){ openTextEdit(el.dataset.edit4u,FOURU[el.dataset.edit4u].title+" 확정 시간","예: 11/28 07:30 로비",false); return; }
+  if(el=T("[data-editmemo]")){ openTextEdit(el.dataset.editmemo,"이날 자유 일정","예: 10:00 아일랜드 호핑 (선착장 집합)\n15:00 마사지",true); return; }
+  if(el=T("[data-textsave]")){ const k=el.dataset.textsave, t=($("#pt-text").value||"").trim().slice(0,400); planSet(k,{text:t}).then(w=>afterPlanSave(w,t?(k.startsWith("4u")?"[4U] "+FOURU[k].title+": "+t:"[일정 메모] "+t.slice(0,60)):"")); return; }
+  if(el=T("[data-dishimg]")){ const d=DISHP[el.dataset.dishimg]; VIEW.list=[{src:d.src,cap:"대표 이미지("+(GLOSS[el.dataset.dishimg]||el.dataset.dishimg)+") · 이 매장 메뉴 사진 아님 · 사진: "+(d.author||"")+" · "+(d.license||""),page:d.page}]; openViewer(0); return; }
   if(T("[data-phrases]")){ openPhrases(); return; }
   if(el=T("[data-phrase]")){ showPhrase(el.dataset.phrase); return; }
   if(el=T("[data-gotoperson]")){ const id=el.dataset.gotoperson; location.hash="map"; setTimeout(()=>{ if(MAP){ openPerson(id); const p=LIVE.people[id]; if(p) MAP.flyTo(p.x,p.y); } },80); return; }
@@ -906,7 +927,7 @@ function renderHome(){
   const d=manilaDay();
   const when=d<0?'출발까지 <b>'+(-d)+'일</b> · 11/24(화) 09:20 인천 출발':d>4?'여행이 끝났어요. 다음 여행도 즐겁게!':'여행 <b>'+(d+1)+'일차</b> · '+["11/24(화) 도착일","11/25(수)","11/26(목)","11/27(금)","11/28(토) 귀국일"][d];
   const dayIdx=d<0?0:Math.min(4,d);
-  const day=COURSE()[dayIdx];
+  const day=DAYS[dayIdx];
   const ppl=Object.entries(LIVE.people).sort((a,b)=>b[1].at-a[1].at);
   const top=rankVenues(VEN.filter(p=>isFood(p)),"claude").slice(0,5);
   $("#app").innerHTML='<div class="page" style="padding-top:0">'+
@@ -922,7 +943,7 @@ function renderHome(){
      '<a href="#eat">'+ICON.restaurant+'맛집·주문</a>'+
      '<a href="#info">'+'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.7 0-3 .9-3 2s1.3 1.7 3 2 3 1 3 2-1.3 2-3 2c-1.4 0-2.5-.5-3-1.5M12 6v2M12 16v2"/></svg>환율 계산</a></div>'+
    (ppl.length?'<div class="panel"><h3>가족 위치</h3><div class="ppl">'+ppl.map(([id,p])=>'<button type="button" data-gotoperson="'+esc(id)+'"><span class="f">'+esc(p.char)+'</span><span><b>'+esc(p.nick||"가족")+'</b><br><span class="fine">'+esc(p.label||"")+' · '+ago(p.at)+'</span></span></button>').join("")+'</div></div>':'')+
-   expHomeHTML()+'<section class="day today"><header><b class="num">'+day[0]+' ('+day[1]+')</b><span>'+(d<0?"첫날 미리보기":"오늘 일정")+' · '+day[2]+'</span></header>'+day[3].map(s=>'<div class="slot"><time>'+s[0]+'</time><div>'+s[1]+'</div></div>').join("")+'</section>'+
+   expHomeHTML()+dayHTML(day,false,(d<0?"첫날 미리보기":"오늘 일정")+' · <a href="#course">일정 고치기</a>')+
    '<div class="sec-h"><h2>Claude 추천 맛집</h2><a href="#eat" class="fine">전체 '+VEN.filter(isFood).length+'곳 보기 →</a></div><div class="vlist">'+top.map((p,i)=>venueCard(p,i+1)).join("")+'</div></div>';
   bindParty(); renderChat();
 }
@@ -958,7 +979,8 @@ function venueCard(p,rank){
   const rating=p.rating?'<span class="stars">★ '+p.rating.score+'</span> <span>'+esc(p.rating.site)+(p.rating.count?' ('+Number(p.rating.count).toLocaleString()+')':'')+'</span>':'<span>별점 정보 없음</span>';
   const pop=p.krPop>=3?'<span class="badge ok">한국인 후기 많음</span>':p.krPop===2?'<span class="badge">한국인 후기 있음</span>':'';
   const rv=p.krReview?'<div class="rv"><b>한국인 후기</b>'+esc(p.krReview.length>110?p.krReview.slice(0,108)+"…":p.krReview)+'</div>':(p.desc?'<div class="rv">'+esc(p.desc)+'</div>':'');
-  return '<article class="vc" style="--pc:'+colorOf(p.cat)+'">'+
+  const cv=coverOf(p);
+  return '<article class="vc" style="--pc:'+colorOf(p.cat)+'">'+(cv?'<button type="button" class="cover" data-open="'+esc(p.id)+'" aria-label="'+esc(dname(p))+' 자세히"><img src="'+esc(cv.src)+'" alt="" loading="lazy">'+(cv.rep?'<i>대표 이미지 · 매장 사진 아님</i>':'')+'</button>':'')+
     '<div class="top1"><div><h3><span class="rank num">'+(rank||"")+'</span>'+esc(dname(p))+'</h3>'+(p.ko&&p.ko!==p.name?'<div class="fine">'+esc(p.ko)+'</div>':'')+'</div>'+pop+'</div>'+
     '<div class="meta"><span class="dot"></span><span>'+esc(catText(p))+'</span>·'+rating+'·<span class="num">'+(p.route?'도보 '+p.route.walk.min+'분':'위치 미확인')+'</span></div><div class="meta">'+openBadge(p)+'</div>'+rv+
     (gc?'<div class="money num">1인 '+rng(p.pp[0],p.pp[1],php)+' <small>· '+S.n+'명 '+rng(gc[0],gc[1],php)+' ('+rng(gc[0],gc[1],krw)+')'+(p.ppEst?' · 메뉴 가격으로 추정':'')+'</small></div>':'<div class="fine">가격 정보 없음</div>')+
@@ -993,7 +1015,7 @@ function drawEat(){
     dz.innerHTML=hits.length?'<div class="panel"><h3>메뉴 검색 결과 <span class="fine">'+hits.length+'개</span></h3>'+hits.slice(0,25).map(({p,m})=>'<button type="button" class="dish" data-open="'+esc(p.id)+'"><span><span class="dn">'+esc(m.n)+'</span>'+glossHTML(m.n)+'<br><span class="dd">'+esc(p.name)+(p.route?' · 도보 '+p.route.walk.min+'분':'')+'</span></span><span class="num"><b>'+php(m.php)+'</b><br><span class="dd">'+krw(m.php)+'</span></span></button>').join("")+'</div>':'';
   } else dz.innerHTML="";
 }
-function loadMenus(){ if(!MENUP) MENUP=fetch("menus.json").then(r=>r.json()).then(j=>{MENUS=j.menus; GLOSS=j.gloss; return MENUS;}).catch(()=>{MENUS={};return MENUS;}); return MENUP; }
+function loadMenus(){ if(!MENUP) MENUP=fetch("menus.json").then(r=>r.json()).then(j=>{MENUS=j.menus; GLOSS=j.gloss; DISHP=j.dishPhotos||{}; DKEYS=Object.keys(DISHP).sort((a,b)=>b.length-a.length); return MENUS;}).catch(()=>{MENUS={};return MENUS;}); return MENUP; }
 let GLOSS={};
 function allItems(id){ const m=MENUS&&MENUS[id]; if(!m) return []; return [].concat(m.curated||[],m.gpt||[],m.kr||[],m.delivery||[]).filter(x=>x&&x.n); }
 function dishHits(id,q){ if(!MENUS) return [];
@@ -1025,7 +1047,9 @@ function renderMenu(p){
 function itemRow(p,k,x,sub,src,hot,opts){
   const pr=priceOf(x.php), q=(ordOf(p.id)[k]||{}).q||0;
   const optTxt=opts&&opts.length?opts.map(o=>esc(o[0])+' ₱'+o[1]).join(" / "):'';
-  return '<div class="dish"><span><span class="dn">'+esc(x.n)+'</span>'+(hot?'<span class="hot">인기</span>':'')+glossHTML(x.n)+
+  const dk=dishKey(x.n+" "+(sub||""));
+  const th=dk&&DISHP[dk]?'<button type="button" class="ith" data-dishimg="'+esc(dk)+'" aria-label="사진 크게 보기"><img src="'+esc(DISHP[dk].src)+'" alt="" loading="lazy"><i>대표</i></button>':'<span class="ith none"></span>';
+  return '<div class="dish wph">'+th+'<span><span class="dn">'+esc(x.n)+'</span>'+(hot?'<span class="hot">인기</span>':'')+glossHTML(x.n)+
     (sub?'<br><span class="dd">'+esc(sub)+'</span>':'')+(optTxt?'<br><span class="dd">선택: '+optTxt+'</span>':'')+(src?'<br><span class="src">'+esc(src)+(x.note?' · '+esc(x.note):'')+'</span>':'')+
     '<br><span class="num"><b>'+(pr?rng(pr[0],pr[1],php):"가격 미확인")+'</b> <span class="dd">'+(pr?rng(pr[0],pr[1],krw):"")+'</span></span></span>'+
     (pr?'<span class="qty" data-item="'+k+'" data-pid="'+esc(p.id)+'">'+(q?'<button type="button" data-dq="-1" aria-label="빼기">−</button><b class="num">'+q+'</b>':'')+'<button type="button" class="add" data-dq="1" aria-label="'+esc(x.n)+' 담기">+</button></span>':'<span></span>')+'</div>';
@@ -1056,24 +1080,6 @@ async function shareOrder(pid){
   const p=BYID[pid], t=orderTotals(p);
   const txt="[주문] "+p.name+"\n"+t.items.map(x=>x.q+"× "+x.n).join("\n")+"\n합계 약 "+php(t.tot)+" ("+krw(t.tot)+")";
   const ok=await postChat("msg",txt); $("#driver").hidden=true; if(ok) location.hash="home";
-}
-
-/* ================= course data ================= */
-function COURSE(){
-  const w=id=>BYID[id]&&BYID[id].route?'도보 '+BYID[id].route.walk.min+'분':'';
-  const q=VEN.find(p=>/Quara/.test(p.name));
-  return [
-    ["11.24","화","도착일",[["09:20","인천 T1 출발 (티웨이 TW-125)"],["12:55","칼리보 공항 도착 → 4U 단독 픽업. 밴 약 2시간 + 카티클란 항에서 보트 → 카그반 항 → 호텔 (총 2.5~3시간 예상)"],
-      ["16:00경","헤난 가든 체크인 (15:00부터). <b>1명 추가 등록</b> — 그랜드룸은 최대 3명, 3번째 인원 1박 ₱1,232(조식 포함, 호텔 예약 페이지 기준)"],["17:25","화이트비치 일몰 (11/25 기준 약 17:25)"],
-      ["18:30",(q?plink(q.id,"꽐라 한식당")+" 무한리필 삼겹살 (한국인 후기 많음, 현금만) 또는 ":"")+plink("gerrys","Gerry's Grill")+" ("+w("gerrys")+")"],["밤",plink("seven-remedios","7-Eleven")+"이나 "+plink("budgetmart","Budget Mart")+"에서 물·간식"]]],
-    ["11.25","수","해변·시장",[["오전","리조트 수영장 (08:00–22:00) · 화이트비치 산책"],["12:00",plink("talipapa","D'Talipapa")+" 해산물 파루토 — 7명 단체 체험 식사. kg당 가격부터 확정"],
-      ["15:00","디몰 구경 → "+plink("halomango","HaloMango")+" 망고 빙수 (패밀리 사이즈)"],["19:00",plink("subo","Subo")+" 저녁 + 전통춤 공연 (예약 권장, "+w("subo")+")"]]],
-    ["11.26","목","액티비티 선택일",[["오전","아일랜드 호핑·헬멧다이빙 등 (원하면 현지 예약 — 돈·정보 탭 참고가 확인)"],["점심",plink("manginasal","Mang Inasal")+" 또는 "+plink("smoke","Smoke")+" — 저렴하고 빠르게"],
-      ["오후","리조트 휴식"],["19:00",plink("aria","Aria")+" 해변 이탈리안 (예약 권장, 서비스차지 10% 별도)"]]],
-    ["11.27","금","여유·쇼핑",[["08:30",plink("nonies","Nonie's")+" 브런치 — 해변 따라 남쪽으로 산책 ("+w("nonies")+")"],["오후",plink("realcoffee","Real Coffee")+" 깔라만시 머핀(선물용 6개 ₱360) · "+plink("budgetmart","Budget Mart")+" 말린 망고"],
-      ["18:30",plink("dosmestizos","Dos Mestizos")+" 대형 파에야 — 30~45분 걸리니 미리 주문"],["밤","짐 정리 · 4U 픽업 시간 재확인"]]],
-    ["11.28","토","귀국일",[["06:30","조식 (보통 06:00–10:00, 현장 확인)"],["07:30–08:00","호텔 출발 권장 — 국제선 3시간 전 공항 도착 기준 계산값. <b>최종 시간은 4U 안내를 따르세요</b>"],["13:55","칼리보 출발 (TW-126) → 19:05 인천 T1 도착"]]]
-  ];
 }
 
 /* ================= money changers + fruit (info) ================= */
@@ -1184,6 +1190,107 @@ function openPhrases(){
 }
 function showPhrase(k){ const [ci,i]=k.split("-").map(Number); const [en,ko]=PHRASES[ci][1][i]; const d=$("#driver");
   d.innerHTML='<p class="big">'+esc(en)+'</p><p class="ko2" style="font-size:16px">'+esc(ko)+'</p><button type="button" data-closedriver>닫기</button>'; d.hidden=false; }
+
+/* ================= editable course (plan) ================= */
+const MEAL_LABEL={breakfast:"아침",lunch:"점심",dinner:"저녁"};
+const DAYS=[
+  {k:"d1",d:"11.24",w:"화",title:"도착일",items:[
+    ["09:20","인천 T1 출발 · 티웨이 TW-125 (출발 90분 전 체크인)"],
+    ["12:55","칼리보(KLO) 도착 · 입국심사·수하물"],
+    ["4U","4u-arrive"],
+    ["이동","4U 밴 약 2시간 → 카티클란 항 → 보트 10~15분 → 카그반 항 → 호텔 (총 2.5~3시간 예상)"],
+    ["meal","lunch","이동 중 · 공항/휴게소"],
+    ["16:00경","헤난 가든 체크인 (15:00부터) · <b>1명 추가 등록</b> (1박 ₱1,232, 조식 포함 — 현장 확인)"],
+    ["17:25","화이트비치 일몰"],
+    ["meal","dinner"],["memo"]]},
+  {k:"d2",d:"11.25",w:"수",title:"2일차",items:[["아침","호텔 조식 (06:00–10:00 · 포함 여부는 예약 확인)"],["meal","lunch"],["meal","dinner"],["memo"]]},
+  {k:"d3",d:"11.26",w:"목",title:"3일차",items:[["아침","호텔 조식"],["meal","lunch"],["meal","dinner"],["memo"]]},
+  {k:"d4",d:"11.27",w:"금",title:"4일차",items:[["아침","호텔 조식"],["meal","lunch"],["meal","dinner"],["memo"],["밤","짐 정리 · 4U 픽업 시간 재확인"]]},
+  {k:"d5",d:"11.28",w:"토",title:"귀국일",items:[["06:30","조식 · 체크아웃 준비 (체크아웃 12:00 전)"],["4U","4u-depart"],["이동","호텔 → 카그반 항 → 보트 → 카티클란 → 밴 약 2시간 → 칼리보 공항"],["13:55","칼리보 출발 · 티웨이 TW-126 (국제선 3시간 전 도착 권장)"],["19:05","인천 T1 도착"]]}
+];
+const FOURU={"4u-arrive":{title:"4U 단독 픽업 (도착)",hint:"만나는 곳: 칼리보 공항 도착 출구 · 4U 안내 기준",def:"12:55 도착 후"},
+  "4u-depart":{title:"4U 단독 픽업 (귀국)",hint:"만나는 곳: 헤난 가든 로비 · 계산상 07:30–08:00 출발 권장",def:"시간 미정"}};
+LIVE.plan={};
+function planLocal(){ try{return JSON.parse(localStorage.getItem("bora-plan")||"{}")}catch(e){return {}} }
+function planGet(k){ return LIVE.plan[k]||planLocal()[k]||null; }
+async function planSet(k,v){
+  v=Object.assign({},v,{at:Date.now(),by:LIVE.uid||null,nick:LIVE.me.nick||""});
+  if(canPost()){ try{ await LIVE.db.doc("plan/"+k).set(v); LIVE.plan[k]=v; return "shared"; }catch(e){} }
+  const l=planLocal(); l[k]=v; try{localStorage.setItem("bora-plan",JSON.stringify(l))}catch(e){} return "local";
+}
+function pct(arr,q){ const a=arr.slice().sort((x,y)=>x-y); if(!a.length) return 0; return a[Math.min(a.length-1,Math.floor(q*(a.length-1)))]; }
+let FAIR=null;
+function fairRange(meal){
+  if(!FAIR){ const r=VEN.filter(p=>p.cat==="restaurant"&&p.pp); const lo=r.map(p=>p.pp[0]), hi=r.map(p=>p.pp[1]);
+    FAIR={lunch:[Math.round(pct(lo,0.25)/10)*10,Math.round(pct(hi,0.5)/10)*10],dinner:[Math.round(pct(lo,0.5)/10)*10,Math.round(pct(hi,0.75)/10)*10],n:r.length}; }
+  return FAIR[meal]||FAIR.lunch;
+}
+function mealBudget(slot,meal){
+  const c=planGet(slot);
+  if(c&&c.budget>0) return {pp:[c.budget,c.budget],src:"직접 입력한 예산"};
+  if(c&&c.venue&&BYID[c.venue]&&BYID[c.venue].pp){ const p=BYID[c.venue]; const k=p.sc?1+p.sc:1; return {pp:[p.pp[0]*k,p.pp[1]*k],src:dname(p)+" 1인 예상"+(p.sc?" (서비스차지 포함)":"")+(p.ppEst?" · 메뉴 가격으로 추정":"")}; }
+  const f=fairRange(meal); return {pp:f,src:"보라카이 적정 범위 (조사 식당 "+FAIR.n+"곳 1인 가격 기준)"};
+}
+function budgetLine(b){ return '인당 <b>'+rng(b.pp[0],b.pp[1],php)+'</b> / '+rng(b.pp[0],b.pp[1],krw)+' <span class="fine">(총 '+S.n+'명 '+rng(b.pp[0]*S.n,b.pp[1]*S.n,php)+' / '+rng(b.pp[0]*S.n,b.pp[1]*S.n,krw)+')</span>'; }
+function slotHTML(day,it,editable){
+  const kind=it[0];
+  if(kind==="meal"){ const meal=it[1], slot=day.k+"-"+meal, c=planGet(slot), b=mealBudget(slot,meal);
+    const v=c&&c.venue&&BYID[c.venue];
+    const what=v?plink(v.id,dname(v))+(v.route?' <span class="fine">도보 '+v.route.walk.min+'분</span>':''):c&&c.text?esc(c.text):'<span class="fine">아직 안 정했어요</span>';
+    return '<div class="slot meal"><time>'+MEAL_LABEL[meal]+'</time><div>'+(it[2]?'<span class="fine">'+esc(it[2])+'</span><br>':'')+what+
+      '<div class="bud num">'+budgetLine(b)+'<br><span class="src">'+esc(b.src)+(c&&c.nick?' · '+esc(c.nick)+'님이 정함':'')+'</span></div>'+
+      (editable?'<button type="button" class="tiny" data-pickmeal="'+slot+'" data-meal="'+meal+'">'+(c?'바꾸기':'식당 고르기 · 직접 쓰기')+'</button>':'')+'</div></div>'; }
+  if(kind==="4U"){ const k=it[1], f=FOURU[k], c=planGet(k);
+    return '<div class="slot fouru"><time>4U</time><div><b>'+f.title+'</b><br>픽업 시간: <b class="num">'+esc(c&&c.text||f.def)+'</b>'+(c&&c.nick?' <span class="fine">('+esc(c.nick)+'님 입력)</span>':'')+'<br><span class="fine">'+f.hint+'. 터미널피·환경세·보트비 포함 여부와 짐 운반도 4U에 확인하세요.</span>'+
+      (editable?'<br><button type="button" class="tiny" data-edit4u="'+k+'">4U 확정 시간 입력</button>':'')+'</div></div>'; }
+  if(kind==="memo"){ const k=day.k+"-memo", c=planGet(k);
+    return '<div class="slot"><time>메모</time><div>'+(c&&c.text?esc(c.text).replace(/\n/g,"<br>"):'<span class="fine">자유 일정 (예: 아일랜드 호핑 10시, 마사지)</span>')+(editable?'<br><button type="button" class="tiny" data-editmemo="'+k+'">'+(c&&c.text?'고치기':'적기')+'</button>':'')+'</div></div>'; }
+  return '<div class="slot"><time>'+it[0]+'</time><div>'+it[1]+'</div></div>';
+}
+function dayTotal(day){ let lo=0,hi=0; day.items.filter(i=>i[0]==="meal").forEach(i=>{const b=mealBudget(day.k+"-"+i[1],i[1]); lo+=b.pp[0]; hi+=b.pp[1];}); return [lo,hi]; }
+function dayHTML(day,editable,label){
+  const t=dayTotal(day);
+  return '<section class="day"><header><b class="num">'+day.d+' ('+day.w+')</b><span>'+(label||day.title)+'</span></header>'+day.items.map(it=>slotHTML(day,it,editable)).join("")+
+    (t[1]?'<div class="slot daytot"><time>식비</time><div class="num">이날 식비 예상 인당 '+rng(t[0],t[1],php)+' · 총 '+S.n+'명 <b>'+rng(t[0]*S.n,t[1]*S.n,php)+'</b> / '+rng(t[0]*S.n,t[1]*S.n,krw)+'</div></div>':'')+'</section>';
+}
+function renderCourse(){
+  let lo=0,hi=0; DAYS.forEach(d=>{const t=dayTotal(d); lo+=t[0]; hi+=t[1];});
+  const shared=canPost();
+  const groups=[["restaurant","음식점"],["cafe","카페·디저트"],["bar","바·펍"]];
+  const food=ALL.filter(isFood).sort((a,b)=>a.route.walk.m-b.route.walk.m);
+  $("#app").innerHTML='<div class="page"><h2>우리 일정</h2><p class="lead">점심·저녁은 비워 두었어요. ‘식당 고르기’로 목록에서 고르거나 직접 써 넣으세요. '+(shared?'정한 내용은 가족 모두에게 똑같이 보여요.':'지금은 이 휴대폰에만 저장돼요 (편집자로 초대받으면 가족과 공유돼요).')+'</p>'+
+   partyHTML()+
+   '<div class="panel num"><h3>여행 식비 예상 (점심·저녁, 호텔 조식 제외)</h3><p>인당 <b>'+rng(lo,hi,php)+'</b> / '+rng(lo,hi,krw)+'<br>총 '+S.n+'명 <b>'+rng(lo*S.n,hi*S.n,php)+'</b> / '+rng(lo*S.n,hi*S.n,krw)+'</p><p class="fine">정하지 않은 끼니는 보라카이 적정 범위(점심 인당 '+rng(fairRange("lunch")[0],fairRange("lunch")[1],php)+', 저녁 '+rng(fairRange("dinner")[0],fairRange("dinner")[1],php)+')로 계산했어요. 식당을 고르면 그 식당 가격으로 바뀌어요.</p></div>'+
+   DAYS.map(d=>dayHTML(d,true)).join("")+
+   '<h2 id="allfood">지도에 있는 식당·카페 전체</h2><p class="lead">스테이션 1~3 OpenStreetMap 등록 음식점·카페·바 '+food.length+'곳, 가까운 순서예요.</p>'+
+   groups.map(([c,l])=>{const arr=food.filter(p=>matches(p,c)); return '<div class="panel"><h3>'+l+' <span class="fine">'+arr.length+'곳</span></h3><div class="plist">'+
+     arr.map(p=>'<button type="button" data-open="'+esc(p.id)+'" style="--pc:'+colorOf(p.cat)+'"><span class="dot"></span><span><span class="nm">'+esc(p.name)+'</span>'+(p.osm?'':' <span class="badge ok">조사함</span>')+'<br><span class="sub">'+esc(p.osm?[KINDLABEL[p.kind],p.cuisine,p.hours].filter(Boolean).join(" · "):[p.ko,p.cuisine].filter(Boolean).join(" · "))+'</span></span><span class="w num">도보 '+p.route.walk.min+'분</span></button>').join("")+'</div></div>';}).join("")+'</div>';
+  bindParty();
+}
+function openMealPicker(slot,meal){
+  const s=$("#sheet"), day=DAYS.find(d=>slot.startsWith(d.k)), c=planGet(slot)||{};
+  const list=rankVenues(VEN.filter(p=>p.cat==="restaurant"||p.cat==="cafe"||p.cat==="dessert"),"claude");
+  const f=fairRange(meal);
+  s.innerHTML='<div class="wrap"><div class="bar"><button type="button" data-close aria-label="닫기">✕</button><div class="t">'+day.d+' '+MEAL_LABEL[meal]+' 정하기</div></div><div class="page" style="padding-top:0">'+
+   '<div class="panel"><h3>직접 쓰기</h3><div class="field"><label for="pm-text">식당 이름이나 계획</label><input id="pm-text" maxlength="40" value="'+esc(c.venue?"":(c.text||""))+'" placeholder="예: 호텔 수영장 바, 디몰에서 각자"></div>'+
+   '<div class="field"><label for="pm-bud">1인 예산 (페소, 선택)</label><input id="pm-bud" inputmode="numeric" value="'+esc(c.budget||"")+'" placeholder="'+f[0]+'–'+f[1]+' 이 보통이에요"></div>'+
+   '<div class="btns"><button type="button" class="btn" data-mealsave="'+slot+'">이렇게 정하기</button>'+(c.venue||c.text||c.budget?'<button type="button" class="btn alt" data-mealclear="'+slot+'">비우기</button>':'')+'</div></div>'+
+   '<label class="search" for="pm-q"><input id="pm-q" type="search" placeholder="목록에서 찾기 (이름·음식 종류)" autocomplete="off"></label>'+
+   '<div class="plist" id="pm-list"></div></div></div>';
+  s.hidden=false; s.scrollTop=0; document.body.style.overflow="hidden";
+  const draw=()=>{ const q=($("#pm-q").value||"").toLowerCase();
+    $("#pm-list").innerHTML=list.filter(p=>!q||(p.name+" "+(p.ko||"")+" "+(p.cuisine||"")).toLowerCase().includes(q)).slice(0,60).map(p=>{const k=p.sc?1+p.sc:1;
+      return '<button type="button" data-mealvenue="'+esc(p.id)+'" data-slot="'+slot+'" style="--pc:'+colorOf(p.cat)+'"><span class="dot"></span><span><span class="nm">'+esc(dname(p))+'</span>'+(p.krPop>=3?' <span class="badge ok">한국인 후기 많음</span>':'')+'<br><span class="sub">'+esc([p.cuisine||CATLABEL[p.cat],p.rating?"★"+p.rating.score:"",p.pp?"인당 "+rng(p.pp[0]*k,p.pp[1]*k,php):"가격 정보 없음"].filter(Boolean).join(" · "))+'</span></span><span class="w num">'+(p.route?'도보 '+p.route.walk.min+'분':'')+'</span></button>';}).join(""); };
+  $("#pm-q").addEventListener("input",draw); draw();
+}
+function openTextEdit(k,title,ph,multi){
+  const s=$("#sheet"), c=planGet(k)||{};
+  s.innerHTML='<div class="wrap"><div class="bar"><button type="button" data-close aria-label="닫기">✕</button><div class="t">'+esc(title)+'</div></div><div class="page" style="padding-top:0"><div class="field"><label for="pt-text">'+esc(title)+'</label>'+
+   (multi?'<textarea id="pt-text" rows="5" maxlength="400" style="font:inherit;font-size:16px;padding:10px;border-radius:11px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)" placeholder="'+esc(ph)+'">'+esc(c.text||"")+'</textarea>':'<input id="pt-text" maxlength="40" value="'+esc(c.text||"")+'" placeholder="'+esc(ph)+'">')+
+   '</div><button type="button" class="btn" data-textsave="'+k+'">저장</button></div></div>';
+  s.hidden=false; document.body.style.overflow="hidden";
+}
+async function afterPlanSave(where,msg){ closeSheet(); if(where==="shared"&&msg) postChat("msg",msg); const h=(location.hash||"#home").slice(1)||"home"; if(h==="course") renderCourse(); else if(h==="home") renderHome(); }
 
 /* ================= map ================= */
 function makeMap(box,cv,pinsEl){
