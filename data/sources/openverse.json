@@ -263,6 +263,22 @@
    "license": "CC BY-SA 2.0",
    "page": "https://www.flickr.com/photos/10559879@N00/3455798202",
    "provider": "flickr"
+  },
+  "hummus": {
+   "src": "img/ov/dish-hummus.jpg",
+   "title": "Sweet Potato Hummus",
+   "author": "Veganbaking.net",
+   "license": "CC BY-SA 2.0",
+   "page": "https://www.flickr.com/photos/31104779@N02/5384913459",
+   "provider": "flickr"
+  },
+  "biryani": {
+   "src": "img/ov/dish-biryani.jpg",
+   "title": "Biryani Rice",
+   "author": "{-Maria-}",
+   "license": "CC BY-NC-ND 2.0",
+   "page": "https://www.flickr.com/photos/26074011@N02/2448042544",
+   "provider": "flickr"
   }
  },
  "venue": {}

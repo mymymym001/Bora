@@ -493,6 +493,18 @@ html.big #app,html.big .sheet .wrap,html.big .driver,html.big .nav{zoom:1.13}
 .colors{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px}
 .colors button{aspect-ratio:1;border-radius:50%;border:3px solid transparent;background:var(--sw);padding:0}
 .colors button[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 2px var(--bg) inset}
+.wallet{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.wallet>div{background:var(--surface-2);border-radius:12px;padding:9px 10px;display:grid;gap:1px;min-width:0}
+.wallet span{font-size:12px;color:var(--muted)}
+.wallet b{font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wallet small{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qe{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;margin-top:10px;min-width:0}
+.qein{display:flex;gap:6px;align-items:center;min-width:0}
+.qein input{flex:1;min-width:0;font:inherit;font-size:16px;padding:10px 12px;border-radius:11px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)}
+.qein .send{border:0;background:var(--accent);color:var(--on-accent);border-radius:11px;padding:10px 14px;font-weight:700;white-space:nowrap}
+.qprev{min-height:1.2em}
+#lbody{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.xt .tiny,.erow .tiny{border:0;background:none;color:var(--muted);font-size:11.5px;padding:0 2px;text-decoration:underline;margin-left:4px;font-weight:400}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 @media (min-width:760px){.card{flex-basis:280px}}
 </style>
@@ -1087,6 +1099,7 @@ document.addEventListener("click",e=>{
   if(el=T("[data-expdel]")){ const id=el.dataset.expdel; LIVE.db.doc("expenses/"+id).delete().then(()=>{ setTimeout(()=>{ if((location.hash||"").slice(1)==="ledger"&&$("#sheet").hidden) renderLedger(); else openExpAll(); },150); }).catch(()=>{}); return; }
   if(el=T("[data-orderexp]")){ const p=BYID[el.dataset.orderexp], t=orderTotals(p); $("#driver").hidden=true; openExpForm({what:dname(p),amt:Math.round(t.tot)}); return; }
   if(el=T("[data-msgdel]")){ const id=el.dataset.msgdel; if(el.dataset.confirm!=="1"){ el.dataset.confirm="1"; el.textContent="한 번 더 누르면 삭제"; setTimeout(()=>{ if(el.isConnected){ el.dataset.confirm=""; el.textContent="삭제"; } },3000); return; } LIVE.db.doc("chat/"+id).delete().catch(()=>alertMsg("삭제하지 못했어요.")); return; }
+  if(el=T("[data-quicksave]")){ quickSave(el.dataset.quicksave); return; }
   if(T("[data-fxadd]")){ openFxForm(); return; }
   if(T("[data-fxsave]")){ saveFx(); return; }
   if(el=T("[data-fxdel]")){ LIVE.db.doc("fx/"+el.dataset.fxdel).delete().catch(()=>{}); return; }
@@ -1128,6 +1141,8 @@ document.addEventListener("click",e=>{
 document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ if(!$("#viewer").hidden) $("#viewer").hidden=true; else if(!$("#driver").hidden) $("#driver").hidden=true; else if(!$("#sheet").hidden) location.hash="home"; }
   if(e.key==="Enter"&&e.target.classList&&e.target.classList.contains("card")) select(e.target.dataset.id,{pan:true}); });
 window.addEventListener("hashchange",route);
+document.addEventListener("input",e=>{ if(e.target.matches&&e.target.matches("[data-quick]")) quickPreview(e.target); });
+document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&e.target.matches&&e.target.matches("[data-quick]")){ e.preventDefault(); quickSave(e.target.id); } });
 
 /* ================= home ================= */
 const TRIP_START=Date.UTC(2026,10,23,16,0); // 2026-11-24 00:00 Manila
@@ -1374,9 +1389,8 @@ function expTotals(){ const by={}; let tot=0; LIVE.exp.filter(e=>e.shared!==fals
 function expHomeHTML(){
   if(LIVE.status==="off") return "";
   const recent=LIVE.exp.slice(-3).reverse();
-  return '<div class="panel" id="expPanel"><h3>공금 · 지출 <span class="fine">'+HOLDER+' 보관</span></h3>'+purseHTML(true)+
-    (recent.length?'<div class="plist">'+recent.map(e=>'<div class="erow"><span>'+esc(e.what)+'<br><span class="sub">'+esc(e.payer)+' · '+esc(e.src||"공금")+' · '+hhmm(e.at)+'</span></span><b class="num">'+php(e.php)+'</b></div>').join("")+'</div>':'')+
-    '<div class="btns">'+(canPost()?'<button type="button" class="btn" data-expadd>지출 적기</button>':'')+'<a class="btn alt" style="text-decoration:none" href="#ledger">지출 표 · 예산</a></div></div>';
+  return '<div class="panel" id="expPanel"><div class="ph2"><h3>공금 · 지출</h3><a href="#ledger" class="more-l">표로 보기 →</a></div>'+purseHTML(true)+quickHTML("qh")+
+    (recent.length?'<div class="plist">'+recent.map(e=>'<div class="erow"><span>'+esc(e.what)+(e.qty>1?' ×'+e.qty:'')+'<br><span class="sub">'+esc(e.payer)+' · '+hhmm(e.at)+'</span></span><b class="num">'+php(e.php)+'</b></div>').join("")+'</div>':'')+'</div>';
 }
 function openExpForm(pre){
   if(!canPost()) return; if(!LIVE.me.nick){ openProfile(()=>openExpForm(pre)); return; }
@@ -1598,8 +1612,8 @@ function openSchedPick(){
   s.hidden=false; s.scrollTop=0; document.body.style.overflow="hidden"; S._sched=list;
 }
 
-/* ================= 공금 예산 (아빠 보관) ================= */
-const CASH_USD=4000, FX_CAP_USD=1200, HOLDER="아빠";
+/* ================= 공금 예산 ================= */
+const CASH_USD=1200, FX_CAP_USD=1200, HOLDER="공금";
 const BUDGET=[
   {k:"extra",label:"호텔 1인 추가비",php:4928,cats:["숙소 추가비"],note:"11/24 체크인 때 페소 현금 (₱1,232×4박)"},
   {k:"airport",label:"칼리보 공항세",php:6300,cats:["공항세"],note:"11/28 공항에서 ₱900×7 — 미리 떼어 두기"},
@@ -1621,14 +1635,13 @@ function purse(){
   return {exUsd:ex.usd,exPhp:ex.php,spent,left:ex.php-spent,usdLeft:CASH_USD-ex.usd,byCat,freeSpent:freeSpent.reduce((a,e)=>a+(+e.php||0),0)};
 }
 function purseHTML(compact){
-  const p=purse(), capLeft=FX_CAP_USD-p.exUsd;
-  let head='<dl class="kv num"><dt>남은 페소 (공금)</dt><dd><b>'+php(p.left)+'</b> ('+krw(p.left)+')</dd><dt>환전한 돈</dt><dd>$'+p.exUsd.toLocaleString()+' → '+php(p.exPhp)+' · 상한까지 $'+Math.max(0,capLeft).toLocaleString()+'</dd><dt>남은 달러</dt><dd>$'+p.usdLeft.toLocaleString()+'</dd><dt>공금 지출</dt><dd>'+php(p.spent)+' / 예산 '+php(BUDGET_TOTAL)+'</dd></dl>';
-  const warn=p.left<0?'<div class="callout warn"><b>공금이 마이너스예요</b>환전 기록이 빠졌거나 부족해요. 환전했다면 ‘+ 환전’으로 기록해 주세요.</div>':'';
-  if(compact) return head+warn;
-  head+=warn;
-  return head+'<div class="tbl" style="margin-top:8px"><table><thead><tr><th>예산 항목</th><th class="r">사용 / 예산</th></tr></thead><tbody>'+BUDGET.map(b=>{
-      const used=b.cats.reduce((a,c)=>a+(p.byCat[c]||0),0), pct=Math.min(100,Math.round(used/b.php*100)), over=used>b.php;
-      return '<tr><td><b>'+esc(b.label)+'</b><br><span class="src">'+esc(b.note)+'</span><div class="bar"><i style="width:'+pct+'%;background:'+(over?"var(--warn)":"var(--accent)")+'"></i></div></td><td class="r num"><b>'+php(used)+'</b> / '+php(b.php)+'<br><span class="src">'+(over?'초과 '+php(used-b.php):'남음 '+php(b.php-used))+'</span></td></tr>'; }).join("")+'</tbody></table></div>';
+  const p=purse();
+  let head='<div class="wallet num"><div><span>남은 페소</span><b>'+php(p.left)+'</b><small>'+krw(p.left)+'</small></div><div><span>쓴 돈 (공금)</span><b>'+php(p.spent)+'</b><small>'+krw(p.spent)+'</small></div><div><span>남은 달러</span><b>$'+p.usdLeft.toLocaleString()+'</b><small>가져온 $'+CASH_USD.toLocaleString()+' 중</small></div></div>';
+  if(p.exUsd) head+='<p class="fine" style="margin:6px 0 0">환전: $'+p.exUsd.toLocaleString()+' → '+php(p.exPhp)+'</p>';
+  if(p.left<0) head+='<div class="callout warn" style="margin-top:8px"><b>남은 페소가 마이너스예요</b>환전한 기록이 빠졌을 수 있어요. “200달러 12,400페소 환전”처럼 적어 주세요.</div>';
+  if(compact) return head;
+  const rows=Object.entries(p.byCat).filter(([,v])=>v).sort((a,b)=>b[1]-a[1]);
+  return head+(rows.length?'<div class="tbl" style="margin-top:10px"><table><thead><tr><th>분류</th><th class="r">페소</th><th class="r">원화</th></tr></thead><tbody>'+rows.map(([c,v])=>'<tr><td>'+esc(c)+'</td><td class="r num">'+php(v)+'</td><td class="r num">'+krw(v)+'</td></tr>').join("")+'</tbody></table></div>':'');
 }
 function fxListHTML(){
   if(!LIVE.fx.length) return '<p class="fine">아직 환전 기록이 없어요.</p>';
@@ -1668,10 +1681,68 @@ function openFreeForm(){
 async function saveFree(){
   const a=parseInt($("#fr-a").value)||0, n=parseInt($("#fr-n").value)||0; if(!(a>0)){$("#fr-a").focus();return} if(!(n>0)){$("#fr-n").focus();return}
   const m=($("#fr-m").value||"").trim().slice(0,30);
-  const v={by:LIVE.uid,payer:HOLDER,what:"자유경비 "+php(a)+" × "+n+"명"+(m?" · "+m:""),amt:a*n,cur:"PHP",php:a*n,qty:1,cat:"자유경비 지급",src:"공금",menu:"",at:Date.now()};
+  const v={by:LIVE.uid,payer:LIVE.me.nick||"가족",what:"자유경비 "+php(a)+" × "+n+"명"+(m?" · "+m:""),amt:a*n,cur:"PHP",php:a*n,qty:1,cat:"자유경비 지급",src:"공금",menu:"",at:Date.now()};
   try{ await LIVE.db.collection("expenses").add(v); closeSheet(); postChat("msg","[자유경비] 1인 "+php(a)+" × "+n+"명 지급"); afterMoney(); }catch(e){ $("#fr-t").textContent="저장하지 못했어요."; }
 }
 function afterMoney(){ const h=(location.hash||"#home").slice(1)||"home"; if(h==="ledger") renderLedger(); else if(h==="home") renderHome(); else if(h==="info") renderInfo(); }
+
+/* ================= 한 줄 지출 입력 (자동 정리) ================= */
+const QCAT=[["공항세",/공항세|터미널/],["숙소 추가비",/추가비|추가 ?인원|호텔|보증금/],["환전 수수료",/수수료/],["교통(트라이크 등)",/트라이크|택시|교통|배삯|보트|툭툭|e-?trike/i],
+  ["레저(투어·마사지)",/마사지|스파|투어|호핑|다이빙|패러|레저|액티비티|스노클/],["쇼핑·기념품",/기념품|쇼핑|선물|마트|말린 ?망고|자석|옷|모자|선크림|약국|약/],
+  ["간식·음료",/쉐이크|셰이크|커피|라테|라떼|아메리카노|카페|아이스크림|젤라또|빙수|할로|간식|음료|맥주|산미구엘|콜라|물|주스|디저트|케이크|빵|머핀|과일|망고/],
+  ["식사",/아침|점심|저녁|식사|밥|야식|브런치|뷔페|시시그|아도보|피자|파스타|버거|치킨|삼겹살|한식|레스토랑|식당|그릴/],["팁·기타",/팁|기타/]];
+const QMENU=[[/망고 ?(쉐이크|셰이크|스무디)/,"망고 쉐이크"],[/(쉐이크|셰이크)/,"과일 쉐이크 (망고 외)"],[/아메리카노|브루드|드립/,"아메리카노·브루드 커피"],[/라테|라떼|카푸치노/,"카페라테·카푸치노"],
+  [/아이스티|레모네이드/,"아이스티·레모네이드"],[/프라페|스무디/,"프라페·스무디"],[/아이스크림|젤라또/,"아이스크림·젤라또"],[/케이크|파이|브라우니/,"케이크 한 조각·파이"],
+  [/맥주|산미구엘|레드호스/,"맥주 (산미구엘 등) 1병"],[/칵테일|모히토|마가리타/,"칵테일"],[/콜라|사이다|탄산/,"탄산음료·캔"],[/생수|물\b/,"생수"],
+  [/시시그/,"시시그"],[/아도보/,"아도보"],[/시니강/,"시니강 (국)"],[/판싯|볶음국수/,"판싯 (볶음국수)"],[/실로그/,"실로그 아침 세트 (밥+달걀+고기)"],[/마늘밥/,"마늘밥 1공기"],
+  [/피자/,"피자 한 판"],[/파스타|스파게티|까르보/,"파스타"],[/버거/,"버거 (레스토랑)"],[/스테이크/,"스테이크"],[/샐러드/,"샐러드"],[/새우/,"새우 요리"],[/생선/,"생선구이·생선요리"],[/오징어|칼라마레스/,"오징어 튀김·구이 (칼라마레스)"],
+  [/라멘/,"라멘"],[/스시|초밥/,"스시·롤"],[/팟타이|태국 ?커리/,"팟타이·태국 커리"],[/커리|카레/,"인도 커리"],[/볶음밥/,"볶음밥"],[/감자튀김/,"감자튀김"],[/졸리비|치킨조이|치킨 ?1조각/,"치킨 1조각 + 밥"]];
+function menuKeyByName(name){ const G=EXTRA.priceGuide||[]; for(let gi=0;gi<G.length;gi++) for(let ri=0;ri<G[gi].rows.length;ri++) if(G[gi].rows[ri].m===name) return gi+"-"+ri; return ""; }
+function parseQuick(raw){
+  const t=(raw||"").trim(); if(!t) return null;
+  const num=s=>parseFloat(String(s).replace(/,/g,""));
+  const amts=[]; const re=/(₱|\$|₩)?\s*(\d[\d,]*(?:\.\d+)?)\s*(만\s*원|만원|페소|php|p\b|달러|불|usd|원|krw)?/gi; let m;
+  while((m=re.exec(t))){ const pre=m[1]||"", unit=(m[3]||"").toLowerCase().replace(/\s/g,""); let cur=null, v=num(m[2]);
+    if(pre==="₱"||/페소|php|^p$/.test(unit)) cur="PHP"; else if(pre==="$"||/달러|불|usd/.test(unit)) cur="USD"; else if(pre==="₩"||/원|krw/.test(unit)) { cur="KRW"; if(/만/.test(unit)) v*=10000; }
+    const after=t.slice(m.index+m[0].length,m.index+m[0].length+3);
+    const isQty=!cur&&/^\s*(개|잔|병|그릇|인분|명|장|박|대|번|시)/.test(after);
+    amts.push({v,cur,isQty,raw:m[0],qtyWord:isQty}); }
+  const isFx=/환전/.test(t)&&amts.some(a=>a.cur==="USD")&&amts.some(a=>a.cur==="PHP");
+  if(isFx){ return {fx:true,usd:amts.find(a=>a.cur==="USD").v,php:amts.find(a=>a.cur==="PHP").v,where:t.replace(/\$?\s*\d[\d,.]*\s*(달러|불|usd|페소|php)?|₱\s*\d[\d,.]*|환전(했음|함|했어요)?/gi," ").replace(/\s+/g," ").trim()}; }
+  const money=amts.filter(a=>a.cur)[0]||amts.filter(a=>!a.isQty).sort((a,b)=>b.v-a.v)[0];
+  if(!money||!(money.v>0)) return {err:"금액을 찾지 못했어요. 예: 점심 지보스 2,350페소"};
+  const q=amts.find(a=>a.isQty&&a!==money); const qty=q?Math.max(1,Math.round(q.v)):1;
+  const cur=money.cur||"PHP";
+  const p=cur==="PHP"?money.v:cur==="USD"?money.v*D.fx.php_per_usd:money.v/D.fx.krw_per_php;
+  const cat=(QCAT.find(([c,r])=>r.test(t))||["팁·기타"])[0];
+  const mm=QMENU.find(([r])=>r.test(t)); const menu=mm?menuKeyByName(mm[1]):"";
+  const src=/자유경비|내 ?돈|개인/.test(t)?"자유경비":"공금";
+  let what=t.replace(money.raw,"").replace(q?q.raw:"","").replace(/(^|\s)(개|잔|병|그릇|인분|장|대|명|박|번)(?=\s|$)/,"$1").replace(/(\S)(개|잔|병|그릇|인분|장|대|명|박|번)(?=\s|$)/,"$1").replace(/(구매|구입|샀음|샀어요|결제|냈음|냈어요|지불|씀|썼음|썼어요|했음|함)\.?$/,"").replace(/(자유경비|내 ?돈|개인)(로|으로)?/,"").replace(/\s+/g," ").trim();
+  what=what.replace(/(용으로|용|으로|로)$/,"").trim()||cat;
+  return {what,amt:money.v,cur,php:Math.round(p*100)/100,qty,cat,menu,src};
+}
+function quickHTML(id){
+  if(!canPost()) return '';
+  return '<div class="qe"><label class="qein" for="'+id+'"><input id="'+id+'" data-quick maxlength="80" autocomplete="off" placeholder="예: 점심 지보스 2,350페소 · 망고쉐이크 2개 460페소"><button type="button" class="send" data-quicksave="'+id+'">기록</button></label><div class="qprev fine" data-qprev="'+id+'"></div></div>';
+}
+function quickPreview(inp){
+  const box=document.querySelector('[data-qprev="'+inp.id+'"]'); if(!box) return; const r=parseQuick(inp.value);
+  if(!r){ box.innerHTML=""; return; } if(r.err){ box.textContent=r.err; return; }
+  if(r.fx){ box.innerHTML='→ <b>환전</b> $'+r.usd.toLocaleString()+' → '+php(r.php)+' (₱'+(r.php/r.usd).toFixed(2)+'/$)'; return; }
+  const j=judge(r);
+  box.innerHTML='→ <b>'+esc(r.what)+'</b>'+(r.qty>1?' ×'+r.qty:'')+' · '+esc(r.cat)+' · <b>'+php(r.php)+'</b> ('+krw(r.php)+')'+(r.cur!=="PHP"?' · '+r.cur+' '+r.amt.toLocaleString():'')+' · '+r.src+(j?' · <span class="badge '+j.cls+'">'+j.t+'</span>':'');
+}
+async function quickSave(id){
+  const inp=document.getElementById(id); if(!inp) return; const r=parseQuick(inp.value);
+  if(!r||r.err){ quickPreview(inp); inp.focus(); return; }
+  if(!LIVE.me.reg){ openProfile(()=>quickSave(id)); return; }
+  try{
+    if(r.fx){ await LIVE.db.collection("fx").add({usd:r.usd,php:r.php,where:r.where||"",by:LIVE.uid,nick:LIVE.me.nick||"",at:Date.now()}); postChat("msg","[환전] $"+r.usd+" → "+php(r.php)); }
+    else { const v={by:LIVE.uid,payer:LIVE.me.nick||"가족",what:r.what,where:"",amt:r.amt,cur:r.cur,php:r.php,qty:r.qty,cat:r.cat,menu:r.menu,src:r.src,raw:inp.value.trim().slice(0,80),at:Date.now()};
+      await LIVE.db.collection("expenses").add(v); const j=judge(v); postChat("msg","[지출] "+v.payer+" · "+v.what+" "+php(v.php)+(j?" ("+j.t+")":"")); }
+    inp.value=""; quickPreview(inp); afterMoney();
+  }catch(e){ const box=document.querySelector('[data-qprev="'+id+'"]'); if(box) box.textContent="저장하지 못했어요. 편집자 권한이 있는지 확인하세요."; }
+}
 
 /* ================= 지출·예약 탭 ================= */
 const EXP_CATS=["식사","간식·음료","교통(트라이크 등)","레저(투어·마사지)","쇼핑·기념품","숙소 추가비","공항세","팁·기타","환전 수수료"];
@@ -1697,10 +1768,10 @@ function expTableHTML(writable){
   const tot=ex.reduce((s,e)=>s+(+e.php||0),0);
   const who={}; ex.filter(e=>catBucket(e.cat)!=="자유경비 지급").forEach(e=>{ const k=e.payer||"?"; who[k]=who[k]||{c:0,f:0}; if(e.src==="자유경비") who[k].f+=(+e.php||0); else who[k].c+=(+e.php||0); });
   const days={}; ex.forEach(e=>{ const d=manilaDateLabel(e.at); (days[d]=days[d]||[]).push(e); });
-  let h='<div class="panel"><h3>공금 지갑 <span class="fine">'+HOLDER+' 보관 · 환전 상한 $'+FX_CAP_USD.toLocaleString()+'</span></h3>'+purseHTML(false)+
-   (writable?'<div class="b3"><button type="button" class="btn" data-expadd>+ 지출</button><button type="button" class="btn alt" data-fxadd>+ 환전</button><button type="button" class="btn alt" data-freeadd>+ 자유경비</button></div>':'<p class="fine">기록은 편집자로 초대받은 가족만 할 수 있어요.</p>')+'</div>'+
+  let h='<div class="panel"><h3>편하게 적기</h3><p class="fine" style="margin:0 0 6px">“무엇 + 금액”만 적으면 분류·금액·평가를 표로 정리해요. 환전은 “200달러 12,400페소 환전”.</p>'+(writable?quickHTML("ql")+'<div class="b3" style="margin-top:8px"><button type="button" class="btn alt" data-expadd>자세히 입력</button><button type="button" class="btn alt" data-fxadd>환전 기록</button><button type="button" class="btn alt" data-freeadd>자유경비 지급</button></div>':'<p class="fine">기록은 편집자로 초대받은 가족만 할 수 있어요.</p>')+'</div>'+
+   '<div class="panel"><h3>공금</h3>'+purseHTML(false)+'</div>'+
    '<div class="panel"><h3>환전 기록</h3>'+fxListHTML()+'</div>';
-  if(!ex.length) return h+'<div class="empty">아직 지출 기록이 없어요. 누가 무엇을 얼마에 샀는지 모두 적어 주세요.</div>';
+  if(!ex.length) return h+'<div class="empty">아직 지출 기록이 없어요. 위 칸에 “점심 지보스 2,350페소”처럼 적어 보세요.</div>';
   h+='<div class="panel num"><h3>누가 얼마 썼나</h3><div class="tbl"><table><thead><tr><th>쓴 사람</th><th class="r">공금</th><th class="r">자유경비</th></tr></thead><tbody>'+
      Object.entries(who).sort((a,b)=>(b[1].c+b[1].f)-(a[1].c+a[1].f)).map(([n,v])=>'<tr><td>'+esc(n)+'</td><td class="r">'+php(v.c)+'</td><td class="r">'+php(v.f)+'</td></tr>').join("")+'</tbody></table></div>'+
      '<p class="fine">전체 기록 '+php(tot)+' ('+krw(tot)+'). 자유경비로 산 것은 이미 지급한 돈이라 공금에서 다시 빼지 않아요.</p></div>';
@@ -1755,11 +1826,11 @@ function alertMsg(t){ const m=$("#chatMsg"); if(m){m.textContent=t;m.hidden=fals
 /* ================= 환전 계획 ================= */
 function exchangePlanHTML(){
   const fx=63, p=purse();
-  return '<div class="panel"><h3>예산 · 환전 계획 (공금, '+HOLDER+' 보관)</h3>'+
+  return '<div class="panel"><h3>예산 · 환전 계획</h3>'+
    '<div class="tbl"><table><tbody>'+BUDGET.map(b=>'<tr><td>'+esc(b.label)+'<br><span class="src">'+esc(b.note)+'</span></td><td class="r num"><b>'+php(b.php)+'</b><br><span class="src">≈ $'+Math.round(b.php/fx)+'</span></td></tr>').join("")+
    '<tr><td>항구 요금 (터미널피·환경세·보트)</td><td class="r num">₱0<br><span class="src">4U 포함</span></td></tr>'+
    '<tr><td><b>합계 (자유경비는 상한)</b></td><td class="r num"><b>'+php(BUDGET_TOTAL)+'</b><br><span class="src">≈ $'+Math.round(BUDGET_TOTAL/fx).toLocaleString()+' · '+krw(BUDGET_TOTAL)+'</span></td></tr></tbody></table></div>'+
-   '<div class="callout ok"><b>환전 상한 $'+FX_CAP_USD.toLocaleString()+' · 나머지 약 $'+(CASH_USD-FX_CAP_USD).toLocaleString()+'는 달러로 보관 (비상금 포함)</b>예산 합계 약 $'+Math.round(BUDGET_TOTAL/fx).toLocaleString()+'에 여유분을 더한 금액이에요. 환율은 환전소 기준 ₱63/$로 계산했어요.</div>'+
+   '<div class="callout ok"><b>가져온 돈 $'+CASH_USD.toLocaleString()+' 기준</b>예산 합계 약 $'+Math.round(BUDGET_TOTAL/fx).toLocaleString()+' + 여유분. 환율은 환전소 기준 ₱63/$로 계산했어요.</div>'+
    '<ul class="clean" style="margin-top:8px"><li><b>1차 · 11/24 칼리보 공항 도착 후 $200</b> — 이동 중 점심, 체크인 추가비 ₱4,928, 첫날 저녁. 공항 환율은 좋지 않아 첫날 몫만.</li>'+
    '<li><b>2차 · 11/25 $600</b> — 디몰 근처 환전소 2~3곳 비교 후.</li>'+
    '<li><b>3차 · 11/27 필요하면 최대 $400</b> — 그때까지 쓴 돈을 보고 결정. <b>공항세 ₱6,300은 먼저 떼어 두기.</b></li>'+
