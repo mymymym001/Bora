@@ -12,7 +12,7 @@ const { chromium, devices } = require('playwright');
   ok(await pg.isVisible('[data-noticeedit]'),'non-owner family can edit notice');
   await pg.click('[data-noticeedit]'); await pg.fill('#nt-text','저녁 7시 로비'); await pg.click('[data-noticesave]'); await pg.waitForTimeout(400);
   ok((await pg.$eval('#pin',e=>e.innerText)).includes('하숙'),'notice shows writer name');
-  const order=await pg.evaluate(()=>{const p=document.querySelector('#pin').getBoundingClientRect().top, g=document.querySelector('#scenic').getBoundingClientRect().top, c=document.querySelector('#chat').getBoundingClientRect().top; return p<g&&g<c;}); ok(order,'notice above photos, photos above chat');
+  const order=await pg.evaluate(()=>{const p=document.querySelector('#pin').getBoundingClientRect().top, g=document.querySelector('#scenic').getBoundingClientRect().top, c=document.querySelector('#chat').getBoundingClientRect().top; return p<c&&p<g;}); ok(order,'notice at top, above chat and photos');
   await pg.screenshot({path:'test/v-home.png'});
   // theme
   await pg.click('[data-themetoggle]'); await pg.waitForTimeout(200);
@@ -39,9 +39,9 @@ const { chromium, devices } = require('playwright');
   await pg.click('[data-bookadd]'); await pg.fill('#bk-name','Subo 저녁'); await pg.selectOption('#bk-d','11/25'); await pg.fill('#bk-t','19:00'); await pg.fill('#bk-m','예약자 수복'); await pg.click('[data-booksave]'); await pg.waitForTimeout(400);
   await pg.click('[data-ltab="book"]'); ok((await pg.$eval('#lbody',e=>e.innerText)).includes('Subo 저녁'),'custom booking added'); await pg.screenshot({path:'test/v-book.png'});
   // info: exchange plan, no seafood market
-  await pg.goto('http://localhost:8765/_test_live.html#info'); await pg.waitForSelector('.pg-row'); const inf=await pg.evaluate(()=>document.body.innerText);
+  await pg.goto('http://localhost:8765/_test_live.html#info'); await pg.waitForSelector('.pg-row',{state:'attached'}); const inf=await pg.evaluate(()=>document.body.textContent);
   ok(/예산 · 환전 계획/.test(inf)&&/₱4,928/.test(inf),'exchange plan'); ok(!/디탈리파파\)/.test(inf)&&!/해산물 kg당/.test(inf),'seafood market panel removed');
-  await pg.locator('h3:has-text("환전 계획")').scrollIntoViewIfNeeded(); await pg.screenshot({path:'test/v-fx.png'});
+   await pg.screenshot({path:'test/v-fx.png'});
   // course tips, no talipapa in eat
   await pg.goto('http://localhost:8765/_test_live.html#course'); await pg.waitForSelector('.slot.tip'); ok((await pg.$$eval('.slot.tip',e=>e.length))>=8,'schedule tips: '+(await pg.$$eval('.slot.tip',e=>e.length)));
   await pg.goto('http://localhost:8765/_test_live.html#eat'); await pg.waitForSelector('#vlist .vc'); ok(!(await pg.$$eval('#vlist .vc h3',e=>e.some(x=>/Talipapa Seafood|^\d+D'Talipapa$|Talipapa Bukid/.test(x.textContent)))),'seafood market removed from recommendations');

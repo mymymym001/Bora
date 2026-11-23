@@ -23,7 +23,7 @@ const { chromium, devices } = require('playwright');
   console.log('  wallet:', t.split('\n').slice(1,9).join(' | '));
   await pg.screenshot({path:'test/b-ledger.png'});
   await pg.click('[data-ltab="book"]'); ok((await pg.$eval('#lbody',e=>e.innerText)).includes('공항세 ₱900 × 7명 = ₱6,300'),'airport tax in bookings');
-  await pg.goto('http://localhost:8765/_test_live.html#info'); await pg.waitForSelector('.pg-row'); const inf=await pg.evaluate(()=>document.body.innerText);
+  await pg.goto('http://localhost:8765/_test_live.html#info'); await pg.waitForSelector('.pg-row',{state:'attached'}); const inf=await pg.evaluate(()=>document.body.textContent);
   ok(/환전 상한 \$1,200/.test(inf)&&/\$2,800는 달러로 보관/.test(inf)&&/칼리보 공항세/.test(inf)&&/4U 포함/.test(inf),'info plan: $1,200 cap, keep $2,800, airport tax, port 4U');
   await pg.locator('h3:has-text("예산 · 환전 계획")').scrollIntoViewIfNeeded(); await pg.screenshot({path:'test/b-plan.png'});
   await pg.goto('http://localhost:8765/_test_live.html#home'); await pg.waitForSelector('#expPanel'); ok(/₱3,972/.test(await pg.$eval('#expPanel',e=>e.innerText)),'home wallet panel');

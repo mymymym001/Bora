@@ -9,7 +9,7 @@ const { chromium, devices } = require('playwright');
   const ok=(c,m)=>console.log((c?'PASS ':'FAIL ')+m);
   await pg.goto('http://localhost:8765/_test_live.html#home'); await pg.waitForSelector('.vc'); await pg.waitForTimeout(400);
   ok((await pg.$eval('.when',e=>e.textContent)).includes('2일차'),'home date = day 2 at fixed clock');
-  ok((await pg.$$eval('.quick > *',e=>e.length))===6,'6 quick actions');
+  ok((await pg.$$eval('.quick > *',e=>e.length))===4,'4 quick actions');
   // phrases
   await pg.click('[data-phrases]'); await pg.waitForSelector('[data-phrase]'); const np=await pg.$$eval('[data-phrase]',e=>e.length); ok(np>=30,'phrase cards '+np);
   await pg.click('[data-phrase="0-2"]'); ok((await pg.$eval('#driver .big',e=>e.textContent))==='No ice, please.','phrase fullscreen'); await pg.screenshot({path:'test/f-phrase.png'});
@@ -35,8 +35,8 @@ const { chromium, devices } = require('playwright');
   const hrs=await pg.$eval('#sheet .kv',e=>e.innerText); ok(/08:00–17:30/.test(hrs)&&/영업 중/.test(hrs),'Palawan hours + open: '+hrs.split('\n').slice(0,4).join(' '));
   // info: money + fruit
   await pg.goto('http://localhost:8765/_test_live.html#info'); await pg.waitForTimeout(500);
-  const inf=await pg.evaluate(()=>document.body.innerText); ok(/환전소 · 은행/.test(inf)&&/과일 가게/.test(inf)&&/한국에 가져갈 수 없어요/.test(inf),'info has changers, fruit, quarantine');
-  await pg.locator('h3:has-text("환전소 · 은행")').scrollIntoViewIfNeeded(); await pg.screenshot({path:'test/f-money.png'});
+  const inf=await pg.evaluate(()=>document.body.textContent); ok(/환전소 · 은행/.test(inf)&&/과일 가게/.test(inf)&&/한국에 가져갈 수 없어요/.test(inf),'info has changers, fruit, quarantine');
+  await pg.evaluate(()=>{const d=[...document.querySelectorAll('details.fold')].find(x=>x.textContent.includes('환전소 · 은행')); if(d){d.open=true; d.scrollIntoView();}}); await pg.screenshot({path:'test/f-money.png'});
   // map chips
   await pg.goto('http://localhost:8765/_test_live.html#map'); await pg.waitForSelector('.chip[data-cat="money"]');
   await pg.click('.chip[data-cat="money"]'); await pg.waitForTimeout(200); ok((await pg.$$eval('.pin:not(.dim)',e=>e.length))===9,'map money pins 9');

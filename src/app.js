@@ -139,7 +139,7 @@ async function initLive(){
     LIVE.unsub.push(db.collection("fx").onSnapshot(snap=>{ LIVE.fx=snap.docs.map(d=>Object.assign({id:d.id},d.data())).filter(f=>f&&+f.usd>0&&+f.php>0); const ep=$("#expPanel"); if(ep) ep.outerHTML=expHomeHTML(); if((location.hash||"").slice(1)==="ledger"&&$("#sheet").hidden&&LTAB==="exp") renderLedger(); },()=>{}));
     LIVE.unsub.push(db.collection("likes").onSnapshot(snap=>{ const o={}; snap.docs.forEach(d=>{const v=d.data(); if(v&&Array.isArray(v.ids)) o[d.id]=v;}); LIVE.likes=o;
       document.querySelectorAll("[data-likebox]").forEach(el=>{ const p=BYID[el.dataset.likebox]; if(p) el.innerHTML=likeBtn(p); });
-      const lr=$("#likeRank"); if(lr) lr.innerHTML=likeRankHTML(5); const h=(location.hash||"#home").slice(1); if(h==="eat"&&(S.sort==="likes"||S.ecat==="mine"||S.ecat==="fam")) drawEat(); },()=>{}));
+      const lr=$("#likeRank"); if(lr) lr.innerHTML=likeRankHTML(3); const h=(location.hash||"#home").slice(1); if(h==="eat"&&(S.sort==="likes"||S.ecat==="mine"||S.ecat==="fam")) drawEat(); },()=>{}));
     LIVE.unsub.push(db.collection("photos").orderBy("at","desc").limit(300).onSnapshot(snap=>{ const o={}; snap.docs.forEach(d=>{const v=d.data(); if(v&&typeof v.asset==="string"&&/^[A-Za-z0-9_-]+$/.test(v.asset)&&!o[v.place]) o[v.place]="/_blob/"+v.asset;}); LIVE.famPhotos=o; },()=>{}));
     LIVE.unsub.push(db.collection("bookings").onSnapshot(snap=>{ LIVE.book=snap.docs.map(d=>Object.assign({id:d.id},d.data())).filter(b=>b&&b.name); if((location.hash||"").slice(1)==="ledger"&&$("#sheet").hidden&&LTAB==="book") renderLedger(); },()=>{}));
     LIVE.unsub.push(db.doc("admin/notice").onSnapshot(d=>{ LIVE.notice=d.exists?d.data():null; drawPin(); },()=>{}));
@@ -468,10 +468,28 @@ function renderPrices(){
     if(src===k){p.value=f(x/fx.krw_per_php,0);u.value=f(x/fx.krw_per_php/fx.php_per_usd,2)}}
   [u,p,k].forEach(i=>i.addEventListener("input",()=>from(i))); from(u); bindChecker();
 }
+function arrangeInfo(){
+  const page=$("#app .page"); if(!page) return;
+  const panels=[...page.querySelectorAll(":scope > .panel")];
+  const byTitle=t=>panels.find(p=>{const h=p.querySelector("h3"); return h&&h.textContent.trim().startsWith(t);});
+  const order=["환율 계산기","이 가격 적정한가요?","예산 · 환전 계획"];
+  const first=page.querySelector(":scope > .lead");
+  let anchor=first;
+  order.forEach(t=>{ const p=byTitle(t); if(p){ anchor.after(p); anchor=p; } });
+  const guideH=[...page.querySelectorAll(":scope > h2")].find(h=>h.textContent.includes("메뉴별 적정 가격"));
+  if(guideH){ const nodes=[]; let n=guideH; while(n&&(n===guideH||n.matches("p.lead,p.fine,details.fold,.callout"))){ nodes.push(n); n=n.nextElementSibling; } nodes.forEach(x=>{ anchor.after(x); anchor=x; }); }
+  const refH=document.createElement("h2"); refH.textContent="참고 정보"; refH.style.fontSize="19px"; anchor.after(refH);
+  page.querySelectorAll(":scope > .panel").forEach(p=>{
+    const h=p.querySelector("h3"); if(!h) return; const t=h.textContent.trim();
+    if(order.some(o=>t.startsWith(o))) return;
+    const d=document.createElement("details"); d.className="panel fold"; const sm=document.createElement("summary"); sm.appendChild(h); d.appendChild(sm);
+    while(p.firstChild) d.appendChild(p.firstChild); p.replaceWith(d);
+  });
+}
 function renderInfo(){
   const extra=1232*4;
   renderPrices();
-  $("#app .page").insertAdjacentHTML("beforeend",'<h2 id="travel">여행 정보</h2>'+
+  $("#app .page").insertAdjacentHTML("beforeend",'<h2 id="travel" style="font-size:19px">여행 정보</h2>'+
   '<div class="panel"><h3>항공 (티웨이 · 일반석)</h3><dl class="kv num"><dt>가는 편</dt><dd>11/24(화) TW-125 · 인천 T1 09:20 → 칼리보 12:55</dd><dt>오는 편</dt><dd>11/28(토) TW-126 · 칼리보 13:55 → 인천 T1 19:05</dd><dt>수하물</dt><dd>1인 기내 10kg + 위탁 15kg</dd><dt>체크인</dt><dd>출발 최소 90분 전, e-티켓과 여권 제시</dd></dl><p class="fine">시간은 모두 현지 공항 시간이에요. 필리핀은 한국보다 1시간 느려요.</p></div>'+
   '<div class="panel"><h3>4U 단독 픽업 — 미리 확인할 것</h3><ul class="clean"><li>칼리보 → 카티클란 항 밴 약 2시간, 총 2.5~3시간</li><li>항구 요금(외국인 1인): 터미널피 ₱150 + 환경세 ₱300 + 보트 약 ₱50 → 약 ₱500, 7명이면 약 '+php(3500)+' ('+krw(3500)+')</li><li>위 요금이 4U 패키지에 포함인지, 카그반 항 → 호텔 구간 포함인지 4U에 확인</li><li>귀국일 호텔 픽업 시간 확인 (계산상 07:30–08:00 출발 권장)</li></ul></div>'+
   '<div class="panel"><h3>숙소 — 헤난 가든 리조트</h3><dl class="kv num"><dt>객실</dt><dd>그랜드룸 3개 (방당 기본 2명, 최대 3명)</dd><dt>체크인/아웃</dt><dd>15:00 / 12:00</dd><dt>추가 1명</dt><dd>1박 ₱1,232 (조식 포함) × 4박 = <b>'+php(extra)+'</b> ('+krw(extra)+')</dd><dt>수영장</dt><dd>야외 4개 + 키즈풀, 08:00–22:00</dd><dt>위치</dt><dd>스테이션 2, 화이트비치에서 한 블록 안쪽</dd></dl>'+
@@ -481,7 +499,7 @@ function renderInfo(){
   '<div class="panel"><h3>날씨 · 시간</h3><ul class="clean"><li>11월 말은 북동풍(아미한) 시작 — 화이트비치(서쪽)는 잔잔, 불라복 비치(동쪽)는 바람이 세요.</li><li>일몰 약 17:25.</li><li>필리핀 = 한국 − 1시간.</li></ul></div>'+
   '<div class="panel"><h3>긴급 연락처</h3><dl class="kv num"><dt>국가 긴급번호</dt><dd>911</dd><dt>티롤 병원 (24시간 응급실)</dt><dd>(036) 288-3041 · '+plink("tirol","지도")+'</dd><dt>주필리핀 대사관 (긴급)</dt><dd>+63-917-817-5703</dd><dt>대사관 대표</dt><dd>+63-2-8856-9210</dd><dt>영사콜센터 (24시간)</dt><dd>+82-2-3210-0404</dd></dl><p class="fine">전화 링크는 앱 안에서 작동하지 않을 수 있어 번호를 글자로 적었어요. 티롤 병원은 간단한 응급만 가능하고 중증은 칼리보로 이송돼요.</p></div>'+
   '<div class="panel"><h3>지도에 표시하지 않은 곳</h3>'+D.unplaced.map(u=>'<p><b>'+esc(u.name)+' ('+esc(u.ko)+')</b> — '+esc(u.note)+' <a href="'+esc(u.gmaps)+'" target="_blank" rel="noopener">구글 지도 ↗</a></p>').join("")+'</div>'+
-  '<div class="panel"><h3>데이터 출처와 한계</h3><ul class="clean"><li>지도·좌표·영업시간 일부: © OpenStreetMap 기여자 (ODbL), 2026-11-23 수집</li><li>메뉴판 대부분: boracay.delivery 배달 앱 게시 메뉴·가격 (2026-11-23 수집, 매장가와 다를 수 있음)</li><li>한국인 후기: 네이버 블로그 등 검색 결과 요약 (원문 접속 제한으로 일부만 확인)</li><li>일부 메뉴·사진 정보: 사용자 GPT 가이드에서 출처와 함께 가져옴</li><li>메뉴·가격·영업 확인: 공식 사이트, Philippine Primer, Booky, Tripadvisor 등 웹 조사 (2026-11-23). 각 항목에 출처와 연도를 표시했어요.</li><li>구글 지도의 식당 목록·별점·사진은 이 사이트로 가져올 수 없어요(접근 불가·이용약관). 대신 각 장소에 구글 지도 버튼을 달았어요.</li><li>경로·시간은 실시간이 아닌 지도 기반 추정이에요.</li><li>환율: '+esc(D.fx.src)+' ('+esc(D.fx.at)+')</li></ul></div>'); bindParty();
+  '<div class="panel"><h3>데이터 출처와 한계</h3><ul class="clean"><li>지도·좌표·영업시간 일부: © OpenStreetMap 기여자 (ODbL), 2026-11-23 수집</li><li>메뉴판 대부분: boracay.delivery 배달 앱 게시 메뉴·가격 (2026-11-23 수집, 매장가와 다를 수 있음)</li><li>한국인 후기: 네이버 블로그 등 검색 결과 요약 (원문 접속 제한으로 일부만 확인)</li><li>일부 메뉴·사진 정보: 사용자 GPT 가이드에서 출처와 함께 가져옴</li><li>메뉴·가격·영업 확인: 공식 사이트, Philippine Primer, Booky, Tripadvisor 등 웹 조사 (2026-11-23). 각 항목에 출처와 연도를 표시했어요.</li><li>구글 지도의 식당 목록·별점·사진은 이 사이트로 가져올 수 없어요(접근 불가·이용약관). 대신 각 장소에 구글 지도 버튼을 달았어요.</li><li>경로·시간은 실시간이 아닌 지도 기반 추정이에요.</li><li>환율: '+esc(D.fx.src)+' ('+esc(D.fx.at)+')</li></ul></div>'); arrangeInfo(); bindParty();
 }
 
 /* ================= routing (hash) ================= */
@@ -557,6 +575,7 @@ document.addEventListener("click",e=>{
   if(el=T("[data-editmemo]")){ openTextEdit(el.dataset.editmemo,"이날 자유 일정","예: 10:00 아일랜드 호핑 (선착장 집합)\n15:00 마사지",true); return; }
   if(el=T("[data-textsave]")){ const k=el.dataset.textsave, t=($("#pt-text").value||"").trim().slice(0,400); planSet(k,{text:t}).then(w=>afterPlanSave(w,t?(k.startsWith("4u")?"[4U] "+FOURU[k].title+": "+t:"[일정 메모] "+t.slice(0,60)):"")); return; }
   if(el=T("[data-dishimg]")){ const d=DISHP[el.dataset.dishimg]; VIEW.list=[{src:d.src,cap:"대표 이미지("+(GLOSS[el.dataset.dishimg]||el.dataset.dishimg)+") · 이 매장 메뉴 사진 아님 · 사진: "+(d.author||"")+" · "+(d.license||""),page:d.page}]; openViewer(0); return; }
+  if(T("[data-gofx]")){ location.hash="info"; return; }
   if(T("[data-phrases]")){ openPhrases(); return; }
   if(el=T("[data-phrase]")){ showPhrase(el.dataset.phrase); return; }
   if(el=T("[data-gotoperson]")){ const id=el.dataset.gotoperson; location.hash="map"; setTimeout(()=>{ if(MAP){ openPerson(id); const p=LIVE.people[id]; if(p) MAP.flyTo(p.x,p.y); } },80); return; }
@@ -573,38 +592,42 @@ window.addEventListener("hashchange",route);
 /* ================= home ================= */
 const TRIP_START=Date.UTC(2026,10,23,16,0); // 2026-11-24 00:00 Manila
 function manilaDay(){ const d=Math.floor((Date.now()-TRIP_START)/86400000); return d; } // 0 = 11/24
+function upNextHTML(day,label){
+  const rows=day.items.filter(it=>it[0]!=="tip"&&it[0]!=="memo").slice(0,6).map(it=>slotHTML(day,it,false)).join("");
+  const tip=day.items.find(it=>it[0]==="tip");
+  return '<section class="day"><header><b class="num">'+day.d+' ('+day.w+')</b><span>'+label+'</span><a href="#course" class="more-l">전체 일정 →</a></header>'+rows+(tip?slotHTML(day,tip,false):'')+'</section>';
+}
 function renderHome(){
   const d=manilaDay();
   const when=d<0?'출발까지 <b>'+(-d)+'일</b> · 11/24(화) 09:20 인천 출발':d>4?'여행이 끝났어요. 다음 여행도 즐겁게!':'여행 <b>'+(d+1)+'일차</b> · '+["11/24(화) 도착일","11/25(수)","11/26(목)","11/27(금)","11/28(토) 귀국일"][d];
-  const dayIdx=d<0?0:Math.min(4,d);
-  const day=DAYS[dayIdx];
+  const day=DAYS[d<0?0:Math.min(4,d)];
   const ppl=Object.entries(LIVE.people).sort((a,b)=>b[1].at-a[1].at);
-  const top=rankVenues(VEN.filter(p=>isFood(p)),"claude").slice(0,5);
+  const top=rankVenues(VEN.filter(p=>isFood(p)&&!/Talipapa Bukid/.test(p.name)),"claude").slice(0,3);
+  const Q=(attr,icon,label)=>'<button type="button" '+attr+'>'+icon+'<span>'+label+'</span></button>';
   $("#app").innerHTML='<div class="page" style="padding-top:0">'+
    '<div class="hero2"><div class="hrow"><h1>보라카이 가족 가이드</h1>'+themeBtn()+'</div><div class="when">'+when+'</div></div>'+
    '<div id="pin">'+pinHTML()+'</div>'+
-   ((EXTRA.scenic||[]).length?'<div class="gal" id="scenic">'+EXTRA.scenic.map((x,i)=>'<button type="button" data-scenic="'+i+'" aria-label="사진 크게 보기"><img src="'+esc(x.src)+'" alt="'+esc(x.caption||"보라카이")+'" loading="lazy"><span class="cap">'+esc(x.caption||"")+' · '+esc(x.author||"")+' · '+esc(x.license||"")+'</span></button>').join("")+'</div>':'')+
-   partyHTML()+
+   '<div class="quick q4">'+
+     Q('data-phrases','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg>','회화 카드')+
+     Q('data-expadd2',ICON.money,'지출 적기')+
+     Q('data-driver="1"',ICON.hotel,'기사님 카드')+
+     Q('data-gofx','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg>','환율 계산')+'</div>'+
    '<section class="chat" id="chat" aria-label="가족 채팅"></section>'+
-   '<div class="quick">'+
-     '<button type="button" data-pick>'+ICON.person+'내 위치 알리기</button>'+
-     '<button type="button" data-phrases><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg>회화 카드</button>'+
-     '<button type="button" data-expadd2>'+ICON.money+'경비 기록</button>'+
-     '<button type="button" data-driver="1">'+ICON.hotel+'호텔 가기<br>(기사님 카드)</button>'+
-     '<a href="#eat">'+ICON.restaurant+'맛집·주문</a>'+
-     '<a href="#info">'+'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.7 0-3 .9-3 2s1.3 1.7 3 2 3 1 3 2-1.3 2-3 2c-1.4 0-2.5-.5-3-1.5M12 6v2M12 16v2"/></svg>환율 계산</a></div>'+
+   upNextHTML(day,d<0?"첫날 미리보기":"오늘 일정")+
+   expHomeHTML()+
    (ppl.length?'<div class="panel"><h3>가족 위치</h3><div class="ppl">'+ppl.map(([id,p])=>'<button type="button" data-gotoperson="'+esc(id)+'"><span class="f">'+esc(p.char)+'</span><span><b>'+esc(p.nick||"가족")+'</b><br><span class="fine">'+esc(p.label||"")+' · '+ago(p.at)+'</span></span></button>').join("")+'</div></div>':'')+
-   expHomeHTML()+dayHTML(day,false,(d<0?"첫날 미리보기":"오늘 일정")+' · <a href="#course">일정 고치기</a>')+
-   '<div class="panel"><h3>가족 찜 순위 <a href="#eat" class="fine" data-famsort>전체 보기 →</a></h3><div id="likeRank">'+likeRankHTML(5)+'</div></div>'+
-   '<div class="sec-h"><h2>Claude 추천 맛집</h2><a href="#eat" class="fine">전체 '+VEN.filter(isFood).length+'곳 보기 →</a></div><div class="vlist">'+top.map((p,i)=>venueCard(p,i+1)).join("")+'</div></div>';
-  bindParty(); renderChat();
+   '<div class="panel"><div class="ph2"><h3>가족 찜 순위</h3><a href="#eat" class="more-l" data-famsort>전체 →</a></div><div id="likeRank">'+likeRankHTML(3)+'</div></div>'+
+   '<div class="sec-h"><h2>Claude 추천</h2><a href="#eat" class="more-l">맛집 '+VEN.filter(isFood).length+'곳 →</a></div><div class="vlist">'+top.map((p,i)=>venueCard(p,i+1)).join("")+'</div>'+
+   ((EXTRA.scenic||[]).length?'<div class="sec-h"><h2>보라카이 풍경</h2></div><div class="gal" id="scenic">'+EXTRA.scenic.map((x,i)=>'<button type="button" data-scenic="'+i+'" aria-label="사진 크게 보기"><img src="'+esc(x.src)+'" alt="'+esc(x.caption||"보라카이")+'" loading="lazy"><span class="cap">'+esc(x.caption||"")+' · '+esc(x.author||"")+' · '+esc(x.license||"")+'</span></button>').join("")+'</div>':'')+
+   '</div>';
+  renderChat();
 }
 function bindParty(){ const sg=$(".seg"); if(sg) sg.addEventListener("click",e=>{const b=e.target.closest("button[data-n]"); if(!b)return; S.n=+b.dataset.n; save();
   document.querySelectorAll(".seg button").forEach(x=>x.setAttribute("aria-pressed",x===b)); const h=(location.hash||"#home").slice(1); if(h==="eat") drawEat(); else if(h==="info"||h==="prices"){const y=window.scrollY; renderInfo(); window.scrollTo(0,y);} else if(h==="home"||!h){const y=window.scrollY; renderHome(); window.scrollTo(0,y);} }); }
 
 /* ================= eat (restaurants) ================= */
 const ECATS=[["all","전체"],["mine","❤️ 내 찜"],["fam","가족 찜"],["open","지금 영업 중"],["meal","식사"],["cafe","카페·디저트"],["bar","바"],["fruit","과일"],["korean","한식"],["krpop","한국인 인기"],["menu","메뉴판 있음"]];
-const SORTS=[["claude","Claude 추천"],["likes","찜 많은 순"],["rating","별점순"],["dist","거리순"],["price","가격순"]];
+const SORTS=[["claude","추천순"],["likes","찜순"],["rating","별점순"],["dist","거리순"],["price","가격순"]];
 function eMatch(p,c){ if(!isFood(p)||/Talipapa Bukid/.test(p.name)) return false;
   return c==="all"||(c==="mine"&&iLike(p.id))||(c==="fam"&&likeCount(p.id)>0)||(c==="open"&&isOpen(p))||(c==="fruit"&&p.cat==="fruit")||(c==="meal"&&p.cat==="restaurant")||(c==="cafe"&&(p.cat==="cafe"||p.cat==="dessert"))||(c==="bar"&&(p.cat==="bar"||p.cat==="pub"))||
     (c==="korean"&&/한식|한국|korean/i.test((p.cuisine||"")+p.name+(p.ko||"")))||(c==="krpop"&&(p.krPop||0)>=2)||(c==="menu"&&p.hasMenu); }
@@ -627,17 +650,21 @@ function rankVenues(list,sort){
 }
 function dname(p){ return p.name.replace(/\s*\([^)]*\)/g,"").replace(/\s+-\s+.*$/,"").trim()||p.name; }
 function venueCard(p,rank){
-  const gc=groupCost(p,S.n), cs=claudeScore(p);
-  const rating=p.rating?'<span class="stars">★ '+p.rating.score+'</span> <span>'+esc(p.rating.site)+(p.rating.count?' ('+Number(p.rating.count).toLocaleString()+')':'')+'</span>':'<span>별점 정보 없음</span>';
+  const gc=groupCost(p,S.n), cs=claudeScore(p), cv=coverOf(p);
+  const rating=p.rating?'<span class="stars">★ '+p.rating.score+'</span>'+(p.rating.count?'<span class="rc">('+Number(p.rating.count).toLocaleString()+')</span>':''):'<span class="rc">별점 없음</span>';
   const pop=p.krPop>=3?'<span class="badge ok">한국인 후기 많음</span>':p.krPop===2?'<span class="badge">한국인 후기 있음</span>':'';
-  const rv=p.krReview?'<div class="rv"><b>한국인 후기</b>'+esc(p.krReview.length>110?p.krReview.slice(0,108)+"…":p.krReview)+'</div>':(p.desc?'<div class="rv">'+esc(p.desc)+'</div>':'');
-  const cv=coverOf(p);
-  return '<article class="vc" style="--pc:'+colorOf(p.cat)+'">'+(cv?'<button type="button" class="cover" data-open="'+esc(p.id)+'" aria-label="'+esc(dname(p))+' 자세히"><img src="'+esc(cv.src)+'" alt="" loading="lazy">'+(cv.rep?'<i>대표 이미지 · 매장 사진 아님</i>':cv.fam?'<i>가족이 찍은 사진</i>':'')+'</button>':'<button type="button" class="cover ph" data-open="'+esc(p.id)+'" style="--pc:'+colorOf(p.cat)+'"><span>'+iconOf(p.cat)+'</span><i>사진 없음 · 다녀와서 사진을 올려 주세요</i></button>')+
-    '<div class="top1"><div><h3><span class="rank num">'+(rank||"")+'</span>'+esc(dname(p))+'</h3>'+(p.ko&&p.ko!==p.name?'<div class="fine">'+esc(p.ko)+'</div>':'')+'</div>'+pop+'</div>'+
-    '<div class="meta"><span class="dot"></span><span>'+esc(catText(p))+'</span>·'+rating+'·<span class="num">'+(p.route?'도보 '+p.route.walk.min+'분':'위치 미확인')+'</span></div><div class="meta">'+openBadge(p)+'</div>'+rv+
-    (gc?'<div class="money num">1인 '+rng(p.pp[0],p.pp[1],php)+' <small>· '+S.n+'명 '+rng(gc[0],gc[1],php)+' ('+rng(gc[0],gc[1],krw)+')'+(p.ppEst?' · 메뉴 가격으로 추정':'')+'</small></div>':'<div class="fine">가격 정보 없음</div>')+
-    (S.sort==="claude"&&cs.r.length?'<div class="why">추천 이유: '+esc(cs.r.slice(0,4).join(" · "))+'</div>':'')+
-    '<div class="likebox" data-likebox="'+esc(p.id)+'">'+likeBtn(p)+'</div><div class="acts"><button type="button" class="btn" data-open="'+esc(p.id)+'">'+(p.hasMenu?'메뉴판·주문':'자세히')+'</button>'+(p.route?'<button type="button" class="btn alt" data-onmap="'+esc(p.id)+'">지도·길</button>':'<a class="btn alt" style="text-decoration:none" href="'+esc(gmapsOf(p))+'" target="_blank" rel="noopener">구글 지도 ↗</a>')+'</div></article>';
+  const rv=p.krReview||p.desc||"";
+  return '<article class="vc vr" style="--pc:'+colorOf(p.cat)+'">'+
+    '<button type="button" class="th'+(cv?'':' ph')+'" data-open="'+esc(p.id)+'" aria-label="'+esc(dname(p))+' 자세히">'+(cv?'<img src="'+esc(cv.src)+'" alt="" loading="lazy">'+(cv.rep?'<i>대표</i>':cv.fam?'<i>가족 사진</i>':''):iconOf(p.cat))+'</button>'+
+    '<div class="vb"><h3 class="tt"><button type="button" data-open="'+esc(p.id)+'"><span class="rank num">'+(rank||"")+'</span>'+esc(dname(p))+'</button></h3>'+
+      '<div class="meta"><span>'+esc(catText(p))+'</span>'+rating+'<span class="num">'+(p.route?'도보 '+p.route.walk.min+'분':'위치 미확인')+'</span></div>'+
+      '<div class="meta">'+openBadge(p)+pop+'</div>'+
+      (gc?'<div class="money num">1인 '+rng(p.pp[0],p.pp[1],php)+' <small>· '+S.n+'명 '+rng(gc[0],gc[1],php)+'</small></div>':'<div class="money"><small>가격 정보 없음</small></div>')+
+    '</div>'+
+    (rv?'<p class="rv2">'+(p.krReview?'<b>한국인 후기</b> ':'')+esc(rv)+'</p>':'')+
+    (S.sort==="claude"&&cs.r.length&&rank?'<div class="why">추천 이유 · '+esc(cs.r.slice(0,3).join(" · "))+'</div>':'')+
+    '<div class="acts2"><span class="likebox" data-likebox="'+esc(p.id)+'">'+likeBtn(p)+'</span><span class="sp"></span>'+
+      '<button type="button" class="mini" data-open="'+esc(p.id)+'">'+(p.hasMenu?'메뉴판':'자세히')+'</button>'+(p.route?'<button type="button" class="mini alt" data-onmap="'+esc(p.id)+'">길찾기</button>':'')+'</div></article>';
 }
 function renderEat(){
   $("#app").innerHTML='<div class="page" style="padding-top:8px"><div class="hrow"><h2 style="margin-top:0">맛집 · 카페</h2>'+themeBtn()+'</div>'+
@@ -659,7 +686,7 @@ function drawEat(){
   let list=VEN.filter(p=>eMatch(p,S.ecat));
   if(q) list=list.filter(p=>(p.name+" "+(p.ko||"")+" "+(p.cuisine||"")+" "+(p.best||[]).join(" ")).toLowerCase().includes(q)||dishHits(p.id,q).length);
   list=rankVenues(list,S.sort);
-  const note={likes:"가족이 ‘가고 싶어요’를 많이 누른 순서예요 (같으면 Claude 추천 순).",claude:"한국인 후기·별점·단체석·거리·가격을 합쳐 Claude가 매긴 순서예요.",rating:"구글·트립어드바이저 등에서 확인된 별점만 반영 — 별점 정보가 없는 곳은 맨 아래예요.",dist:"헤난 가든에서 도보 거리 순 — 위치를 모르는 곳은 맨 아래예요.",price:"1인 예상 비용이 낮은 순 — 가격 정보가 없는 곳은 맨 아래예요."}[S.sort];
+  const note={_:0,likes:"가족이 ‘가고 싶어요’를 많이 누른 순서예요 (같으면 Claude 추천 순).",claude:"한국인 후기·별점·단체석·거리·가격을 합쳐 Claude가 매긴 순서예요.",rating:"구글·트립어드바이저 등에서 확인된 별점만 반영 — 별점 정보가 없는 곳은 맨 아래예요.",dist:"헤난 가든에서 도보 거리 순 — 위치를 모르는 곳은 맨 아래예요.",price:"1인 예상 비용이 낮은 순 — 가격 정보가 없는 곳은 맨 아래예요."}[S.sort];
   $("#sortNote").textContent=note+" "+list.length+"곳.";
   el.innerHTML=list.length?list.map((p,i)=>venueCard(p,i+1)).join(""):'<div class="empty">찾는 곳이 없어요. 다른 말로 검색해 보세요.</div>';
   const dz=$("#dishes");
@@ -740,9 +767,9 @@ function priceGuideHTML(){
   const G=EXTRA.priceGuide||[]; if(!G.length) return '';
   const opts=G.map((g,gi)=>'<optgroup label="'+esc(g.g)+'">'+g.rows.map((r,ri)=>'<option value="'+gi+'-'+ri+'">'+esc(r.m)+'</option>').join("")+'</optgroup>').join("");
   return '<div class="panel"><h3>이 가격 적정한가요?</h3><div class="chk"><label for="ck-m" class="fine">메뉴 종류</label><select id="ck-m">'+opts+'</select><label for="ck-p" class="fine">메뉴판 가격 (페소)</label><input id="ck-p" inputmode="decimal" placeholder="예: 450"><div id="ck-out" class="verdict" hidden></div></div></div>'+
-   '<h2 style="font-size:19px;margin-top:6px">메뉴별 적정 가격</h2><p class="lead">'+esc(EXTRA.priceGuideNote||"")+'</p>'+
-   G.map(g=>'<div class="panel"><h3>'+esc(g.g)+' <span class="fine">'+esc(g.desc)+'</span></h3>'+g.rows.map(r=>'<div class="pg-row"><span class="mn">'+esc(r.m)+'</span><span class="rg num">'+rng(r.lo,r.hi,php)+'<br><span class="fine" style="font-weight:400">'+rng(r.lo,r.hi,krw)+'</span></span><span class="sub">보통 이 사이가 적정해요 · '+php(r.high)+' 넘으면 비싼 편'+(PG_NOTE[r.m]?' · '+esc(PG_NOTE[r.m]):'')+'</span></div>').join("")+
-     (g.g==="한식·아시안"?'<p class="fine" style="margin-top:6px">한식: 꽐라 한식당 무한리필 삼겹살 ₱499 ('+krw(499)+') — 한국 블로그·영상 1곳 기준, 현장 확인. 한식 메뉴 가격 자료는 적어서 표에서는 뺐어요.</p>':'')+'</div>').join("")+
+   '<h2 style="font-size:19px;margin-top:6px">메뉴별 적정 가격</h2><p class="lead">가격 범위 안이면 적정, ‘비싼 편’ 금액을 넘으면 비싼 편이에요. 카테고리를 눌러 펼치세요.</p><p class="fine">'+esc(EXTRA.priceGuideNote||"")+'</p>'+
+   G.map((g,gi)=>'<details class="panel fold"'+(gi===0?' open':'')+'><summary><h3>'+esc(g.g)+' <span class="fine">'+esc(g.desc)+'</span></h3></summary>'+g.rows.map(r=>'<div class="pg-row"><span class="mn">'+esc(r.m)+'</span><span class="rg num">'+rng(r.lo,r.hi,php)+'</span><span class="sub num">'+rng(r.lo,r.hi,krw)+' · 비싼 편 '+php(r.high)+'+'+(PG_NOTE[r.m]?' · '+esc(PG_NOTE[r.m]):'')+'</span></div>').join("")+
+     (g.g==="한식·아시안"?'<p class="fine" style="margin-top:6px">한식: 꽐라 한식당 무한리필 삼겹살 ₱499 ('+krw(499)+') — 한국 블로그·영상 1곳 기준, 현장 확인. 한식 메뉴 가격 자료는 적어서 표에서는 뺐어요.</p>':'')+'</details>').join("")+
    '<div class="callout"><b>계산할 때 기억하기</b>메뉴판 가격에 서비스차지 10%가 붙는 곳이 많아요(정상). 표의 가격은 서비스차지 전 금액이에요.</div>';
 }
 function bindChecker(){
@@ -952,9 +979,7 @@ function renderCourse(){
    partyHTML()+
    '<div class="panel num"><h3>여행 식비 예상 (점심·저녁, 호텔 조식 제외)</h3><p>인당 <b>'+rng(lo,hi,php)+'</b> / '+rng(lo,hi,krw)+'<br>총 '+S.n+'명 <b>'+rng(lo*S.n,hi*S.n,php)+'</b> / '+rng(lo*S.n,hi*S.n,krw)+'</p><p class="fine">정하지 않은 끼니는 보라카이 적정 범위(점심 인당 '+rng(fairRange("lunch")[0],fairRange("lunch")[1],php)+', 저녁 '+rng(fairRange("dinner")[0],fairRange("dinner")[1],php)+')로 계산했어요. 식당을 고르면 그 식당 가격으로 바뀌어요.</p></div>'+
    DAYS.map(d=>dayHTML(d,true)).join("")+
-   '<h2 id="allfood">지도에 있는 식당·카페 전체</h2><p class="lead">스테이션 1~3 OpenStreetMap 등록 음식점·카페·바 '+food.length+'곳, 가까운 순서예요.</p>'+
-   groups.map(([c,l])=>{const arr=food.filter(p=>matches(p,c)); return '<div class="panel"><h3>'+l+' <span class="fine">'+arr.length+'곳</span></h3><div class="plist">'+
-     arr.map(p=>'<button type="button" data-open="'+esc(p.id)+'" style="--pc:'+colorOf(p.cat)+'"><span class="dot"></span><span><span class="nm">'+esc(p.name)+'</span>'+(p.osm?'':' <span class="badge ok">조사함</span>')+'<br><span class="sub">'+esc(p.osm?[KINDLABEL[p.kind],p.cuisine,p.hours].filter(Boolean).join(" · "):[p.ko,p.cuisine].filter(Boolean).join(" · "))+'</span></span><span class="w num">도보 '+p.route.walk.min+'분</span></button>').join("")+'</div></div>';}).join("")+'</div>';
+   '<p class="fine">스테이션 1~3의 모든 식당·카페는 맛집 탭과 지도 탭에서 볼 수 있어요.</p></div>';
   bindParty();
 }
 function openMealPicker(slot,meal){

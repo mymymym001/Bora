@@ -34,7 +34,7 @@ GROUPS = [
    ("버거 (레스토랑)", lambda i: not i["fast"] and re.search(r"burger", i["n"]) and not re.search(r"slider|kid", i["n"])),
    ("스테이크", lambda i: re.search(r"steak|ribeye|sirloin|tenderloin", i["n"]) and not re.search(r"sandwich|rice|salpicao|bowl|tapa|burger|pasta|salad|fries|wrap|pizza|silog|quesadilla|taco", i["n"]) and i["p"] >= 450),
    ("샐러드", lambda i: re.search(r"salad", i["n"]) and not re.search(r"side|add", i["n"]))]),
- ("해산물", "식당에서 주문 시 (시장 파루토는 아래 kg당 가격 참고)", [
+ ("해산물", "식당에서 주문 시", [
    ("새우 요리", lambda i: re.search(r"shrimp|prawn|gambas|hipon", i["n"]) and not re.search(r"chips|cracker|siomai|dumpling|fried rice|pasta|spaghetti|pizza", i["n"])),
    ("생선구이·생선요리", lambda i: re.search(r"fish|tuna|lapu|bangus|salmon|maya", i["n"]) and not re.search(r"fish ?ball|sauce|chips|sandwich|burger|fillet sandwich|kids", i["n"])),
    ("오징어 튀김·구이 (칼라마레스)", lambda i: re.search(r"calamar|squid|pusit", i["n"])),

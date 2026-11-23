@@ -20,7 +20,7 @@ const { chromium, devices } = require('playwright');
   await pg.evaluate(()=>window.scrollTo(0,1500)); await pg.waitForTimeout(200);
   const st=await pg.$eval('.sortbar',e=>e.getBoundingClientRect().top); ok(st<40,'sort bar stays at top when scrolling ('+Math.round(st)+'px)');
   await pg.screenshot({path:'test/l-eat.png'});
-  const covers=await pg.$$eval('#vlist .vc .cover',e=>e.length), cards=await pg.$$eval('#vlist .vc',e=>e.length); ok(covers===cards,'every card has a cover area ('+covers+'/'+cards+')');
+  const covers=await pg.$$eval('#vlist .vc .th',e=>e.length), cards=await pg.$$eval('#vlist .vc',e=>e.length); ok(covers===cards,'every card has a cover area ('+covers+'/'+cards+')');
   // unlike
   await pg.goto('http://localhost:8765/_test_live.html#p-subo'); await pg.waitForSelector('#sheet [data-like]'); await pg.click('#sheet [data-like]'); await pg.waitForTimeout(300);
   ok(/3/.test(await pg.$eval('#sheet [data-likebox]',e=>e.innerText)),'unlike from detail');

@@ -39,9 +39,9 @@ const { chromium, devices } = require('playwright');
   await pg.click('.nav a[data-tab="home"]'); await pg.waitForSelector('.msg.loc'); await pg.click('.msg.loc button >> nth=0'); ok(true,'loc message click');
   // course tab lists all food
   await pg.click('.nav a[data-tab="course"]'); await pg.waitForTimeout(300);
-  const n=await pg.$$eval('.plist button',e=>e.length); ok(n>200, 'course lists all food places: '+n);
+  const n=await pg.$$eval('.slot.meal',e=>e.length); ok(n===8, 'course meal slots: '+n);
   await pg.screenshot({path:'test/live-4course.png'});
-  await pg.locator('.plist button >> nth=5').click(); await pg.waitForTimeout(300); ok(await pg.isVisible('#sheet'),'osm place opens: '+await pg.$eval('#sheet .t',e=>e.textContent));
+  await pg.goto('http://localhost:8765/_test_live.html#map'); await pg.waitForSelector('.dp',{state:'attached'}); await pg.waitForTimeout(500); await pg.evaluate(()=>{const d=[...document.querySelectorAll('.dp')].find(x=>x.style.visibility!=='hidden'); d.click();}); await pg.waitForTimeout(300); ok(await pg.isVisible('#sheet'),'osm place opens: '+await pg.$eval('#sheet .t',e=>e.textContent));
   await pg.screenshot({path:'test/live-5osm.png'});
   await pg.goto('http://localhost:8765/_test_live.html#home'); await pg.waitForSelector('.msg'); await pg.waitForTimeout(300); const hs=await pg.evaluate(()=>[document.documentElement.scrollWidth,window.innerWidth]); ok(hs[0]<=hs[1],'no horizontal scroll '+hs); await pg.screenshot({path:'test/live-6.png'}); console.log('errors', JSON.stringify(errs)); await b.close();
 })();
