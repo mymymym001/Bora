@@ -3,7 +3,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap">
 <style>
-/* Layout: 지도가 주인공인 한 손 조작 앱. 상단 인원·필터 → 지도 카드 → 가로 장소 카드 → 호텔 복귀 패널, 하단 탭. */
+/* 의도적으로 라이트 테마 하나만 사용 (휴대폰 다크 모드여도 밝은 화면 유지). Layout: 지도가 주인공인 한 손 조작 앱. 상단 인원·필터 → 지도 카드 → 가로 장소 카드 → 호텔 복귀 패널, 하단 탭. */
 :root{
   --bg:#F3F6F5; --surface:#FFFFFF; --surface-2:#E9EFEE; --ink:#10292C; --muted:#5A6E71; --line:#D9E3E2;
   --accent:#0B7A83; --accent-soft:#D7EEEF; --on-accent:#FFFFFF; --sun:#E38B1F; --sun-soft:#FCEBD3;
@@ -11,22 +11,10 @@
   --sea:#A8DADF; --land:#F0EDE5; --sand:#F5E5BE; --green:#D3E5C9; --pool:#86CFE3; --road:#FFFFFF; --casing:#D3CDBF; --path:#C2B79F; --label:#3E5457; --halo:rgba(255,255,255,.9);
   --c-restaurant:#CF5530; --c-cafe:#8B5A34; --c-convenience:#2A77B8; --c-pharmacy:#2A9258; --c-pub:#7448AE; --follow:#6A3FD0; --follow-soft:#ECE5FB; --c-money:#0E8A6E; --c-fruit:#D9A400;
   --font:"IBM Plex Sans KR",-apple-system,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
-  --r:16px; --shadow:0 1px 2px rgba(16,41,44,.06),0 6px 20px rgba(16,41,44,.08);
+  color-scheme:light; --r:16px; --shadow:0 1px 2px rgba(16,41,44,.06),0 6px 20px rgba(16,41,44,.08);
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0C181A; --surface:#132326; --surface-2:#1A2E31; --ink:#E3EDED; --muted:#93A8AA; --line:#23383B;
-  --accent:#3DB3BB; --accent-soft:#16393C; --on-accent:#06191B; --sun:#F2A646; --sun-soft:#3A2A14;
-  --warn:#EE8A62; --warn-soft:#3A2018; --ok:#6CC795; --ok-soft:#173326;
-  --sea:#0F3A43; --land:#1A2A2C; --sand:#3A3427; --green:#1E3428; --pool:#1C566A; --road:#3A4D50; --casing:#0E1B1D; --path:#5A5644; --label:#C6D6D7; --halo:rgba(12,24,26,.85);
-  --c-restaurant:#F07A52; --c-cafe:#C98C5E; --c-convenience:#5BA5E6; --c-pharmacy:#55C485; --c-pub:#A884DD; --follow:#B497FF; --follow-soft:#2A2145; --c-money:#3CC9A4; --c-fruit:#F2C94C;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.35); color-scheme:dark }}
-:root[data-theme="dark"]{
-  --bg:#0C181A; --surface:#132326; --surface-2:#1A2E31; --ink:#E3EDED; --muted:#93A8AA; --line:#23383B;
-  --accent:#3DB3BB; --accent-soft:#16393C; --on-accent:#06191B; --sun:#F2A646; --sun-soft:#3A2A14;
-  --warn:#EE8A62; --warn-soft:#3A2018; --ok:#6CC795; --ok-soft:#173326;
-  --sea:#0F3A43; --land:#1A2A2C; --sand:#3A3427; --green:#1E3428; --pool:#1C566A; --road:#3A4D50; --casing:#0E1B1D; --path:#5A5644; --label:#C6D6D7; --halo:rgba(12,24,26,.85);
-  --c-restaurant:#F07A52; --c-cafe:#C98C5E; --c-convenience:#5BA5E6; --c-pharmacy:#55C485; --c-pub:#A884DD; --follow:#B497FF; --follow-soft:#2A2145; --c-money:#3CC9A4; --c-fruit:#F2C94C;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.35); color-scheme:dark }
+
+
 
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
