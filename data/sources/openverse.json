@@ -207,6 +207,14 @@
    "license": "CC BY-SA 2.0",
    "page": "https://www.flickr.com/photos/91049143@N00/15668410878",
    "provider": "flickr"
+  },
+  "burrito": {
+   "src": "img/ov/dish-burrito.jpg",
+   "title": "Chipotle Burrito",
+   "author": "compujeramey",
+   "license": "CC BY 2.0",
+   "page": "https://www.flickr.com/photos/37171504@N00/51922135",
+   "provider": "flickr"
   }
  },
  "venue": {}
