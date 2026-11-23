@@ -21,7 +21,7 @@ const { chromium, devices } = require('playwright');
   pg=await ctx.newPage(); pg.on('pageerror',e=>errs.push(e.message));
   await pg.goto('http://localhost:8765/_test_live.html#home'); await pg.waitForSelector('#pin .pin-notice'); await pg.waitForTimeout(300);
   const g=await pg.$eval('#pin',e=>e.innerText); ok(/🚨공지🚨/.test(g)&&/07:30 로비 집합/.test(g)&&/Smoke Resto/.test(g),'guest sees pinned notice + next schedule');
-  ok(!(await pg.isVisible('[data-noticeedit]'))&&!(await pg.isVisible('#noticeToggle')),'guest cannot edit notice or use 공지 toggle');
+  ok((await pg.isVisible('[data-noticeedit]'))&&(await pg.isVisible('#noticeToggle')),'family member can edit notice (requested change)');
   await pg.screenshot({path:'test/a-guest.png'});
   console.log('errors', JSON.stringify(errs)); await b.close();
 })();

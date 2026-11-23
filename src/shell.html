@@ -16,6 +16,16 @@
 
 
 
+:root.dark{
+  --bg:#0C181A; --surface:#132326; --surface-2:#1A2E31; --ink:#E3EDED; --muted:#93A8AA; --line:#23383B;
+  --accent:#3DB3BB; --accent-soft:#16393C; --on-accent:#06191B; --sun:#F2A646; --sun-soft:#3A2A14;
+  --warn:#EE8A62; --warn-soft:#3A2018; --ok:#6CC795; --ok-soft:#173326;
+  --sea:#0F3A43; --land:#1A2A2C; --sand:#3A3427; --green:#1E3428; --pool:#1C566A; --road:#3A4D50; --casing:#0E1B1D; --path:#5A5644; --label:#C6D6D7; --halo:rgba(12,24,26,.85);
+  --c-restaurant:#F07A52; --c-cafe:#C98C5E; --c-convenience:#5BA5E6; --c-pharmacy:#55C485; --c-pub:#A884DD; --follow:#B497FF; --follow-soft:#2A2145; --c-money:#3CC9A4; --c-fruit:#F2C94C;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.35); color-scheme:dark }
+:root.dark .pin-notice{background:#3A1A14;border-color:#F0785F}
+:root.dark .pin-notice b{color:#FF9B85}
+:root.dark .pin-notice .next{background:var(--surface)}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.5;
@@ -170,8 +180,8 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px;font-size:14px}
 
 /* nav */
 .nav{position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--surface);border-top:1px solid var(--line);
-  padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));display:grid;grid-template-columns:repeat(5,1fr)}
-.nav a{display:grid;justify-items:center;gap:2px;text-decoration:none;color:var(--muted);font-size:11.5px;padding:4px 0;border-radius:10px}
+  padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));display:grid;grid-template-columns:repeat(6,1fr)}
+.nav a{display:grid;justify-items:center;gap:2px;text-decoration:none;color:var(--muted);font-size:11px;letter-spacing:-.02em;white-space:nowrap;padding:4px 0;border-radius:10px}
 .nav a svg{width:22px;height:22px}
 .nav a[aria-current="page"]{color:var(--accent);font-weight:700}
 .loading{padding:40px 0;text-align:center;color:var(--muted)}
@@ -353,6 +363,13 @@ details.menu summary span{font-weight:400;color:var(--muted);font-size:12.5px}
 .chk select,.chk input{font:inherit;font-size:16px;padding:10px 12px;border-radius:11px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
 .verdict{border-radius:12px;padding:10px 12px;font-size:15px}
 .verdict b{font-size:17px}
+.hrow{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.themeb{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:9px;padding:5px 9px;font-size:12.5px;font-weight:500;white-space:nowrap}
+.slot.tip{background:color-mix(in srgb,var(--sun-soft) 70%,transparent);font-size:13.5px}
+.slot.tip time{color:var(--sun);font-size:12.5px}
+.sel{font:inherit;font-size:16px;padding:10px 12px;border-radius:11px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+table.xt td{font-size:13.5px}
+table.xt .badge{white-space:nowrap}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 @media (min-width:760px){.card{flex-basis:280px}}
 </style>
@@ -368,6 +385,7 @@ details.menu summary span{font-weight:400;color:var(--muted);font-size:12.5px}
 <nav class="nav" aria-label="메뉴">
   <a href="#home" data-tab="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7M5 10v10h14V10"/></svg>홈</a>
   <a href="#info" data-tab="info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>돈·정보</a>
+  <a href="#ledger" data-tab="ledger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>지출·예약</a>
   <a href="#eat" data-tab="eat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 3v8M4.5 3v5a2.5 2.5 0 0 0 5 0V3M7 11v10M17 3c-2 1-3 3.5-3 7h3v11"/></svg>맛집</a>
   <a href="#map" data-tab="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>지도</a>
   <a href="#course" data-tab="course"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>코스</a>

@@ -1,5 +1,6 @@
 // 로컬 테스트용 window.claude 모의 구현 (db·user). 실제 아티팩트에서는 플랫폼이 제공.
 (function(){
+  if(!window.__fresh){ try{ if(!localStorage.getItem('bora-me')) localStorage.setItem('bora-me',JSON.stringify({nick:'수복',char:'🐢',reg:true})); }catch(e){} }
   const store=new Map(); const subs=new Set();
   const snapDoc=(id,data)=>({id,exists:data!==undefined,data:()=>data,metadata:{fromCache:false,hasPendingWrites:false}});
   function runQuery(q){ let docs=[...store.entries()].filter(([p])=>{const s=p.split("/");return s.slice(0,-1).join("/")===q.path}).map(([p,v])=>snapDoc(p.split("/").pop(),v));
