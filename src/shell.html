@@ -527,6 +527,20 @@ html.big #app,html.big .sheet .wrap,html.big .driver,html.big .nav{zoom:1.13}
 .wxrow{margin-top:3px}
 .wxc{display:inline-flex;gap:3px;align-items:center;font-size:12.5px;background:var(--surface-2);border-radius:8px;padding:1px 8px;white-space:nowrap}
 .wxday{font-size:13px;padding:8px 14px;border-top:1px solid var(--line);color:var(--ink);background:var(--surface)}
+/* 가독성 패스: 선택 상태 또렷하게, 색 소음 줄이기 */
+:root.dark .sorts{background:var(--bg);border:1px solid var(--line)}
+:root.dark .sorts button{color:var(--muted)}
+:root.dark .sorts button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);box-shadow:none}
+:root.dark .chip{background:var(--surface);border-color:var(--line);color:var(--ink)}
+:root.dark .seg button{color:var(--ink)}
+.fine,.src,.sub{line-height:1.5}
+:root.dark{--muted:#B4B8BF}
+.vr .rv2 b{color:var(--muted)}
+.vr .why{color:var(--muted)}
+:root.dark .vr .badge.ok{background:transparent;border:1px solid var(--line);color:var(--ink)}
+.nav a{font-size:11px}
+#sortNote{display:none}
+.lead{font-size:14.5px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 @media (min-width:760px){.card{flex-basis:280px}}
 </style>
