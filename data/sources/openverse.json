@@ -287,6 +287,78 @@
    "license": "CC BY 2.0",
    "page": "https://www.flickr.com/photos/37054091@N06/6116740954",
    "provider": "flickr"
+  },
+  "sashimi": {
+   "src": "img/ov/dish-sashimi.jpg",
+   "title": "Sushi Sashimi bridge",
+   "author": "Pedro Moura Pinheiro",
+   "license": "CC BY-NC-SA 2.0",
+   "page": "https://www.flickr.com/photos/56044438@N00/2022655147",
+   "provider": "flickr"
+  },
+  "tempura": {
+   "src": "img/ov/dish-tempura.jpg",
+   "title": "Teriyaki Chicken Sushi Roll and Avocado and Prawn Tempura Sushi Rolls - Sakura Kaiten Sushi",
+   "author": "avlxyz",
+   "license": "CC BY-SA 2.0",
+   "page": "https://www.flickr.com/photos/10559879@N00/851641032",
+   "provider": "flickr"
+  },
+  "poke": {
+   "src": "img/ov/dish-poke.jpg",
+   "title": "Garden Gourmet Vrimp recipe 'poke bowl'",
+   "author": "Nestlé",
+   "license": "CC BY-NC-ND 2.0",
+   "page": "https://www.flickr.com/photos/28056346@N06/51559497122",
+   "provider": "flickr"
+  },
+  "shrimp": {
+   "src": "img/ov/dish-shrimp.jpg",
+   "title": "Likeke garlic butter shrimp",
+   "author": "Elton Lin",
+   "license": "CC BY-NC-ND 2.0",
+   "page": "https://www.flickr.com/photos/96545415@N00/6584698741",
+   "provider": "flickr"
+  },
+  "prawn": {
+   "src": "img/ov/dish-prawn.jpg",
+   "title": "Grilled prawns with herb butter, flamed in white wine with sauteed garlics.",
+   "author": "Sebastian Mary",
+   "license": "CC BY-SA 2.0",
+   "page": "https://www.flickr.com/photos/58862846@N00/357868167",
+   "provider": "flickr"
+  },
+  "crab": {
+   "src": "img/ov/dish-crab.jpg",
+   "title": "Chilly Crab and Oyster Omelette",
+   "author": "souvikdg",
+   "license": "CC BY-NC-SA 2.0",
+   "page": "https://www.flickr.com/photos/9620344@N08/7013523057",
+   "provider": "flickr"
+  },
+  "lobster": {
+   "src": "img/ov/dish-lobster.jpg",
+   "title": "Grilled Lobster Tail",
+   "author": "Another Pint Please...",
+   "license": "CC BY-NC-SA 2.0",
+   "page": "https://www.flickr.com/photos/53484449@N00/14026678329",
+   "provider": "flickr"
+  },
+  "squid": {
+   "src": "img/ov/dish-squid.jpg",
+   "title": "GRILLED SQUID",
+   "author": "whologwhy",
+   "license": "CC BY 2.0",
+   "page": "https://www.flickr.com/photos/60417477@N00/4997841338",
+   "provider": "flickr"
+  },
+  "scallop": {
+   "src": "img/ov/dish-scallop.jpg",
+   "title": "228/365 - Scallops for Dinner",
+   "author": "djwtwo",
+   "license": "CC BY-NC-SA 2.0",
+   "page": "https://www.flickr.com/photos/40761412@N00/7792181070",
+   "provider": "flickr"
   }
  },
  "venue": {}

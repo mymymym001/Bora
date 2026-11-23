@@ -509,6 +509,24 @@ html.big #app,html.big .sheet .wrap,html.big .driver,html.big .nav{zoom:1.13}
 .hero-sea{margin-top:2px}
 .hero-sea button{flex:0 0 100%;max-width:none;aspect-ratio:16/9}
 .hero-sea .cap{font-size:11px}
+.wx{display:grid;gap:8px}
+.wxh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.wxnow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center}
+.wxnow .big{font-size:40px;line-height:1}
+.wxnow b.num{font-size:26px}
+.uvbox{display:grid;justify-items:center;border-radius:12px;padding:6px 10px;background:var(--surface-2);min-width:64px}
+.uvbox b{font-size:22px;line-height:1.1}
+.uvbox small{font-size:11px;color:var(--muted)}
+.uvbox.warn{background:var(--warn-soft)} .uvbox.warn b{color:var(--warn)}
+.uvbox.sun{background:var(--sun-soft)} .uvbox.sun b{color:var(--sun)}
+.wxstrip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.wxstrip>div{display:grid;justify-items:center;gap:1px;background:var(--surface-2);border-radius:10px;padding:6px 2px;font-size:12px}
+.wxstrip>div.now{outline:2px solid var(--accent)}
+.wxstrip b{font-size:19px}
+.uv{font-weight:700;color:var(--muted)} .uv.ok{color:var(--ok)} .uv.sun{color:var(--sun)} .uv.warn{color:var(--warn)}
+.wxrow{margin-top:3px}
+.wxc{display:inline-flex;gap:3px;align-items:center;font-size:12.5px;background:var(--surface-2);border-radius:8px;padding:1px 8px;white-space:nowrap}
+.wxday{font-size:13px;padding:8px 14px;border-top:1px solid var(--line);color:var(--ink);background:var(--surface)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 @media (min-width:760px){.card{flex-basis:280px}}
 </style>

@@ -622,7 +622,7 @@ setInterval(()=>{ const c=document.getElementById("clock"); if(c) c.innerHTML=cl
 function upNextHTML(day,label){
   const rows=day.items.filter(it=>it[0]!=="tip"&&it[0]!=="memo").slice(0,6).map(it=>slotHTML(day,it,false)).join("");
   const tip=day.items.find(it=>it[0]==="tip");
-  return '<section class="day"><header><b class="num">'+day.d+' ('+day.w+')</b><span>'+label+'</span><a href="#course" class="more-l">전체 일정 →</a></header>'+rows+(tip?slotHTML(day,tip,false):'')+'</section>';
+  return '<section class="day"><header><b class="num">'+day.d+' ('+day.w+')</b><span>'+label+'</span><a href="#course" class="more-l">전체 일정 →</a></header>'+dayWx(day)+rows+(tip?slotHTML(day,tip,false):'')+'</section>';
 }
 function renderHome(){
   const d=manilaDay();
@@ -633,7 +633,7 @@ function renderHome(){
   const Q=(attr,icon,label)=>'<button type="button" '+attr+'>'+icon+'<span>'+label+'</span></button>';
   $("#app").innerHTML='<div class="page" style="padding-top:0">'+
    '<div class="hero2"><div class="hrow"><h1>보라카이 가족 가이드</h1>'+themeBtn()+'</div><div class="when">'+when+'</div><div class="clock num" id="clock">'+clockText()+'</div></div>'+
-   '<div id="pin">'+pinHTML()+'</div>'+
+   '<div id="pin">'+pinHTML()+'</div>'+wxHomeHTML()+
    ((EXTRA.scenic||[]).length?'<div class="gal hero-sea" id="scenic">'+EXTRA.scenic.map((x,i)=>'<button type="button" data-scenic="'+i+'" aria-label="사진 크게 보기"><img src="'+esc(x.src)+'" alt="'+esc(x.caption||"보라카이 바다")+'"'+(i?' loading="lazy"':'')+'><span class="cap">'+esc(x.caption||"")+' · '+esc(x.author||"")+' · '+esc(x.license||"")+'</span></button>').join("")+'</div>':'')+
    '<div class="quick q4">'+
      Q('data-phrases','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg>','회화 카드')+
@@ -978,7 +978,8 @@ function mealBudget(slot,meal){
   const f=fairRange(meal); return {pp:f,src:"보라카이 적정 범위 (조사 식당 "+FAIR.n+"곳 1인 가격 기준)"};
 }
 function budgetLine(b){ return '인당 <b>'+rng(b.pp[0],b.pp[1],php)+'</b> / '+rng(b.pp[0],b.pp[1],krw)+' <span class="fine">(총 '+S.n+'명 '+rng(b.pp[0]*S.n,b.pp[1]*S.n,php)+' / '+rng(b.pp[0]*S.n,b.pp[1]*S.n,krw)+')</span>'; }
-function slotHTML(day,it,editable){
+function slotHTML(day,it,editable){ const w=slotWx(day,it); const html=slotHTML0(day,it,editable); if(!w||!html.endsWith('</div></div>')) return html; return html.slice(0,-12)+'<div class="wxrow">'+w+'</div></div></div>'; }
+function slotHTML0(day,it,editable){
   const kind=it[0];
   if(kind==="meal"){ const meal=it[1], slot=day.k+"-"+meal, c=planGet(slot), b=mealBudget(slot,meal);
     const v=c&&c.venue&&BYID[c.venue];
@@ -997,7 +998,7 @@ function slotHTML(day,it,editable){
 function dayTotal(day){ let lo=0,hi=0; day.items.filter(i=>i[0]==="meal").forEach(i=>{const b=mealBudget(day.k+"-"+i[1],i[1]); lo+=b.pp[0]; hi+=b.pp[1];}); return [lo,hi]; }
 function dayHTML(day,editable,label){
   const t=dayTotal(day);
-  return '<section class="day"><header><b class="num">'+day.d+' ('+day.w+')</b><span>'+(label||day.title)+'</span></header>'+day.items.map(it=>slotHTML(day,it,editable)).join("")+
+  return '<section class="day"><header><b class="num">'+day.d+' ('+day.w+')</b><span>'+(label||day.title)+'</span></header>'+dayWx(day)+day.items.map(it=>slotHTML(day,it,editable)).join("")+
     (t[1]?'<div class="slot daytot"><time>식비</time><div class="num">이날 식비 예상 인당 '+rng(t[0],t[1],php)+' · 총 '+S.n+'명 <b>'+rng(t[0]*S.n,t[1]*S.n,php)+'</b> / '+rng(t[0]*S.n,t[1]*S.n,krw)+'</div></div>':'')+'</section>';
 }
 function renderCourse(){
@@ -1341,6 +1342,45 @@ function likeRankHTML(n){
     return '<button type="button" data-open="'+esc(id)+'" style="--pc:'+colorOf(p.cat)+';grid-template-columns:24px 1fr auto"><span class="num" style="font-weight:700">'+(i+1)+'</span><span><span class="nm">'+esc(dname(p))+'</span>'+(c>=likeMajority()?' <span class="badge sun">가족 다수</span>':'')+'<br><span class="sub">'+l.map(x=>esc(x.char||"")+esc(x.nick||"")).join(" · ")+'</span></span><span class="w num">❤️ '+c+'</span></button>';}).join("")+'</div>';
 }
 
+/* ================= 날씨 (Open-Meteo, 매일 아침 갱신) ================= */
+let WX=null;
+const DAYDATE={d1:"2026-11-24",d2:"2026-11-25",d3:"2026-11-26",d4:"2026-11-27",d5:"2026-11-28"};
+function wxIcon(code,day){ const c=+code;
+  if(c===0) return day===0?["🌙","맑음"]:["☀️","맑음"]; if(c===1) return day===0?["🌙","대체로 맑음"]:["🌤️","대체로 맑음"]; if(c===2) return ["⛅","구름 조금"]; if(c===3) return ["☁️","흐림"];
+  if(c===45||c===48) return ["🌫️","안개"]; if(c>=51&&c<=57) return ["🌦️","이슬비"]; if(c>=61&&c<=67) return ["🌧️","비"]; if(c>=80&&c<=82) return ["🌦️","소나기"]; if(c>=95) return ["⛈️","뇌우"]; return ["🌡️","-"]; }
+function uvLevel(u){ u=+u||0; return u<3?["낮음","ok"]:u<6?["보통",""]:u<8?["높음","sun"]:u<11?["매우 높음","warn"]:["위험","warn"]; }
+function wxAt(date,hour){ if(!WX) return null; const h=Math.max(0,Math.min(23,Math.round(hour))); const r=WX.hours[date+"T"+String(h).padStart(2,"0")+":00"]; return r?{code:r[0],t:r[1],feel:r[2],rain:r[3],uv:r[4],wind:r[5],day:r[6]}:null; }
+function wxChip(w){ if(!w) return ""; const [ic]=wxIcon(w.code,w.day), u=uvLevel(w.uv);
+  return '<span class="wxc" title="'+esc(wxIcon(w.code,w.day)[1])+'">'+ic+' '+w.t+'°'+(w.rain>=30?' · ☔'+w.rain+'%':'')+(w.day?' · <span class="uv '+u[1]+'">UV '+Math.round(w.uv)+'</span>':'')+'</span>'; }
+function slotHour(day,it){
+  const k=it[0];
+  if(k==="meal") return it[1]==="lunch"?12:it[1]==="dinner"?18.5:7.5;
+  if(k==="4U") return it[1]==="4u-arrive"?13:8;
+  if(k==="tip"||k==="memo") return null;
+  const m=String(k).match(/(\d{1,2}):(\d{2})/); if(m) return +m[1]+(+m[2])/60;
+  return {"아침":7,"오전":10,"점심":12,"오후":15,"저녁":18.5,"밤":21,"이동":14}[k]||null;
+}
+function slotWx(day,it){
+  const h=slotHour(day,it); if(h==null) return ""; if(day.k==="d1"&&h<13) return ""; if(day.k==="d5"&&h>11) return "";
+  return wxChip(wxAt(DAYDATE[day.k],h));
+}
+function dayWx(day){ if(!WX) return ""; const d=WX.days[DAYDATE[day.k]]; if(!d) return ""; const [ic,lb]=wxIcon(d.code,1), u=uvLevel(d.uv);
+  return '<div class="wxday">'+ic+' '+lb+' · '+d.tmin+'–'+d.tmax+'° · ☔ '+d.rain+'% · <span class="uv '+u[1]+'">자외선 '+Math.round(d.uv)+' '+u[0]+'</span> · 일몰 '+esc(d.sunset)+'</div>'; }
+function wxHomeHTML(){
+  if(!WX) return '<div class="wx panel" id="wxCard"><div class="wxh"><b>보라카이 날씨</b><span class="fine">예보를 불러오는 중이에요 · 매일 아침 갱신</span></div></div>';
+  const n=new Date(Date.now()+8*3600e3), ds=n.toISOString().slice(0,10); const trip=Object.values(DAYDATE);
+  const date=trip.includes(ds)?ds:(ds<trip[0]?trip[0]:trip[trip.length-1]); const live=date===ds;
+  const hr=live?n.getUTCHours():9; const w=wxAt(date,hr), d=WX.days[date]; if(!w||!d) return '';
+  const [ic,lb]=wxIcon(w.code,w.day), u=uvLevel(w.uv), du=uvLevel(d.uv);
+  const md=+date.slice(5,7)+"/"+(+date.slice(8,10)), wd=["일","월","화","수","목","금","토"][new Date(date+"T00:00:00Z").getUTCDay()];
+  const strip=[9,12,15,18,21].map(h=>{const x=wxAt(date,h); if(!x) return ''; const [i2]=wxIcon(x.code,x.day); return '<div class="'+(live&&h<=hr&&hr<h+3?'now':'')+'"><span>'+h+'시</span><b>'+i2+'</b><span>'+x.t+'°</span><small class="uv '+uvLevel(x.uv)[1]+'">UV '+Math.round(x.uv)+'</small></div>';}).join("");
+  return '<div class="wx panel" id="wxCard"><div class="wxh"><b>'+md+'('+wd+') '+(live?String(hr).padStart(2,"0")+':00 보라카이':'보라카이 예보')+'</b><span class="fine">업데이트 '+esc(WX.updated.slice(5).replace("-","/"))+' · Open-Meteo</span></div>'+
+    '<div class="wxnow"><span class="big">'+ic+'</span><div><b class="num">'+w.t+'°</b> <span>'+lb+' · 체감 '+w.feel+'°</span><br><span class="fine num">오늘 '+d.tmin+'–'+d.tmax+'° · 비 '+d.rain+'% · 바람 '+w.wind+'km/h · 일몰 '+esc(d.sunset)+'</span></div>'+
+    '<div class="uvbox '+du[1]+'"><small>자외선 최고</small><b>'+Math.round(d.uv)+'</b><small>'+du[0]+'</small></div></div>'+
+    '<div class="wxstrip">'+strip+'</div>'+(d.uv>=8?'<p class="fine" style="margin:6px 0 0">자외선이 매우 강해요. 10~15시엔 그늘·선크림(2시간마다)·모자·래시가드 챙기기.</p>':'')+'</div>';
+}
+function loadWx(){ return fetch("weather.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{ if(j&&j.hours){ WX=j; const c=$("#wxCard"); if(c) c.outerHTML=wxHomeHTML(); const h=(location.hash||"#home").slice(1); if(h==="course"&&$("#sheet").hidden) renderCourse(); } }).catch(()=>{}); }
+
 /* ================= map ================= */
 function makeMap(box,cv,pinsEl){
   const ctx=cv.getContext("2d");
@@ -1466,7 +1506,7 @@ Promise.all(["data.json","map.json","venues.json"].map(u=>fetch(u).then(r=>{if(!
   others.forEach(p=>{ p.route=routeToHotel(p.x,p.y); BYID[p.id]=p; });
   ALL=VEN.filter(p=>p.route).concat(others);
   D.places=VEN.filter(p=>p.route);
-  route(); initLive();
+  route(); initLive(); loadWx(); setInterval(loadWx,30*60000);
   setInterval(()=>{ if(MAP&&Object.keys(LIVE.people).length) MAP.setPeople(); },60000);
 }).catch(err=>{ $("#app").innerHTML='<div class="loading">데이터를 불러오지 못했어요. 새로고침해 주세요.<br><small>'+esc(err.message)+'</small></div>'; });
 })();
