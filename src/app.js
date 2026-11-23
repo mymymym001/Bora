@@ -439,14 +439,11 @@ function showDriver(){
 function plink(id,label){return '<button type="button" class="plink" data-open="'+esc(id)+'">'+esc(label)+'</button>'}
 function renderPrices(){
   const fx=D.fx, n=S.n;
-  const rows=VEN.filter(p=>p.pp&&isFood(p)&&!p.ppEst).map(p=>({p,g:groupCost(p,n)})).sort((a,b)=>a.g[0]-b.g[0]);
   $("#app").innerHTML='<div class="page"><h2>돈 · 가격 · 여행 정보</h2><p class="lead">비싸다고 무조건 바가지는 아니에요. 가격을 <b>미리 확인했는지</b>가 핵심이에요.</p>'+
   '<div class="panel"><h3>환율 계산기</h3><p class="fine">기준: 1 USD = ₱'+fx.php_per_usd.toFixed(2)+' · ₱1 = ₩'+fx.krw_per_php.toFixed(2)+' ('+esc(fx.src)+', '+esc(fx.at)+'). 시장 환율이라 환전소에서 받는 금액은 이보다 조금 적어요.</p>'+
    '<div class="fx"><label for="fx-usd">달러 (USD)<input id="fx-usd" inputmode="decimal" value="100"></label><label for="fx-php">페소 (PHP)<input id="fx-php" inputmode="decimal"></label><label for="fx-krw">원 (KRW)<input id="fx-krw" inputmode="decimal"></label></div></div>'+
   '<div class="panel"><h3>계산서 읽는 법</h3><ul class="clean"><li><b>VAT 12%</b>: 메뉴판 아래 "VAT inclusive"(포함) / "exclusive"(별도) 표기를 확인해요.</li><li><b>서비스차지 10%</b>: 필리핀에서 흔하고 정상이에요(의무는 아님). 붙어 있으면 팁은 따로 안 줘도 돼요.</li><li>예) Aria는 메뉴에 "VAT 포함, 서비스차지 10% 별도" — 음식 ₱5,000이면 계산서 ₱5,500이 정상이에요.</li><li>서비스차지가 없으면 팁은 10% 안팎이면 충분해요.</li></ul></div>'+
-  partyHTML()+'<div class="panel"><h3>'+n+'명 식사 적정 총액</h3><p class="fine">조사 자료의 1인 추정 범위 × '+n+'명, 서비스차지가 확인된 곳은 10% 반영. 지도 탭의 인원 선택에 따라 바뀌어요.</p><div class="tbl"><table><thead><tr><th>장소</th><th class="r">'+n+'명 PHP</th><th class="r">KRW</th></tr></thead><tbody>'+
-   rows.map(({p,g})=>'<tr><td>'+plink(p.id,p.name)+'<br><span class="src">'+esc(chargeNote(p))+'</span></td><td class="r num">'+rng(g[0],g[1],php)+'</td><td class="r num">'+rng(g[0],g[1],krw)+'</td></tr>').join("")+'</tbody></table></div></div>'+
-  '<div class="panel"><h3>e-트라이크 타기 전에</h3><ul class="clean"><li>보라카이엔 미터 택시도 Grab 차량 호출도 없어요. 이동은 걷기 아니면 e-트라이크예요.</li><li>타기 전에 <b>"How much in total?"</b> — 1대 전체 요금인지, 1인당인지 확인해요.</li><li>합승(shared)이면 1인 약 ₱15–30, 전세(special)면 가까운 거리 1대 약 ₱100–150.</li><li>7명이면 2대가 편해요 (1대 약 6명까지, 편하게는 4~5명).</li><li>공식 요금표(말레이 조례)가 있지만 원문은 확인 못 했어요 — 아래는 블로그 기준 참고가예요.</li></ul>'+
+  priceGuideHTML()+'<div class="panel"><h3>e-트라이크 타기 전에</h3><ul class="clean"><li>보라카이엔 미터 택시도 Grab 차량 호출도 없어요. 이동은 걷기 아니면 e-트라이크예요.</li><li>타기 전에 <b>"How much in total?"</b> — 1대 전체 요금인지, 1인당인지 확인해요.</li><li>합승(shared)이면 1인 약 ₱15–30, 전세(special)면 가까운 거리 1대 약 ₱100–150.</li><li>7명이면 2대가 편해요 (1대 약 6명까지, 편하게는 4~5명).</li><li>공식 요금표(말레이 조례)가 있지만 원문은 확인 못 했어요 — 아래는 블로그 기준 참고가예요.</li></ul>'+
    '<div class="tbl"><table><thead><tr><th>구간 (전세 1대)</th><th class="r">참고가</th></tr></thead><tbody>'+
    [["스테이션 2 → 스테이션 1","약 ₱150 (추정)"],["→ 카그반 항","약 ₱150"],["→ 디니위드 비치","약 ₱250"],["→ 푸카 비치","약 ₱300–350"],["시간제 투어 (최대 4명)","₱500 / 시간"]].map(r=>'<tr><td>'+r[0]+'</td><td class="r num">'+r[1]+'</td></tr>').join("")+
    '</tbody></table></div><button type="button" class="btn" data-driver="1">기사님께 보여주기 (영어)</button></div>'+
@@ -463,7 +460,7 @@ function renderPrices(){
     if(src===u){p.value=f(x*fx.php_per_usd,0);k.value=f(x*fx.php_per_usd*fx.krw_per_php,0)}
     if(src===p){u.value=f(x/fx.php_per_usd,2);k.value=f(x*fx.krw_per_php,0)}
     if(src===k){p.value=f(x/fx.krw_per_php,0);u.value=f(x/fx.krw_per_php/fx.php_per_usd,2)}}
-  [u,p,k].forEach(i=>i.addEventListener("input",()=>from(i))); from(u);
+  [u,p,k].forEach(i=>i.addEventListener("input",()=>from(i))); from(u); bindChecker();
 }
 function renderInfo(){
   const extra=1232*4;
@@ -718,6 +715,26 @@ async function shareOrder(pid){
   const ok=await postChat("msg",txt); $("#driver").hidden=true; if(ok) location.hash="home";
 }
 
+/* ================= category price guide + checker ================= */
+const PG_NOTE={"스테이크":"부위·수입산 여부·무게에 따라 차이가 커요","생선구이·생선요리":"생선 크기에 따라 차이가 커요","탄산음료·캔":"편의점은 이보다 훨씬 싸요","생수":"편의점·마트는 500ml ₱20–40 정도 (참고)"};
+function priceGuideHTML(){
+  const G=EXTRA.priceGuide||[]; if(!G.length) return '';
+  const opts=G.map((g,gi)=>'<optgroup label="'+esc(g.g)+'">'+g.rows.map((r,ri)=>'<option value="'+gi+'-'+ri+'">'+esc(r.m)+'</option>').join("")+'</optgroup>').join("");
+  return '<div class="panel"><h3>이 가격 적정한가요?</h3><div class="chk"><label for="ck-m" class="fine">메뉴 종류</label><select id="ck-m">'+opts+'</select><label for="ck-p" class="fine">메뉴판 가격 (페소)</label><input id="ck-p" inputmode="decimal" placeholder="예: 450"><div id="ck-out" class="verdict" hidden></div></div></div>'+
+   '<h2 style="font-size:19px;margin-top:6px">메뉴별 적정 가격</h2><p class="lead">'+esc(EXTRA.priceGuideNote||"")+'</p>'+
+   G.map(g=>'<div class="panel"><h3>'+esc(g.g)+' <span class="fine">'+esc(g.desc)+'</span></h3>'+g.rows.map(r=>'<div class="pg-row"><span class="mn">'+esc(r.m)+'</span><span class="rg num">'+rng(r.lo,r.hi,php)+'<br><span class="fine" style="font-weight:400">'+rng(r.lo,r.hi,krw)+'</span></span><span class="sub">보통 이 사이가 적정해요 · '+php(r.high)+' 넘으면 비싼 편'+(PG_NOTE[r.m]?' · '+esc(PG_NOTE[r.m]):'')+'</span></div>').join("")+
+     (g.g==="한식·아시안"?'<p class="fine" style="margin-top:6px">한식: 꽐라 한식당 무한리필 삼겹살 ₱499 ('+krw(499)+') — 한국 블로그·영상 1곳 기준, 현장 확인. 한식 메뉴 가격 자료는 적어서 표에서는 뺐어요.</p>':'')+'</div>').join("")+
+   '<div class="callout"><b>계산할 때 기억하기</b>메뉴판 가격에 서비스차지 10%가 붙는 곳이 많아요(정상). 표의 가격은 서비스차지 전 금액이에요.</div>';
+}
+function bindChecker(){
+  const m=$("#ck-m"), p=$("#ck-p"), o=$("#ck-out"); if(!m) return;
+  const run=()=>{ const [gi,ri]=m.value.split("-").map(Number), r=(EXTRA.priceGuide[gi]||{}).rows[ri]; const v=parseFloat((p.value||"").replace(/,/g,""));
+    if(!r||!(v>0)){ o.hidden=true; return; }
+    let t,bg; if(v<r.lo){t="저렴한 편이에요";bg="var(--ok-soft)";} else if(v<=r.hi){t="적정해요";bg="var(--ok-soft)";} else if(v<r.high){t="조금 비싼 편이에요";bg="var(--sun-soft)";} else {t="비싼 편이에요 (상위 10%)";bg="var(--warn-soft)";}
+    o.style.background=bg; o.hidden=false;
+    o.innerHTML='<b>'+t+'</b><br>'+php(v)+' = 약 <b>'+krw(v)+'</b> · 서비스차지 10% 붙으면 '+php(v*1.1)+' ('+krw(v*1.1)+')<br><span class="fine">'+esc(r.m)+' 보통 '+rng(r.lo,r.hi,php)+' / '+rng(r.lo,r.hi,krw)+'</span>'; };
+  m.addEventListener("change",run); p.addEventListener("input",run);
+}
 /* ================= money changers + fruit (info) ================= */
 let EXTRA={};
 function shopRow(p){ return '<button type="button" data-open="'+esc(p.id)+'" style="--pc:'+colorOf(p.cat)+';grid-template-columns:10px 1fr auto"><span class="dot"></span><span><span class="nm">'+esc(p.ko||p.name)+'</span><br><span class="sub">'+esc(p.name)+' · '+esc(p.desc||"")+'</span><br>'+openBadge(p)+'</span><span class="w num">'+(p.route?'도보 '+p.route.walk.min+'분':'')+'</span></button>'; }
@@ -1088,8 +1105,8 @@ function makeMap(box,cv,pinsEl){
 }
 
 /* ================= boot ================= */
-Promise.all(["data.json","map.json","venues.json"].map(u=>fetch(u).then(r=>{if(!r.ok) throw new Error(u+" "+r.status); return r.json();}))).then(([d,m,v])=>{
-  fetch("extra.json").then(r=>r.json()).then(e=>{EXTRA=e; const h=(location.hash||"#home").slice(1); if((h==="home"||!h)&&$("#sheet").hidden) renderHome();}).catch(()=>{});
+Promise.all(["data.json","map.json","venues.json"].map(u=>fetch(u).then(r=>{if(!r.ok) throw new Error(u+" "+r.status); return r.json();})).concat([fetch("extra.json").then(r=>r.ok?r.json():{}).catch(()=>({}))])).then(([d,m,v,e])=>{
+  EXTRA=e||{};
   D=d; D.map=m; G=buildGraph(m.graph);
   HW=dijkstra(G.entry,false); HT=dijkstra(G.entry,true);
   VEN=v; const have=new Set();
