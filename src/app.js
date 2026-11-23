@@ -634,6 +634,7 @@ function renderHome(){
   $("#app").innerHTML='<div class="page" style="padding-top:0">'+
    '<div class="hero2"><div class="hrow"><h1>보라카이 가족 가이드</h1>'+themeBtn()+'</div><div class="when">'+when+'</div><div class="clock num" id="clock">'+clockText()+'</div></div>'+
    '<div id="pin">'+pinHTML()+'</div>'+
+   ((EXTRA.scenic||[]).length?'<div class="gal hero-sea" id="scenic">'+EXTRA.scenic.map((x,i)=>'<button type="button" data-scenic="'+i+'" aria-label="사진 크게 보기"><img src="'+esc(x.src)+'" alt="'+esc(x.caption||"보라카이 바다")+'"'+(i?' loading="lazy"':'')+'><span class="cap">'+esc(x.caption||"")+' · '+esc(x.author||"")+' · '+esc(x.license||"")+'</span></button>').join("")+'</div>':'')+
    '<div class="quick q4">'+
      Q('data-phrases','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg>','회화 카드')+
      Q('data-expadd2',ICON.money,'지출 적기')+
@@ -645,7 +646,7 @@ function renderHome(){
    (ppl.length?'<div class="panel"><h3>가족 위치</h3><div class="ppl">'+ppl.map(([id,p])=>'<button type="button" data-gotoperson="'+esc(id)+'"><span class="f">'+esc(p.char)+'</span><span><b>'+esc(p.nick||"가족")+'</b><br><span class="fine">'+esc(p.label||"")+' · '+ago(p.at)+'</span></span></button>').join("")+'</div></div>':'')+
    '<div class="panel"><div class="ph2"><h3>가족 찜 순위</h3><a href="#eat" class="more-l" data-famsort>전체 →</a></div><div id="likeRank">'+likeRankHTML(3)+'</div></div>'+
    '<div class="sec-h"><h2>Claude 추천</h2><a href="#eat" class="more-l">맛집 '+VEN.filter(isFood).length+'곳 →</a></div><div class="vlist">'+top.map((p,i)=>venueCard(p,i+1)).join("")+'</div>'+
-   ((EXTRA.scenic||[]).length?'<div class="sec-h"><h2>보라카이 풍경</h2></div><div class="gal" id="scenic">'+EXTRA.scenic.map((x,i)=>'<button type="button" data-scenic="'+i+'" aria-label="사진 크게 보기"><img src="'+esc(x.src)+'" alt="'+esc(x.caption||"보라카이")+'" loading="lazy"><span class="cap">'+esc(x.caption||"")+' · '+esc(x.author||"")+' · '+esc(x.license||"")+'</span></button>').join("")+'</div>':'')+
+   ''+
    '</div>';
   renderChat();
 }
