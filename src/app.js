@@ -338,7 +338,7 @@ async function saveProfile(){
 
 /* ================= detail sheet ================= */
 let photoUnsub=null, VIEW={list:[],i:0};
-function photosOf(p){ return (p.photos||[]).map(x=>({src:x.src,cap:"사진: "+x.author+" · "+x.license+(x.generic?" · 대표 이미지(이 매장 사진 아님)":""),page:x.page})); }
+function photosOf(p){ return (p.photos||[]).map(x=>({src:x.src,cap:(x.caption?x.caption+" · ":"")+"사진: "+(x.author||"")+" · "+(x.license||""),page:x.page})); }
 function renderGallery(p,family){
   const el=$("#gal"); if(!el) return;
   const list=photosOf(p).concat(family);
@@ -503,6 +503,7 @@ document.addEventListener("click",e=>{
   if(T("[data-driver]")){ showDriver(); return; }
   if(T("[data-closedriver]")){ $("#driver").hidden=true; return; }
   if(el=T("[data-view]")){ openViewer(+el.dataset.view); return; }
+  if(el=T("[data-scenic]")){ VIEW.list=(EXTRA.scenic||[]).map(x=>({src:x.src,cap:(x.caption||"")+" · 사진: "+(x.author||"")+" · "+(x.license||""),page:x.page})); openViewer(+el.dataset.scenic); return; }
   if(T("[data-vclose]")){ $("#viewer").hidden=true; return; }
   if(T("[data-vprev]")){ openViewer(Math.max(0,VIEW.i-1)); return; }
   if(T("[data-vnext]")){ openViewer(Math.min(VIEW.list.length-1,VIEW.i+1)); return; }
@@ -552,6 +553,7 @@ function renderHome(){
   const top=rankVenues(VEN.filter(p=>isFood(p)),"claude").slice(0,5);
   $("#app").innerHTML='<div class="page" style="padding-top:0">'+
    '<div class="hero2"><h1>보라카이 가족 가이드</h1><div class="when">'+when+'</div></div>'+
+   ((EXTRA.scenic||[]).length?'<div class="gal" id="scenic">'+EXTRA.scenic.map((x,i)=>'<button type="button" data-scenic="'+i+'" aria-label="사진 크게 보기"><img src="'+esc(x.src)+'" alt="'+esc(x.caption||"보라카이")+'" loading="lazy"><span class="cap">'+esc(x.caption||"")+' · '+esc(x.author||"")+' · '+esc(x.license||"")+'</span></button>').join("")+'</div>':'')+
    partyHTML()+
    '<section class="chat" id="chat" aria-label="가족 채팅"></section>'+
    '<div class="quick">'+
@@ -941,7 +943,7 @@ function makeMap(box,cv,pinsEl){
 
 /* ================= boot ================= */
 Promise.all(["data.json","map.json","venues.json"].map(u=>fetch(u).then(r=>{if(!r.ok) throw new Error(u+" "+r.status); return r.json();}))).then(([d,m,v])=>{
-  fetch("extra.json").then(r=>r.json()).then(e=>{EXTRA=e;}).catch(()=>{});
+  fetch("extra.json").then(r=>r.json()).then(e=>{EXTRA=e; const h=(location.hash||"#home").slice(1); if((h==="home"||!h)&&$("#sheet").hidden) renderHome();}).catch(()=>{});
   D=d; D.map=m; G=buildGraph(m.graph);
   HW=dijkstra(G.entry,false); HT=dijkstra(G.entry,true);
   VEN=v; const have=new Set();

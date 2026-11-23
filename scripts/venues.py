@@ -69,6 +69,16 @@ for p in gpt["places"]:
     if p.get("service") and v.get("sc") is None: v["sc"] = p["service"]
     v["sources"] += [s[1] for s in p.get("sources", []) if s[1].startswith("https://")]
 
+# 2b) GPT 가이드의 사용 허가 사진 (CC 라이선스, 저자 표기) → site/img/
+SCENIC = []
+for ph in gpt.get("photos", []):
+    item = dict(src="img/" + ph["file"], author=ph.get("credit"), license=ph.get("license"), page=ph.get("source"), caption=ph.get("caption"))
+    if ph.get("venue") == "White Beach": SCENIC.append(item); continue
+    c = canon(ph.get("venue", ""))
+    tgt = V.get(c) or next((v for k, v in V.items() if c and (k.startswith(c) or c.startswith(k))), None)
+    if tgt is not None: tgt["photos"].append(item)
+    else: print("photo venue not matched:", ph.get("venue"))
+
 # 3) 한국인 후기 조사
 POP = {"high": 3, "medium": 2, "low": 1}
 for fn, defcat in (("kr_restaurants.json", "restaurant"), ("kr_cafes.json", "cafe")):
@@ -241,7 +251,7 @@ for c, v in V.items():
     v.pop("key", None)
     out.append(v)
 json.dump(out, open(os.path.join(R, "site", "venues.json"), "w"), ensure_ascii=False, separators=(",", ":"))
-EXTRA = dict(
+EXTRA = dict(scenic=SCENIC,
     changers=[dict(name=c.get("name"), ko=c.get("ko_name"), loc=c.get("location"), rate=c.get("usd_rate_notes"), krw=c.get("takes_krw"), tips=c.get("tips"), kr=c.get("korean_review"))
               for c in (mf.get("changers") or []) if re.search(r"Nikko|Golden|Salamat|Henann", c.get("name") or "")],
     fruitSeason=(mf.get("fruit_season") or {}).get("summary"), quarantine=mf.get("korea_quarantine"),
