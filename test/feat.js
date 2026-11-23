@@ -27,8 +27,8 @@ const { chromium, devices } = require('playwright');
   const badges=await pg.$$eval('#vlist .vc .meta .badge',e=>e.map(x=>x.textContent));
   const open=badges.filter(t=>/영업 중|24시간|곧 마감/.test(t)).length, unk=badges.filter(t=>/미확인/.test(t)).length;
   ok(open>20,'open badges at noon: '+open+' open / '+unk+' unknown / '+badges.length+' total');
-  await pg.click('[data-ecat="open"]'); await pg.waitForTimeout(100); const no=await pg.$$eval('#vlist .vc',e=>e.length); ok(no===open,'open filter count '+no);
-  await pg.click('[data-ecat="fruit"]'); await pg.waitForTimeout(100); ok((await pg.$$eval('#vlist .vc',e=>e.length))>=8,'fruit filter in eat');
+  await pg.click('[data-efil="open"]'); await pg.waitForTimeout(100); const no=await pg.$$eval('#vlist .vc',e=>e.length); ok(no===open,'open filter count '+no);
+  await pg.click('[data-efil="open"]'); await pg.click('[data-ecat="fruit"]'); await pg.waitForTimeout(100); ok((await pg.$$eval('#vlist .vc',e=>e.length))>=8,'fruit filter in eat');
   await pg.screenshot({path:'test/f-eat.png'});
   // detail weekly hours
   await pg.goto('http://localhost:8765/_test_live.html#p-v-shop-n11010640771'); await pg.waitForTimeout(500);

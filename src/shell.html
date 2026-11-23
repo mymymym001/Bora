@@ -541,6 +541,12 @@ html.big #app,html.big .sheet .wrap,html.big .driver,html.big .nav{zoom:1.13}
 .nav a{font-size:11px}
 #sortNote{display:none}
 .lead{font-size:14.5px}
+.ecat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.ecat button{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:10px 4px;font-size:15px;font-weight:700;display:flex;justify-content:center;align-items:baseline;gap:5px;white-space:nowrap}
+.ecat button small{font-size:11.5px;font-weight:500;color:var(--muted)}
+.ecat button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.ecat button[aria-pressed="true"] small{color:inherit;opacity:.8}
+.efil .chip{font-size:13px;padding:5px 11px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 @media (min-width:760px){.card{flex-basis:280px}}
 </style>
