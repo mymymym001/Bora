@@ -161,6 +161,60 @@ for c, v in V.items():
         la, lo = map(float, f[3].split(",")); v.update(lat=la, lon=lo, coordSrc="OSM " + ("node " if f[0][0] == "n" else "way ") + f[0][1:], coordConf="high")
         if f[4] and not v.get("hours"): v["hours"] = f[4] + " (OSM)"
 
+# 5b) 환전소 · 과일가게 (OSM 위치 + 조사 결과)
+from hours import parse as parse_hours, PLATFORM_DEFAULT
+SHOPS = [  # (OSM id, 이름, 한국어, 분류, 설명)
+    ("n11007698090", "V. B. Queen's Money Changer", "브이비 퀸즈 환전소", "money", "디몰 안 환전소"),
+    ("n14057998967", "El Chen Money Changer", "엘 첸 환전소", "money", "디몰 북쪽 메인로드 환전소"),
+    ("n11006942480", "M Lhuillier (D'Mall)", "엠 륄리에 (디몰)", "money", "전당포 겸 환전·송금 체인"),
+    ("n6388425651", "M Lhuillier (Station 3)", "엠 륄리에 (스테이션 3)", "money", "전당포 겸 환전·송금 체인"),
+    ("n11011483313", "Cebuana Lhuillier", "세부아나 륄리에", "money", "전당포 겸 환전·송금 체인"),
+    ("n11010640771", "Palawan Pawnshop", "팔라완 전당포", "money", "전당포 겸 환전·송금 체인"),
+    ("n14241096297", "BPI (D'Mall)", "BPI 은행 (디몰)", "money", "은행·ATM"),
+    ("n12901423973", "BDO", "BDO 은행", "money", "은행·ATM (해외카드 1회 ₱250 수수료)"),
+    ("n3057138532", "Metrobank (Station 2)", "메트로뱅크", "money", "은행·ATM"),
+    ("n10060224407", "Nikko Fruit Store", "니코 과일가게 (디몰)", "fruit", "디몰 시장 쪽 과일가게"),
+    ("n11006942483", "Fruitas", "프루타스 (디몰)", "fruit", "과일 주스·쉐이크 체인"),
+    ("n11932740294", "El Centro Fruit Shakes", "엘 센트로 과일 쉐이크", "fruit", "해변길 과일 쉐이크 (헤난 가든 가까움)"),
+    ("n14157204565", "Jonah's Fruit Shakes (Station 1–2)", "조나스 과일 쉐이크", "fruit", "망고 쉐이크로 유명한 조나스의 지점"),
+    ("w31929703", "D'Mall Palengke Market", "디몰 재래시장 (과일 노점)", "fruit", "디몰 안 시장, 과일 노점"),
+    ("w316240419", "Talipapa Bukid Market", "탈리파파 부킷 시장 (과일·채소)", "fruit", "현지인 시장, 과일·채소 노점이 모여 있음"),
+    ("n10062685399", "Jomer Fruit Stand", "조머 과일 노점", "fruit", "탈리파파 부킷 시장 과일 노점"),
+    ("n10099959017", "Sweet Fruit Store", "스위트 과일가게", "fruit", "스테이션 2 안쪽 과일가게"),
+    ("n12415986597", "Healthree Foods", "헬스리 푸드 (채소·과일)", "fruit", "채소·과일 상점"),
+    ("n14057998962", "Isle Veggies Store", "아일 베지 (채소·과일)", "fruit", "채소·과일 상점"),
+    ("n10222738245", "Eleven J Pasalubong (dried fruits)", "일레븐 J 기념품 (말린 망고)", "fruit", "말린 망고 등 기념품 (한국 반입 가능 품목)"),
+]
+mf = load("money_fruit.json", {}) or {}
+def find_r(name, arr):
+    k = canon(name).split("dmall")[0][:8]
+    for r in arr or []:
+        if k and k in canon(r.get("name", "")): return r
+    return None
+for oid, nm, ko, cat, desc in SHOPS:
+    f = pid.get(oid)
+    if not f: print("missing osm", oid, nm); continue
+    la, lo = map(float, f[3].split(","))
+    V["shop-" + oid] = dict(key="shop-" + oid, name=nm, sources=[], menus={}, photos=[]); v = V["shop-" + oid]; v.update(name=nm, ko=ko, cat=cat, desc=desc, lat=la, lon=lo, coordSrc="OSM " + ("node " if oid[0] == "n" else "way ") + oid[1:], coordConf="high")
+    if f[4]: v["hours"] = f[4] + " (OSM)"
+    r = find_r(nm, mf.get("changers" if cat == "money" else "fruit"))
+    if r:
+        for a_, b_ in (("hours", "hours"), ("korean_review", "krReview"), ("tips", "tips"), ("rate_notes", "rateNote"), ("usd_rate_notes", "rateNote"), ("sells", "sells"), ("prices", "fruitPrices")):
+            val = r.get(a_)
+            if val and (b_ != "hours" or not v.get("hours")): v[b_] = val if isinstance(val, str) else json.dumps(val, ensure_ascii=False)
+        v["sources"] += [x for x in (r.get("sources") or []) if isinstance(x, str) and x.startswith("https://")][:5]
+    v["sources"].append("OpenStreetMap")
+
+# 5c) 영업시간 정리
+for c, v in V.items():
+    h = v.get("hours")
+    if isinstance(h, str) and h.startswith("09:00–21:30") and "배달 플랫폼" in h:
+        mm = re.search(r"OSM (node|way) (\d+)", v.get("coordSrc", "")); f = pid.get(mm.group(1)[0] + mm.group(2)) if mm else None
+        v["hours"] = (f[4] + " (OSM)") if f and f[4] else "매장 영업시간 미확인 (배달 접수 09:00–21:30)"
+    if isinstance(v.get("hours"), str):
+        H = parse_hours(v["hours"])
+        if H: v["H"] = H
+
 # 6) 출력
 GLOSS = {"sisig": "시시그(다진 돼지고기 철판)", "adobo": "아도보(간장·식초 조림)", "sinigang": "시니강(새콤한 국)", "kare-kare": "카레카레(땅콩 스튜)", "kare kare": "카레카레(땅콩 스튜)",
          "lechon": "레촌(통구이 돼지)", "liempo": "리엠포(삼겹살 구이)", "pancit": "판싯(볶음국수)", "lumpia": "룸피아(춘권)", "halo-halo": "할로할로(필리핀 빙수)", "halo halo": "할로할로(필리핀 빙수)",
@@ -187,8 +241,16 @@ for c, v in V.items():
     v.pop("key", None)
     out.append(v)
 json.dump(out, open(os.path.join(R, "site", "venues.json"), "w"), ensure_ascii=False, separators=(",", ":"))
+EXTRA = dict(
+    changers=[dict(name=c.get("name"), ko=c.get("ko_name"), loc=c.get("location"), rate=c.get("usd_rate_notes"), krw=c.get("takes_krw"), tips=c.get("tips"), kr=c.get("korean_review"))
+              for c in (mf.get("changers") or []) if re.search(r"Nikko|Golden|Salamat|Henann", c.get("name") or "")],
+    fruitSeason=(mf.get("fruit_season") or {}).get("summary"), quarantine=mf.get("korea_quarantine"),
+    fruitTips=[f.get("tips") for f in (mf.get("fruit") or []) if f.get("tips")][:3],
+    mangoPrice="D'Mall 과일가게 망고 1kg ₱150–200 (한국 여행사 블로그, 날짜 미상)")
+json.dump(EXTRA, open(os.path.join(R, "site", "extra.json"), "w"), ensure_ascii=False, separators=(",", ":"))
 json.dump(dict(menus=menus, gloss=GLOSS), open(os.path.join(R, "site", "menus.json"), "w"), ensure_ascii=False, separators=(",", ":"))
 from collections import Counter
+print("hours parsed", sum(1 for v in out if v.get("H")), "/", len(out))
 print("venues", len(out), Counter(v["cat"] for v in out), "with xy", sum(1 for v in out if "x" in v), "with menu", sum(1 for v in out if v["hasMenu"]),
       "kr", sum(1 for v in out if v.get("krPop")), "rated", sum(1 for v in out if v.get("rating")))
 print("venues.json %d KB, menus.json %d KB" % (os.path.getsize(os.path.join(R, "site", "venues.json")) // 1024, os.path.getsize(os.path.join(R, "site", "menus.json")) // 1024))

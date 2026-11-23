@@ -1,0 +1,314 @@
+{
+  "_meta": {
+    "compiled": "2026-11-23",
+    "method": "WebSearch only (WebFetch blocked for trvlogue.com, nate.com, phtourguide.com, da.gov.ph in this session). Facts are from search-result snippets; null = not verified. No current (Nov 2026) exchange rate figures were found for any changer.",
+    "general_money_tips": [
+      "Bring crisp, new-series USD 100 bills (Korean blogs: double exchange KRW->USD in Korea, USD->PHP in Boracay; one blog claims ~5-10% better than KRW->PHP directly -- unverified blog claim).",
+      "Check mid-market rate (e.g. on phone) before exchanging; compare posted boards at 2-3 changers (Wise guide).",
+      "Count pesos at the counter before leaving.",
+      "D'Mall changers are reported to pay better than beach-path changers but worse than big-city malls (phtourguide.com, undated).",
+      "Henann Garden Resort front desk also exchanges money (trvlogue 2026, convenient, likely lower rate).",
+      "KRW: forum reports say won can be changed in Boracay but at a poor rate (one post: 15%+ loss) -- old ESL Cafe forum posts, not verified for 2026.",
+      "ATM skimming devices were found on D'Mall ATMs in 2013 (Inquirer) -- prefer ATMs inside bank branches, shield PIN."
+    ]
+  },
+  "changers": [
+    {
+      "name": "Nikko Forex",
+      "ko_name": "니코 포렉스",
+      "type": "changer",
+      "location": "Station 2 / D'Mall area, a little off the main road down a side lane; sign is small and easy to miss. Of two previously known branches, one reported closed / moved.",
+      "hours": null,
+      "usd_rate_notes": "trvlogue 2026 comparison (single traveler): best USD rate of all places compared, ahead of Golden Forex and D'Mall changers. No exact figure available.",
+      "takes_usd": true,
+      "takes_krw": null,
+      "tips": "Confirm which branch is operating before walking there; Korean blogger reported a wasted trip to a closed branch.",
+      "korean_review": "한국 블로그에서 '환율 좋다고 유명한 곳'으로 가장 많이 언급. 두 지점 중 하나는 폐업/이전했다는 후기 있음.",
+      "sources": ["https://www.trvlogue.com/en/boracay-money-exchange-rates", "https://www.trvlogue.com/ko/boracay-money-exchange-rates"]
+    },
+    {
+      "name": "Golden Forex",
+      "ko_name": "골든 포렉스",
+      "type": "changer",
+      "location": "White Beach (beach path) side, near Station 2",
+      "hours": null,
+      "usd_rate_notes": "trvlogue 2026: slightly better than D'Mall changers, below Nikko Forex. No figure.",
+      "takes_usd": true,
+      "takes_krw": null,
+      "tips": null,
+      "korean_review": "한국어 블로그에서 Queen's와 함께 디몰/화이트비치 근처 환전소로 언급.",
+      "sources": ["https://www.trvlogue.com/en/boracay-money-exchange-rates"]
+    },
+    {
+      "name": "V.B. Queen's Money Changer",
+      "ko_name": "퀸즈 환전소",
+      "type": "changer",
+      "location": "D'Mall per trvlogue and OSM; Wise listing instead gives 'Ambulong South, Manocmanoc' (Plus code XW2J+X96), phone +63 36 262 3208 -- possibly multiple branches; sources conflict.",
+      "hours": null,
+      "usd_rate_notes": "trvlogue 2026: rate not worth a special trip; armed security guard on site.",
+      "takes_usd": true,
+      "takes_krw": null,
+      "tips": "Call +63 36 262 3208 to confirm branch/rate.",
+      "korean_review": null,
+      "sources": ["https://wise.com/gb/currency-exchange/boracay", "https://www.trvlogue.com/en/boracay-money-exchange-rates"]
+    },
+    {
+      "name": "Salamat Boracay (Korean-run tour agency, also exchanges)",
+      "ko_name": "살라맛 보라카이",
+      "type": "changer",
+      "location": "2nd floor of a building near D'Mall (Korean blog; exact address not verified)",
+      "hours": null,
+      "usd_rate_notes": "Korean travel reviews (nate, undated): gives at least ~0.1 PHP better than street rate. Unverified.",
+      "takes_usd": true,
+      "takes_krw": null,
+      "tips": "Korean-speaking; ask KRW rate directly.",
+      "korean_review": "후기 2편에서 '일반 거리 환전 비율보다 0.1이라도 높게' 환전해 준다고 칭찬. 투어 예약과 함께 이용.",
+      "sources": ["https://m.view.nate.com/travel/view/129158/"]
+    },
+    {
+      "name": "El Chen",
+      "ko_name": null,
+      "type": "changer",
+      "location": "Main road, Station 1-2 (OSM)",
+      "hours": null,
+      "usd_rate_notes": null,
+      "takes_usd": null,
+      "takes_krw": null,
+      "tips": null,
+      "korean_review": null,
+      "sources": ["OpenStreetMap (provided)"]
+    },
+    {
+      "name": "M Lhuillier",
+      "ko_name": "엠 루이리에",
+      "type": "pawnshop",
+      "location": "D'Mall and Station 3 (OSM)",
+      "hours": null,
+      "hours_note": "Not found for Boracay branches. Other M Lhuillier branches nationally list 07:00-19:00 or 08:00-18:00 (BDO-hosted branch directory) -- not Boracay-specific.",
+      "usd_rate_notes": null,
+      "takes_usd": null,
+      "takes_krw": null,
+      "tips": "Pawnshop/remittance chain; usually exchanges USD but verify at counter.",
+      "korean_review": null,
+      "sources": ["OpenStreetMap (provided)", "https://www.bdo.com.ph/content/dam/bdounibank/en-ph/remittance/cash-pick-up-directories/m-lhuillier-branches-as-of-apr-7.pdf"]
+    },
+    {
+      "name": "Cebuana Lhuillier",
+      "ko_name": "세부아나 루이리에",
+      "type": "pawnshop",
+      "location": "Station 3 (OSM)",
+      "hours": null,
+      "usd_rate_notes": null,
+      "takes_usd": null,
+      "takes_krw": null,
+      "tips": null,
+      "korean_review": null,
+      "sources": ["OpenStreetMap (provided)"]
+    },
+    {
+      "name": "Palawan Pawnshop",
+      "ko_name": "팔라완 전당포",
+      "type": "pawnshop",
+      "location": "Per OSM",
+      "hours": "Mo-Su 08:00-17:30 (OpenStreetMap; not independently verified)",
+      "usd_rate_notes": null,
+      "takes_usd": null,
+      "takes_krw": null,
+      "tips": null,
+      "korean_review": null,
+      "sources": ["OpenStreetMap (provided)"]
+    },
+    {
+      "name": "Villarica Pawnshop",
+      "ko_name": "빌라리카 전당포",
+      "type": "pawnshop",
+      "location": "Per OSM",
+      "hours": null,
+      "usd_rate_notes": null,
+      "takes_usd": null,
+      "takes_krw": null,
+      "tips": null,
+      "korean_review": null,
+      "sources": ["OpenStreetMap (provided)"]
+    },
+    {
+      "name": "Henann Garden Resort front desk",
+      "ko_name": "헤난 가든 리조트 프런트",
+      "type": "changer",
+      "location": "In the family's hotel, Station 2",
+      "hours": null,
+      "usd_rate_notes": "Mentioned as an option by trvlogue 2026; Korean blogs say hotel rates are lower than outside but not by much.",
+      "takes_usd": true,
+      "takes_krw": null,
+      "tips": "Good for a small first amount on arrival night.",
+      "korean_review": "숙소 환전은 환율이 낮지만 큰 차이는 아니라 편하게 이용하는 것도 방법이라는 의견.",
+      "sources": ["https://www.trvlogue.com/en/boracay-money-exchange-rates"]
+    },
+    {
+      "name": "BPI (ATM, D'Mall / beach path)",
+      "ko_name": "BPI 은행 ATM",
+      "type": "bank",
+      "location": "BPI ATM inside D'Mall complex, Station 2; also along beach near Station 1-2",
+      "hours": "Branch Mo-Fr 09:00-16:30 (OSM; not independently verified). ATMs typically 24h -- unverified.",
+      "atm_fee_foreign_card": "Reported PHP 250 per withdrawal at a BPI ATM (trvlogue Bohol 2026 traveler report); another guide says ~USD 3.50 or 1.75%. Home bank fees extra.",
+      "usd_rate_notes": null,
+      "takes_usd": null,
+      "takes_krw": false,
+      "tips": "Foreign cards may hit low per-transaction limits (some travelers report PHP 4,000-10,000).",
+      "korean_review": null,
+      "sources": ["https://www.rexby.com/ExploreToConnect/ttd/convenient-cash-in-dmall", "https://www.trvlogue.com/en/bohol-atm-withdrawal-fees", "https://wise.com/gb/blog/atms-in-the-philippines"]
+    },
+    {
+      "name": "BDO",
+      "ko_name": "BDO 은행",
+      "type": "bank",
+      "location": null,
+      "location_note": "No confirmed Boracay branch/ATM location found in searches.",
+      "hours": null,
+      "atm_fee_foreign_card": "PHP 250 for cards issued overseas, plus issuer fees (BDO official page). BDO-card limit PHP 25,000/transaction, 50,000/day (foreign-card limit not stated).",
+      "takes_krw": false,
+      "sources": ["https://www.bdo.com.ph/personal/digital/atm"]
+    },
+    {
+      "name": "Metrobank",
+      "ko_name": "메트로뱅크",
+      "type": "bank",
+      "location": "Stand-alone ATM inside D'Mall with guard; branch on main road near back entrance of D'Mall (2012 blog -- may be outdated)",
+      "hours": null,
+      "atm_fee_foreign_card": "Reported ~USD 3.5 / may charge (Wise blog; not confirmed by Metrobank)",
+      "takes_krw": false,
+      "sources": ["https://travelistakusinera.blogspot.com/2012/03/boracay-atm-machines.html", "https://wise.com/au/blog/atms-in-the-philippines"]
+    },
+    {
+      "name": "PNB Boracay-Station 2",
+      "ko_name": "PNB 은행",
+      "type": "bank",
+      "location": "Station 2, Barangay Balabag (directory listing)",
+      "hours": null,
+      "atm_fee_foreign_card": null,
+      "takes_krw": false,
+      "sources": ["https://yatmo.com/world/en/ph/malay/unknown-city"]
+    },
+    {"name": "RCBC", "ko_name": null, "type": "bank", "location": null, "hours": null, "atm_fee_foreign_card": null, "note": "No Boracay location confirmed.", "sources": []},
+    {"name": "EastWest Bank", "ko_name": null, "type": "bank", "location": null, "hours": null, "atm_fee_foreign_card": null, "note": "Directory implies presence in area; no address confirmed.", "sources": ["https://yatmo.com/world/en/ph/malay/unknown-city"]}
+  ],
+  "fruit": [
+    {
+      "name": "D'Mall fruit shop(s) (inner D'Mall)",
+      "ko_name": "디몰 과일가게",
+      "sells": "Fresh mango and tropical fruit",
+      "location": "Inside D'Mall, Station 2",
+      "hours": "D'Mall generally ~09:00-20:00+ daily, varies by store (travel sites)",
+      "prices": {"mango_per_kg": "PHP 150-200 (Korean travel-agency blog tripstore.kr, undated)", "mangosteen": null, "rambutan": null, "lanzones": null, "pineapple": null, "banana": null, "dragon_fruit": null, "coconut": null},
+      "tips": "Ask per-kg price first; some stalls price per piece/tray.",
+      "sources": ["https://www.tripstore.kr/blog/%EB%B3%B4%EB%9D%BC%EC%B9%B4%EC%9D%B4-%EC%8B%9C%EC%9E%A5-%EB%A1%9C%EC%BB%AC-%EB%A7%88%EC%BC%93-%ED%95%B4%EC%82%B0%EB%AC%BC-%EA%B0%80%EC%9D%B4%EB%93%9C"]
+    },
+    {
+      "name": "Nikko Fruit Store", "ko_name": null, "sells": null, "location": "D'Mall (per task list/OSM)", "hours": null,
+      "prices": null, "tips": null, "sources": ["OpenStreetMap (provided)"], "note": "No web info found."
+    },
+    {
+      "name": "D'Talipapa / Talipapa Market (incl. Talipapa Bukid)",
+      "ko_name": "디탈리파파 / 탈리파파 부키드 재래시장",
+      "sells": "Seafood, fruit stalls (mango, mangosteen, papaya etc.), souvenirs",
+      "location": "D'Talipapa: inland between Station 1-2 / near Station 2 (Expedia); Talipapa Bukid: Station 2-3 inland (Korean blogs)",
+      "hours": null,
+      "prices": null,
+      "tips": "Korean blogs: cheaper than D'Mall for fruit; choose mangoes with unbruised skin and fresh stem, ask vendor to cut them for eating at hotel. Bargain politely; ask per-kg price before weighing.",
+      "sources": ["https://www.tripstore.kr/blog/%EB%B3%B4%EB%9D%BC%EC%B9%B4%EC%9D%B4-%EC%8B%9C%EC%9E%A5-%EB%A1%9C%EC%BB%AC-%EB%A7%88%EC%BC%93-%ED%95%B4%EC%82%B0%EB%AC%BC-%EA%B0%80%EC%9D%B4%EB%93%9C", "https://www.expedia.co.uk/Talipapa-Market-Boracay-Island.d6170124.Attraction"]
+    },
+    {
+      "name": "D'Mall Palengke fruit stalls", "ko_name": "디몰 팔렝케", "sells": null, "location": "D'Mall area", "hours": null,
+      "prices": null, "tips": null, "sources": [], "note": "No specific info found."
+    },
+    {
+      "name": "Jonah's Fruit Shake & Snack Bar",
+      "ko_name": "조나스 프루트 쉐이크",
+      "sells": "Fruit shakes (famous banana/mango shakes), snacks",
+      "location": "Station 1, Main Road beside Prince Crown Regency (2022 guide); older blogs place it on beach path Station 1",
+      "hours": "Conflicting: daily 09:00-21:00 (one guide) vs 24h (2010 blog) -- verify",
+      "prices": {"shake": "from PHP 147 (2022 magazine guide)"},
+      "tips": "Station 1 is a 15-20 min walk north from Henann Garden.",
+      "sources": ["https://d3ppocuozxd02b.cloudfront.net/magazine/boracay-panay-island/2022/04/25/7-summer-food-stops-in-boracay-to-satisfy-your-food-cravings", "https://wanderlog.com/place/details/444306/jonahs-fruit-shake--snack-bar"]
+    },
+    {
+      "name": "D'Mall mango dessert shops (e.g. Halomango)",
+      "ko_name": "디몰 망고 디저트 (할로망고 등)",
+      "sells": "Mango shake, mango ice cream, halo-halo",
+      "location": "D'Mall, Station 2",
+      "hours": null,
+      "prices": {"mango_shake": "~PHP 150", "mango_ice_cream": "~PHP 200 (Korean blog, undated)"},
+      "sources": ["https://uk.trip.com/restaurant/philippines/boracay%20island/detail/Halomango-10562032"]
+    },
+    {"name": "Fruitas", "ko_name": null, "sells": "Fresh fruit juice/shakes (chain)", "location": "D'Mall (task list)", "hours": null, "prices": null, "sources": [], "note": "Not verified."},
+    {"name": "El Centro Fruit Shakes", "ko_name": null, "sells": null, "location": null, "hours": null, "prices": null, "sources": [], "note": "No web info found."},
+    {"name": "Jomer Fruit Stand", "ko_name": null, "sells": null, "location": null, "hours": null, "prices": null, "sources": [], "note": "No web info found."},
+    {"name": "Sweet Fruit Store", "ko_name": null, "sells": null, "location": null, "hours": null, "prices": null, "sources": [], "note": "No web info found."},
+    {"name": "Healthree Foods", "ko_name": null, "sells": null, "location": null, "hours": "Mo-Sa 10:00-20:00, Su 10:00-15:00 (OpenStreetMap; not independently verified)", "prices": null, "sources": ["OpenStreetMap (provided)"]},
+    {"name": "Isle Veggies Store", "ko_name": null, "sells": null, "location": null, "hours": null, "prices": null, "sources": [], "note": "No web info found."},
+    {
+      "name": "Eleven J Pasalubong / At Iz Boracay Co. (pasalubong)",
+      "ko_name": "건망고 기념품점",
+      "sells": "Dried mango, banana chips, coconut oil etc. At Iz Boracay Co. has 3 branches incl. D'Mall and Talipapa.",
+      "location": "D'Mall / Talipapa",
+      "hours": null,
+      "prices": {"dried_mango_reference": "7D Cebu factory outlet (2025 Japanese blog): PHP 163/150g, 198/200g, 95/80g bites. Boracay prices likely higher -- not verified."},
+      "tips": "Buy sealed commercial packs (7D, Cebu brands) for taking home.",
+      "sources": ["https://myboracayguide.com/info/boracay-shopping-and-more", "https://3d-universal.com/blogs/2025/06/souvenir-dried-mango.html"],
+      "note": "Eleven J Pasalubong itself not found online."
+    },
+    {
+      "name": "Budget Mart (D'Mall) / Savemore",
+      "ko_name": "버짓마트",
+      "sells": "Supermarket: packaged dried mango, snacks, some fruit",
+      "location": "Budget Mart: D'Mall, Station 2",
+      "hours": null,
+      "prices": null,
+      "tips": "Fixed prices, card payment possible (Korean blog re D'Mall mart).",
+      "sources": ["https://www.expedia.com/Budget-Mart-Boracay-Island.d6170136.Vacation-Attraction"]
+    }
+  ],
+  "price_benchmarks_non_boracay": {
+    "mango": "Metro Manila markets PHP 150-300/kg (DA, Dec 2024); Guimaras mango retail up to PHP 400/kg in premium markets incl. Boracay (Manila Bulletin, Jul 2026)",
+    "mangosteen": "Davao PHP 150-200/kg (SunStar 2026)",
+    "rambutan": "Davao PHP 50-60/kg (undated)",
+    "note": "Boracay tourist prices likely higher than these (inference)."
+  },
+  "fruit_season": {
+    "summary": "Late November: mango is off-peak (peak Mar-Jun) but available year-round, possibly pricier. Lanzones commonly listed Aug-Dec, so likely still around. Mangosteen listed Jun/Aug-Nov by some sources, so tail end/uncertain. Rambutan peak Aug-Oct, so probably finished or scarce. Sources disagree.",
+    "mango": "Peak Mar-May/Jun; year-round availability",
+    "mangosteen": "Jun-Nov or Aug-Nov (sources vary); off-season production exists at higher prices",
+    "rambutan": "Aug-Oct (or Jul-Sep)",
+    "lanzones": "Aug-Dec (one source: Mar-Apr and Oct)",
+    "sources": ["https://interaksyon.philstar.com/breaking-news/2018/06/04/127991/peak-season-philippines-popular-fruits-chart/", "https://willflyforfood.net/fruits-in-the-philippines", "https://www.sunstar.com.ph/article/1820996/Davao/Business/Mangosteen-for-all-seasons"]
+  },
+  "korea_quarantine": {
+    "fresh_mango": "PROHIBITED for travelers to carry in. Korea's Animal and Plant Quarantine Agency (농림축산검역본부) lists fresh fruits incl. mango as banned carry-on items. Philippine mango import is only allowed via designated commercial export orchards/packhouses, not personal luggage. Undeclared: fine up to KRW 10 million (reported for banned items). Must declare any agricultural item on arrival.",
+    "other_fresh_fruit": "Also banned (mangosteen, rambutan etc. are fresh fruit).",
+    "dried_mango": "Commercially processed, sealed dried mango (e.g. 7D) is widely bought by Korean travelers and a blog says it passes; however no official QIA statement was found. Hankyung (2025) quoting QIA: dried fruit containing seeds may be banned for some items. Dried mango slices have no seeds -- likely OK but declare if unsure.",
+    "recommendation": "Eat fresh fruit in Boracay; bring only sealed commercial dried mango; if in doubt, declare at the plant quarantine desk on arrival (Incheon).",
+    "sources": ["https://www.mafra.go.kr/bbs/home/792/578526/artclView.do", "https://www.hankyung.com/article/202508015566g", "https://www.segye.com/view/20240515505508", "https://baby.tali.kr/philippines-mango-import"]
+  },
+  "sources": [
+    "https://www.trvlogue.com/en/boracay-money-exchange-rates",
+    "https://www.trvlogue.com/ko/boracay-money-exchange-rates",
+    "https://wise.com/gb/currency-exchange/boracay",
+    "https://m.view.nate.com/travel/view/129158/",
+    "https://phtourguide.com/?p=2913",
+    "https://www.bdo.com.ph/personal/digital/atm",
+    "https://wise.com/gb/blog/atms-in-the-philippines",
+    "https://www.trvlogue.com/en/bohol-atm-withdrawal-fees",
+    "https://www.rexby.com/ExploreToConnect/ttd/convenient-cash-in-dmall",
+    "https://travelistakusinera.blogspot.com/2012/03/boracay-atm-machines.html",
+    "https://newsinfo.inquirer.net/451937/boracay-bank-clients-warned-on-theft-devices-on-atm-machines",
+    "https://forums.eslcafe.com/korea/viewtopic.php?p=2905227",
+    "https://www.tripstore.kr/blog/%EB%B3%B4%EB%9D%BC%EC%B9%B4%EC%9D%B4-%EC%8B%9C%EC%9E%A5-%EB%A1%9C%EC%BB%AC-%EB%A7%88%EC%BC%93-%ED%95%B4%EC%82%B0%EB%AC%BC-%EA%B0%80%EC%9D%B4%EB%93%9C",
+    "https://d3ppocuozxd02b.cloudfront.net/magazine/boracay-panay-island/2022/04/25/7-summer-food-stops-in-boracay-to-satisfy-your-food-cravings",
+    "https://myboracayguide.com/info/boracay-shopping-and-more",
+    "https://3d-universal.com/blogs/2025/06/souvenir-dried-mango.html",
+    "https://mb.com.ph/2026/07/29/a-name-worth-protecting-guimaras-mangos-journey-to-global-markets",
+    "https://interaksyon.philstar.com/breaking-news/2018/06/04/127991/peak-season-philippines-popular-fruits-chart/",
+    "https://www.mafra.go.kr/bbs/home/792/578526/artclView.do",
+    "https://www.hankyung.com/article/202508015566g"
+  ]
+}

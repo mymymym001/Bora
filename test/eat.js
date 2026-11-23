@@ -16,7 +16,7 @@ const { chromium, devices } = require('playwright');
   const stars=await pg.$$eval('#vlist .vc .stars',e=>e.map(x=>parseFloat(x.textContent.replace('★',''))));
   ok(stars.length>10 && stars.every((v,i)=>i===0||stars[i-1]>=v),'rating sort descending: '+stars.slice(0,8).join(','));
   await pg.click('[data-sort="dist"]'); await pg.waitForTimeout(100);
-  const d=await pg.$$eval('#vlist .vc .meta',e=>e.map(x=>{const m=x.textContent.match(/도보 (\d+)분/);return m?+m[1]:999}));
+  const d=await pg.$$eval('#vlist .vc',e=>e.map(x=>{const m=x.querySelector('.meta').textContent.match(/도보 (\d+)분/);return m?+m[1]:999}));
   ok(d.every((v,i)=>i===0||d[i-1]<=v),'distance sort ascending: '+d.slice(0,8).join(','));
   await pg.click('[data-sort="price"]'); await pg.waitForTimeout(100);
   const pr=await pg.$$eval('#vlist .vc .money',e=>e.map(x=>+x.textContent.match(/₱([\d,]+)/)[1].replace(/,/g,'')));

@@ -169,6 +169,7 @@ layers["graph"] = dict(xy=gx, e=edges, entry=ni(hw_node))
 
 # ---------- OSM 음식점 전체 ----------
 import xml.etree.ElementTree as ET
+from hours import parse as parse_hours
 CUR_OSM = set()
 for p in PLACES:
     import re
@@ -198,7 +199,8 @@ for e in r:
         lat = sum(p[0] for p in pts) / len(pts); lon = sum(p[1] for p in pts) / len(pts)
     cu = [CUISINE.get(c.strip().lower(), c.strip()) for c in t.get("cuisine", "").split(";") if c.strip()]
     X, Y = xy(lat, lon)
-    others.append(dict(id="o" + key, name=t["name"], cat=CATMAP[t["amenity"]], kind=t["amenity"], cuisine=", ".join(cu[:3]),
+    _H = parse_hours(t.get("opening_hours", "")) if t.get("opening_hours") else None
+    others.append(dict(H=_H, id="o" + key, name=t["name"], cat=CATMAP[t["amenity"]], kind=t["amenity"], cuisine=", ".join(cu[:3]),
                        hours=t.get("opening_hours", ""), h24=t.get("opening_hours", "") == "24/7", x=round(X), y=round(Y),
                        lat=round(lat, 6), lon=round(lon, 6), osm=("node " if e.tag == "node" else "way ") + e.get("id")))
 print("osm others:", len(others))
