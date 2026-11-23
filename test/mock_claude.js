@@ -22,6 +22,7 @@
   store.set("people/u_mom",{nick:"엄마",char:"🐬",x:-40,y:-345,label:"디몰 근처",at:now-5*60000});
   store.set("chat/c1",{by:"u_mom",nick:"엄마",char:"🐬",kind:"notice",text:"저녁 7시 Subo 예약했어요!",at:now-30*60000});
   store.set("chat/c2",{by:"u_mom",nick:"엄마",char:"🐬",kind:"loc",text:"디몰 근처에 있어요",x:-40,y:-345,label:"디몰 근처",at:now-5*60000});
+  store.set("likes/u_mom",{ids:["subo","aria"],nick:"엄마",char:"🐬",at:now});store.set("likes/u_dad",{ids:["subo"],nick:"아빠",char:"🐳",at:now});store.set("likes/u_sis",{ids:["subo","aria"],nick:"사랑",char:"🦩",at:now});
   const G=!!window.__guest; if(G) store.set("admin/notice",{text:"내일 07:30 로비 집합",sched:{time:"11.25(수) 점심",text:"Smoke Resto"},at:now-60000,by:"u_me"});
   const user={id:async()=>G?"u_guest":"u_me",can:async()=>true,isOwner:async()=>!G,canEdit:async()=>true,me:async()=>({id:"u_me",name:"수복 최",avatarUrl:"",color:"#888",email:null,isOwner:true,canEdit:true}),profiles:async ids=>({})};
   window.__mockStore=store;

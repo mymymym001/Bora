@@ -13,7 +13,7 @@ const { chromium, devices } = require('playwright');
   // phrases
   await pg.click('[data-phrases]'); await pg.waitForSelector('[data-phrase]'); const np=await pg.$$eval('[data-phrase]',e=>e.length); ok(np>=30,'phrase cards '+np);
   await pg.click('[data-phrase="0-2"]'); ok((await pg.$eval('#driver .big',e=>e.textContent))==='No ice, please.','phrase fullscreen'); await pg.screenshot({path:'test/f-phrase.png'});
-  await pg.click('[data-closedriver]'); await pg.click('[data-close]');
+  await pg.click('[data-closedriver]'); await pg.goto('http://localhost:8765/_test_live.html#home'); await pg.waitForSelector('[data-expadd2]');
   // expenses
   await pg.click('[data-expadd2]'); await pg.waitForSelector('#ex-what');
   await pg.fill('#ex-what','Subo 저녁'); await pg.fill('#ex-amt','6000'); await pg.click('#ex-shared'); await pg.click('[data-expsave]'); await pg.waitForTimeout(400);

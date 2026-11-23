@@ -180,9 +180,9 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px;font-size:14px}
 
 /* nav */
 .nav{position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--surface);border-top:1px solid var(--line);
-  padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));display:grid;grid-template-columns:repeat(6,1fr)}
-.nav a{display:grid;justify-items:center;gap:2px;text-decoration:none;color:var(--muted);font-size:11px;letter-spacing:-.02em;white-space:nowrap;padding:4px 0;border-radius:10px}
-.nav a svg{width:22px;height:22px}
+  padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));display:grid;grid-template-columns:repeat(7,1fr)}
+.nav a{display:grid;justify-items:center;gap:2px;text-decoration:none;color:var(--muted);font-size:10.5px;letter-spacing:-.02em;white-space:nowrap;padding:4px 0;border-radius:10px}
+.nav a svg{width:21px;height:21px}
 .nav a[aria-current="page"]{color:var(--accent);font-weight:700}
 .loading{padding:40px 0;text-align:center;color:var(--muted)}
 
@@ -370,6 +370,17 @@ details.menu summary span{font-weight:400;color:var(--muted);font-size:12.5px}
 .sel{font:inherit;font-size:16px;padding:10px 12px;border-radius:11px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
 table.xt td{font-size:13.5px}
 table.xt .badge{white-space:nowrap}
+.likebox{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.likeb{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:14px;font-weight:500;color:var(--ink)}
+.likeb.on{border-color:#E0442E;background:color-mix(in srgb,#E0442E 14%,var(--surface));font-weight:700}
+.likers{font-size:16px;letter-spacing:1px}
+.sortbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:var(--bg);padding-block:6px;display:grid;gap:4px}
+.sortbar .sl{font-size:12px;font-weight:700;color:var(--muted)}
+.sorts.s5{grid-template-columns:repeat(5,1fr)}
+.sorts.s5 button{font-size:12.5px;padding:8px 1px}
+.vc .cover.ph{display:grid;place-items:center;background:color-mix(in srgb,var(--pc) 18%,var(--surface-2));aspect-ratio:16/6}
+.vc .cover.ph span svg{width:34px;height:34px;color:var(--pc)}
+.vc .cover.ph i{background:rgba(0,0,0,.45)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 @media (min-width:760px){.card{flex-basis:280px}}
 </style>
@@ -390,5 +401,6 @@ table.xt .badge{white-space:nowrap}
   <a href="#map" data-tab="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>지도</a>
   <a href="#course" data-tab="course"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>코스</a>
   
+  <a href="#talk" data-tab="talk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg>회화</a>
 </nav>
 
