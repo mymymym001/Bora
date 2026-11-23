@@ -336,6 +336,15 @@ details.menu summary span{font-weight:400;color:var(--muted);font-size:12.5px}
 .vc .cover{border:0;padding:0;border-radius:12px;overflow:hidden;aspect-ratio:16/8;max-width:100%;position:relative;background:var(--surface-2);margin:-2px -2px 2px}
 .vc .cover img{width:100%;height:100%;object-fit:cover;display:block}
 .vc .cover i{position:absolute;right:6px;bottom:6px;font-style:normal;font-size:11px;color:#fff;background:rgba(0,0,0,.55);padding:1px 7px;border-radius:6px}
+.pin-notice{margin-top:12px;border:2px solid #E0442E;background:#FFF1EC;border-radius:var(--r);padding:12px 14px;display:grid;gap:6px}
+.pin-notice .ph{display:flex;justify-content:space-between;align-items:baseline}
+.pin-notice b{font-size:16px;color:#C2321D}
+.pin-notice .nt{margin:0;font-size:15.5px;font-weight:500;color:var(--ink)}
+.pin-notice .next{display:flex;flex-wrap:wrap;gap:6px;align-items:baseline;background:#fff;border-radius:10px;padding:7px 10px;font-size:14.5px}
+.pin-notice .next span{font-size:12px;font-weight:700;color:#fff;background:#E0442E;border-radius:6px;padding:1px 7px}
+.pin-notice .next b{font-size:14.5px;color:var(--ink)}
+.pin-notice.empty{border-style:dashed;background:var(--surface)}
+.pin-notice .btns .btn{flex:1 1 100px;padding:8px 10px;font-size:13.5px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 @media (min-width:760px){.card{flex-basis:280px}}
 </style>
@@ -480,7 +489,7 @@ async function initLive(){
     const [db,user,assets]=await Promise.all([c.use("db"),c.use("user"),c.use("assets")]);
     LIVE.db=db; LIVE.user=user; LIVE.assets=assets;
     if(!db){clearTimeout(timer);LIVE.status="off";renderChat();return}
-    if(user){LIVE.uid=await user.id(); LIVE.canWrite=await user.can("data.write");
+    if(user){LIVE.uid=await user.id(); LIVE.canWrite=await user.can("data.write"); LIVE.isOwner=!!(await user.isOwner());
       if(!LIVE.me.nick){const me=await user.me(); if(me.name){LIVE.me.nick=me.name.split(" ")[0].slice(0,10); saveMe();}}}
     LIVE.unsub.push(db.collection("people").onSnapshot(snap=>{
       const o={}; snap.docs.forEach(d=>{const v=d.data(); if(v&&typeof v.x==="number"&&typeof v.y==="number") o[d.id]=v;}); LIVE.people=o;
@@ -492,6 +501,7 @@ async function initLive(){
       LIVE.exp=snap.docs.map(d=>Object.assign({id:d.id},d.data())).filter(e=>typeof e.php==="number"&&e.what);
       const ep=$("#expPanel"); if(ep) ep.outerHTML=expHomeHTML();
     },()=>{}));
+    LIVE.unsub.push(db.doc("admin/notice").onSnapshot(d=>{ LIVE.notice=d.exists?d.data():null; drawPin(); },()=>{}));
     LIVE.unsub.push(db.collection("plan").onSnapshot(snap=>{
       const o={}; snap.docs.forEach(d=>{const v=d.data(); if(v) o[d.id]=v;}); LIVE.plan=o;
       const h=(location.hash||"#home").slice(1)||"home"; if($("#sheet").hidden&&!(document.activeElement&&document.activeElement.closest&&document.activeElement.closest("#chat"))){ const y=window.scrollY; if(h==="course") renderCourse(); else if(h==="home") renderHome(); window.scrollTo(0,y); }
@@ -506,7 +516,7 @@ async function initLive(){
 const canPost=()=>LIVE.db&&LIVE.uid&&LIVE.canWrite!==false;
 async function postChat(kind,text,extra){
   if(!canPost()) return false;
-  try{ await LIVE.db.collection("chat").add(Object.assign({by:LIVE.uid,nick:LIVE.me.nick||"가족",char:LIVE.me.char,kind,text:String(text).slice(0,500),at:Date.now()},extra||{})); return true; }
+  try{ await LIVE.db.collection("chat").add(Object.assign({by:LIVE.uid,admin:LIVE.isOwner||undefined,nick:LIVE.me.nick||"가족",char:LIVE.me.char,kind,text:String(text).slice(0,500),at:Date.now()},extra||{})); return true; }
   catch(e){ chatError(e); return false; }
 }
 function chatError(e){ const m=$("#chatMsg"); if(!m) return;
@@ -623,24 +633,24 @@ function renderChat(scroll){
   let body;
   if(st==="off") body='<p class="chatmsg">채팅과 위치 공유는 claude.ai에 로그인하고 이 페이지에 <b>편집자로 초대받은</b> 가족만 쓸 수 있어요. 지금 보는 화면에서는 꺼져 있어요.</p>';
   else body='<ol class="msgs" id="msgs" aria-live="polite">'+(LIVE.chat.length?LIVE.chat.map(msgHTML).join(""):'<li class="chatempty">'+(st==="live"?"아직 메시지가 없어요. 첫 인사를 남겨 보세요.":"메시지를 불러오는 중…")+'</li>')+'</ol>'+
-    (writable?'<form class="chatform" id="chatForm"><button type="button" class="nt" id="noticeToggle" aria-pressed="'+noticeOn+'" title="모두에게 공지">공지</button><label for="chatIn" class="sr" hidden>메시지</label><input id="chatIn" maxlength="500" autocomplete="off" placeholder="'+(noticeOn?"공지 내용 (모두에게 강조 표시)":"메시지 입력")+'"><button class="send" type="submit">보내기</button></form>'+
+    (writable?'<form class="chatform" id="chatForm">'+(LIVE.isOwner?'<button type="button" class="nt" id="noticeToggle" aria-pressed="'+noticeOn+'" title="공지로 고정">공지</button>':'')+'<label for="chatIn" class="sr" hidden>메시지</label><input id="chatIn" maxlength="500" autocomplete="off" placeholder="'+(noticeOn?"공지 내용 (채팅 위에 고정돼요)":"메시지 입력")+'"><button class="send" type="submit">보내기</button></form>'+
       '<div class="chatbar"><button type="button" class="btn loc" data-pick>'+(myLoc()?"내 위치 다시 알리기":"내 위치 알리기")+'</button><button type="button" class="btn alt" data-profile>'+esc(me.char)+' '+esc(me.nick||"이름 정하기")+'</button></div>'
      :(st==="live"||st==="slow"?'<p class="chatmsg">'+(LIVE.uid?"보기 전용이에요. 글쓰기와 위치 공유는 편집자로 초대받은 가족만 할 수 있어요.":"로그인하면 글을 쓸 수 있어요.")+'</p>':''));
   const keep=document.activeElement&&document.activeElement.id==="chatIn"; const val=keep?$("#chatIn").value:"";
   el.className="chat"+(chatBig?" big":"");
   el.innerHTML='<header><h2>가족 채팅</h2><span class="live'+(st==="live"?" on":"")+'"><i></i>'+stTxt+'</span>'+(st!=="off"?'<button type="button" class="tiny" data-chatsize>'+(chatBig?"작게":"크게")+'</button>':'')+'</header>'+
-    (latestNotice?'<div class="notice"><b>공지</b>'+esc(latestNotice.char||"")+' '+esc(latestNotice.nick)+': '+esc(latestNotice.text)+'</div>':'')+body+'<p class="chatmsg" id="chatMsg" hidden></p>';
+    body+'<p class="chatmsg" id="chatMsg" hidden></p>';
   if(keep){const i=$("#chatIn"); i.value=val; i.focus();}
   const ms=$("#msgs"); if(ms) ms.scrollTop=ms.scrollHeight;
   const f=$("#chatForm"); if(f) f.addEventListener("submit",async ev=>{ev.preventDefault(); const i=$("#chatIn"); const t=i.value.trim(); if(!t) return;
     if(!LIVE.me.nick){openProfile(); return;}
-    i.value=""; const ok=await postChat(noticeOn?"notice":"msg",t); if(!ok) i.value=t; else if(noticeOn){noticeOn=false;renderChat();}});
+    i.value=""; const asNotice=noticeOn&&LIVE.isOwner; const ok=await postChat(asNotice?"notice":"msg",t); if(!ok) i.value=t; else if(asNotice){ await setNotice({text:t}); noticeOn=false; renderChat(); }});
 }
 function msgHTML(m){
   const mine=m.by&&m.by===LIVE.uid;
   let t=esc(m.text);
   if(m.kind==="loc"&&typeof m.x==="number") t='<button type="button" data-locx="'+m.x+'" data-locy="'+m.y+'">'+esc(m.label||"위치")+'에 있어요 · 지도에서 보기</button>';
-  return '<li class="msg'+(m.kind==="notice"?" notice-m":"")+(m.kind==="loc"?" loc":"")+(mine?" mine":"")+'"><span class="c">'+esc(m.char||"🙂")+'</span><div><div class="h"><b>'+esc(m.nick||"가족")+'</b>'+(m.kind==="notice"?'<span class="badge sun">공지</span> ':'')+hhmm(m.at)+'</div><div class="t">'+t+'</div></div></li>';
+  return '<li class="msg'+(m.kind==="notice"?" notice-m":"")+(m.kind==="loc"?" loc":"")+(mine?" mine":"")+'"><span class="c">'+esc(m.char||"🙂")+'</span><div><div class="h"><b>'+esc(m.nick||"가족")+'</b>'+(m.admin?'<span class="badge ok">관리자</span> ':'')+(m.kind==="notice"?'<span class="badge sun">공지</span> ':'')+hhmm(m.at)+'</div><div class="t">'+t+'</div></div></li>';
 }
 
 /* ---------- follow ---------- */
@@ -886,6 +896,12 @@ document.addEventListener("click",e=>{
   if(T("[data-expall]")){ openExpAll(); return; }
   if(el=T("[data-expdel]")){ const id=el.dataset.expdel; LIVE.db.doc("expenses/"+id).delete().then(()=>{ setTimeout(openExpAll,150); }).catch(()=>{}); return; }
   if(el=T("[data-orderexp]")){ const p=BYID[el.dataset.orderexp], t=orderTotals(p); $("#driver").hidden=true; openExpForm({what:dname(p),amt:Math.round(t.tot)}); return; }
+  if(T("[data-noticeedit]")){ openNoticeEdit(); return; }
+  if(T("[data-noticesave]")){ const t=($("#nt-text").value||"").trim().slice(0,300), tell=$("#nt-chat").checked; setNotice({text:t||null}).then(ok=>{ if(ok){ closeSheet(); if(tell&&t) postChat("notice",t); } }); return; }
+  if(T("[data-noticeclear]")){ if(LIVE.isOwner&&LIVE.db) LIVE.db.doc("admin/notice").delete().then(()=>{LIVE.notice=null;drawPin();}).catch(()=>{}); return; }
+  if(T("[data-schedpick]")){ openSchedPick(); return; }
+  if(el=T("[data-schedset]")){ const e=S._sched[+el.dataset.schedset]; setNotice({sched:{time:e.time,text:e.text}}).then(ok=>{ if(ok){ closeSheet(); postChat("notice","다음 일정: "+e.time+" · "+e.text); } }); return; }
+  if(T("[data-schedcustom]")){ const tm=($("#sc-time").value||"").trim(), tx=($("#sc-text").value||"").trim(); if(!tm||!tx){ (tm?$("#sc-text"):$("#sc-time")).focus(); return; } setNotice({sched:{time:tm.slice(0,24),text:tx.slice(0,60)}}).then(ok=>{ if(ok){ closeSheet(); postChat("notice","다음 일정: "+tm+" · "+tx); } }); return; }
   if(el=T("[data-pickmeal]")){ openMealPicker(el.dataset.pickmeal,el.dataset.meal); return; }
   if(el=T("[data-mealvenue]")){ const p=BYID[el.dataset.mealvenue], slot=el.dataset.slot; planSet(slot,{venue:p.id}).then(w=>afterPlanSave(w,"[일정] "+slot.replace(/^d(\d)-/,(m,n)=>DAYS[n-1].d+" ").replace("lunch","점심").replace("dinner","저녁")+" → "+dname(p))); return; }
   if(el=T("[data-mealsave]")){ const slot=el.dataset.mealsave, text=($("#pm-text").value||"").trim().slice(0,40), bud=parseInt(($("#pm-bud").value||"").replace(/[^0-9]/g,""))||0; if(!text&&!bud){$("#pm-text").focus();return}
@@ -922,7 +938,7 @@ function renderHome(){
    '<div class="hero2"><h1>보라카이 가족 가이드</h1><div class="when">'+when+'</div></div>'+
    ((EXTRA.scenic||[]).length?'<div class="gal" id="scenic">'+EXTRA.scenic.map((x,i)=>'<button type="button" data-scenic="'+i+'" aria-label="사진 크게 보기"><img src="'+esc(x.src)+'" alt="'+esc(x.caption||"보라카이")+'" loading="lazy"><span class="cap">'+esc(x.caption||"")+' · '+esc(x.author||"")+' · '+esc(x.license||"")+'</span></button>').join("")+'</div>':'')+
    partyHTML()+
-   '<section class="chat" id="chat" aria-label="가족 채팅"></section>'+
+   '<div id="pin">'+pinHTML()+'</div><section class="chat" id="chat" aria-label="가족 채팅"></section>'+
    '<div class="quick">'+
      '<button type="button" data-pick>'+ICON.person+'내 위치 알리기</button>'+
      '<button type="button" data-phrases><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg>회화 카드</button>'+
@@ -1279,6 +1295,51 @@ function openTextEdit(k,title,ph,multi){
   s.hidden=false; document.body.style.overflow="hidden";
 }
 async function afterPlanSave(where,msg){ closeSheet(); if(where==="shared"&&msg) postChat("msg",msg); const h=(location.hash||"#home").slice(1)||"home"; if(h==="course") renderCourse(); else if(h==="home") renderHome(); }
+
+/* ================= admin: pinned notice + next schedule ================= */
+LIVE.isOwner=false; LIVE.notice=null;
+function strip(h){ const d=document.createElement("div"); d.innerHTML=h; return d.textContent||""; }
+function schedEntries(){
+  const out=[];
+  DAYS.forEach(day=>day.items.forEach(it=>{
+    const lbl=day.d+"("+day.w+")";
+    if(it[0]==="meal"){ const c=planGet(day.k+"-"+it[1]); const v=c&&c.venue&&BYID[c.venue]; out.push({time:lbl+" "+MEAL_LABEL[it[1]],text:v?dname(v):c&&c.text?c.text:MEAL_LABEL[it[1]]+" (아직 안 정함)"}); }
+    else if(it[0]==="4U"){ const c=planGet(it[1]); out.push({time:lbl+" 4U",text:FOURU[it[1]].title+" · "+(c&&c.text||FOURU[it[1]].def)}); }
+    else if(it[0]==="memo"){ const c=planGet(day.k+"-memo"); if(c&&c.text) out.push({time:lbl+" 메모",text:c.text.split("\n")[0]}); }
+    else out.push({time:lbl+" "+it[0],text:strip(it[1])});
+  }));
+  return out;
+}
+function pinHTML(){
+  const n=LIVE.notice, own=LIVE.isOwner;
+  if(!n||!(n.text||n.sched)){ return own?'<div class="pin-notice empty"><b>🚨공지🚨</b><span>아직 공지가 없어요. 관리자만 쓸 수 있어요.</span><div class="btns"><button type="button" class="btn" data-noticeedit>공지 쓰기</button><button type="button" class="btn alt" data-schedpick>다음 일정 지정</button></div></div>':''; }
+  return '<div class="pin-notice" role="status"><div class="ph"><b>🚨공지🚨</b><span class="fine">관리자 · '+ago(n.at)+'</span></div>'+
+    (n.text?'<p class="nt">'+esc(n.text).replace(/\n/g,"<br>")+'</p>':'')+
+    (n.sched?'<div class="next"><span>다음 일정</span><b>'+esc(n.sched.time)+'</b> '+esc(n.sched.text)+'</div>':'')+
+    (own?'<div class="btns"><button type="button" class="btn" data-noticeedit>공지 고치기</button><button type="button" class="btn alt" data-schedpick>다음 일정 지정</button><button type="button" class="btn alt" data-noticeclear>내리기</button></div>':'')+'</div>';
+}
+function drawPin(){ const el=$("#pin"); if(el) el.innerHTML=pinHTML(); }
+async function setNotice(patch){
+  if(!LIVE.isOwner||!LIVE.db) return false;
+  const cur=LIVE.notice||{}; const v=Object.assign({},cur,patch,{at:Date.now(),by:LIVE.uid});
+  for(const k in v) if(v[k]===null) delete v[k];
+  try{ await LIVE.db.doc("admin/notice").set(v); LIVE.notice=v; drawPin(); return true; }catch(e){ const m=$("#chatMsg"); if(m){m.textContent="공지를 저장하지 못했어요.";m.hidden=false;} return false; }
+}
+function openNoticeEdit(){
+  const s=$("#sheet"), n=LIVE.notice||{};
+  s.innerHTML='<div class="wrap"><div class="bar"><button type="button" data-close aria-label="닫기">✕</button><div class="t">🚨공지🚨 쓰기</div></div><div class="page" style="padding-top:0">'+
+   '<div class="field"><label for="nt-text">가족 채팅 위에 고정될 공지</label><textarea id="nt-text" rows="5" maxlength="300" style="font:inherit;font-size:16px;padding:10px;border-radius:11px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)" placeholder="예: 내일 07:30 로비 집합! 여권 꼭 챙기기">'+esc(n.text||"")+'</textarea></div>'+
+   '<label class="toggle"><input type="checkbox" id="nt-chat" checked> 가족 채팅에도 알리기</label>'+
+   '<button type="button" class="btn" data-noticesave>공지 고정</button></div></div>';
+  s.hidden=false; document.body.style.overflow="hidden";
+}
+function openSchedPick(){
+  const s=$("#sheet"), list=schedEntries();
+  s.innerHTML='<div class="wrap"><div class="bar"><button type="button" data-close aria-label="닫기">✕</button><div class="t">다음 일정 지정</div></div><div class="page" style="padding-top:0">'+
+   '<div class="panel"><h3>직접 쓰기</h3><div class="field"><label for="sc-time">언제</label><input id="sc-time" maxlength="24" placeholder="예: 11/25 15:00"></div><div class="field"><label for="sc-text">무엇</label><input id="sc-text" maxlength="60" placeholder="예: 디몰 할로망고 앞에서 만나기"></div><button type="button" class="btn" data-schedcustom>다음 일정으로 지정</button></div>'+
+   '<div class="panel"><h3>우리 일정에서 고르기</h3><div class="plist">'+list.map((e,i)=>'<button type="button" data-schedset="'+i+'" style="grid-template-columns:1fr auto"><span><span class="nm">'+esc(e.text)+'</span><br><span class="sub">'+esc(e.time)+'</span></span><span class="w">지정 ›</span></button>').join("")+'</div></div></div></div>';
+  s.hidden=false; s.scrollTop=0; document.body.style.overflow="hidden"; S._sched=list;
+}
 
 /* ================= map ================= */
 function makeMap(box,cv,pinsEl){

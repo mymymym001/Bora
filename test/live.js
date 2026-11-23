@@ -8,12 +8,12 @@ const { chromium, devices } = require('playwright');
   await pg.screenshot({path:'test/live-1.png'}); await pg.screenshot({path:'test/live-1full.png',fullPage:true});
   ok(await pg.isVisible('.ppl button'), 'family location list on home');
   ok((await pg.$$eval('.msg',e=>e.length))===2, 'chat shows seeded msgs');
-  ok(await pg.isVisible('.notice'), 'pinned notice');
+  ok(await pg.isVisible('#pin .pin-notice'), 'pinned notice block');
   // profile + send message
   await pg.fill('#chatIn','안녕하세요 테스트'); await pg.click('.chatform .send'); await pg.waitForTimeout(300);
   ok((await pg.$$eval('.msg',e=>e.length))===3, 'message sent appears');
   await pg.click('#noticeToggle'); await pg.fill('#chatIn','8시 로비 집합'); await pg.click('.chatform .send'); await pg.waitForTimeout(300);
-  ok((await pg.$eval('.notice',e=>e.textContent)).includes('8시 로비'), 'notice pinned updates');
+  ok((await pg.$eval('#pin',e=>e.textContent)).includes('8시 로비'), 'notice pinned updates');
   // share location via pick
   await pg.click('.chatbar [data-pick]'); await pg.waitForSelector('.pickbar'); await pg.waitForTimeout(700);
   const box=await pg.locator('#mapbox').boundingBox(); await pg.mouse.click(box.x+box.width*0.35, box.y+box.height*0.75); await pg.waitForTimeout(150);
