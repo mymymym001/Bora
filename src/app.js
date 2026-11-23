@@ -22,9 +22,9 @@ const TRIKE={cap:5,specialLo:100,specialHi:150,shared:25};
 const CHARS=["🐢","🐬","🦀","🐙","🐠","🦩","🐳","🦜","🌴","🥥","🍍","🐚"];
 const WALK_MPM=67, TRIKE_MPM=250, STALE_MS=2*3600e3;
 
-function themeBtn(){ return '<span class="tbtns"><button type="button" class="tiny themeb" data-bigtext aria-pressed="'+document.documentElement.classList.contains("big")+'">가+ 글자</button><button type="button" class="tiny themeb" data-themetoggle>'+(document.documentElement.classList.contains("dark")?"☀️ 라이트":"🌙 다크")+'</button></span>'; }
+function themeBtn(){ return '<span class="tbtns"><button type="button" class="tiny themeb" data-bigtext aria-label="글자 크게" aria-pressed="'+document.documentElement.classList.contains("big")+'">가+</button><button type="button" class="tiny themeb" data-themetoggle aria-label="'+(document.documentElement.classList.contains("dark")?"라이트 모드로":"다크 모드로")+'">'+(document.documentElement.classList.contains("dark")?"☀️":"🌙")+'</button></span>'; }
 try{ if(localStorage.getItem("bora-big")==="1") document.documentElement.classList.add("big"); }catch(e){}
-function setTheme(t){ document.documentElement.classList.toggle("dark",t==="dark"); try{localStorage.setItem("bora-theme",t)}catch(e){} document.querySelectorAll("[data-themetoggle]").forEach(b=>b.textContent=t==="dark"?"☀️ 라이트":"🌙 다크"); if(MAP) MAP.draw&&setTimeout(()=>{ try{ MAP.resize(); }catch(e){} },30); }
+function setTheme(t){ document.documentElement.classList.toggle("dark",t==="dark"); try{localStorage.setItem("bora-theme",t)}catch(e){} document.querySelectorAll("[data-themetoggle]").forEach(b=>{b.textContent=t==="dark"?"☀️":"🌙"; b.setAttribute("aria-label",t==="dark"?"라이트 모드로":"다크 모드로");}); if(MAP) MAP.draw&&setTimeout(()=>{ try{ MAP.resize(); }catch(e){} },30); }
 { let t=null; try{ t=localStorage.getItem("bora-theme"); }catch(e){} if(t!=="light") document.documentElement.classList.add("dark"); }
 let D=null, MAP=null, G=null, ALL=[], VEN=[], BYID={}, MENUS=null, MENUP=null;
 const S={n:7,cat:"all",sel:null,mode:"walk",all:false,follow:null,person:null,pick:null,sort:"claude",ecat:"all",q:""};
@@ -188,13 +188,13 @@ function chipsHTML(){
 }
 function renderMapTab(){
   $("#app").innerHTML=
-   '<div class="top"><div class="brand"><h1>보라카이 가족 가이드</h1><small>11.24–28 · 헤난 가든</small></div>'+partyHTML()+chipsHTML()+'</div>'+
+   '<div class="top"><div class="brand"><h1>지도</h1><small>캐릭터를 누르면 따라가기</small></div>'+partyHTML()+chipsHTML()+'</div>'+
    '<div class="mapbox" id="mapbox"><canvas id="cv" aria-label="헤난 가든 주변 지도"></canvas><div class="pins" id="pins"></div>'+
    '<div class="mapctl"><button type="button" id="zin" aria-label="확대">+</button><button type="button" id="zout" aria-label="축소">−</button>'+
    '<button type="button" id="zhome" aria-label="호텔로 이동">'+ICON.hotel+'</button><button type="button" id="zme" aria-label="내 위치 알리기">'+ICON.person+'</button></div>'+
    '<div id="pickbar"></div><div class="attrib">© OpenStreetMap 기여자</div></div>'+
    '<div id="follow"></div>'+
-   '<p class="fine" style="margin:8px 2px 0">가족 채팅은 <a href="#home">홈</a>에 있어요. 지도의 캐릭터를 누르면 따라가기를 할 수 있어요.</p>'+
+   
    '<div class="sec-h"><h2 id="railTitle">가까운 추천</h2><span id="railNote"></span></div><div class="rail" id="rail"></div>'+
    '<label class="toggle"><input type="checkbox" id="allToggle"'+(S.all?" checked":"")+'> 조사 안 된 주변 식당·카페 '+ALL.filter(p=>p.osm).length+'곳도 카드로 보기 (지도에는 작은 점으로 항상 표시)</label>'+
    '<div class="sec-h"><h2>호텔 복귀</h2><span>지도 기반 추정</span></div><div id="ret"></div>';
@@ -687,7 +687,7 @@ function venueCard(p,rank){
 }
 function renderEat(){
   $("#app").innerHTML='<div class="page" style="padding-top:8px"><div class="hrow"><h2 style="margin-top:0">맛집 · 카페</h2>'+themeBtn()+'</div>'+
-   '<p class="lead">한국인 후기 조사 + 직접 조사 + 배달 앱 메뉴판을 합친 '+VEN.filter(isFood).length+'곳이에요. 메뉴판에서 고르고 주문서를 직원에게 보여 주세요.</p>'+
+   '<p class="lead">'+VEN.filter(isFood).length+'곳 · 메뉴판에서 담고 주문서를 직원에게 보여 주세요.</p>'+
    partyHTML()+
    '<label class="search" for="q"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="식당 이름이나 메뉴로 찾기 (예: 망고, 삼겹살, pizza)" value="'+esc(S.q)+'" autocomplete="off"></label>'+
    '<div class="chips" id="ecats">'+ECATS.map(([k,l])=>'<button type="button" class="chip" data-ecat="'+k+'" aria-pressed="'+(S.ecat===k)+'">'+l+' <span class="n">'+VEN.filter(p=>eMatch(p,k)).length+'</span></button>').join("")+'</div>'+
@@ -863,11 +863,11 @@ function openExpForm(pre){
    '<div class="field"><label for="ex-what">무엇을 샀나요</label><input id="ex-what" maxlength="40" value="'+esc(pre.what||"")+'" placeholder="예: 망고 쉐이크, 트라이크, 기념품"></div>'+
    '<div class="field"><label for="ex-where">어디서 (선택)</label><input id="ex-where" maxlength="30" value="'+esc(pre.where||"")+'" placeholder="예: 디몰 할로망고"></div>'+
    '<div class="field"><label for="ex-amt">금액 (전체)</label><input id="ex-amt" inputmode="decimal" value="'+esc(pre.amt||"")+'" placeholder="0"></div>'+
-   '<div class="sorts" role="group" aria-label="통화" id="ex-cur">'+["PHP","USD","KRW"].map(c=>'<button type="button" data-cur="'+c+'" aria-pressed="'+(c==="PHP")+'">'+({PHP:"₱ 페소",USD:"$ 달러",KRW:"₩ 원"}[c])+'</button>').join("")+'</div>'+
+   '<div class="sorts c3" role="group" aria-label="통화" id="ex-cur">'+["PHP","USD","KRW"].map(c=>'<button type="button" data-cur="'+c+'" aria-pressed="'+(c==="PHP")+'">'+({PHP:"₱ 페소",USD:"$ 달러",KRW:"₩ 원"}[c])+'</button>').join("")+'</div>'+
    '<div class="field"><label for="ex-qty">개수</label><input id="ex-qty" inputmode="numeric" value="'+esc(pre.qty||1)+'"></div>'+
-   '<div class="field"><label for="ex-cat">분류</label><select id="ex-cat" class="sel">'+EXP_CATS.map(c=>'<option'+(c===(pre.cat||"식사")?' selected':'')+'>'+c+'</option>').join("")+'</select></div>'+
-   '<div class="field"><span>돈 출처</span><div class="sorts" role="group" id="ex-src"><button type="button" data-src="공금" aria-pressed="'+((pre.src||"공금")==="공금")+'">공금 (아빠 지갑)</button><button type="button" data-src="자유경비" aria-pressed="'+(pre.src==="자유경비")+'">내 자유경비</button></div></div>'+
-   '<div class="field"><label for="ex-menu">메뉴 종류 (고르면 적정 가격인지 평가해요)</label><select id="ex-menu" class="sel"><option value="">선택 안 함</option>'+G.map((g,gi)=>'<optgroup label="'+esc(g.g)+'">'+g.rows.map((r,ri)=>'<option value="'+gi+'-'+ri+'">'+esc(r.m)+'</option>').join("")+'</optgroup>').join("")+'</select></div>'+
+   '<div class="field"><label for="ex-cat">분류</label><select id="ex-cat" class="fsel">'+EXP_CATS.map(c=>'<option'+(c===(pre.cat||"식사")?' selected':'')+'>'+c+'</option>').join("")+'</select></div>'+
+   '<div class="field"><span>돈 출처</span><div class="sorts c2" role="group" id="ex-src"><button type="button" data-src="공금" aria-pressed="'+((pre.src||"공금")==="공금")+'">공금 · 아빠 지갑</button><button type="button" data-src="자유경비" aria-pressed="'+(pre.src==="자유경비")+'">내 자유경비</button></div></div>'+
+   '<div class="field"><label for="ex-menu">메뉴 종류 (고르면 적정 가격인지 평가해요)</label><select id="ex-menu" class="fsel"><option value="">선택 안 함</option>'+G.map((g,gi)=>'<optgroup label="'+esc(g.g)+'">'+g.rows.map((r,ri)=>'<option value="'+gi+'-'+ri+'">'+esc(r.m)+'</option>').join("")+'</optgroup>').join("")+'</select></div>'+
    '<div class="field"><label for="ex-payer">쓴 사람 (누가 샀나요)</label><input id="ex-payer" maxlength="10" value="'+esc(pre.payer||LIVE.me.nick)+'"></div>'+
    '<p class="fine" id="ex-conv"></p><button type="button" class="btn" data-expsave>저장</button><p class="fine">환율 기준: 1 USD = ₱'+D.fx.php_per_usd.toFixed(2)+', ₱1 = ₩'+D.fx.krw_per_php.toFixed(2)+'. 모든 기록은 페소로 바꿔 합산해요.</p></div></div>';
   s.hidden=false; document.body.style.overflow="hidden";
@@ -913,7 +913,7 @@ function phrasesBody(){ return '<p class="lead">문장을 누르면 크게 떠�
    PHRASES.map(([cat,list],ci)=>'<div class="panel"><h3>'+cat+'</h3><div class="plist">'+list.map(([en,ko,pr],i)=>'<button type="button" data-phrase="'+ci+'-'+i+'" style="grid-template-columns:1fr auto"><span><span class="nm">'+esc(ko)+'</span><br><span class="sub">'+esc(en)+'</span><br><span class="sub" style="color:var(--accent)">'+esc(pr)+'</span></span><span class="w">크게 ›</span></button>').join("")+'</div></div>').join(""); }
 function renderTalk(){ $("#app").innerHTML='<div class="page"><div class="hrow"><h2>회화 카드</h2>'+themeBtn()+'</div>'+
   '<div class="sos"><b>긴급 상황</b><dl class="kv num"><dt>필리핀 긴급번호</dt><dd><b>911</b></dd><dt>티롤 병원 응급실 (24시간)</dt><dd>(036) 288-3041 · 호텔에서 도보 약 '+(BYID.tirol&&BYID.tirol.route?BYID.tirol.route.walk.min:6)+'분</dd><dt>대사관 긴급</dt><dd>+63-917-817-5703</dd><dt>영사콜센터 (24시간)</dt><dd>+82-2-3210-0404</dd></dl>'+
-  '<div class="btns"><button type="button" class="btn" data-sos="0">도와주세요 (영어로 크게)</button><button type="button" class="btn alt" data-open="tirol">병원 길찾기</button></div></div>'+phrasesBody()+'</div>'; }
+  '<div class="btns"><button type="button" class="btn" data-sos="0">도와주세요 카드</button><button type="button" class="btn alt" data-open="tirol">병원 길찾기</button></div></div>'+phrasesBody()+'</div>'; }
 const SOS=[["Please help us! We need a doctor.","도와주세요! 의사가 필요해요.","플리즈 헬프 어스! 위 니드 어 닥터."]];
 function openPhrases(){ location.hash="talk"; return;
   const s=$("#sheet");
@@ -1104,7 +1104,7 @@ function purseHTML(compact){
   head+=warn;
   return head+'<div class="tbl" style="margin-top:8px"><table><thead><tr><th>예산 항목</th><th class="r">사용 / 예산</th></tr></thead><tbody>'+BUDGET.map(b=>{
       const used=b.cats.reduce((a,c)=>a+(p.byCat[c]||0),0), pct=Math.min(100,Math.round(used/b.php*100)), over=used>b.php;
-      return '<tr><td><b>'+esc(b.label)+'</b><br><span class="src">'+esc(b.note)+'</span><div class="bar"><i style="width:'+pct+'%;background:'+(over?"var(--warn)":"var(--accent)")+'"></i></div></td><td class="r num">'+php(used)+'<br><span class="src">/ '+php(b.php)+(over?' · 초과':' · 남음 '+php(b.php-used))+'</span></td></tr>'; }).join("")+'</tbody></table></div>';
+      return '<tr><td><b>'+esc(b.label)+'</b><br><span class="src">'+esc(b.note)+'</span><div class="bar"><i style="width:'+pct+'%;background:'+(over?"var(--warn)":"var(--accent)")+'"></i></div></td><td class="r num"><b>'+php(used)+'</b> / '+php(b.php)+'<br><span class="src">'+(over?'초과 '+php(used-b.php):'남음 '+php(b.php-used))+'</span></td></tr>'; }).join("")+'</tbody></table></div>';
 }
 function fxListHTML(){
   if(!LIVE.fx.length) return '<p class="fine">아직 환전 기록이 없어요.</p>';
@@ -1174,7 +1174,7 @@ function expTableHTML(writable){
   const who={}; ex.filter(e=>catBucket(e.cat)!=="자유경비 지급").forEach(e=>{ const k=e.payer||"?"; who[k]=who[k]||{c:0,f:0}; if(e.src==="자유경비") who[k].f+=(+e.php||0); else who[k].c+=(+e.php||0); });
   const days={}; ex.forEach(e=>{ const d=manilaDateLabel(e.at); (days[d]=days[d]||[]).push(e); });
   let h='<div class="panel"><h3>공금 지갑 <span class="fine">'+HOLDER+' 보관 · 환전 상한 $'+FX_CAP_USD.toLocaleString()+'</span></h3>'+purseHTML(false)+
-   (writable?'<div class="btns" style="margin-top:8px"><button type="button" class="btn" data-expadd>+ 지출</button><button type="button" class="btn alt" data-fxadd>+ 환전</button><button type="button" class="btn alt" data-freeadd>+ 자유경비 지급</button></div>':'<p class="fine">기록은 편집자로 초대받은 가족만 할 수 있어요.</p>')+'</div>'+
+   (writable?'<div class="b3"><button type="button" class="btn" data-expadd>+ 지출</button><button type="button" class="btn alt" data-fxadd>+ 환전</button><button type="button" class="btn alt" data-freeadd>+ 자유경비</button></div>':'<p class="fine">기록은 편집자로 초대받은 가족만 할 수 있어요.</p>')+'</div>'+
    '<div class="panel"><h3>환전 기록</h3>'+fxListHTML()+'</div>';
   if(!ex.length) return h+'<div class="empty">아직 지출 기록이 없어요. 누가 무엇을 얼마에 샀는지 모두 적어 주세요.</div>';
   h+='<div class="panel num"><h3>누가 얼마 썼나</h3><div class="tbl"><table><thead><tr><th>쓴 사람</th><th class="r">공금</th><th class="r">자유경비</th></tr></thead><tbody>'+
@@ -1211,9 +1211,9 @@ function bookHTML(writable){
 function openBookForm(){
   const s=$("#sheet");
   s.innerHTML='<div class="wrap"><div class="bar"><button type="button" data-close aria-label="닫기">✕</button><div class="t">예약 추가</div></div><div class="page" style="padding-top:0">'+
-   '<div class="field"><label for="bk-kind">종류</label><select id="bk-kind" class="sel">'+["식당","투어·액티비티","마사지·스파","교통","기타"].map(k=>'<option>'+k+'</option>').join("")+'</select></div>'+
+   '<div class="field"><label for="bk-kind">종류</label><select id="bk-kind" class="fsel">'+["식당","투어·액티비티","마사지·스파","교통","기타"].map(k=>'<option>'+k+'</option>').join("")+'</select></div>'+
    '<div class="field"><label for="bk-name">이름</label><input id="bk-name" maxlength="50" placeholder="예: Subo 저녁, 아일랜드 호핑"></div>'+
-   '<div class="field"><label for="bk-d">날짜</label><select id="bk-d" class="sel">'+TRIP_DAYS.map(d=>'<option>'+d+'</option>').join("")+'</select></div>'+
+   '<div class="field"><label for="bk-d">날짜</label><select id="bk-d" class="fsel">'+TRIP_DAYS.map(d=>'<option>'+d+'</option>').join("")+'</select></div>'+
    '<div class="field"><label for="bk-t">시간</label><input id="bk-t" maxlength="12" placeholder="예: 19:00"></div>'+
    '<div class="field"><label for="bk-p">인원</label><input id="bk-p" inputmode="numeric" value="'+S.n+'"></div>'+
    '<div class="field"><label for="bk-m">메모 (예약번호·연락처·장소)</label><input id="bk-m" maxlength="80"></div>'+
@@ -1292,7 +1292,7 @@ function makeMap(box,cv,pinsEl){
   const sx=x=>(x-st.cx)*st.scale+st.w/2, sy=y=>(y-st.cy)*st.scale+st.h/2;
   const wx=X=>(X-st.w/2)/st.scale+st.cx, wy=Y=>(Y-st.h/2)/st.scale+st.cy;
   function path(a,close){ctx.moveTo(sx(a[0]),sy(a[1])); for(let i=2;i<a.length;i+=2) ctx.lineTo(sx(a[i]),sy(a[i+1])); if(close) ctx.closePath();}
-  function fillLayer(arr,col){ctx.beginPath(); arr.forEach(a=>path(a,true)); ctx.fillStyle=col; ctx.fill("evenodd");}
+  function fillLayer(arr,col){ctx.fillStyle=col; arr.forEach(a=>{ctx.beginPath(); path(a,true); ctx.fill();});}
   function draw(){
     if(!st.w) return;
     ctx.setTransform(st.dpr,0,0,st.dpr,0,0);

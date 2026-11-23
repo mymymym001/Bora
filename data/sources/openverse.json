@@ -215,6 +215,46 @@
    "license": "CC BY 2.0",
    "page": "https://www.flickr.com/photos/37171504@N00/51922135",
    "provider": "flickr"
+  },
+  "taco": {
+   "src": "img/ov/dish-taco.jpg",
+   "title": "Fish Tacos",
+   "author": "powerplantop",
+   "license": "CC BY-NC-ND 2.0",
+   "page": "https://www.flickr.com/photos/40726522@N02/9277764323",
+   "provider": "flickr"
+  },
+  "nachos": {
+   "src": "img/ov/dish-nachos.jpg",
+   "title": "'Midwest Nachos': Check Pot Every Now and Then, Stirring'",
+   "author": "Adam Kuban",
+   "license": "CC BY-NC-ND 2.0",
+   "page": "https://www.flickr.com/photos/49503172960@N01/377677012",
+   "provider": "flickr"
+  },
+  "quesadilla": {
+   "src": "img/ov/dish-quesadilla.jpg",
+   "title": "Beef Quesadilla",
+   "author": "alasam",
+   "license": "CC BY-NC-ND 2.0",
+   "page": "https://www.flickr.com/photos/24176761@N00/2068670861",
+   "provider": "flickr"
+  },
+  "paella": {
+   "src": "img/ov/dish-paella.jpg",
+   "title": "Seafood Paella",
+   "author": "avlxyz",
+   "license": "CC BY-SA 2.0",
+   "page": "https://www.flickr.com/photos/10559879@N00/1158217645",
+   "provider": "flickr"
+  },
+  "steak": {
+   "src": "img/ov/dish-steak.jpg",
+   "title": "Steak dinner",
+   "author": "churl",
+   "license": "CC BY-NC-ND 2.0",
+   "page": "https://www.flickr.com/photos/77005536@N00/102391291",
+   "provider": "flickr"
   }
  },
  "venue": {}
