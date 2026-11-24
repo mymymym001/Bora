@@ -9,7 +9,7 @@ const { chromium, devices } = require('playwright');
   for(const [txt,exp] of cases){ await pg.fill('#ql',txt); await pg.waitForTimeout(80); const pv=await pg.$eval('[data-qprev="ql"]',e=>e.innerText); ok(pv.includes(exp),'preview "'+txt+'" → '+pv); await pg.click('[data-quicksave="ql"]'); await pg.waitForTimeout(350); }
   const t=await pg.$eval('#lbody',e=>e.innerText);
   console.log('  wallet:', t.split('\n').slice(4,14).join(' | '));
-  ok(/남은 페소\s*₱8,651/.test(t),'남은 페소 = 12,400 − 2,350 − 460 − 300 − 639 = ₱8,651: '+(t.match(/남은 페소\s*(\S+)/)||[])[1]);
+  ok(/남은 페소\s*₱29,651/.test(t),'남은 페소 = 12,400 − 2,350 − 460 − 300 − 639 = ₱8,651: '+(t.match(/남은 페소\s*(\S+)/)||[])[1]);
   ok(/\$1,000/.test(t),'남은 달러 $1,000');
   ok(/망고쉐이크/.test(t)&&/×2/.test(t)&&/적정/.test(t),'mango shake row ×2 judged 적정 (₱230 each)');
   ok((await pg.$$eval('table.xt tbody tr',e=>e.length))===5,'5 expense rows in table');

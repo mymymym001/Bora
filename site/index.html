@@ -1481,8 +1481,8 @@ function returnCardHTML(){
     '<li>남은 페소는 공항에서 간식·물로 쓰기 (재환전은 손해)</li></ul></div>';
 }
 /* 오늘 체크리스트 (가족 공유: checks/{날짜}) */
-const CHECKS={d1:[["fee","1명 추가비 ₱4,928 냈음"],["fx1","1차 환전 (약 $300) 하고 기록함"],["dep","보증금 카드로 처리함"],["pick4u","귀국 픽업 시간 4U에 확인"]],
-  d2:[["fx2","2차 환전 (약 $500) 하고 기록함"],["sun","선크림·물 챙김"]],
+const CHECKS={d1:[["fee","1명 추가비 ₱4,928 냈음"],["fx1","1차 환전 (약 $200) 하고 기록함"],["dep","보증금 카드로 처리함"],["pick4u","귀국 픽업 시간 4U에 확인"]],
+  d2:[["fx2","2차 환전 (약 $400) 하고 기록함"],["sun","선크림·물 챙김"]],
   d3:[["fx3","남은 돈 확인 · 3차 환전 필요한지 결정"]],
   d4:[["tax","공항세 ₱6,300 따로 떼어 둠"],["pack","짐 대부분 싸 둠 · 무게 확인"],["pick4u2","내일 4U 픽업 시간 다시 확인"]],
   d5:[["dep2","보증금 카드 승인 취소 확인"],["safe","방 금고·충전기·여권 확인"],["taxpaid","공항세 냈음"]]};
@@ -1861,11 +1861,11 @@ const DAYS=[
     ["meal","lunch","이동 중 · 공항/휴게소"],
     ["16:00경","헤난 가든 체크인 (15:00부터) · <b>1명 추가 등록</b> 1박 ₱1,232 × 4박 = ₱4,928 · 보증금은 <b>카드</b>"],
     ["tip","추가 인원 요금은 페소 현금이 원칙이라, 체크인 때 달러나 카드로 되는지 먼저 물어보세요. 안 되면 디몰에서 환전한 뒤 프런트에 다시 들러 내면 돼요. 회화 카드 ‘호텔’에 문장이 있어요."],
-    ["16:30","디몰 환전 · 헤난 가든에서 도보 약 5분. 환전소 2~3곳 환율 비교 후 <b>1차 약 $300</b> (추가비 ₱4,928 + 첫날 저녁 + 이틀째 점심 몫)"],
-    ["tip","환전하면 지출·예약 탭에 “300달러 18,900페소 환전”처럼 적어 두세요. 창구 앞에서 바로 세어 보고 떠나요."],
+    ["16:30","디몰 환전 · 헤난 가든에서 도보 약 5분. 가진 ₱21,000으로 첫날은 충분해서, 환전소 2~3곳 환율을 비교하고 <b>1차 $200</b>만 바꿔도 돼요"],
+    ["tip","환전하면 지출·예약 탭에 “200달러 12,600페소 환전”처럼 적어 두세요. 창구 앞에서 바로 세어 보고 떠나요."],
     ["meal","dinner","이른 저녁 17:00 · 디몰 근처"],
     ["17:25","화이트비치 일몰 — 해변 쪽 자리가 있는 식당이면 먹으면서 볼 수 있어요"],["memo"]]},
-  {k:"d2",d:"11.25",w:"수",title:"2일차",items:[["아침","호텔 조식 (06:00–10:00 · 포함 여부는 예약 확인)"],["tip","환전 2차: 첫날 환율이 좋았던 디몰 환전소에서 약 $500 바꾸기. 환전하면 지출·예약 탭에 ‘+ 환전’으로 기록해 주세요."],["meal","lunch"],["tip","해변·디몰엔 공중화장실이 많지 않아요. 식당·카페에 들렀을 때 다녀오는 게 좋아요."],["meal","dinner"],["memo"]]},
+  {k:"d2",d:"11.25",w:"수",title:"2일차",items:[["아침","호텔 조식 (06:00–10:00 · 포함 여부는 예약 확인)"],["tip","환전 2차: 첫날 환율이 좋았던 디몰 환전소에서 약 $400 바꾸기. 환전하면 지출·예약 탭에 ‘+ 환전’으로 기록해 주세요."],["meal","lunch"],["tip","해변·디몰엔 공중화장실이 많지 않아요. 식당·카페에 들렀을 때 다녀오는 게 좋아요."],["meal","dinner"],["memo"]]},
   {k:"d3",d:"11.26",w:"목",title:"3일차",items:[["아침","호텔 조식"],["tip","아일랜드 호핑 등 배를 타면 배 위엔 화장실이 없거나 불편해요. 출발 전에 꼭 다녀오고 멀미약은 30분 전에."],["meal","lunch"],["meal","dinner"],["memo"]]},
   {k:"d4",d:"11.27",w:"금",title:"4일차",items:[["아침","호텔 조식"],["tip","공항세 ₱6,300 (₱900×7)을 먼저 따로 떼어 두고 남은 페소를 확인하세요. 모자라면 3차 환전(최대 $400). 남는 돈은 오늘 기념품·팁으로."],["meal","lunch"],["meal","dinner"],["memo"],["밤","짐 정리 · 4U 픽업 시간 재확인 · 생과일은 한국에 못 가져가요"]]},
   {k:"d5",d:"11.28",w:"토",title:"귀국일",items:[["06:30","조식 · 체크아웃 준비 (체크아웃 12:00 전) · 보증금 카드 승인 취소 확인"],["tip","화장실: 공항까지 약 2.5~3시간 이동해요. 로비에서 출발 직전에 다녀오세요."],["4U","4u-depart"],["이동","호텔 → 카그반 항 → 보트 → 카티클란 → 밴 약 2시간 → 칼리보 공항"],["tip","칼리보 공항에서 공항세 ₱900×7=₱6,300을 페소 현금으로 내요 (떼어 둔 돈). 출국장 들어가기 전 화장실·간식 해결."],["13:55","칼리보 출발 · 티웨이 TW-126 (국제선 3시간 전 도착 권장)"],["19:05","인천 T1 도착"]]}
@@ -2001,6 +2001,7 @@ function openSchedPick(){
 }
 
 /* ================= 공금 예산 ================= */
+const CASH_PHP=21000; /* 예전에 바꿔 둔 페소 (가지고 감) */
 const CASH_USD=1200, FX_CAP_USD=1200, HOLDER="공금";
 const BUDGET=[
   {k:"extra",when:"d1",label:"호텔 1인 추가비",php:4928,cats:["숙소 추가비"],note:"체크인 때 페소 현금 (₱1,232×4박)"},
@@ -2022,15 +2023,15 @@ function purse(){
   const common=LIVE.exp.filter(e=>(e.src||"공금")==="공금"), freeSpent=LIVE.exp.filter(e=>e.src==="자유경비");
   const spent=common.reduce((a,e)=>a+(+e.php||0),0);
   const byCat={}; common.forEach(e=>{ const c=catBucket(e.cat,e.at); byCat[c]=(byCat[c]||0)+(+e.php||0); });
-  return {exUsd:ex.usd,exPhp:ex.php,spent,left:ex.php-spent,usdLeft:CASH_USD-ex.usd,byCat,freeSpent:freeSpent.reduce((a,e)=>a+(+e.php||0),0)};
+  return {exUsd:ex.usd,exPhp:ex.php,havePhp:CASH_PHP+ex.php,spent,left:CASH_PHP+ex.php-spent,usdLeft:CASH_USD-ex.usd,byCat,freeSpent:freeSpent.reduce((a,e)=>a+(+e.php||0),0)};
 }
 function purseHTML(compact){
   const p=purse();
-  const pct=p.exPhp>0?Math.max(0,Math.min(100,Math.round(p.spent/p.exPhp*100))):0;
+  const pct=p.havePhp>0?Math.max(0,Math.min(100,Math.round(p.spent/p.havePhp*100))):0;
   let head='<div class="wallet2 num">'+
-    '<div class="w-ex"><span>환전한 페소</span><b>'+php(p.exPhp)+'</b><small>'+(p.exUsd?'$'+p.exUsd.toLocaleString()+' 환전 · ':'')+krw(p.exPhp)+'</small></div>'+
-    '<div class="w-bar" role="img" aria-label="환전한 페소 중 '+pct+'% 사용"><i style="width:'+pct+'%"></i></div>'+
-    '<div class="w-two"><div><span>쓴 돈 (공금)</span><b>'+php(p.spent)+'</b><small>'+krw(p.spent)+(p.exPhp>0?' · '+pct+'%':'')+'</small></div><div><span>남은 페소</span><b class="'+(p.left<0?'neg':'')+'">'+php(p.left)+'</b><small>'+krw(p.left)+'</small></div></div>'+
+    '<div class="w-ex"><span>가진 페소 (원래 있던 돈 + 환전)</span><b>'+php(p.havePhp)+'</b><small>원래 '+php(CASH_PHP)+' + 환전 '+php(p.exPhp)+(p.exUsd?' ($'+p.exUsd.toLocaleString()+')':'')+' · '+krw(p.havePhp)+'</small></div>'+
+    '<div class="w-bar" role="img" aria-label="가진 페소 중 '+pct+'% 사용"><i style="width:'+pct+'%"></i></div>'+
+    '<div class="w-two"><div><span>쓴 돈 (공금)</span><b>'+php(p.spent)+'</b><small>'+krw(p.spent)+(p.havePhp>0?' · '+pct+'%':'')+'</small></div><div><span>남은 페소</span><b class="'+(p.left<0?'neg':'')+'">'+php(p.left)+'</b><small>'+krw(p.left)+'</small></div></div>'+
     '<p class="w-usd">환전 안 한 달러 <b>$'+p.usdLeft.toLocaleString()+'</b> <span>(가져온 $'+CASH_USD.toLocaleString()+' 중)</span></p></div>';
   if(p.left<0) head+='<div class="callout warn" style="margin-top:8px"><b>남은 페소가 마이너스예요</b>환전한 기록이 빠졌을 수 있어요. “200달러 12,400페소 환전”처럼 적어 주세요.</div>';
   if(compact) return head;
@@ -2232,10 +2233,10 @@ function exchangePlanHTML(){
       '<tr class="bgrp"><th colspan="2">'+h+'</th></tr>'+(g==="d1"?'<tr><td colspan="2">항구 요금 (터미널피·환경세·보트)<br><span class="src">칼리보 → 카티클란 이동 중 · 4U 포함</span>'+per7(0,fx)+'</td></tr>':'')+
       BUDGET.filter(b=>(b.when||"daily")===g).map(b=>'<tr><td colspan="2">'+esc(b.label)+(b.note?'<br><span class="src">'+esc(b.note)+'</span>':'')+(b.days?per7d(b.php,fx,b.days):per7(b.php,fx))+'</td></tr>').join("")).join("")+
    '<tr class="btot"><td colspan="2"><b>합계</b><br><span class="src">자유경비는 상한으로 계산</span>'+per7(BUDGET_TOTAL,fx)+'</td></tr></tbody></table></div>'+
-   '<div class="callout ok"><b>가져온 돈 $'+CASH_USD.toLocaleString()+' 기준</b>예산 합계 약 $'+Math.round(BUDGET_TOTAL/fx).toLocaleString()+' + 여유분. 환율은 환전소 기준 ₱63/$로 계산했어요.</div>'+
-   '<ul class="clean" style="margin-top:8px"><li><b>1차 · 11/24 체크인 후 디몰 $300</b> — 체크인 추가비 ₱4,928, 첫날 이른 저녁, 다음 날 점심 몫. 이동 중 간식용으로 공항에서 $20~30만 따로 바꿔도 돼요.</li>'+
-   '<li><b>2차 · 11/25 $500</b> — 첫날 환율이 좋았던 환전소에서.</li>'+
-   '<li><b>3차 · 11/27 필요하면 최대 $400</b> — 그때까지 쓴 돈을 보고 결정. <b>공항세 ₱6,300은 먼저 떼어 두기.</b></li>'+
+   '<div class="callout ok"><b>가진 돈: 페소 '+php(CASH_PHP)+' + 달러 $'+CASH_USD.toLocaleString()+'</b>예산 합계 '+php(BUDGET_TOTAL)+' 중 '+php(CASH_PHP)+'은 이미 있는 페소로 내고, 나머지 약 '+php(BUDGET_TOTAL-CASH_PHP)+' (약 $'+Math.round((BUDGET_TOTAL-CASH_PHP)/fx).toLocaleString()+')만 환전하면 돼요. 환율은 환전소 기준 ₱63/$.</div>'+
+   '<ul class="clean" style="margin-top:8px"><li><b>11/24 첫날은 가진 ₱21,000으로 충분해요</b> — 추가비 ₱4,928 + 첫날 저녁을 내도 넉넉해요. 디몰에서는 환율 비교 겸 <b>1차 $200</b>만 바꿔도 돼요.</li>'+
+   '<li><b>2차 · 11/25 $400</b> — 첫날 본 환율 좋은 환전소에서.</li>'+
+   '<li><b>3차 · 11/27 필요하면 최대 $300</b> — 그때까지 쓴 돈을 보고 결정. <b>공항세 ₱6,300은 먼저 떼어 두기.</b></li>'+
    '<li>보증금은 카드로. 남은 페소는 재환전하면 손해라 공항에서 간식 등으로 쓰기.</li></ul>'+
    '<p class="fine">지금까지 환전 $'+p.exUsd.toLocaleString()+' → '+php(p.exPhp)+' · 남은 페소 '+php(p.left)+'. 기록은 지출·예약 탭에서.</p></div>';
 }
