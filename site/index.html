@@ -235,6 +235,20 @@ svg.tide .tnow{stroke:#E5484D;stroke-width:2;stroke-dasharray:3 3}
 .wxtbl td,.wxtbl th{padding:7px 4px;white-space:nowrap}
 .wxtbl tr.best td{background:color-mix(in srgb,#0B5FD6 14%,transparent)}
 .warnt{color:var(--warn)}
+.fxcalc{border:1.5px solid color-mix(in srgb,var(--accent) 55%,var(--line))}
+.fxdir{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;background:var(--surface-2);border-radius:12px;padding:3px;margin-bottom:10px}
+.fxdir button{border:0;background:none;border-radius:9px;padding:7px 2px;font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap}
+.fxdir button[aria-pressed="true"]{background:#0B5FD6;color:#fff}
+.fxin{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--bg);border-radius:14px;padding:4px 14px}
+.fxin:focus-within{border-color:var(--accent)}
+.fxin .cur{font-size:24px;font-weight:700;color:var(--muted)}
+.fxin input{flex:1;min-width:0;width:0;border:0;background:none;outline:none;font:inherit;font-size:26px;font-weight:700;color:var(--ink);padding:8px 0;font-variant-numeric:tabular-nums}
+.fxout{display:grid;gap:2px;padding:12px 4px 4px}
+.fxout b{font-size:34px;line-height:1.15;color:var(--accent);letter-spacing:-.01em;word-break:break-all}
+.fxout span{font-size:14px;color:var(--muted)}
+.fxchips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.fxchips .chip{font-size:13px;padding:5px 11px}
+.fxrate{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
 /* nav */
 .nav{position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--surface);border-top:1px solid var(--line);
   padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));display:grid;grid-template-columns:repeat(7,1fr)}
@@ -1102,11 +1116,32 @@ function showDriver(){
 
 /* ================= other pages ================= */
 function plink(id,label){return '<button type="button" class="plink" data-open="'+esc(id)+'">'+esc(label)+'</button>'}
+const FXC=63; /* 환전소에서 실제로 받는 달러 환율 (예산 계산과 같은 기준) */
+const FXMODES={php:{cur:"₱",ph:"메뉴판 가격 (페소)",chips:[100,500,1000,5000]},krw:{cur:"₩",ph:"원화 금액",chips:[10000,50000,100000,300000]},usd:{cur:"$",ph:"달러 금액",chips:[20,100,200,500]}};
+function bindFxCalc(){
+  const inp=$("#fx-in"); if(!inp) return; const fx=D.fx; let mode=S.fxm&&FXMODES[S.fxm]?S.fxm:"php";
+  const num=v=>parseFloat(String(v).replace(/[^\d.]/g,""))||0, won=v=>"₩"+(Math.round(v/10)*10).toLocaleString("ko-KR"), pes=v=>"₱"+Math.round(v).toLocaleString("en-US"), usd=v=>"$"+(Math.round(v*10)/10).toLocaleString("en-US");
+  const draw=()=>{ const x=num(inp.value), m=$("#fx-main"), sub=$("#fx-sub");
+    if(mode==="php"){ m.textContent=won(x*fx.krw_per_php); sub.textContent=x?pes(x)+" ≈ "+usd(x/FXC):""; }
+    if(mode==="krw"){ const p=x/fx.krw_per_php; m.textContent=pes(p); sub.textContent=x?won(x)+" ≈ "+usd(p/FXC):""; }
+    if(mode==="usd"){ const p=x*FXC; m.textContent=pes(p); sub.textContent=x?usd(x)+" ≈ "+won(p*fx.krw_per_php):""; } };
+  const setMode=k=>{ mode=k; S.fxm=k; const M=FXMODES[k]; $("#fx-cur").textContent=M.cur; inp.placeholder=M.ph; inp.value="";
+    document.querySelectorAll("[data-fxm]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.fxm===k));
+    $("#fx-chips").innerHTML=M.chips.map(v=>'<button type="button" class="chip" data-fxv="'+v+'">'+M.cur+v.toLocaleString("en-US")+'</button>').join(""); draw(); };
+  inp.addEventListener("input",draw);
+  $(".fxdir").addEventListener("click",e=>{ const b=e.target.closest("[data-fxm]"); if(b){ setMode(b.dataset.fxm); inp.focus(); } });
+  $("#fx-chips").addEventListener("click",e=>{ const b=e.target.closest("[data-fxv]"); if(b){ inp.value=(+b.dataset.fxv).toLocaleString("en-US"); draw(); } });
+  setMode(mode);
+}
 function renderPrices(){
   const fx=D.fx, n=S.n;
-  $("#app").innerHTML='<div class="page"><h2>돈 · 가격 · 여행 정보</h2><p class="lead">비싸다고 무조건 바가지는 아니에요. 가격을 <b>미리 확인했는지</b>가 핵심이에요.</p>'+
-  '<div class="panel"><h3>환율 계산기</h3><p class="fine">기준: 1 USD = ₱'+fx.php_per_usd.toFixed(2)+' · ₱1 = ₩'+fx.krw_per_php.toFixed(2)+' ('+esc(fx.src)+', '+esc(fx.at)+'). 시장 환율이라 환전소에서 받는 금액은 이보다 조금 적어요.</p>'+
-   '<div class="fx"><label for="fx-usd">달러 (USD)<input id="fx-usd" inputmode="decimal" value="100"></label><label for="fx-php">페소 (PHP)<input id="fx-php" inputmode="decimal"></label><label for="fx-krw">원 (KRW)<input id="fx-krw" inputmode="decimal"></label></div></div>'+
+  $("#app").innerHTML='<div class="page"><div class="hrow"><h2>돈 · 정보</h2>'+themeBtn()+'</div>'+
+  '<div class="panel fxcalc"><h3>환율 계산기</h3>'+
+   '<div class="fxdir" role="group" aria-label="계산 방향"><button type="button" data-fxm="php" aria-pressed="true">페소 → 원</button><button type="button" data-fxm="krw" aria-pressed="false">원 → 페소</button><button type="button" data-fxm="usd" aria-pressed="false">달러 → 페소</button></div>'+
+   '<label class="fxin" for="fx-in"><span class="cur" id="fx-cur">₱</span><input id="fx-in" inputmode="decimal" autocomplete="off" placeholder="메뉴판 가격"></label>'+
+   '<div class="fxout" aria-live="polite"><b class="num" id="fx-main">₩0</b><span class="num" id="fx-sub"></span></div>'+
+   '<div class="fxchips" id="fx-chips"></div>'+
+   '<p class="fxrate num">$1 ≈ ₱'+FXC+' (환전소 기준) · ₱1 ≈ ₩'+(Math.round(fx.krw_per_php*10)/10)+'</p></div>'+
   '<div class="panel"><h3>계산서 읽는 법</h3><ul class="clean"><li><b>VAT 12%</b>: 메뉴판 아래 "VAT inclusive"(포함) / "exclusive"(별도) 표기를 확인해요.</li><li><b>서비스차지 10%</b>: 필리핀에서 흔하고 정상이에요(의무는 아님). 붙어 있으면 팁은 따로 안 줘도 돼요.</li><li>예) Aria는 메뉴에 "VAT 포함, 서비스차지 10% 별도" — 음식 ₱5,000이면 계산서 ₱5,500이 정상이에요.</li><li>서비스차지가 없으면 팁은 10% 안팎이면 충분해요.</li></ul></div>'+
   priceGuideHTML()+'<div class="panel"><h3>e-트라이크 타기 전에</h3><ul class="clean"><li>보라카이엔 미터 택시도 Grab 차량 호출도 없어요. 이동은 걷기 아니면 e-트라이크예요.</li><li>타기 전에 <b>"How much in total?"</b> — 1대 전체 요금인지, 1인당인지 확인해요.</li><li>합승(shared)이면 1인 약 ₱15–30, 전세(special)면 가까운 거리 1대 약 ₱100–150.</li><li>7명이면 2대가 편해요 (1대 약 6명까지, 편하게는 4~5명).</li><li>공식 요금표(말레이 조례)가 있지만 원문은 확인 못 했어요 — 아래는 블로그 기준 참고가예요.</li></ul>'+
    '<div class="tbl"><table><thead><tr><th>구간 (전세 1대)</th><th class="r">참고가</th></tr></thead><tbody>'+
@@ -1116,20 +1151,14 @@ function renderPrices(){
    [["아일랜드 호핑 + 헬멧다이빙 + 점심","약 US$58–61 / 1인"],["헬멧다이빙만 (20분)","약 US$21 / 1인"],["아일랜드 호핑 + 패러세일링","약 US$41–72 / 1인"],["섬 입장료 (보통 불포함)","₱100–300 / 1인"]].map(r=>'<tr><td>'+r[0]+'</td><td class="r num">'+r[1]+'</td></tr>').join("")+
    '</tbody></table></div><p class="fine">포함 항목(점심·픽업·입장료)이 다르니 비교해서 고르세요. 해변 현장 가격은 확인 못 했어요. 공인(DOT 인증) 업체를 이용하세요.</p></div>'+
   exchangePlanHTML()+moneyFruitHTML()+'<div class="panel"><h3>환전 · ATM</h3><ul class="clean"><li>구김·낙서 없는 새 달러를 준비해요. 손상된 지폐는 거절되거나 낮게 쳐줘요.</li><li>창구 앞에서 바로 세어 보고 떠나요. "No commission" 문구만 믿지 말고 환율을 비교해요.</li><li>디몰에 M Lhuillier 등 환전소가 있어요. 호텔 프런트도 되지만 조금 불리해요.</li><li>BDO ATM은 해외카드 1회 ₱250 수수료가 붙어요.</li><li>노점·트라이크·시장은 현금, 큰 식당·리조트는 카드 가능.</li></ul></div></div>';
-  const u=$("#fx-usd"),p=$("#fx-php"),k=$("#fx-krw");
-  const num=v=>parseFloat(String(v).replace(/,/g,""))||0, f=(v,d)=>v?v.toLocaleString("en-US",{maximumFractionDigits:d}):"";
-  function from(src){const x=num(src.value);
-    if(src===u){p.value=f(x*fx.php_per_usd,0);k.value=f(x*fx.php_per_usd*fx.krw_per_php,0)}
-    if(src===p){u.value=f(x/fx.php_per_usd,2);k.value=f(x*fx.krw_per_php,0)}
-    if(src===k){p.value=f(x/fx.krw_per_php,0);u.value=f(x/fx.krw_per_php/fx.php_per_usd,2)}}
-  [u,p,k].forEach(i=>i.addEventListener("input",()=>from(i))); from(u); bindChecker();
+  bindFxCalc(); bindChecker();
 }
 function arrangeInfo(){
   const page=$("#app .page"); if(!page) return;
   const panels=[...page.querySelectorAll(":scope > .panel")];
   const byTitle=t=>panels.find(p=>{const h=p.querySelector("h3"); return h&&h.textContent.trim().startsWith(t);});
   const order=["환율 계산기","이 가격 적정한가요?","예산 · 환전 계획"];
-  const first=page.querySelector(":scope > .lead");
+  const first=page.querySelector(":scope > .hrow")||page.querySelector(":scope > h2");
   let anchor=first;
   order.forEach(t=>{ const p=byTitle(t); if(p){ anchor.after(p); anchor=p; } });
   const guideH=[...page.querySelectorAll(":scope > h2")].find(h=>h.textContent.includes("메뉴별 적정 가격"));
@@ -1150,7 +1179,7 @@ function renderInfo(){
   '<div class="panel"><h3>4U 단독 픽업 — 미리 확인할 것</h3><ul class="clean"><li>칼리보 → 카티클란 항 밴 약 2시간, 총 2.5~3시간</li><li>항구 요금(외국인 1인): 터미널피 ₱150 + 환경세 ₱300 + 보트 약 ₱50 → 약 ₱500, 7명이면 약 '+php(3500)+' ('+krw(3500)+')</li><li>위 요금이 4U 패키지에 포함인지, 카그반 항 → 호텔 구간 포함인지 4U에 확인</li><li>귀국일 호텔 픽업 시간 확인 (계산상 07:30–08:00 출발 권장)</li></ul></div>'+
   '<div class="panel"><h3>숙소 — 헤난 가든 리조트</h3><dl class="kv num"><dt>객실</dt><dd>그랜드룸 3개 (방당 기본 2명, 최대 3명)</dd><dt>체크인/아웃</dt><dd>15:00 / 12:00</dd><dt>추가 1명</dt><dd>1박 ₱1,232 (조식 포함) × 4박 = <b>'+php(extra)+'</b> ('+krw(extra)+')</dd><dt>수영장</dt><dd>야외 4개 + 키즈풀, 08:00–22:00</dd><dt>위치</dt><dd>스테이션 2, 화이트비치에서 한 블록 안쪽</dd></dl>'+
    '<div class="callout warn"><b>체크인 때 1명 추가 등록</b>예약 시 인원을 추가하지 못했으니, 체크인할 때 3명이 쓰는 방에 1명을 추가해요. 요금은 헤난 예약 페이지 문구 기준이니 현장에서 다시 확인하세요.</div></div>'+
-  '<div class="panel"><h3>환전 준비</h3><p>달러 현금을 가져가요. 오늘 기준 <b class="num">$100 ≈ '+php(100*D.fx.php_per_usd)+' ≈ '+krw(100*D.fx.php_per_usd)+'</b> (시장 환율). <a href="#prices">환율 계산기 →</a></p></div>'+
+  '<div class="panel"><h3>환전 준비</h3><p>달러 현금을 가져가요. 환전소 기준 <b class="num">$100 ≈ '+php(100*FXC)+' ≈ '+krw(100*FXC)+'</b>. 계산은 이 탭 맨 위 환율 계산기로.</p></div>'+
   '<div class="panel"><h3>채팅·위치 공유 쓰는 법</h3><ul class="clean"><li>이 페이지 소유자가 공유 메뉴에서 가족을 <b>이메일로 편집자 초대</b>해야 글쓰기·위치 공유가 돼요. 링크만 받은 사람은 볼 수만 있어요.</li><li>처음에 이름과 캐릭터를 정하고, ‘내 위치 알리기’ → 지도에서 있는 곳을 누르면 가족 지도에 캐릭터가 떠요.</li><li>휴대폰 GPS는 이 페이지에서 쓸 수 없어서 자동으로 따라가지 않아요. 움직이면 다시 알려 주세요.</li><li>가족 캐릭터를 누르고 ‘따라가기’를 누르면 그 사람까지 가는 길과 시간이 나와요.</li></ul></div>'+
   '<div class="panel"><h3>날씨 · 시간</h3><ul class="clean"><li>11월 말은 북동풍(아미한) 시작 — 화이트비치(서쪽)는 잔잔, 불라복 비치(동쪽)는 바람이 세요.</li><li>일몰 약 17:25.</li><li>필리핀 = 한국 − 1시간.</li></ul></div>'+
   '<div class="panel"><h3>긴급 연락처</h3><dl class="kv num"><dt>국가 긴급번호</dt><dd>911</dd><dt>티롤 병원 (24시간 응급실)</dt><dd>(036) 288-3041 · '+plink("tirol","지도")+'</dd><dt>주필리핀 대사관 (긴급)</dt><dd>+63-917-817-5703</dd><dt>대사관 대표</dt><dd>+63-2-8856-9210</dd><dt>영사콜센터 (24시간)</dt><dd>+82-2-3210-0404</dd></dl><p class="fine">전화 링크는 앱 안에서 작동하지 않을 수 있어 번호를 글자로 적었어요. 티롤 병원은 간단한 응급만 가능하고 중증은 칼리보로 이송돼요.</p></div>'+
@@ -1442,7 +1471,7 @@ const PG_NOTE={"스테이크":"부위·수입산 여부·무게에 따라 차이
 function priceGuideHTML(){
   const G=EXTRA.priceGuide||[]; if(!G.length) return '';
   const opts=G.map((g,gi)=>'<optgroup label="'+esc(g.g)+'">'+g.rows.map((r,ri)=>'<option value="'+gi+'-'+ri+'">'+esc(r.m)+'</option>').join("")+'</optgroup>').join("");
-  return '<div class="panel"><h3>이 가격 적정한가요?</h3><div class="chk"><label for="ck-m" class="fine">메뉴 종류</label><select id="ck-m">'+opts+'</select><label for="ck-p" class="fine">메뉴판 가격 (페소)</label><input id="ck-p" inputmode="decimal" placeholder="예: 450"><div id="ck-out" class="verdict" hidden></div></div></div>'+
+  return '<div class="panel"><h3>이 가격 적정한가요?</h3><div class="chk"><label for="ck-m" class="fine">메뉴 종류</label><select id="ck-m"><option value="" selected disabled>메뉴 고르기</option>'+opts+'</select><label for="ck-p" class="fine">메뉴판 가격 (페소)</label><input id="ck-p" inputmode="decimal" placeholder="예: 450"><div id="ck-out" class="verdict" hidden></div></div></div>'+
    '<h2 style="font-size:19px;margin-top:6px">메뉴별 적정 가격</h2><p class="lead">가격 범위 안이면 적정, ‘비싼 편’ 금액을 넘으면 비싼 편이에요. 카테고리를 눌러 펼치세요.</p><p class="fine">'+esc(EXTRA.priceGuideNote||"")+'</p>'+
    G.map((g,gi)=>'<details class="panel fold"'+(gi===0?' open':'')+'><summary><h3>'+esc(g.g)+' <span class="fine">'+esc(g.desc)+'</span></h3></summary>'+g.rows.map(r=>'<div class="pg-row"><span class="mn">'+esc(r.m)+'</span><span class="rg num">'+rng(r.lo,r.hi,php)+'</span><span class="sub num">'+rng(r.lo,r.hi,krw)+' · 비싼 편 '+php(r.high)+'+'+(PG_NOTE[r.m]?' · '+esc(PG_NOTE[r.m]):'')+'</span></div>').join("")+
      (g.g==="한식·아시안"?'<p class="fine" style="margin-top:6px">한식: 꽐라 한식당 무한리필 삼겹살 ₱499 ('+krw(499)+') — 한국 블로그·영상 1곳 기준, 현장 확인. 한식 메뉴 가격 자료는 적어서 표에서는 뺐어요.</p>':'')+'</details>').join("")+
@@ -1450,8 +1479,9 @@ function priceGuideHTML(){
 }
 function bindChecker(){
   const m=$("#ck-m"), p=$("#ck-p"), o=$("#ck-out"); if(!m) return;
-  const run=()=>{ const [gi,ri]=m.value.split("-").map(Number), r=(EXTRA.priceGuide[gi]||{}).rows[ri]; const v=parseFloat((p.value||"").replace(/,/g,""));
-    if(!r||!(v>0)){ o.hidden=true; return; }
+  const run=()=>{ const [gi,ri]=(m.value||"").split("-").map(Number), r=m.value?((EXTRA.priceGuide[gi]||{}).rows||[])[ri]:null; const v=parseFloat((p.value||"").replace(/,/g,""));
+    if(!(v>0)){ o.hidden=true; return; }
+    if(!r){ o.style.background="var(--surface-2)"; o.hidden=false; o.innerHTML=php(v)+' = 약 <b>'+krw(v)+'</b><br><span class="fine">위에서 메뉴 종류를 고르면 적정한 가격인지 알려 드려요.</span>'; return; }
     let t,bg; if(v<r.lo){t="저렴한 편이에요";bg="var(--ok-soft)";} else if(v<=r.hi){t="적정해요";bg="var(--ok-soft)";} else if(v<r.high){t="조금 비싼 편이에요";bg="var(--sun-soft)";} else {t="비싼 편이에요 (상위 10%)";bg="var(--warn-soft)";}
     o.style.background=bg; o.hidden=false;
     o.innerHTML='<b>'+t+'</b><br>'+php(v)+' = 약 <b>'+krw(v)+'</b> · 서비스차지 10% 붙으면 '+php(v*1.1)+' ('+krw(v*1.1)+')<br><span class="fine">'+esc(r.m)+' 보통 '+rng(r.lo,r.hi,php)+' / '+rng(r.lo,r.hi,krw)+'</span>'; };

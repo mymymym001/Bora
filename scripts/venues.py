@@ -292,7 +292,13 @@ EXTRA = dict(scenic=SCENIC,
     fruitSeason=(mf.get("fruit_season") or {}).get("summary"), quarantine=mf.get("korea_quarantine"),
     fruitTips=[f.get("tips") for f in (mf.get("fruit") or []) if f.get("tips")][:3],
     mangoPrice="D'Mall 과일가게 망고 1kg ₱150–200 (한국 여행사 블로그, 날짜 미상)")
-json.dump(EXTRA, open(os.path.join(R, "site", "extra.json"), "w"), ensure_ascii=False, separators=(",", ":"))
+_xp = os.path.join(R, "site", "extra.json")
+try:  # price_guide.py가 넣은 가격 가이드는 지우지 않고 유지
+    _old = json.load(open(_xp))
+    for _k in ("priceGuide", "priceGuideNote"):
+        if _k in _old and _k not in EXTRA: EXTRA[_k] = _old[_k]
+except Exception: pass
+json.dump(EXTRA, open(_xp, "w"), ensure_ascii=False, separators=(",", ":"))
 json.dump(dict(menus=menus, gloss=GLOSS, dishPhotos=DISHP), open(os.path.join(R, "site", "menus.json"), "w"), ensure_ascii=False, separators=(",", ":"))
 from collections import Counter
 print("hours parsed", sum(1 for v in out if v.get("H")), "/", len(out))

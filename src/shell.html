@@ -235,6 +235,20 @@ svg.tide .tnow{stroke:#E5484D;stroke-width:2;stroke-dasharray:3 3}
 .wxtbl td,.wxtbl th{padding:7px 4px;white-space:nowrap}
 .wxtbl tr.best td{background:color-mix(in srgb,#0B5FD6 14%,transparent)}
 .warnt{color:var(--warn)}
+.fxcalc{border:1.5px solid color-mix(in srgb,var(--accent) 55%,var(--line))}
+.fxdir{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;background:var(--surface-2);border-radius:12px;padding:3px;margin-bottom:10px}
+.fxdir button{border:0;background:none;border-radius:9px;padding:7px 2px;font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap}
+.fxdir button[aria-pressed="true"]{background:#0B5FD6;color:#fff}
+.fxin{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--bg);border-radius:14px;padding:4px 14px}
+.fxin:focus-within{border-color:var(--accent)}
+.fxin .cur{font-size:24px;font-weight:700;color:var(--muted)}
+.fxin input{flex:1;min-width:0;width:0;border:0;background:none;outline:none;font:inherit;font-size:26px;font-weight:700;color:var(--ink);padding:8px 0;font-variant-numeric:tabular-nums}
+.fxout{display:grid;gap:2px;padding:12px 4px 4px}
+.fxout b{font-size:34px;line-height:1.15;color:var(--accent);letter-spacing:-.01em;word-break:break-all}
+.fxout span{font-size:14px;color:var(--muted)}
+.fxchips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.fxchips .chip{font-size:13px;padding:5px 11px}
+.fxrate{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
 /* nav */
 .nav{position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--surface);border-top:1px solid var(--line);
   padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));display:grid;grid-template-columns:repeat(7,1fr)}

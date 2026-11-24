@@ -29,8 +29,8 @@ const { chromium, devices } = require('playwright');
   for (const t of ['home','eat','course','info','map']) { await pg.click(`.nav a[data-tab="${t}"]`); await pg.waitForTimeout(200); ok((await pg.evaluate(()=>location.hash))==='#'+t,'tab '+t); }
   await pg.click('.nav a[data-tab="eat"]'); await pg.click('#vlist .vc .tt button >> nth=0'); await pg.waitForTimeout(200); ok(await pg.isVisible('#sheet'),'course link opens place');
   await pg.click('[data-close]'); await pg.waitForTimeout(200); ok(!(await pg.isVisible('#sheet')),'close button');
-  await pg.goto('http://localhost:8765/_test.html#prices'); await pg.fill('#fx-usd','200'); await pg.dispatchEvent('#fx-usd','input');
-  ok((await pg.inputValue('#fx-php'))==='12,782','USD 200 → PHP '+await pg.inputValue('#fx-php')+' / KRW '+await pg.inputValue('#fx-krw'));
+  await pg.goto('http://localhost:8765/_test.html#prices'); await pg.click('[data-fxm="usd"]'); await pg.fill('#fx-in','200');
+  ok((await pg.$eval('#fx-main',e=>e.textContent))==='₱12,600','USD 200 → '+await pg.$eval('#fx-main',e=>e.textContent)+' / '+await pg.$eval('#fx-sub',e=>e.textContent));
   const links = await pg.$$eval('a[href^="http"]', e=>e.length); console.log('external links on prices:', links);
   console.log('errors', JSON.stringify(errs)); await b.close();
 })();
