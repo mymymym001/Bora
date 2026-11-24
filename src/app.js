@@ -464,19 +464,21 @@ function showDriver(){
 /* ================= other pages ================= */
 function plink(id,label){return '<button type="button" class="plink" data-open="'+esc(id)+'">'+esc(label)+'</button>'}
 const FXC=63; /* 환전소에서 실제로 받는 달러 환율 (예산 계산과 같은 기준) */
-const FXMODES={php:{cur:"₱",ph:"메뉴판 가격 (페소)",chips:[100,500,1000,5000]},krw:{cur:"₩",ph:"원화 금액",chips:[10000,50000,100000,300000]},usd:{cur:"$",ph:"달러 금액",chips:[20,100,200,500]}};
+const FXMODES={php:{cur:"₱",lab:"페소",ocur:"₩",olab:"원",def:100,chips:[100,500,1000,5000]},krw:{cur:"₩",lab:"원",ocur:"₱",olab:"페소",def:10000,chips:[10000,50000,100000,300000]},usd:{cur:"$",lab:"달러",ocur:"₱",olab:"페소",def:100,chips:[20,100,200,500]}};
 function bindFxCalc(){
   const inp=$("#fx-in"); if(!inp) return; const fx=D.fx; let mode=S.fxm&&FXMODES[S.fxm]?S.fxm:"php";
-  const num=v=>parseFloat(String(v).replace(/[^\d.]/g,""))||0, won=v=>"₩"+(Math.round(v/10)*10).toLocaleString("ko-KR"), pes=v=>"₱"+Math.round(v).toLocaleString("en-US"), usd=v=>"$"+(Math.round(v*10)/10).toLocaleString("en-US");
+  const num=v=>parseFloat(String(v).replace(/[^\d.]/g,""))||0, n0=v=>Math.round(v).toLocaleString("en-US"), won=v=>(Math.round(v/10)*10).toLocaleString("ko-KR"), usd=v=>"$"+(Math.round(v*10)/10).toLocaleString("en-US");
   const draw=()=>{ const x=num(inp.value), m=$("#fx-main"), sub=$("#fx-sub");
-    if(mode==="php"){ m.textContent=won(x*fx.krw_per_php); sub.textContent=x?pes(x)+" ≈ "+usd(x/FXC):""; }
-    if(mode==="krw"){ const p=x/fx.krw_per_php; m.textContent=pes(p); sub.textContent=x?won(x)+" ≈ "+usd(p/FXC):""; }
-    if(mode==="usd"){ const p=x*FXC; m.textContent=pes(p); sub.textContent=x?usd(x)+" ≈ "+won(p*fx.krw_per_php):""; } };
-  const setMode=k=>{ mode=k; S.fxm=k; const M=FXMODES[k]; $("#fx-cur").textContent=M.cur; inp.placeholder=M.ph; inp.value="";
+    if(mode==="php"){ m.textContent=won(x*fx.krw_per_php); sub.textContent=x?"≈ "+usd(x/FXC):""; }
+    if(mode==="krw"){ const p=x/fx.krw_per_php; m.textContent=n0(p); sub.textContent=x?"≈ "+usd(p/FXC):""; }
+    if(mode==="usd"){ const p=x*FXC; m.textContent=n0(p); sub.textContent=x?"≈ ₩"+won(p*fx.krw_per_php):""; }
+    document.querySelectorAll("#fx-chips [data-fxv]").forEach(b=>b.setAttribute("aria-pressed",+b.dataset.fxv===x)); };
+  const setMode=k=>{ mode=k; S.fxm=k; const M=FXMODES[k]; $("#fx-cur").textContent=M.cur; $("#fx-curl").textContent=M.lab; $("#fx-ocur").textContent=M.ocur; $("#fx-ocurl").textContent=M.olab;
+    inp.value=M.def.toLocaleString("en-US"); inp.setAttribute("aria-label",M.lab+" 금액");
     document.querySelectorAll("[data-fxm]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.fxm===k));
     $("#fx-chips").innerHTML=M.chips.map(v=>'<button type="button" class="chip" data-fxv="'+v+'">'+M.cur+v.toLocaleString("en-US")+'</button>').join(""); draw(); };
-  inp.addEventListener("input",draw);
-  $(".fxdir").addEventListener("click",e=>{ const b=e.target.closest("[data-fxm]"); if(b){ setMode(b.dataset.fxm); inp.focus(); } });
+  inp.addEventListener("input",draw); inp.addEventListener("focus",()=>inp.select());
+  $(".fxdir").addEventListener("click",e=>{ const b=e.target.closest("[data-fxm]"); if(b) setMode(b.dataset.fxm); });
   $("#fx-chips").addEventListener("click",e=>{ const b=e.target.closest("[data-fxv]"); if(b){ inp.value=(+b.dataset.fxv).toLocaleString("en-US"); draw(); } });
   setMode(mode);
 }
@@ -485,8 +487,10 @@ function renderPrices(){
   $("#app").innerHTML='<div class="page"><div class="hrow"><h2>돈 · 정보</h2>'+themeBtn()+'</div>'+
   '<div class="panel fxcalc"><h3>환율 계산기</h3>'+
    '<div class="fxdir" role="group" aria-label="계산 방향"><button type="button" data-fxm="php" aria-pressed="true">페소 → 원</button><button type="button" data-fxm="krw" aria-pressed="false">원 → 페소</button><button type="button" data-fxm="usd" aria-pressed="false">달러 → 페소</button></div>'+
-   '<label class="fxin" for="fx-in"><span class="cur" id="fx-cur">₱</span><input id="fx-in" inputmode="decimal" autocomplete="off" placeholder="메뉴판 가격"></label>'+
-   '<div class="fxout" aria-live="polite"><b class="num" id="fx-main">₩0</b><span class="num" id="fx-sub"></span></div>'+
+   '<label class="fxbox fxin" for="fx-in"><span class="fxcur"><b id="fx-cur">₱</b><small id="fx-curl">페소</small></span><input id="fx-in" class="num" inputmode="decimal" autocomplete="off"></label>'+
+   '<div class="fxarrow" aria-hidden="true">↓</div>'+
+   '<div class="fxbox fxout" aria-live="polite"><span class="fxcur"><b id="fx-ocur">₩</b><small id="fx-ocurl">원</small></span><b class="num" id="fx-main">0</b></div>'+
+   '<p class="fxsub num" id="fx-sub"></p>'+
    '<div class="fxchips" id="fx-chips"></div>'+
    '<p class="fxrate num">$1 ≈ ₱'+FXC+' (환전소 기준) · ₱1 ≈ ₩'+(Math.round(fx.krw_per_php*10)/10)+'</p></div>'+
   '<div class="panel"><h3>계산서 읽는 법</h3><ul class="clean"><li><b>VAT 12%</b>: 메뉴판 아래 "VAT inclusive"(포함) / "exclusive"(별도) 표기를 확인해요.</li><li><b>서비스차지 10%</b>: 필리핀에서 흔하고 정상이에요(의무는 아님). 붙어 있으면 팁은 따로 안 줘도 돼요.</li><li>예) Aria는 메뉴에 "VAT 포함, 서비스차지 10% 별도" — 음식 ₱5,000이면 계산서 ₱5,500이 정상이에요.</li><li>서비스차지가 없으면 팁은 10% 안팎이면 충분해요.</li></ul></div>'+
@@ -817,8 +821,9 @@ async function shareOrder(pid){
 const PG_NOTE={"스테이크":"부위·수입산 여부·무게에 따라 차이가 커요","생선구이·생선요리":"생선 크기에 따라 차이가 커요","탄산음료·캔":"편의점은 이보다 훨씬 싸요","생수":"편의점·마트는 500ml ₱20–40 정도 (참고)"};
 function priceGuideHTML(){
   const G=EXTRA.priceGuide||[]; if(!G.length) return '';
-  const opts=G.map((g,gi)=>'<optgroup label="'+esc(g.g)+'">'+g.rows.map((r,ri)=>'<option value="'+gi+'-'+ri+'">'+esc(r.m)+'</option>').join("")+'</optgroup>').join("");
-  return '<div class="panel"><h3>이 가격 적정한가요?</h3><div class="chk"><label for="ck-m" class="fine">메뉴 종류</label><select id="ck-m"><option value="" selected disabled>메뉴 고르기</option>'+opts+'</select><label for="ck-p" class="fine">메뉴판 가격 (페소)</label><input id="ck-p" inputmode="decimal" placeholder="예: 450"><div id="ck-out" class="verdict" hidden></div></div></div>'+
+  let defK=""; G.forEach((g,gi)=>g.rows.forEach((r,ri)=>{ if(!defK&&r.m==="망고 쉐이크") defK=gi+"-"+ri; }));
+  const opts=G.map((g,gi)=>'<optgroup label="'+esc(g.g)+'">'+g.rows.map((r,ri)=>'<option value="'+gi+'-'+ri+'"'+(gi+"-"+ri===defK?' selected':'')+'>'+esc(r.m)+'</option>').join("")+'</optgroup>').join("");
+  return '<div class="panel"><h3>이 가격 적정한가요?</h3><div class="chk"><label for="ck-m" class="fine">메뉴 종류</label><select id="ck-m">'+opts+'</select><label for="ck-p" class="fine">메뉴판 가격 (페소)</label><input id="ck-p" inputmode="decimal" placeholder="메뉴판에 적힌 가격 (예: 250)"><div id="ck-out" class="verdict" hidden></div></div></div>'+
    '<h2 style="font-size:19px;margin-top:6px">메뉴별 적정 가격</h2><p class="lead">가격 범위 안이면 적정, ‘비싼 편’ 금액을 넘으면 비싼 편이에요. 카테고리를 눌러 펼치세요.</p><p class="fine">'+esc(EXTRA.priceGuideNote||"")+'</p>'+
    G.map((g,gi)=>'<details class="panel fold"'+(gi===0?' open':'')+'><summary><h3>'+esc(g.g)+' <span class="fine">'+esc(g.desc)+'</span></h3></summary>'+g.rows.map(r=>'<div class="pg-row"><span class="mn">'+esc(r.m)+'</span><span class="rg num">'+rng(r.lo,r.hi,php)+'</span><span class="sub num">'+rng(r.lo,r.hi,krw)+' · 비싼 편 '+php(r.high)+'+'+(PG_NOTE[r.m]?' · '+esc(PG_NOTE[r.m]):'')+'</span></div>').join("")+
      (g.g==="한식·아시안"?'<p class="fine" style="margin-top:6px">한식: 꽐라 한식당 무한리필 삼겹살 ₱499 ('+krw(499)+') — 한국 블로그·영상 1곳 기준, 현장 확인. 한식 메뉴 가격 자료는 적어서 표에서는 뺐어요.</p>':'')+'</details>').join("")+
