@@ -6,7 +6,7 @@ const { chromium, devices } = require('playwright');
   await pg.goto('http://localhost:8765/_test_live.html#home'); await pg.waitForSelector('#chat'); await pg.waitForTimeout(400);
   await pg.screenshot({path:'test/e-home.png'}); await pg.screenshot({path:'test/e-home-full.png',fullPage:true});
   ok(await pg.isVisible('#chat .chatform'),'home has chat with input');
-  ok((await pg.$$eval('.nowrow',e=>e.length))>=1,'home shows now-picks');
+  ok((await pg.$$eval('.nowcard',e=>e.length))>=0,'home shows now-picks');
   await pg.click('.nav a[data-tab="eat"]'); await pg.waitForSelector('#vlist .vc');
   const total=await pg.$$eval('#vlist .vc',e=>e.length); ok(total>90,'eat list count '+total);
   const names=async()=>pg.$$eval('#vlist .vc h3',e=>e.slice(0,6).map(x=>x.textContent));

@@ -199,8 +199,10 @@ function renderMapTab(){
    '<div id="follow"></div>'+
    
    '<div class="sec-h"><h2 id="railTitle">가까운 추천</h2><span id="railNote"></span></div><div class="rail" id="rail"></div>'+
+   '<label class="toggle"><input type="checkbox" id="allToggle"'+(S.all?" checked":"")+'> 조사 안 된 주변 식당·카페 '+ALL.filter(p=>p.osm).length+'곳도 카드로 보기 (지도에는 작은 점으로 항상 표시)</label>'+
    '<div class="sec-h"><h2>호텔 복귀</h2><span>지도 기반 추정</span></div><div id="ret"></div>';
   MAP=makeMap($("#mapbox"),$("#cv"),$("#pins"));
+  { const at=$("#allToggle"); if(at) at.addEventListener("change",e=>{S.all=e.target.checked; save(); refresh(false);}); }
   bindTop(); refresh(true); MAP.setPeople(); renderFollow();
 }
 function bindTop(){
@@ -644,14 +646,21 @@ function clockText(){ const f=(off)=>{ const d=new Date(Date.now()+off*3600e3); 
   return '<span>🇵🇭 필리핀 <b>'+f(8)+'</b></span><span>🇰🇷 한국 <b>'+f(9)+'</b></span><span class="fine">한국이 1시간 빨라요</span>'; }
 setInterval(()=>{ const c=document.getElementById("clock"); if(c) c.innerHTML=clockText(); },30000);
 /* 지금 갈 만한 곳: 영업 중 · 도보 12분 이내 · 평점/한국인 추천 */
+function menuPhotos(p,n){ if(!MENUS) return []; const out=[], seen={};
+  for(const x of allItems(p.id)){ const k=dishKey(x.n+" "+(x.ko||"")); if(!k||seen[k]||!DISHP[k]) continue; seen[k]=1; out.push({x,ph:DISHP[k]}); if(out.length>=n) break; }
+  return out; }
 function nowPicksHTML(){
   if(manilaDay()<0) return "";
-  const L=VEN.filter(p=>isFood(p)&&p.cat!=="fruit"&&isOpen(p)&&p.route&&p.route.walk.min<=12)
+  const L=VEN.filter(p=>isFood(p)&&p.cat!=="fruit"&&isOpen(p)&&p.route&&p.route.walk.min<=12&&coverOf(p)&&p.hasMenu)
     .map(p=>({p,s:(p.rating?wRating(p):3.6)*2+(p.krPop||0)*0.6-p.route.walk.min*0.04})).sort((a,b)=>b.s-a.s).slice(0,3);
   if(!L.length) return "";
   const h=new Date(Date.now()+8*3600e3).getUTCHours(), meal=h<10?"아침 후 간식":h<15?"점심":h<17?"간식·카페":h<21?"저녁":"야식";
-  return '<div class="panel nowp"><div class="ph2"><h3>📍 지금 갈 만한 곳 <span class="fine">'+meal+' · 영업 중 · 도보 12분 안</span></h3><a href="#eat" class="more-l" data-gonow>더 보기 →</a></div>'+
-    L.map(({p})=>'<button type="button" class="nowrow" data-open="'+esc(p.id)+'"><span class="nm">'+esc(dname(p))+'</span><span class="mt num">'+(p.rating?'★'+p.rating.score+' · ':'')+'도보 '+p.route.walk.min+'분'+(p.pp?' · 1인 '+rng(p.pp[0],p.pp[1],php):'')+'</span>'+(p.krPop>=2?'<span class="kr">🇰🇷 한국인 추천</span>':'')+'</button>').join("")+'</div>';
+  return '<div class="sec-h"><h2>📍 지금 갈 만한 곳</h2><a href="#eat" class="more-l" data-gonow>더 보기 →</a></div><p class="fine" style="margin:-4px 0 8px">'+meal+' · 지금 영업 중 · 도보 12분 안 · 평점과 한국인 추천 순</p><div class="nowcards">'+
+    L.map(({p})=>{ const cv=coverOf(p), mp=menuPhotos(p,3);
+      return '<article class="nowcard"><button type="button" class="nc-img" data-open="'+esc(p.id)+'" aria-label="'+esc(dname(p))+' 자세히"><img src="'+esc(cv.src)+'" alt="" loading="lazy">'+(cv.rep?'<i>대표 사진</i>':'')+'</button>'+
+        '<div class="nc-b"><h3><button type="button" data-open="'+esc(p.id)+'">'+esc(dname(p))+'</button></h3><div class="mt num">'+(p.rating?'<span class="stars">★ '+p.rating.score+'</span> · ':'')+'도보 '+p.route.walk.min+'분'+(p.pp?' · 1인 '+rng(p.pp[0],p.pp[1],php):'')+(p.krPop>=2?' · <span class="kr">🇰🇷 한국인 추천</span>':'')+'</div>'+
+        (mp.length?'<div class="nc-menu">'+mp.map(({x,ph})=>'<button type="button" data-open="'+esc(p.id)+'"><img src="'+esc(ph.src)+'" alt="" loading="lazy"><span class="mn">'+esc(x.ko||x.n)+'</span><span class="pr num">'+(x.php?php(x.php):'')+'</span></button>').join("")+'</div>':'')+
+        '<div class="acts2"><button type="button" class="mini" data-open="'+esc(p.id)+'">메뉴판 보기</button>'+(p.route?'<button type="button" class="mini alt" data-onmap="'+esc(p.id)+'">길찾기</button>':'')+'</div></div></article>'; }).join("")+'</div>';
 }
 /* 귀국 준비 카드: 11/27 15:00 ~ 11/28 */
 function returnCardHTML(){
@@ -705,16 +714,18 @@ function renderHome(){
      Q('data-expadd2',ICON.money,'지출 적기')+
      Q('data-driver="1"',ICON.hotel,'기사님 카드')+
      Q('data-gofx','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg>','환율 계산')+'</div>'+
-   returnCardHTML()+nowPicksHTML()+
+   returnCardHTML()+
    '<section class="chat" id="chat" aria-label="가족 채팅"></section>'+
    upNextHTML(day,d<0?"첫날 미리보기":"오늘 일정")+checksHTML(day.k)+
    expHomeHTML()+
    (ppl.length?'<div class="panel"><h3>가족 위치</h3><div class="ppl">'+ppl.map(([id,p])=>'<button type="button" data-gotoperson="'+esc(id)+'"><span class="f">'+esc(p.char)+'</span><span><b>'+esc(p.nick||"가족")+'</b><br><span class="fine">'+esc(p.label||"")+' · '+ago(p.at)+'</span></span></button>').join("")+'</div></div>':'')+
    '<div class="panel"><div class="ph2"><h3>가족 찜 순위</h3><a href="#eat" class="more-l" data-famsort>전체 →</a></div><div id="likeRank">'+likeRankHTML(3)+'</div></div>'+
+   '<div id="nowPicks">'+nowPicksHTML()+'</div>'+
 
    ''+
    '</div>';
   renderChat();
+  loadMenus().then(()=>{ const n=$("#nowPicks"); if(n&&(location.hash||"#home").slice(1).replace(/^$/,"home")==="home") n.innerHTML=nowPicksHTML(); });
 }
 function partyMini(){ let o=""; for(let i=1;i<=7;i++) o+='<option value="'+i+'"'+(i===S.n?' selected':'')+'>'+i+'명</option>'; return '<label class="pmini"><span class="sr">인원</span><select data-party aria-label="인원">'+o+'</select></label>'; }
 document.addEventListener("change",e=>{ const sl=e.target.closest&&e.target.closest("select[data-party]"); if(!sl) return; S.n=+sl.value; save(); const h=(location.hash||"#home").slice(1)||"home"; const y=window.scrollY;
