@@ -674,6 +674,9 @@ function renderHome(){
    '</div>';
   renderChat();
 }
+function partyMini(){ let o=""; for(let i=1;i<=7;i++) o+='<option value="'+i+'"'+(i===S.n?' selected':'')+'>'+i+'명</option>'; return '<label class="pmini"><span class="sr">인원</span><select data-party aria-label="인원">'+o+'</select></label>'; }
+document.addEventListener("change",e=>{ const sl=e.target.closest&&e.target.closest("select[data-party]"); if(!sl) return; S.n=+sl.value; save(); const h=(location.hash||"#home").slice(1)||"home"; const y=window.scrollY;
+  if(h==="eat") drawEat(); else { route(); window.scrollTo(0,y); } });
 function bindParty(){ const sg=$(".seg"); if(sg) sg.addEventListener("click",e=>{const b=e.target.closest("button[data-n]"); if(!b)return; S.n=+b.dataset.n; save();
   document.querySelectorAll(".seg button").forEach(x=>x.setAttribute("aria-pressed",x===b)); const h=(location.hash||"#home").slice(1); if(h==="eat") drawEat(); else if(h==="info"||h==="prices"){const y=window.scrollY; renderInfo(); window.scrollTo(0,y);} else if(h==="home"||!h){const y=window.scrollY; renderHome(); window.scrollTo(0,y);} }); }
 
@@ -716,13 +719,13 @@ function venueCard(p,rank){
       (gc?'<div class="money num">1인 '+rng(p.pp[0],p.pp[1],php)+' <small>· '+S.n+'명 '+rng(gc[0],gc[1],php)+'</small></div>':'<div class="money"><small>가격 정보 없음</small></div>')+
     '</div>'+
     (rv?'<p class="rv2">'+(p.krReview?'<b>한국인 후기</b> ':'')+esc(rv)+'</p>':'')+
-    (S.sort==="claude"&&cs.r.length&&rank?'<div class="why">추천 이유 · '+esc(cs.r.slice(0,3).join(" · "))+'</div>':'')+
+
     '<div class="acts2"><span class="likebox" data-likebox="'+esc(p.id)+'">'+likeBtn(p)+'</span><span class="sp"></span>'+
       '<button type="button" class="mini" data-open="'+esc(p.id)+'">'+(p.hasMenu?'메뉴판':'자세히')+'</button>'+(p.route?'<button type="button" class="mini alt" data-onmap="'+esc(p.id)+'">길찾기</button>':'')+'</div></article>';
 }
 function renderEat(){
-  $("#app").innerHTML='<div class="page eatpage" style="padding-top:8px"><div class="hrow"><h2 style="margin-top:0">맛집 · 카페 <small class="hcount">'+VEN.filter(p=>eMatch(p,"all")).length+'곳</small></h2>'+themeBtn()+'</div>'+
-   '<div class="eattop">'+partyHTML()+
+  $("#app").innerHTML='<div class="page eatpage" style="padding-top:8px"><div class="hrow"><h2 style="margin-top:0">맛집 · 카페 <small class="hcount">'+VEN.filter(p=>eMatch(p,"all")).length+'곳</small></h2><div class="hbtns">'+partyMini()+themeBtn()+'</div></div>'+
+   '<div class="eattop">'+
    '<label class="search" for="q"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="식당·메뉴 찾기 (망고, 삼겹살…)" value="'+esc(S.q)+'" autocomplete="off"></label></div>'+
    '<div class="sortbar"><div class="ecat" id="ecats" role="group" aria-label="종류">'+ECATS.map(([k,l])=>'<button type="button" data-ecat="'+k+'" aria-pressed="'+(S.ecat===k)+'">'+l+'<small>'+VEN.filter(p=>eMatch(p,k)).length+'</small></button>').join("")+'</div>'+
    '<div class="efrow"><label class="esort"><span class="sr">정렬</span><select id="esort" aria-label="정렬">'+SORTS.map(([k,l])=>'<option value="'+k+'"'+(S.sort===k?' selected':'')+'>'+l+'</option>').join("")+'</select></label>'+
@@ -961,11 +964,11 @@ function sayEN(text,slow,btn){
     speechSynthesis.speak(u); }catch(e){ toast("소리를 재생하지 못했어요. 무음 모드인지 확인해 주세요."); }
 }
 function phraseAt(k){ const [ci,i]=k.split("-").map(Number); return PHRASES[ci][1][i]; }
-function phrasesBody(){ return '<p class="lead">문장을 누르면 크게 떠요. 직원에게 화면을 보여 주세요. 파란 글씨는 한국어로 읽는 발음이에요. <b>🔊</b>를 누르면 휴대폰이 영어로 읽어 줘요.</p>'+
+function phrasesBody(){ return '<p class="lead">문장을 누르면 크게 떠요 · 🔊 영어로 읽어 줘요 · 파란 글씨는 발음</p>'+
    PHRASES.map(([cat,list],ci)=>'<div class="panel"><h3>'+cat+'</h3><div class="plist phl">'+list.map(([en,ko,pr],i)=>phraseRow(ci,i,en,ko,pr)).join("")+'</div></div>').join(""); }
 function renderTalk(){ $("#app").innerHTML='<div class="page"><div class="hrow"><h2>회화 카드</h2>'+themeBtn()+'</div>'+
-  '<div class="sos"><b>긴급 상황</b><dl class="kv num"><dt>필리핀 긴급번호</dt><dd><b>911</b></dd><dt>티롤 병원 응급실 (24시간)</dt><dd>(036) 288-3041 · 호텔에서 도보 약 '+(BYID.tirol&&BYID.tirol.route?BYID.tirol.route.walk.min:6)+'분</dd><dt>대사관 긴급</dt><dd>+63-917-817-5703</dd><dt>영사콜센터 (24시간)</dt><dd>+82-2-3210-0404</dd></dl>'+
-  '<div class="btns"><button type="button" class="btn" data-sos="0">도와주세요 카드</button><button type="button" class="btn alt" data-open="tirol">병원 길찾기</button></div></div>'+phrasesBody()+'</div>'; }
+  '<details class="sos sosmini"><summary><span class="num">🚨 긴급 <b>911</b> · 병원 <b>(036) 288-3041</b></span><span class="w">더보기</span></summary><dl class="kv num"><dt>티롤 병원 응급실 (24시간)</dt><dd>(036) 288-3041 · 호텔에서 도보 약 '+(BYID.tirol&&BYID.tirol.route?BYID.tirol.route.walk.min:6)+'분</dd><dt>대사관 긴급</dt><dd>+63-917-817-5703</dd><dt>영사콜센터 (24시간)</dt><dd>+82-2-3210-0404</dd></dl></details>'+
+  '<div class="sosbtns"><button type="button" class="btn" data-sos="0">🆘 도와주세요 카드</button><button type="button" class="btn alt" data-open="tirol">병원 길찾기</button></div>'+phrasesBody()+'</div>'; }
 const SOS=[["Please help us! We need a doctor.","도와주세요! 의사가 필요해요.","플리즈 헬프 어스! 위 니드 어 닥터."]];
 function openPhrases(){ location.hash="talk"; return;
   const s=$("#sheet");
@@ -1050,11 +1053,10 @@ function renderCourse(){
   const shared=canPost();
   const groups=[["restaurant","음식점"],["cafe","카페·디저트"],["bar","바·펍"]];
   const food=ALL.filter(isFood).sort((a,b)=>a.route.walk.m-b.route.walk.m);
-  $("#app").innerHTML='<div class="page"><h2>우리 일정</h2><p class="lead">점심·저녁은 비워 두었어요. ‘식당 고르기’로 목록에서 고르거나 직접 써 넣으세요. '+(shared?'정한 내용은 가족 모두에게 똑같이 보여요.':'지금은 이 휴대폰에만 저장돼요 (편집자로 초대받으면 가족과 공유돼요).')+'</p>'+
-   partyHTML()+
-   '<div class="panel num"><h3>여행 식비 예상 (아침은 호텔 조식 포함)</h3><div class="tbl"><table><thead><tr><th>끼니</th><th class="r">1인</th><th class="r">'+S.n+'명</th></tr></thead><tbody>'+
+  $("#app").innerHTML='<div class="page"><div class="hrow"><h2>우리 일정</h2><div class="hbtns">'+partyMini()+themeBtn()+'</div></div><p class="lead">점심·저녁은 ‘식당 고르기’로 정해요. '+(shared?'가족 모두에게 똑같이 보여요.':'지금은 이 휴대폰에만 저장돼요.')+'</p>'+
+   '<details class="panel fold num mealsum"><summary><h3>식비 예상 · '+S.n+'명 <b>'+rng(lo*S.n,hi*S.n,php)+'</b></h3></summary><div class="tbl"><table><thead><tr><th>끼니</th><th class="r">1인</th><th class="r">'+S.n+'명</th></tr></thead><tbody>'+
      [["lunch","점심"],["dinner","저녁"]].map(([k,l])=>{ let a=0,b=0; DAYS.forEach(d=>{const t=dayTotal(d,k); a+=t[0]; b+=t[1];}); return '<tr><td>'+l+'</td><td class="r">'+rng(a,b,php)+'<br><span class="src">'+rng(a,b,krw)+'</span></td><td class="r"><b>'+rng(a*S.n,b*S.n,php)+'</b><br><span class="src">'+rng(a*S.n,b*S.n,krw)+'</span></td></tr>'; }).join("")+
-     '<tr><td><b>합계</b></td><td class="r"><b>'+rng(lo,hi,php)+'</b><br><span class="src">'+rng(lo,hi,krw)+'</span></td><td class="r"><b>'+rng(lo*S.n,hi*S.n,php)+'</b><br><span class="src">'+rng(lo*S.n,hi*S.n,krw)+'</span></td></tr></tbody></table></div><p class="fine">디저트·카페는 돈·정보 탭 예산에 따로 잡혀 있어요. 정하지 않은 끼니는 보라카이 적정 범위(점심 인당 '+rng(fairRange("lunch")[0],fairRange("lunch")[1],php)+', 저녁 '+rng(fairRange("dinner")[0],fairRange("dinner")[1],php)+')로 계산했어요. 식당을 고르면 그 식당 가격으로 바뀌어요.</p></div>'+
+     '<tr><td><b>합계</b></td><td class="r"><b>'+rng(lo,hi,php)+'</b><br><span class="src">'+rng(lo,hi,krw)+'</span></td><td class="r"><b>'+rng(lo*S.n,hi*S.n,php)+'</b><br><span class="src">'+rng(lo*S.n,hi*S.n,krw)+'</span></td></tr></tbody></table></div><p class="fine">디저트·카페는 돈·정보 탭 예산에 따로 잡혀 있어요. 정하지 않은 끼니는 보라카이 적정 범위(점심 인당 '+rng(fairRange("lunch")[0],fairRange("lunch")[1],php)+', 저녁 '+rng(fairRange("dinner")[0],fairRange("dinner")[1],php)+')로 계산했어요. 식당을 고르면 그 식당 가격으로 바뀌어요.</p></details>'+
    DAYS.map(d=>dayHTML(d,true)).join("")+
    '<p class="fine">스테이션 1~3의 모든 식당·카페는 맛집 탭과 지도 탭에서 볼 수 있어요.</p></div>';
   bindParty();
