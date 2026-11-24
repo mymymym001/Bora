@@ -513,7 +513,7 @@ function arrangeInfo(){
   let anchor=first;
   order.forEach(t=>{ const p=byTitle(t); if(p){ anchor.after(p); anchor=p; } });
   const guideH=[...page.querySelectorAll(":scope > h2")].find(h=>h.textContent.includes("메뉴별 적정 가격"));
-  if(guideH){ const nodes=[]; let n=guideH; while(n&&(n===guideH||n.matches("p.lead,p.fine,details.fold,.callout"))){ nodes.push(n); n=n.nextElementSibling; } nodes.forEach(x=>{ anchor.after(x); anchor=x; }); }
+  if(guideH){ const nodes=[]; let n=guideH; while(n&&(n===guideH||n.matches("p.lead,p.fine,details.fold,.callout,.pglegend"))){ nodes.push(n); n=n.nextElementSibling; } nodes.forEach(x=>{ anchor.after(x); anchor=x; }); }
   const refH=document.createElement("h2"); refH.textContent="참고 정보"; refH.style.fontSize="19px"; anchor.after(refH);
   page.querySelectorAll(":scope > .panel").forEach(p=>{
     const h=p.querySelector("h3"); if(!h) return; const t=h.textContent.trim();
@@ -825,16 +825,17 @@ async function shareOrder(pid){
 }
 
 /* ================= category price guide + checker ================= */
+const PG_ICON={"패스트푸드":"🍔","필리핀 현지식":"🍲","양식":"🍕","해산물":"🦐","한식·아시안":"🍜","카페 음료":"☕","디저트·쉐이크":"🥭","주류·음료":"🍺"};
 const PG_NOTE={"스테이크":"부위·수입산 여부·무게에 따라 차이가 커요","생선구이·생선요리":"생선 크기에 따라 차이가 커요","탄산음료·캔":"편의점은 이보다 훨씬 싸요","생수":"편의점·마트는 500ml ₱20–40 정도 (참고)"};
 function priceGuideHTML(){
   const G=EXTRA.priceGuide||[]; if(!G.length) return '';
   let defK=""; G.forEach((g,gi)=>g.rows.forEach((r,ri)=>{ if(!defK&&r.m==="망고 쉐이크") defK=gi+"-"+ri; }));
   const opts=G.map((g,gi)=>'<optgroup label="'+esc(g.g)+'">'+g.rows.map((r,ri)=>'<option value="'+gi+'-'+ri+'"'+(gi+"-"+ri===defK?' selected':'')+'>'+esc(r.m)+'</option>').join("")+'</optgroup>').join("");
   return '<div class="panel"><h3>이 가격 적정한가요?</h3><div class="chk"><label for="ck-m" class="fine">메뉴 종류</label><select id="ck-m">'+opts+'</select><label for="ck-p" class="fine">메뉴판 가격 (페소)</label><input id="ck-p" inputmode="decimal" placeholder="메뉴판에 적힌 가격 (예: 250)"><div id="ck-out" class="verdict" hidden></div></div></div>'+
-   '<h2 style="font-size:19px;margin-top:6px">메뉴별 적정 가격</h2><p class="lead">가격 범위 안이면 적정, ‘비싼 편’ 금액을 넘으면 비싼 편이에요. 카테고리를 눌러 펼치세요.</p><p class="fine">'+esc(EXTRA.priceGuideNote||"")+'</p>'+
-   G.map((g,gi)=>'<details class="panel fold"'+(gi===0?' open':'')+'><summary><h3>'+esc(g.g)+' <span class="fine">'+esc(g.desc)+'</span></h3></summary>'+g.rows.map(r=>'<div class="pg-row"><span class="mn">'+esc(r.m)+'</span><span class="rg num">'+rng(r.lo,r.hi,php)+'</span><span class="sub num">'+rng(r.lo,r.hi,krw)+' · 비싼 편 '+php(r.high)+'+'+(PG_NOTE[r.m]?' · '+esc(PG_NOTE[r.m]):'')+'</span></div>').join("")+
+   '<h2 class="pgh">📋 메뉴별 적정 가격</h2><div class="pglegend"><span><i class="ok"></i>적정 = 이 범위 안</span><span><i class="hi"></i>비싼 편 = 이 금액 넘으면</span></div>'+
+   G.map((g,gi)=>'<details class="panel fold pgfold"'+(gi===0?' open':'')+'><summary><span class="pgic" aria-hidden="true">'+(PG_ICON[g.g]||"🍽️")+'</span><span class="pgt"><b>'+esc(g.g)+'</b><small>'+esc(g.desc)+'</small></span><span class="pgn">'+g.rows.length+'개</span></summary>'+g.rows.map(r=>'<div class="pg-row"><span class="mn">'+esc(r.m)+'</span><span class="rg num">'+rng(r.lo,r.hi,php)+'</span><span class="sub num">'+rng(r.lo,r.hi,krw)+'<span class="hiw">비싼 편 '+php(r.high)+'+</span>'+(PG_NOTE[r.m]?'<br>'+esc(PG_NOTE[r.m]):'')+'</span></div>').join("")+
      (g.g==="한식·아시안"?'<p class="fine" style="margin-top:6px">한식: 꽐라 한식당 무한리필 삼겹살 ₱499 ('+krw(499)+') — 한국 블로그·영상 1곳 기준, 현장 확인. 한식 메뉴 가격 자료는 적어서 표에서는 뺐어요.</p>':'')+'</details>').join("")+
-   '<div class="callout"><b>계산할 때 기억하기</b>메뉴판 가격에 서비스차지 10%가 붙는 곳이 많아요(정상). 표의 가격은 서비스차지 전 금액이에요.</div>';
+   '<div class="callout"><b>계산할 때 기억하기</b>메뉴판 가격에 서비스차지 10%가 붙는 곳이 많아요(정상). 표의 가격은 서비스차지 전 금액이에요.</div><p class="fine">'+esc(EXTRA.priceGuideNote||"")+'</p>';
 }
 function bindChecker(){
   const m=$("#ck-m"), p=$("#ck-p"), o=$("#ck-out"); if(!m) return;
