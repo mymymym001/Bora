@@ -1316,14 +1316,14 @@ async function saveBook(){
 function alertMsg(t){ const m=$("#chatMsg"); if(m){m.textContent=t;m.hidden=false;} }
 
 /* ================= 환전 계획 ================= */
-function per7(v,fx){ const one=Math.round(v/7); return '<span class="pp"><span class="pl">1인</span>'+php(one)+'</span><span class="pp tot"><span class="pl">7인</span>'+php(v)+'</span><span class="src">≈ $'+Math.round(v/fx).toLocaleString()+'</span>'; }
+function per7(v,fx,extra){ const one=Math.round(v/7); const r=(t,x,cls)=>'<span class="pl">'+t+'</span><span class="pv'+cls+'">'+php(x)+'</span><span class="pw'+cls+'">'+krw(x)+'</span><span class="pd'+cls+'">$'+Math.round(x/fx).toLocaleString()+'</span>'; return '<div class="ppg num">'+r("1인",one,"")+r("7인",v," tot")+'</div>'+(extra?'<div class="src" style="text-align:right">'+extra+'</div>':''); }
 function exchangePlanHTML(){
   const fx=63, p=purse();
   return '<div class="panel"><h3>예산 · 환전 계획</h3>'+
-   '<p class="fine" style="margin:0 0 6px">모두 적정 예상 금액이에요. 1인은 7명으로 똑같이 나눈 몫이에요.</p><div class="tbl"><table><tbody>'+[["d1","11/24 (화) · 도착일"],["daily","11/24 ~ 11/28 · 여행 중 매일"],["d5","11/28 (토) · 출국일"]].map(([g,h])=>
-      '<tr class="bgrp"><th colspan="2">'+h+'</th></tr>'+(g==="d1"?'<tr><td>항구 요금 (터미널피·환경세·보트)<br><span class="src">칼리보 → 카티클란 이동 중</span></td><td class="r num">'+per7(0,fx)+'<span class="src">4U 포함</span></td></tr>':'')+
-      BUDGET.filter(b=>(b.when||"daily")===g).map(b=>'<tr><td>'+esc(b.label)+(b.note?'<br><span class="src">'+esc(b.note)+'</span>':'')+'</td><td class="r num">'+per7(b.php,fx)+'</td></tr>').join("")).join("")+
-   '<tr class="btot"><td><b>합계</b><br><span class="src">자유경비는 상한으로 계산</span></td><td class="r num">'+per7(BUDGET_TOTAL,fx)+'<span class="src">'+krw(BUDGET_TOTAL)+'</span></td></tr></tbody></table></div>'+
+   '<p class="fine" style="margin:0 0 6px">모두 적정 예상 금액이에요. 1인은 7명으로 똑같이 나눈 몫이에요. 원화는 ₱1 ≈ ₩'+(Math.round(D.fx.krw_per_php*10)/10)+'로 계산했어요.</p><div class="tbl"><table><tbody>'+[["d1","11/24 (화) · 도착일"],["daily","11/24 ~ 11/28 · 여행 중 매일"],["d5","11/28 (토) · 출국일"]].map(([g,h])=>
+      '<tr class="bgrp"><th colspan="2">'+h+'</th></tr>'+(g==="d1"?'<tr><td colspan="2">항구 요금 (터미널피·환경세·보트)<br><span class="src">칼리보 → 카티클란 이동 중 · 4U 포함</span>'+per7(0,fx)+'</td></tr>':'')+
+      BUDGET.filter(b=>(b.when||"daily")===g).map(b=>'<tr><td colspan="2">'+esc(b.label)+(b.note?'<br><span class="src">'+esc(b.note)+'</span>':'')+per7(b.php,fx)+'</td></tr>').join("")).join("")+
+   '<tr class="btot"><td colspan="2"><b>합계</b><br><span class="src">자유경비는 상한으로 계산</span>'+per7(BUDGET_TOTAL,fx)+'</td></tr></tbody></table></div>'+
    '<div class="callout ok"><b>가져온 돈 $'+CASH_USD.toLocaleString()+' 기준</b>예산 합계 약 $'+Math.round(BUDGET_TOTAL/fx).toLocaleString()+' + 여유분. 환율은 환전소 기준 ₱63/$로 계산했어요.</div>'+
    '<ul class="clean" style="margin-top:8px"><li><b>1차 · 11/24 칼리보 공항 도착 후 $200</b> — 이동 중 점심, 체크인 추가비 ₱4,928, 첫날 저녁. 공항 환율은 좋지 않아 첫날 몫만.</li>'+
    '<li><b>2차 · 11/25 $600</b> — 디몰 근처 환전소 2~3곳 비교 후.</li>'+
