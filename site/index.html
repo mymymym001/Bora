@@ -1509,7 +1509,7 @@ function openExpForm(pre){
    '<div class="field"><label for="ex-amt">금액 (전체)</label><input id="ex-amt" inputmode="decimal" value="'+esc(pre.amt||"")+'" placeholder="0"></div>'+
    '<div class="sorts c3" role="group" aria-label="통화" id="ex-cur">'+["PHP","USD","KRW"].map(c=>'<button type="button" data-cur="'+c+'" aria-pressed="'+(c==="PHP")+'">'+({PHP:"₱ 페소",USD:"$ 달러",KRW:"₩ 원"}[c])+'</button>').join("")+'</div>'+
    '<div class="field"><label for="ex-qty">개수</label><input id="ex-qty" inputmode="numeric" value="'+esc(pre.qty||1)+'"></div>'+
-   '<div class="field"><label for="ex-cat">분류</label><select id="ex-cat" class="fsel">'+EXP_CATS.map(c=>'<option'+(c===(pre.cat||"식사")?' selected':'')+'>'+c+'</option>').join("")+'</select></div>'+
+   '<div class="field"><label for="ex-cat">분류</label><select id="ex-cat" class="fsel">'+EXP_CATS.map(c=>'<option'+(c===catBucket(pre.cat||"식사",pre.at)?' selected':'')+'>'+c+'</option>').join("")+'</select></div>'+
    '<div class="field"><span>돈 출처</span><div class="sorts c2" role="group" id="ex-src"><button type="button" data-src="공금" aria-pressed="'+((pre.src||"공금")==="공금")+'">공금</button><button type="button" data-src="자유경비" aria-pressed="'+(pre.src==="자유경비")+'">내 자유경비</button></div></div>'+
    '<div class="field"><label for="ex-menu">메뉴 종류 (고르면 적정 가격인지 평가해요)</label><select id="ex-menu" class="fsel"><option value="">선택 안 함</option>'+G.map((g,gi)=>'<optgroup label="'+esc(g.g)+'">'+g.rows.map((r,ri)=>'<option value="'+gi+'-'+ri+'">'+esc(r.m)+'</option>').join("")+'</optgroup>').join("")+'</select></div>'+
    '<div class="field"><label for="ex-payer">쓴 사람 (누가 샀나요)</label><input id="ex-payer" maxlength="10" value="'+esc(pre.payer||LIVE.me.nick)+'"></div>'+
@@ -1645,7 +1645,7 @@ function slotHTML0(day,it,editable){
   if(kind==="tip") return '<div class="slot tip"><time>💡 팁</time><div>'+esc(it[1])+'</div></div>';
   return '<div class="slot"><time>'+it[0]+'</time><div>'+it[1]+'</div></div>';
 }
-function dayTotal(day){ let lo=0,hi=0; day.items.filter(i=>i[0]==="meal").forEach(i=>{const b=mealBudget(day.k+"-"+i[1],i[1]); lo+=b.pp[0]; hi+=b.pp[1];}); return [lo,hi]; }
+function dayTotal(day,only){ let lo=0,hi=0; day.items.filter(i=>i[0]==="meal"&&(!only||i[1]===only)).forEach(i=>{const b=mealBudget(day.k+"-"+i[1],i[1]); lo+=b.pp[0]; hi+=b.pp[1];}); return [lo,hi]; }
 function dayHTML(day,editable,label){
   const t=dayTotal(day);
   return '<section class="day"><header><b class="num">'+day.d+' ('+day.w+')</b><span>'+(label||day.title)+'</span></header>'+dayWx(day)+day.items.map(it=>slotHTML(day,it,editable)).join("")+
@@ -1658,7 +1658,9 @@ function renderCourse(){
   const food=ALL.filter(isFood).sort((a,b)=>a.route.walk.m-b.route.walk.m);
   $("#app").innerHTML='<div class="page"><h2>우리 일정</h2><p class="lead">점심·저녁은 비워 두었어요. ‘식당 고르기’로 목록에서 고르거나 직접 써 넣으세요. '+(shared?'정한 내용은 가족 모두에게 똑같이 보여요.':'지금은 이 휴대폰에만 저장돼요 (편집자로 초대받으면 가족과 공유돼요).')+'</p>'+
    partyHTML()+
-   '<div class="panel num"><h3>여행 식비 예상 (점심·저녁, 호텔 조식 제외)</h3><p>인당 <b>'+rng(lo,hi,php)+'</b> / '+rng(lo,hi,krw)+'<br>총 '+S.n+'명 <b>'+rng(lo*S.n,hi*S.n,php)+'</b> / '+rng(lo*S.n,hi*S.n,krw)+'</p><p class="fine">정하지 않은 끼니는 보라카이 적정 범위(점심 인당 '+rng(fairRange("lunch")[0],fairRange("lunch")[1],php)+', 저녁 '+rng(fairRange("dinner")[0],fairRange("dinner")[1],php)+')로 계산했어요. 식당을 고르면 그 식당 가격으로 바뀌어요.</p></div>'+
+   '<div class="panel num"><h3>여행 식비 예상 (아침은 호텔 조식 포함)</h3><div class="tbl"><table><thead><tr><th>끼니</th><th class="r">1인</th><th class="r">'+S.n+'명</th></tr></thead><tbody>'+
+     [["lunch","점심"],["dinner","저녁"]].map(([k,l])=>{ let a=0,b=0; DAYS.forEach(d=>{const t=dayTotal(d,k); a+=t[0]; b+=t[1];}); return '<tr><td>'+l+'</td><td class="r">'+rng(a,b,php)+'<br><span class="src">'+rng(a,b,krw)+'</span></td><td class="r"><b>'+rng(a*S.n,b*S.n,php)+'</b><br><span class="src">'+rng(a*S.n,b*S.n,krw)+'</span></td></tr>'; }).join("")+
+     '<tr><td><b>합계</b></td><td class="r"><b>'+rng(lo,hi,php)+'</b><br><span class="src">'+rng(lo,hi,krw)+'</span></td><td class="r"><b>'+rng(lo*S.n,hi*S.n,php)+'</b><br><span class="src">'+rng(lo*S.n,hi*S.n,krw)+'</span></td></tr></tbody></table></div><p class="fine">디저트·카페는 돈·정보 탭 예산에 따로 잡혀 있어요. 정하지 않은 끼니는 보라카이 적정 범위(점심 인당 '+rng(fairRange("lunch")[0],fairRange("lunch")[1],php)+', 저녁 '+rng(fairRange("dinner")[0],fairRange("dinner")[1],php)+')로 계산했어요. 식당을 고르면 그 식당 가격으로 바뀌어요.</p></div>'+
    DAYS.map(d=>dayHTML(d,true)).join("")+
    '<p class="fine">스테이션 1~3의 모든 식당·카페는 맛집 탭과 지도 탭에서 볼 수 있어요.</p></div>';
   bindParty();
@@ -1737,8 +1739,9 @@ function openSchedPick(){
 const CASH_USD=1200, FX_CAP_USD=1200, HOLDER="공금";
 const BUDGET=[
   {k:"extra",when:"d1",label:"호텔 1인 추가비",php:4928,cats:["숙소 추가비"],note:"체크인 때 페소 현금 (₱1,232×4박)"},
-  {k:"meal",label:"식사 (점심·저녁, 조식 포함)",php:30800,cats:["식사"],note:"점심 ~₱450 + 저녁 ~₱650 / 인"},
-  {k:"snack",label:"간식·음료",php:7000,cats:["간식·음료"],note:"인당 하루 ₱250"},
+  {k:"lunch",label:"점심",php:12600,cats:["점심"],note:"1인 한 끼 ~₱450 × 4번 (11/24~27)"},
+  {k:"dinner",label:"저녁",php:18200,cats:["저녁"],note:"1인 한 끼 ~₱650 × 4번 (11/24~27)"},
+  {k:"dessert",label:"디저트·카페·음료",php:7000,cats:["디저트·음료"],note:"1인 하루 ~₱250 × 4일 (쉐이크·커피·아이스크림·물)"},
   {k:"trike",label:"교통 (트라이크)",php:2400,cats:["교통(트라이크 등)"],note:"2대 × 하루 2번 × 4일"},
   {k:"leisure",label:"레저 (최소)",php:3500,cats:["레저(투어·마사지)"],note:"예: 마사지 한 번"},
   {k:"free",label:"자유경비 지급 (상한)",php:14000,cats:["자유경비 지급"],note:"$222 상한 · 날마다 유동, 안 주는 날도 있음",cap:true},
@@ -1747,12 +1750,13 @@ const BUDGET=[
 ];
 const BUDGET_TOTAL=BUDGET.reduce((a,b)=>a+b.php,0);
 LIVE.fx=[];
-function catBucket(c){ const m={"식사·음료":"식사","간식·디저트":"간식·음료","투어·액티비티":"레저(투어·마사지)","마사지·스파":"레저(투어·마사지)","숙소·호텔":"숙소 추가비","환전·수수료":"환전 수수료","기타":"팁·기타"}; return m[c]||c||"팁·기타"; }
+function mealByTime(at){ const h=new Date((at||Date.now())+8*3600e3).getUTCHours(); return h<15?"점심":"저녁"; }
+function catBucket(c,at){ if(c==="식사"||c==="식사·음료") return mealByTime(at); const m={"간식·음료":"디저트·음료","간식·디저트":"디저트·음료","투어·액티비티":"레저(투어·마사지)","마사지·스파":"레저(투어·마사지)","숙소·호텔":"숙소 추가비","환전·수수료":"환전 수수료","기타":"팁·기타"}; return m[c]||c||"팁·기타"; }
 function purse(){
   const ex=LIVE.fx.reduce((a,f)=>({usd:a.usd+(+f.usd||0),php:a.php+(+f.php||0)}),{usd:0,php:0});
   const common=LIVE.exp.filter(e=>(e.src||"공금")==="공금"), freeSpent=LIVE.exp.filter(e=>e.src==="자유경비");
   const spent=common.reduce((a,e)=>a+(+e.php||0),0);
-  const byCat={}; common.forEach(e=>{ const c=catBucket(e.cat); byCat[c]=(byCat[c]||0)+(+e.php||0); });
+  const byCat={}; common.forEach(e=>{ const c=catBucket(e.cat,e.at); byCat[c]=(byCat[c]||0)+(+e.php||0); });
   return {exUsd:ex.usd,exPhp:ex.php,spent,left:ex.php-spent,usdLeft:CASH_USD-ex.usd,byCat,freeSpent:freeSpent.reduce((a,e)=>a+(+e.php||0),0)};
 }
 function purseHTML(compact){
@@ -1761,8 +1765,10 @@ function purseHTML(compact){
   if(p.exUsd) head+='<p class="fine" style="margin:6px 0 0">환전: $'+p.exUsd.toLocaleString()+' → '+php(p.exPhp)+'</p>';
   if(p.left<0) head+='<div class="callout warn" style="margin-top:8px"><b>남은 페소가 마이너스예요</b>환전한 기록이 빠졌을 수 있어요. “200달러 12,400페소 환전”처럼 적어 주세요.</div>';
   if(compact) return head;
-  const rows=Object.entries(p.byCat).filter(([,v])=>v).sort((a,b)=>b[1]-a[1]);
-  return head+(rows.length?'<div class="tbl" style="margin-top:10px"><table><thead><tr><th>분류</th><th class="r">페소</th><th class="r">원화</th></tr></thead><tbody>'+rows.map(([c,v])=>'<tr><td>'+esc(c)+'</td><td class="r num">'+php(v)+'</td><td class="r num">'+krw(v)+'</td></tr>').join("")+'</tbody></table></div>':'');
+  const used=new Set(); const rows=BUDGET.map(b=>{ const v=b.cats.reduce((a,c)=>{used.add(c); return a+(p.byCat[c]||0);},0); return [b.label,v,b.php]; });
+  Object.entries(p.byCat).forEach(([c,v])=>{ if(!used.has(c)&&v) rows.push([c,v,null]); });
+  if(!rows.some(r=>r[1])) return head;
+  return head+'<div class="tbl" style="margin-top:10px"><table><thead><tr><th>분류</th><th class="r">쓴 돈</th><th class="r">예산</th></tr></thead><tbody>'+rows.map(([c,v,b])=>'<tr><td>'+esc(c)+'</td><td class="r num"><b>'+php(v)+'</b><br><span class="src">'+krw(v)+'</span></td><td class="r num">'+(b!=null?php(b)+'<br><span class="src">'+krw(b)+'</span>':'-')+'</td></tr>').join("")+'</tbody></table></div>';
 }
 function fxListHTML(){
   if(!LIVE.fx.length) return '<p class="fine">아직 환전 기록이 없어요.</p>';
@@ -1788,7 +1794,7 @@ async function saveFx(){
   try{ await LIVE.db.collection("fx").add(v); closeSheet(); postChat("msg","[환전] $"+u+" → "+php(pp)+" (₱"+(pp/u).toFixed(2)+"/$)"+(v.where?" · "+v.where:"")); afterMoney(); }catch(e){ $("#fx-r").textContent="저장하지 못했어요."; }
 }
 function openFreeForm(){
-  if(!canPost()) return; const s=$("#sheet"), paid=LIVE.exp.filter(e=>catBucket(e.cat)==="자유경비 지급").reduce((a,e)=>a+(+e.php||0),0);
+  if(!canPost()) return; const s=$("#sheet"), paid=LIVE.exp.filter(e=>catBucket(e.cat,e.at)==="자유경비 지급").reduce((a,e)=>a+(+e.php||0),0);
   s.innerHTML='<div class="wrap"><div class="bar"><button type="button" data-close aria-label="닫기">✕</button><div class="t">자유경비 지급</div></div><div class="page" style="padding-top:0">'+
    '<p class="lead">상한 '+php(14000)+' 중 '+php(paid)+' 지급함 · 남은 상한 '+php(Math.max(0,14000-paid))+'. 안 주는 날은 기록하지 않으면 돼요.</p>'+
    '<div class="field"><label for="fr-a">1인당 금액 (페소)</label><input id="fr-a" inputmode="numeric" placeholder="예: 500"></div>'+
@@ -1810,7 +1816,8 @@ function afterMoney(){ const h=(location.hash||"#home").slice(1)||"home"; if(h==
 /* ================= 한 줄 지출 입력 (자동 정리) ================= */
 const QCAT=[["공항세",/공항세|터미널/],["숙소 추가비",/추가비|추가 ?인원|호텔|보증금/],["환전 수수료",/수수료/],["교통(트라이크 등)",/트라이크|택시|교통|배삯|보트|툭툭|e-?trike/i],
   ["레저(투어·마사지)",/마사지|스파|투어|호핑|다이빙|패러|레저|액티비티|스노클/],["쇼핑·기념품",/기념품|쇼핑|선물|마트|말린 ?망고|자석|옷|모자|선크림|약국|약/],
-  ["간식·음료",/쉐이크|셰이크|커피|라테|라떼|아메리카노|카페|아이스크림|젤라또|빙수|할로|간식|음료|맥주|산미구엘|콜라|물|주스|디저트|케이크|빵|머핀|과일|망고/],
+  ["점심",/점심|런치|브런치/],["저녁",/저녁|디너|야식/],
+  ["디저트·음료",/쉐이크|셰이크|커피|라테|라떼|아메리카노|카페|아이스크림|젤라또|빙수|할로|간식|음료|맥주|산미구엘|콜라|물|주스|디저트|케이크|빵|머핀|과일|망고/],
   ["식사",/아침|점심|저녁|식사|밥|야식|브런치|뷔페|시시그|아도보|피자|파스타|버거|치킨|삼겹살|한식|레스토랑|식당|그릴/],["팁·기타",/팁|기타/]];
 const QMENU=[[/망고 ?(쉐이크|셰이크|스무디)/,"망고 쉐이크"],[/(쉐이크|셰이크)/,"과일 쉐이크 (망고 외)"],[/아메리카노|브루드|드립/,"아메리카노·브루드 커피"],[/라테|라떼|카푸치노/,"카페라테·카푸치노"],
   [/아이스티|레모네이드/,"아이스티·레모네이드"],[/프라페|스무디/,"프라페·스무디"],[/아이스크림|젤라또/,"아이스크림·젤라또"],[/케이크|파이|브라우니/,"케이크 한 조각·파이"],
@@ -1835,7 +1842,7 @@ function parseQuick(raw){
   const q=amts.find(a=>a.isQty&&a!==money); const qty=q?Math.max(1,Math.round(q.v)):1;
   const cur=money.cur||"PHP";
   const p=cur==="PHP"?money.v:cur==="USD"?money.v*D.fx.php_per_usd:money.v/D.fx.krw_per_php;
-  const cat=(QCAT.find(([c,r])=>r.test(t))||["팁·기타"])[0];
+  let cat=(QCAT.find(([c,r])=>r.test(t))||["팁·기타"])[0]; if(cat==="식사") cat=mealByTime();
   const mm=QMENU.find(([r])=>r.test(t)); const menu=mm?menuKeyByName(mm[1]):"";
   const src=/자유경비|내 ?돈|개인/.test(t)?"자유경비":"공금";
   let what=t.replace(money.raw,"").replace(q?q.raw:"","").replace(/(^|\s)(개|잔|병|그릇|인분|장|대|명|박|번)(?=\s|$)/,"$1").replace(/(\S)(개|잔|병|그릇|인분|장|대|명|박|번)(?=\s|$)/,"$1").replace(/(구매|구입|샀음|샀어요|결제|냈음|냈어요|지불|씀|썼음|썼어요|했음|함)\.?$/,"").replace(/(자유경비|내 ?돈|개인)(로|으로)?/,"").replace(/\s+/g," ").trim();
@@ -1866,7 +1873,7 @@ async function quickSave(id){
 }
 
 /* ================= 지출·예약 탭 ================= */
-const EXP_CATS=["식사","간식·음료","교통(트라이크 등)","레저(투어·마사지)","쇼핑·기념품","숙소 추가비","공항세","팁·기타","환전 수수료"];
+const EXP_CATS=["점심","저녁","디저트·음료","교통(트라이크 등)","레저(투어·마사지)","쇼핑·기념품","숙소 추가비","공항세","팁·기타","환전 수수료"];
 const TRIP_DAYS=["11/24","11/25","11/26","11/27","11/28"];
 function manilaDateLabel(ms){ const d=new Date(ms+8*3600e3); return (d.getUTCMonth()+1)+"/"+d.getUTCDate(); }
 function pgFind(key){ if(!key) return null; const [gi,ri]=String(key).split("-").map(Number); const g=(EXTRA.priceGuide||[])[gi]; return g&&g.rows[ri]?{g:g.g,r:g.rows[ri]}:null; }
@@ -1887,7 +1894,7 @@ function renderLedger(){
 function expTableHTML(writable){
   const ex=LIVE.exp.slice().sort((a,b)=>a.at-b.at);
   const tot=ex.reduce((s,e)=>s+(+e.php||0),0);
-  const who={}; ex.filter(e=>catBucket(e.cat)!=="자유경비 지급").forEach(e=>{ const k=e.payer||"?"; who[k]=who[k]||{c:0,f:0}; if(e.src==="자유경비") who[k].f+=(+e.php||0); else who[k].c+=(+e.php||0); });
+  const who={}; ex.filter(e=>catBucket(e.cat,e.at)!=="자유경비 지급").forEach(e=>{ const k=e.payer||"?"; who[k]=who[k]||{c:0,f:0}; if(e.src==="자유경비") who[k].f+=(+e.php||0); else who[k].c+=(+e.php||0); });
   const days={}; ex.forEach(e=>{ const d=manilaDateLabel(e.at); (days[d]=days[d]||[]).push(e); });
   let h='<div class="panel"><h3>편하게 적기</h3><p class="fine" style="margin:0 0 6px">“무엇 + 금액”만 적으면 분류·금액·평가를 표로 정리해요. 환전은 “200달러 12,400페소 환전”.</p>'+(writable?quickHTML("ql")+'<div class="b3" style="margin-top:8px"><button type="button" class="btn alt" data-expadd>자세히 입력</button><button type="button" class="btn alt" data-fxadd>환전 기록</button><button type="button" class="btn alt" data-freeadd>자유경비 지급</button></div>':'<p class="fine">기록은 편집자로 초대받은 가족만 할 수 있어요.</p>')+'</div>'+
    '<div class="panel"><h3>공금</h3>'+purseHTML(false)+'</div>'+
@@ -1898,7 +1905,7 @@ function expTableHTML(writable){
      '<p class="fine">전체 기록 '+php(tot)+' ('+krw(tot)+'). 자유경비로 산 것은 이미 지급한 돈이라 공금에서 다시 빼지 않아요.</p></div>';
   Object.keys(days).forEach(d=>{ const list=days[d], dt=list.filter(e=>(e.src||"공금")==="공금").reduce((s,e)=>s+(+e.php||0),0);
     h+='<div class="panel"><h3>'+esc(d)+' <span class="fine num">공금 '+php(dt)+' · '+krw(dt)+'</span></h3><div class="tbl"><table class="xt"><thead><tr><th>품목 · 평가</th><th class="r">금액</th></tr></thead><tbody>'+
-      list.map(e=>{ const j=judge(e); return '<tr><td><b>'+esc(e.what)+'</b>'+(e.qty>1?' ×'+e.qty:'')+' '+(j?'<span class="badge '+j.cls+'">'+j.t+'</span><br><span class="src">'+esc(j.note)+'</span>':'')+'<br><span class="src">'+esc(e.payer||"")+' · '+hhmm(e.at)+' · '+esc(catBucket(e.cat))+' · <b>'+esc(e.src||"공금")+'</b>'+(e.where?' · '+esc(e.where):'')+'</span>'+(e.by===LIVE.uid?' <button type="button" class="tiny" data-expdel="'+esc(e.id)+'">삭제</button>':'')+'</td>'+
+      list.map(e=>{ const j=judge(e); return '<tr><td><b>'+esc(e.what)+'</b>'+(e.qty>1?' ×'+e.qty:'')+' '+(j?'<span class="badge '+j.cls+'">'+j.t+'</span><br><span class="src">'+esc(j.note)+'</span>':'')+'<br><span class="src">'+esc(e.payer||"")+' · '+hhmm(e.at)+' · '+esc(catBucket(e.cat,e.at))+' · <b>'+esc(e.src||"공금")+'</b>'+(e.where?' · '+esc(e.where):'')+'</span>'+(e.by===LIVE.uid?' <button type="button" class="tiny" data-expdel="'+esc(e.id)+'">삭제</button>':'')+'</td>'+
         '<td class="r num"><b>'+php(e.php)+'</b><br><span class="src">'+krw(e.php)+(e.cur&&e.cur!=="PHP"?'<br>'+esc(e.cur)+' '+Number(e.amt).toLocaleString():'')+'</span></td></tr>'; }).join("")+'</tbody></table></div></div>'; });
   return h;
 }
@@ -2019,7 +2026,7 @@ function slotWx(day,it){
 function dayWx(day){ if(!WX) return ""; const d=WX.days[DAYDATE[day.k]]; if(!d) return ""; const [ic,lb]=wxIcon(d.code,1), u=uvLevel(d.uv);
   return '<div class="wxday">'+ic+' '+lb+' · '+d.tmin+'–'+d.tmax+'° · ☔ '+d.rain+'% · <span class="uv '+u[1]+'">자외선 '+Math.round(d.uv)+' '+u[0]+'</span> · 일몰 '+esc(d.sunset)+'</div>'; }
 function wxBeachLine(date){ const bp=beachPlan(date), ex=tideList().filter(e=>e.date===date);
-  return '<button type="button" class="wxmore" data-wxopen><span>'+(bp.none?'🌊 물때':'🏖️ 놀기 좋은 시간 <b class="num">'+(bp.pick.length?bp.pick.map(w=>hhmm(w.a)+'–'+hhmm(w.b)).join(', '):'실내 추천')+'</b>')+'<br><small>'+ex.map(e=>(e.hi?'만조 ':'간조 ')+hhmm(e.t)).join(' · ')+'</small></span><span class="w">시간별·물때 ›</span></button>'; }
+  return '<button type="button" class="wxmore" data-wxopen><span>'+(bp.none?'🌊 물때':'🏖️ 놀기 좋은 시간 <b class="num">'+(bp.pick.length?bp.pick.map(w=>hfmt(w.a)+'–'+hfmt(w.b)).join(', '):'실내 추천')+'</b>')+'<br><small>'+ex.map(e=>(e.hi?'만조 ':'간조 ')+hfmt(e.t)).join(' · ')+'</small></span><span class="w">시간별·물때 ›</span></button>'; }
 function wxHomeHTML(){
   if(!WX) return '<div class="wx panel" id="wxCard"><div class="wxh"><b>보라카이 날씨</b><span class="fine">예보를 불러오는 중이에요 · 매일 아침 갱신</span></div><button type="button" class="wxmore" data-wxopen><span>시간별 날씨 · 밀물/썰물 · 놀기 좋은 시간</span><span class="w">열기 ›</span></button></div>';
   const n=new Date(Date.now()+8*3600e3), ds=n.toISOString().slice(0,10); const trip=Object.values(DAYDATE);
@@ -2034,7 +2041,7 @@ function wxHomeHTML(){
     '<div class="wxstrip">'+strip+'</div>'+wxBeachLine(date)+(d.uv>=8?'<p class="fine" style="margin:6px 0 0">자외선이 매우 강해요. 10~15시엔 그늘·선크림(2시간마다)·모자·래시가드 챙기기.</p>':'')+'</div>';
 }
 /* ================= 날씨·바다 상세 (시간별 · 밀물/썰물 · 놀기 좋은 시간) ================= */
-function hhmm(x){ x=((x%24)+24)%24; let h=Math.floor(x), m=Math.round((x-h)*60); if(m===60){h=(h+1)%24;m=0;} return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0"); }
+function hfmt(x){ x=((x%24)+24)%24; let h=Math.floor(x), m=Math.round((x-h)*60); if(m===60){h=(h+1)%24;m=0;} return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0"); }
 function seaAt(date,h){ if(!WX||!WX.marine) return null; const r=WX.marine[date+"T"+String(h).padStart(2,"0")+":00"]; return r&&r[0]!=null?{lvl:r[0],wave:r[1],sst:r[2]}:null; }
 function tideList(){ /* 전체 기간의 만조·간조 (시간별 값을 포물선 보간) */
   if(!WX||!WX.marine) return []; const ks=Object.keys(WX.marine).sort(), v=ks.map(k=>WX.marine[k][0]); const out=[];
@@ -2076,7 +2083,7 @@ function tideSVG(date){
   return '<svg class="tide" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(+date.slice(5,7)+'/'+(+date.slice(8))+' 물때 그래프')+'">'+
     '<rect x="'+X(sr)+'" y="4" width="'+(X(ss)-X(sr))+'" height="'+(H-26)+'" class="tday"/>'+
     '<path d="'+path+' L'+X(pts[pts.length-1][0])+' '+(H-22)+' L'+X(pts[0][0])+' '+(H-22)+'Z" class="tfill"/><path d="'+path+'" class="tline"/>'+
-    ex.map(e=>'<circle cx="'+X(e.t)+'" cy="'+Y(e.lvl)+'" r="4" class="'+(e.hi?'thi':'tlo')+'"/><text x="'+Math.min(W-30,Math.max(30,X(e.t)))+'" y="'+(e.hi?Y(e.lvl)-8:Math.min(H-26,Y(e.lvl)+16))+'" text-anchor="middle" class="tlab">'+(e.hi?'만조 ':'간조 ')+hhmm(e.t)+'</text>').join("")+
+    ex.map(e=>'<circle cx="'+X(e.t)+'" cy="'+Y(e.lvl)+'" r="4" class="'+(e.hi?'thi':'tlo')+'"/><text x="'+Math.min(W-30,Math.max(30,X(e.t)))+'" y="'+(e.hi?Y(e.lvl)-8:Math.min(H-26,Y(e.lvl)+16))+'" text-anchor="middle" class="tlab">'+(e.hi?'만조 ':'간조 ')+hfmt(e.t)+'</text>').join("")+
     (live?'<line x1="'+X(nh)+'" x2="'+X(nh)+'" y1="4" y2="'+(H-22)+'" class="tnow"/>':'')+
     [0,6,12,18].map(h=>'<text x="'+X(h)+'" y="'+(H-6)+'" text-anchor="middle" class="tax">'+h+'시</text>').join("")+'</svg>';
 }
@@ -2089,14 +2096,14 @@ function openWx(date){
   if(!WX){ body='<div class="panel"><p class="fine">예보를 불러오는 중이에요. 잠시 후 다시 열어 주세요.</p></div>'; }
   else { const d=WX.days[date], bp=beachPlan(date), [ic,lb]=wxIcon(d.code,1), u=uvLevel(d.uv), ex=tideList().filter(e=>e.date===date);
     const pick=bp.none?'<p>'+(date===DAYDATE.d5?'출국일이라 아침 일찍 공항으로 이동해요. 물놀이 시간은 없어요.':'오늘은 해변 시간이 거의 없어요.')+'</p>':
-      (bp.pick.length?bp.pick.map((w,i)=>'<div class="bpick"><b class="num">'+hhmm(w.a)+'–'+hhmm(w.b)+'</b><span>'+(i===0&&bp.pick.length>1?'':'')+esc(w.why.slice(0,3).join(' · '))+'</span></div>').join(""):'<p>비가 많이 올 예정이라 실내 일정을 추천해요.</p>');
+      (bp.pick.length?bp.pick.map((w,i)=>'<div class="bpick"><b class="num">'+hfmt(w.a)+'–'+hfmt(w.b)+'</b><span>'+(i===0&&bp.pick.length>1?'':'')+esc(w.why.slice(0,3).join(' · '))+'</span></div>').join(""):'<p>비가 많이 올 예정이라 실내 일정을 추천해요.</p>');
     const sunsetH=bp.sunset;
     body='<div class="panel wxsum"><div class="wxnow"><span class="big">'+ic+'</span><div><b class="num">'+d.tmin+'–'+d.tmax+'°</b> <span>'+lb+'</span><br><span class="fine num">비 '+d.rain+'% · 바람 최대 '+d.wind+'km/h · 일출 '+esc(d.sunrise)+' · 일몰 '+esc(d.sunset)+'</span></div><div class="uvbox '+u[1]+'"><small>자외선 최고</small><b>'+Math.round(d.uv)+'</b><small>'+u[0]+'</small></div></div></div>'+
       '<div class="panel bplan"><h3>🏖️ 놀기 좋은 시간</h3>'+pick+
       (bp.none?'':'<ul class="clean">'+(bp.uvHigh.length?'<li><b>피할 시간 '+rangeTxt(bp.uvHigh)+'</b> — 자외선 매우 강함. 그늘·래시가드·선크림 2시간마다.</li>':'')+(bp.rainy.length?'<li>☔ 비 올 확률 높은 시간: '+rangeTxt(bp.rainy)+'</li>':'')+
-      '<li>🌅 노을 사진: <b class="num">'+hhmm(sunsetH-0.75)+'–'+hhmm(sunsetH)+'</b> (화이트비치 서쪽 바다)</li></ul>')+
+      '<li>🌅 노을 사진: <b class="num">'+hfmt(sunsetH-0.75)+'–'+hfmt(sunsetH)+'</b> (화이트비치 서쪽 바다)</li></ul>')+
       '<p class="fine">밀물·비·자외선·파도를 같이 따져서 고른 시간이에요. 화이트비치는 썰물 때 물이 얕아지고 해초가 드러나서, 수영은 밀물 앞뒤가 좋아요. 아이들 얕은 물놀이는 물이 빠지는 중간 시간도 괜찮아요.</p></div>'+
-      '<div class="panel"><h3>🌊 밀물 · 썰물</h3>'+(ex.length?'<div class="tides">'+ex.map(e=>'<div class="'+(e.hi?'hi':'lo')+'"><small>'+(e.hi?'만조 (물 가장 높음)':'간조 (물 가장 낮음)')+'</small><b class="num">'+hhmm(e.t)+'</b><small class="num">'+(e.lvl>=0?'+':'')+e.lvl.toFixed(1)+'m</small></div>').join("")+'</div>'+tideSVG(date):'<p class="fine">바다 예보를 아직 받지 못했어요.</p>')+
+      '<div class="panel"><h3>🌊 밀물 · 썰물</h3>'+(ex.length?'<div class="tides">'+ex.map(e=>'<div class="'+(e.hi?'hi':'lo')+'"><small>'+(e.hi?'만조 (물 가장 높음)':'간조 (물 가장 낮음)')+'</small><b class="num">'+hfmt(e.t)+'</b><small class="num">'+(e.lvl>=0?'+':'')+e.lvl.toFixed(1)+'m</small></div>').join("")+'</div>'+tideSVG(date):'<p class="fine">바다 예보를 아직 받지 못했어요.</p>')+
       '<p class="fine">Open-Meteo 바다 예측 모델(화이트비치 앞바다) 기준이라 실제와 30분~1시간 차이 날 수 있어요. 노란 칸은 해 떠 있는 시간.</p></div>'+
       '<div class="panel"><h3>시간별</h3><div class="tbl"><table class="wxtbl"><thead><tr><th>시각</th><th>날씨</th><th>비</th><th>UV</th><th>물때</th><th>파도</th></tr></thead><tbody>'+
       Array.from({length:17},(_,i)=>i+6).map(h=>{const w=wxAt(date,h), sa=seaAt(date,h), ts=tideState(date,h); if(!w) return ''; const best=!bp.none&&bp.pick.some(p=>h>=p.a&&h<p.b);

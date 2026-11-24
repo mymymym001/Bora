@@ -5,7 +5,7 @@ const { chromium, devices } = require('playwright');
   await pg.goto('http://localhost:8765/_test_live.html#ledger'); await pg.waitForSelector('#ql'); await pg.waitForTimeout(300);
   const t0=await pg.$eval('#lbody',e=>e.innerText); ok(!/아빠|보관|\$4,000|\$2,800|남음|예산 항목/.test(t0),'no holder / $4,000 / 남음 wording');
   ok(/가져온 \$1,200/.test(t0),'$1,200 brought shown');
-  const cases=[['200달러 12,400페소 환전','환전'],['점심 지보스 2,350페소','식사'],['망고쉐이크 2개 460페소','간식·음료'],['트라이크 2대 300페소','교통'],['기념품 말린망고 10달러','쇼핑'],['저녁 subo 4,800 자유경비로','자유경비']];
+  const cases=[['200달러 12,400페소 환전','환전'],['점심 지보스 2,350페소','점심'],['망고쉐이크 2개 460페소','디저트·음료'],['트라이크 2대 300페소','교통'],['기념품 말린망고 10달러','쇼핑'],['저녁 subo 4,800 자유경비로','자유경비']];
   for(const [txt,exp] of cases){ await pg.fill('#ql',txt); await pg.waitForTimeout(80); const pv=await pg.$eval('[data-qprev="ql"]',e=>e.innerText); ok(pv.includes(exp),'preview "'+txt+'" → '+pv); await pg.click('[data-quicksave="ql"]'); await pg.waitForTimeout(350); }
   const t=await pg.$eval('#lbody',e=>e.innerText);
   console.log('  wallet:', t.split('\n').slice(4,14).join(' | '));

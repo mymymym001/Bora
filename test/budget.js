@@ -12,12 +12,12 @@ const { chromium, devices } = require('playwright');
   // common expense: extra guest fee 4,928
   await pg.click('[data-expadd]'); await pg.fill('#ex-what','1인 추가비 4박'); await pg.fill('#ex-amt','4928'); await pg.selectOption('#ex-cat','숙소 추가비'); await pg.fill('#ex-payer','아빠'); await pg.click('[data-expsave]'); await pg.waitForTimeout(400);
   // personal free-money purchase: mango shake 230
-  await pg.click('[data-expadd]'); await pg.fill('#ex-what','망고 쉐이크'); await pg.fill('#ex-amt','230'); await pg.selectOption('#ex-cat','간식·음료'); await pg.selectOption('#ex-menu',{label:'망고 쉐이크'}); await pg.click('[data-src="자유경비"]'); await pg.fill('#ex-payer','사랑'); await pg.click('[data-expsave]'); await pg.waitForTimeout(400);
+  await pg.click('[data-expadd]'); await pg.fill('#ex-what','망고 쉐이크'); await pg.fill('#ex-amt','230'); await pg.selectOption('#ex-cat','디저트·음료'); await pg.selectOption('#ex-menu',{label:'망고 쉐이크'}); await pg.click('[data-src="자유경비"]'); await pg.fill('#ex-payer','사랑'); await pg.click('[data-expsave]'); await pg.waitForTimeout(400);
   const t=await pg.$eval('#lbody',e=>e.innerText);
   ok(/남은 페소\s*₱3,972/.test(t),'wallet left = 12,400 − 3,500 − 4,928 = ₱3,972 (free-money purchase not deducted)');
   ok(/남은 달러\s*\$1,000/.test(t),'dollars left $1,000');
   ok(/환전: \$200 → ₱12,400/.test(t),'exchange line shown');
-  ok(/자유경비 지급\s*₱3,500/.test(t),'category table: 자유경비 지급 ₱3,500');
+  ok(/자유경비 지급( \(상한\))?\s*₱3,500/.test(t),'category table: 자유경비 지급 ₱3,500');
   ok(/사랑\s*₱0\s*₱230/.test(t),'who spent table: 사랑 free money ₱230');
   ok(/적정/.test(t),'mango shake judged 적정 (₱230)');
   console.log('  wallet:', t.split('\n').slice(1,9).join(' | '));
