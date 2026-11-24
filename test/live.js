@@ -6,7 +6,7 @@ const { chromium, devices } = require('playwright');
   const t0=Date.now(); await pg.goto('http://localhost:8765/_test_live.html#home'); await pg.waitForSelector('#chat'); console.log('load+route ms', Date.now()-t0);
   await pg.waitForSelector('.msg'); await pg.waitForTimeout(300);
   await pg.screenshot({path:'test/live-1.png'}); await pg.screenshot({path:'test/live-1full.png',fullPage:true});
-  ok(await pg.isVisible('.ppl button'), 'family location list on home');
+  ok(await pg.isVisible('.fl-list button'), 'family location list on home');
   ok((await pg.$$eval('.msg',e=>e.length))===2, 'chat shows seeded msgs');
   ok(await pg.isVisible('#pin .pin-notice'), 'pinned notice block');
   // profile + send message
