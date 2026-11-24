@@ -1365,7 +1365,7 @@ function bindParty(){ const sg=$(".seg"); if(sg) sg.addEventListener("click",e=>
 const ECATS=[["all","전체"],["meal","식사"],["cafe","카페·디저트"],["korean","한식"],["bar","바"],["fruit","과일"]];
 const EFILS=[["open","지금 영업 중"],["krpop","한국인 인기"],["mine","❤️ 내 찜"],["fam","가족 찜"]];
 S.efil=S.efil||[];
-const SORTS=[["claude","추천순"],["likes","찜순"],["rating","별점순"],["dist","거리순"],["price","가격순"]];
+const SORTS=[["claude","추천순"],["kr","한국인 추천순"],["rating","전체 평점순"],["likes","찜순"],["dist","거리순"],["price","가격순"]];
 function eMatch(p,c){ if(!isFood(p)||/Talipapa Bukid/.test(p.name)) return false;
   return c==="all"||(c==="mine"&&iLike(p.id))||(c==="fam"&&likeCount(p.id)>0)||(c==="open"&&isOpen(p))||(c==="fruit"&&p.cat==="fruit")||(c==="meal"&&p.cat==="restaurant")||(c==="cafe"&&(p.cat==="cafe"||p.cat==="dessert"))||(c==="bar"&&(p.cat==="bar"||p.cat==="pub"))||
     (c==="korean"&&/한식|한국|korean/i.test((p.cuisine||"")+p.name+(p.ko||"")))||(c==="krpop"&&(p.krPop||0)>=2)||(c==="menu"&&p.hasMenu); }
@@ -1380,17 +1380,20 @@ function claudeScore(p){
   if(p.pp&&p.pp[1]<=400){ s+=0.4; r.push("저렴"); }
   return {s,r};
 }
+/* 리뷰 수까지 반영한 평점 (리뷰가 적으면 4.0 쪽으로 당겨서 계산 — 리뷰 3개짜리 5.0이 1위가 되지 않게) */
+function wRating(p){ const r=p.rating; if(!r) return 0; const n=+(r.count||0), m=80, C=4.0; return (n*r.score+m*C)/(n+m); }
 function rankVenues(list,sort){
   const big=1e9;
-  const key={claude:p=>-claudeScore(p).s, rating:p=>p.rating?-(p.rating.score*1e7+Math.min(9999999,+(p.rating.count||0))):big,
+  const key={claude:p=>-claudeScore(p).s, rating:p=>p.rating?-wRating(p):big, kr:p=>-((p.krPop||0)*100+(p.rating?wRating(p)*10:0)),
     dist:p=>p.route?p.route.walk.m:big, price:p=>p.pp?p.pp[0]:big, likes:p=>-(likeCount(p.id)*1000)-claudeScore(p).s}[sort];
   return list.slice().sort((a,b)=>key(a)-key(b));
 }
+function shortSite(s){ s=String(s||""); return /trip ?advisor/i.test(s)?"트립어드바이저":/google/i.test(s)?"구글":/trip\.com/i.test(s)?"Trip.com":/guru/i.test(s)?"레스토랑구루":s.slice(0,12); }
 function dname(p){ return p.name.replace(/\s*\([^)]*\)/g,"").replace(/\s+-\s+.*$/,"").trim()||p.name; }
 function venueCard(p,rank){
   const gc=groupCost(p,S.n), cs=claudeScore(p), cv=coverOf(p);
-  const rating=p.rating?'<span class="stars">★ '+p.rating.score+'</span>'+(p.rating.count?'<span class="rc">('+Number(p.rating.count).toLocaleString()+')</span>':''):'<span class="rc">별점 없음</span>';
-  const pop=p.krPop>=3?'<span class="badge ok">한국인 후기 많음</span>':p.krPop===2?'<span class="badge">한국인 후기 있음</span>':'';
+  const rating=p.rating?'<span class="stars">★ '+p.rating.score+'</span>'+(p.rating.count?'<span class="rc">('+Number(p.rating.count).toLocaleString()+(p.rating.site?' · '+esc(shortSite(p.rating.site)):'')+')</span>':''):'<span class="rc">평점 없음</span>';
+  const pop=p.krPop>=3?'<span class="badge ok">🇰🇷 한국인 추천 많음</span>':p.krPop===2?'<span class="badge">🇰🇷 한국인 추천</span>':'';
   const rv=p.krReview||p.desc||"";
   return '<article class="vc vr" style="--pc:'+colorOf(p.cat)+'">'+
     '<button type="button" class="th'+(cv?'':' ph')+'" data-open="'+esc(p.id)+'" aria-label="'+esc(dname(p))+' 자세히">'+(cv?'<img src="'+esc(cv.src)+'" alt="" loading="lazy">'+(cv.rep?'<i>대표</i>':cv.fam?'<i>가족 사진</i>':''):iconOf(p.cat))+'</button>'+
@@ -1426,7 +1429,7 @@ function drawEat(){
   let list=VEN.filter(p=>eMatch(p,S.ecat)&&S.efil.every(f=>eMatch(p,f)));
   if(q) list=list.filter(p=>(p.name+" "+(p.ko||"")+" "+(p.cuisine||"")+" "+(p.best||[]).join(" ")).toLowerCase().includes(q)||dishHits(p.id,q).length);
   list=rankVenues(list,S.sort);
-  const note={_:0,likes:"가족이 ‘가고 싶어요’를 많이 누른 순서예요 (같으면 Claude 추천 순).",claude:"한국인 후기·별점·단체석·거리·가격을 합쳐 Claude가 매긴 순서예요.",rating:"구글·트립어드바이저 등에서 확인된 별점만 반영 — 별점 정보가 없는 곳은 맨 아래예요.",dist:"헤난 가든에서 도보 거리 순 — 위치를 모르는 곳은 맨 아래예요.",price:"1인 예상 비용이 낮은 순 — 가격 정보가 없는 곳은 맨 아래예요."}[S.sort];
+  const note={_:0,likes:"가족이 ‘가고 싶어요’를 많이 누른 순서예요 (같으면 Claude 추천 순).",claude:"한국인 후기·별점·단체석·거리·가격을 합쳐 Claude가 매긴 순서예요.",rating:"트립어드바이저·구글 등 전 세계 평점 순서예요. 리뷰 수가 적으면 조금 낮춰 계산해요. 평점이 없는 곳은 맨 아래예요.",kr:"한국인 블로그·후기에서 많이 추천된 순서예요 (같으면 전체 평점 순).",dist:"헤난 가든에서 도보 거리 순 — 위치를 모르는 곳은 맨 아래예요.",price:"1인 예상 비용이 낮은 순 — 가격 정보가 없는 곳은 맨 아래예요."}[S.sort];
   $("#sortNote").textContent=note+" "+list.length+"곳.";
   el.innerHTML=list.length?list.map((p,i)=>venueCard(p,i+1)).join(""):'<div class="empty">찾는 곳이 없어요. 다른 말로 검색해 보세요.</div>';
   const dz=$("#dishes");

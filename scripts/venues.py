@@ -250,6 +250,14 @@ for c, v in V.items():
     v["sources"] = list(dict.fromkeys(v["sources"]))[:10]
     v.pop("key", None)
     out.append(v)
+# 전 세계 평점 보강 (data/sources/ratings.json: 검색으로 확인한 TripAdvisor·Google 등 평점)
+_rp = os.path.join(R, "data", "sources", "ratings.json")
+if os.path.exists(_rp):
+    _RT = {r["id"]: r for r in json.load(open(_rp)) if r.get("score")}
+    for v in out:
+        r = _RT.get(v.get("id"))
+        if r and (not v.get("rating") or (r.get("count") or 0) > (v["rating"].get("count") or 0)):
+            v["rating"] = dict(site=r.get("site") or "후기", score=r["score"], count=r.get("count"), seen="2026-11-24 검색")
 json.dump(out, open(os.path.join(R, "site", "venues.json"), "w"), ensure_ascii=False, separators=(",", ":"))
 # 7) Openverse 사진: 매장 사진(제목에 매장명+Boracay 확인된 것만) + 대표 음식 이미지
 OV = load("openverse.json", {"dish": {}, "venue": {}}) or {"dish": {}, "venue": {}}
