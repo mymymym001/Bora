@@ -14,7 +14,7 @@ const { chromium, devices } = require('playwright');
   ok(/망고쉐이크/.test(t)&&/×2/.test(t)&&/적정/.test(t),'mango shake row ×2 judged 적정 (₱230 each)');
   ok((await pg.$$eval('table.xt tbody tr',e=>e.length))===5,'5 expense rows in table');
   await pg.screenshot({path:'test/q-ledger.png',fullPage:true});
-  await pg.goto('http://localhost:8765/_test_live.html#home'); await pg.waitForSelector('#qh'); ok(await pg.isVisible('#qh'),'quick entry on home');
-  await pg.locator('#expPanel').scrollIntoViewIfNeeded(); await pg.screenshot({path:'test/q-home.png'});
+  await pg.goto('http://localhost:8765/_test_live.html#home'); await pg.waitForSelector('#chat'); ok(!(await pg.$('#likeRank')),'home has no likes ranking');
+  
   console.log('errors',JSON.stringify(errs)); await b.close();
 })();

@@ -717,9 +717,7 @@ function renderHome(){
    returnCardHTML()+
    '<section class="chat" id="chat" aria-label="가족 채팅"></section>'+
    upNextHTML(day,d<0?"첫날 미리보기":"오늘 일정")+checksHTML(day.k)+
-   expHomeHTML()+
    (ppl.length?'<div class="panel"><h3>가족 위치</h3><div class="ppl">'+ppl.map(([id,p])=>'<button type="button" data-gotoperson="'+esc(id)+'"><span class="f">'+esc(p.char)+'</span><span><b>'+esc(p.nick||"가족")+'</b><br><span class="fine">'+esc(p.label||"")+' · '+ago(p.at)+'</span></span></button>').join("")+'</div></div>':'')+
-   '<div class="panel"><div class="ph2"><h3>가족 찜 순위</h3><a href="#eat" class="more-l" data-famsort>전체 →</a></div><div id="likeRank">'+likeRankHTML(3)+'</div></div>'+
    '<div id="nowPicks">'+nowPicksHTML()+'</div>'+
 
    ''+

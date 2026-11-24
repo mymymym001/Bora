@@ -18,7 +18,7 @@ const { chromium, devices } = require('playwright');
   await pg.click('[data-expadd2]'); await pg.waitForSelector('#ex-what');
   await pg.fill('#ex-what','Subo 저녁'); await pg.fill('#ex-amt','6000'); await pg.click('[data-expsave]'); await pg.waitForTimeout(400);
   await pg.click('[data-expadd2]'); await pg.fill('#ex-what','환전 전 택시'); await pg.fill('#ex-amt','20'); await pg.click('[data-cur="USD"]'); await pg.fill('#ex-payer','엄마'); await pg.click('[data-expsave]'); await pg.waitForTimeout(400);
-  const ep=await pg.$eval('#expPanel',e=>e.innerText); ok(/7,278/.test(ep),'expense total ₱6,000 + $20(₱1,278) = ₱7,278: '+ep.split('\n').slice(1,3).join(' '));
+  ok(!(await pg.$('#expPanel')),'home has no fund panel');
   await pg.goto('http://localhost:8765/_test_live.html#ledger'); await pg.waitForSelector('#lbody table'); const st=await pg.$eval('#lbody',e=>e.innerText); console.log('  ledger:', st.split('\n').slice(1,8).join(' | '));
   ok(/수복/.test(st)&&/엄마/.test(st)&&/₱7,278/.test(st),'who-spent table and total ₱7,278'); await pg.screenshot({path:'test/f-settle.png'}); await pg.goto('http://localhost:8765/_test_live.html#home'); await pg.waitForSelector('#chat');
   await pg.screenshot({path:'test/f-home.png',fullPage:true});
