@@ -27,6 +27,6 @@ const { chromium, devices } = require('playwright');
   ok(/가져온 돈 \$1,200/.test(inf)&&!/\$2,800/.test(inf)&&/칼리보 공항세/.test(inf)&&/4U 포함/.test(inf),'info plan: $1,200 brought, airport tax, port 4U');
   await pg.locator('h3:has-text("예산 · 환전 계획")').scrollIntoViewIfNeeded(); await pg.screenshot({path:'test/b-plan.png'});
   await pg.goto('http://localhost:8765/_test_live.html#home'); await pg.waitForSelector('#expPanel'); ok(/₱3,972/.test(await pg.$eval('#expPanel',e=>e.innerText)),'home wallet panel');
-  await pg.goto('http://localhost:8765/_test_live.html#course'); await pg.waitForSelector('.slot.tip'); const c=await pg.evaluate(()=>document.body.innerText); ok(/약 \$200만/.test(c)&&/₱6,300/.test(c),'course tips updated');
+  await pg.goto('http://localhost:8765/_test_live.html#course'); await pg.waitForSelector('.slot.tip'); const c=await pg.evaluate(()=>document.body.innerText); ok(/1차 약 \$300/.test(c)&&/₱6,300/.test(c),'course tips updated');
   console.log('errors',JSON.stringify(errs)); await b.close();
 })();
