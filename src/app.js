@@ -640,7 +640,7 @@ function renderHome(){
    ((EXTRA.scenic||[]).length?'<div class="gal hero-sea" id="scenic">'+EXTRA.scenic.map((x,i)=>'<button type="button" data-scenic="'+i+'" aria-label="사진 크게 보기"><img src="'+esc(x.src)+'" alt="'+esc(x.caption||"보라카이 바다")+'"'+(i?' loading="lazy"':'')+'><span class="cap">'+esc(x.caption||"")+' · '+esc(x.author||"")+' · '+esc(x.license||"")+'</span></button>').join("")+'</div>':'')+
    '<div id="pin">'+pinHTML()+'</div>'+wxHomeHTML()+
    '<div class="quick q5">'+
-     Q('data-wxopen','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18h10a4 4 0 0 0 .5-7.97A6 6 0 0 0 6.2 11 3.5 3.5 0 0 0 7 18z"/></svg>','날씨·물때')+
+     Q('data-wxopen','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18h10a4 4 0 0 0 .5-7.97A6 6 0 0 0 6.2 11 3.5 3.5 0 0 0 7 18z"/></svg>','날씨·바다')+
      Q('data-phrases','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg>','회화 카드')+
      Q('data-expadd2',ICON.money,'지출 적기')+
      Q('data-driver="1"',ICON.hotel,'기사님 카드')+
@@ -1400,7 +1400,7 @@ function slotWx(day,it){
 function dayWx(day){ if(!WX) return ""; const d=WX.days[DAYDATE[day.k]]; if(!d) return ""; const [ic,lb]=wxIcon(d.code,1), u=uvLevel(d.uv);
   return '<div class="wxday">'+ic+' '+lb+' · '+d.tmin+'–'+d.tmax+'° · ☔ '+d.rain+'% · <span class="uv '+u[1]+'">자외선 '+Math.round(d.uv)+' '+u[0]+'</span> · 일몰 '+esc(d.sunset)+'</div>'; }
 function wxBeachLine(date){ const bp=beachPlan(date), ex=tideList().filter(e=>e.date===date);
-  return '<button type="button" class="wxmore" data-wxopen><span>'+(bp.none?'🌊 물때':'🏖️ 놀기 좋은 시간 <b class="num">'+(bp.pick.length?bp.pick.map(w=>hfmt(w.a)+'–'+hfmt(w.b)).join(', '):'실내 추천')+'</b>')+'<br><small>'+ex.map(e=>(e.hi?'만조 ':'간조 ')+hfmt(e.t)).join(' · ')+'</small></span><span class="w">시간별·물때 ›</span></button>'; }
+  return '<button type="button" class="wxmore" data-wxopen><span>'+(bp.none?'🌊 바닷물 시간':'🏖️ 놀기 좋은 시간 <b class="num">'+(bp.pick.length?bp.pick.map(w=>hfmt(w.a)+'–'+hfmt(w.b)).join(', '):'실내 추천')+'</b>')+'<br><small>'+ex.map(e=>(e.hi?'🌊 물 많음 ':'🏝️ 물 적음 ')+hfmt(e.t)).join(' · ')+'</small></span><span class="w">시간별·바다 ›</span></button>'; }
 function wxHomeHTML(){
   if(!WX) return '<div class="wx panel" id="wxCard"><div class="wxh"><b>보라카이 날씨</b><span class="fine">예보를 불러오는 중이에요 · 매일 아침 갱신</span></div><button type="button" class="wxmore" data-wxopen><span>시간별 날씨 · 밀물/썰물 · 놀기 좋은 시간</span><span class="w">열기 ›</span></button></div>';
   const n=new Date(Date.now()+8*3600e3), ds=n.toISOString().slice(0,10); const trip=Object.values(DAYDATE);
@@ -1417,7 +1417,7 @@ function wxHomeHTML(){
 /* ================= 날씨·바다 상세 (시간별 · 밀물/썰물 · 놀기 좋은 시간) ================= */
 function hfmt(x){ x=((x%24)+24)%24; let h=Math.floor(x), m=Math.round((x-h)*60); if(m===60){h=(h+1)%24;m=0;} return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0"); }
 function seaAt(date,h){ if(!WX||!WX.marine) return null; const r=WX.marine[date+"T"+String(h).padStart(2,"0")+":00"]; return r&&r[0]!=null?{lvl:r[0],wave:r[1],sst:r[2]}:null; }
-function tideList(){ /* 전체 기간의 만조·간조 (시간별 값을 포물선 보간) */
+function tideList(){ /* 전체 기간의 물 최고·최저 (시간별 값을 포물선 보간) */
   if(!WX||!WX.marine) return []; const ks=Object.keys(WX.marine).sort(), v=ks.map(k=>WX.marine[k][0]); const out=[];
   for(let i=1;i<v.length-1;i++){ const a=v[i-1],b=v[i],c=v[i+1]; if(a==null||b==null||c==null) continue;
     const hi=b>a&&b>=c, lo=b<a&&b<=c; if(!hi&&!lo) continue;
@@ -1436,7 +1436,7 @@ function beachPlan(date){
     let sc=100, why=[]; sc-=w.rain*0.6; if(w.code>=95) sc-=60;
     if(w.uv>=8){sc-=25;} else if(w.uv>=6){sc-=10;} else why.push("자외선 "+Math.round(w.uv));
     if(h<8) sc-=6;
-    if(s){ const r=(s.lvl-lo)/span, st=tideState(date,h); sc+=30*r-12; why.unshift(r>=0.65?"밀물 · 수영하기 좋음":r<=0.3?"썰물 · 얕은 물놀이":(st==="in"?"물 들어오는 중":st==="out"?"물 빠지는 중":"중간 물때")); if(s.wave>1) sc-=20; else if(s.wave>0.7) sc-=8; else why.push("파도 "+s.wave.toFixed(1)+"m"); }
+    if(s){ const r=(s.lvl-lo)/span, st=tideState(date,h); sc+=30*r-12; why.unshift(r>=0.65?"밀물 · 수영하기 좋음":r<=0.3?"썰물 · 얕은 물놀이":(st==="in"?"물 들어오는 중":st==="out"?"물 빠지는 중":"물 중간")); if(s.wave>1) sc-=20; else if(s.wave>0.7) sc-=8; else why.push("파도 "+s.wave.toFixed(1)+"m"); }
     if(w.feel>=35) sc-=5; if(w.rain<30) why.push("비 "+w.rain+"%");
     hs.push({h,sc,why,w,s}); }
   const win=[]; for(let i=0;i+1<hs.length;i++) if(hs[i+1].h===hs[i].h+1) win.push({a:hs[i].h,b:hs[i].h+2,sc:(hs[i].sc+hs[i+1].sc)/2,why:hs[i].why});
@@ -1454,10 +1454,10 @@ function tideSVG(date){
   const [sr,ss]=sunHours(date); const path=pts.map((p,i)=>(i?"L":"M")+X(p[0]).toFixed(1)+" "+Y(p[1]).toFixed(1)).join(" ");
   const ex=tideList().filter(e=>e.date===date);
   const n=new Date(Date.now()+8*3600e3), live=n.toISOString().slice(0,10)===date, nh=n.getUTCHours()+n.getUTCMinutes()/60;
-  return '<svg class="tide" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(+date.slice(5,7)+'/'+(+date.slice(8))+' 물때 그래프')+'">'+
+  return '<svg class="tide" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(+date.slice(5,7)+'/'+(+date.slice(8))+' 바닷물 높이 그래프')+'">'+
     '<rect x="'+X(sr)+'" y="4" width="'+(X(ss)-X(sr))+'" height="'+(H-26)+'" class="tday"/>'+
     '<path d="'+path+' L'+X(pts[pts.length-1][0])+' '+(H-22)+' L'+X(pts[0][0])+' '+(H-22)+'Z" class="tfill"/><path d="'+path+'" class="tline"/>'+
-    ex.map(e=>'<circle cx="'+X(e.t)+'" cy="'+Y(e.lvl)+'" r="4" class="'+(e.hi?'thi':'tlo')+'"/><text x="'+Math.min(W-30,Math.max(30,X(e.t)))+'" y="'+(e.hi?Y(e.lvl)-8:Math.min(H-26,Y(e.lvl)+16))+'" text-anchor="middle" class="tlab">'+(e.hi?'만조 ':'간조 ')+hfmt(e.t)+'</text>').join("")+
+    ex.map(e=>'<circle cx="'+X(e.t)+'" cy="'+Y(e.lvl)+'" r="4" class="'+(e.hi?'thi':'tlo')+'"/><text x="'+Math.min(W-30,Math.max(30,X(e.t)))+'" y="'+(e.hi?Y(e.lvl)-8:Math.min(H-26,Y(e.lvl)+16))+'" text-anchor="middle" class="tlab">'+(e.hi?'물 많음 ':'물 적음 ')+hfmt(e.t)+'</text>').join("")+
     (live?'<line x1="'+X(nh)+'" x2="'+X(nh)+'" y1="4" y2="'+(H-22)+'" class="tnow"/>':'')+
     [0,6,12,18].map(h=>'<text x="'+X(h)+'" y="'+(H-6)+'" text-anchor="middle" class="tax">'+h+'시</text>').join("")+'</svg>';
 }
@@ -1476,12 +1476,12 @@ function openWx(date){
       '<div class="panel bplan"><h3>🏖️ 놀기 좋은 시간</h3>'+pick+
       (bp.none?'':'<ul class="clean">'+(bp.uvHigh.length?'<li><b>피할 시간 '+rangeTxt(bp.uvHigh)+'</b> — 자외선 매우 강함. 그늘·래시가드·선크림 2시간마다.</li>':'')+(bp.rainy.length?'<li>☔ 비 올 확률 높은 시간: '+rangeTxt(bp.rainy)+'</li>':'')+
       '<li>🌅 노을 사진: <b class="num">'+hfmt(sunsetH-0.75)+'–'+hfmt(sunsetH)+'</b> (화이트비치 서쪽 바다)</li></ul>')+
-      '<p class="fine">밀물·비·자외선·파도를 같이 따져서 고른 시간이에요. 화이트비치는 썰물 때 물이 얕아지고 해초가 드러나서, 수영은 밀물 앞뒤가 좋아요. 아이들 얕은 물놀이는 물이 빠지는 중간 시간도 괜찮아요.</p></div>'+
-      '<div class="panel"><h3>🌊 밀물 · 썰물</h3>'+(ex.length?'<div class="tides">'+ex.map(e=>'<div class="'+(e.hi?'hi':'lo')+'"><small>'+(e.hi?'만조 (물 가장 높음)':'간조 (물 가장 낮음)')+'</small><b class="num">'+hfmt(e.t)+'</b><small class="num">'+(e.lvl>=0?'+':'')+e.lvl.toFixed(1)+'m</small></div>').join("")+'</div>'+tideSVG(date):'<p class="fine">바다 예보를 아직 받지 못했어요.</p>')+
+      '<p class="fine">밀물·비·자외선·파도를 같이 따져서 고른 시간이에요. 밀물은 바닷물이 해변 쪽으로 들어오는 것, 썰물은 바다 쪽으로 빠지는 거예요. 물이 빠지면 화이트비치는 얕아지고 해초가 보여서, 수영은 물이 많이 들어왔을 때가 좋아요. 아이들 얕은 물놀이는 물이 빠져 있을 때도 괜찮아요.</p></div>'+
+      '<div class="panel"><h3>🌊 밀물 · 썰물</h3>'+(ex.length?'<div class="tides">'+ex.map(e=>'<div class="'+(e.hi?'hi':'lo')+'"><small>'+(e.hi?'🌊 물 가장 많음':'🏝️ 물 가장 적음')+'</small><b class="num">'+hfmt(e.t)+'</b></div>').join("")+'</div>'+tideSVG(date):'<p class="fine">바다 예보를 아직 받지 못했어요.</p>')+
       '<p class="fine">Open-Meteo 바다 예측 모델(화이트비치 앞바다) 기준이라 실제와 30분~1시간 차이 날 수 있어요. 노란 칸은 해 떠 있는 시간.</p></div>'+
-      '<div class="panel"><h3>시간별</h3><div class="tbl"><table class="wxtbl"><thead><tr><th>시각</th><th>날씨</th><th>비</th><th>UV</th><th>물때</th><th>파도</th></tr></thead><tbody>'+
+      '<div class="panel"><h3>시간별</h3><div class="tbl"><table class="wxtbl"><thead><tr><th>시각</th><th>날씨</th><th>비</th><th>UV</th><th>바닷물</th><th>파도</th></tr></thead><tbody>'+
       Array.from({length:17},(_,i)=>i+6).map(h=>{const w=wxAt(date,h), sa=seaAt(date,h), ts=tideState(date,h); if(!w) return ''; const best=!bp.none&&bp.pick.some(p=>h>=p.a&&h<p.b);
-        return '<tr class="'+(best?'best':'')+'"><td class="num">'+h+'시'+(best?' 🏖️':'')+'</td><td>'+wxIcon(w.code,w.day)[0]+' <span class="num">'+w.t+'°</span></td><td class="num">'+(w.rain>=50?'<b class="warnt">'+w.rain+'%</b>':w.rain+'%')+'</td><td><span class="uv '+uvLevel(w.uv)[1]+'">'+Math.round(w.uv)+'</span></td><td>'+(ts==="in"?'↑ 밀물':ts==="out"?'↓ 썰물':'— 정조')+'</td><td class="num">'+(sa&&sa.wave!=null?sa.wave.toFixed(1)+'m':'')+'</td></tr>';}).join("")+
+        return '<tr class="'+(best?'best':'')+'"><td class="num">'+h+'시'+(best?' 🏖️':'')+'</td><td>'+wxIcon(w.code,w.day)[0]+' <span class="num">'+w.t+'°</span></td><td class="num">'+(w.rain>=50?'<b class="warnt">'+w.rain+'%</b>':w.rain+'%')+'</td><td><span class="uv '+uvLevel(w.uv)[1]+'">'+Math.round(w.uv)+'</span></td><td>'+(ts==="in"?'↑ 들어옴':ts==="out"?'↓ 빠짐':'— 멈춤')+'</td><td class="num">'+(sa&&sa.wave!=null?sa.wave.toFixed(1)+'m':'')+'</td></tr>';}).join("")+
       '</tbody></table></div><p class="fine">업데이트 '+esc(WX.updated.slice(5).replace("-","/"))+' (필리핀 시각) · 매일 아침 갱신 · 바다 수온 '+(seaAt(date,12)?Math.round(seaAt(date,12).sst)+'°':'-')+'</p></div>';
   }
   s.innerHTML='<div class="wrap"><div class="bar"><button type="button" data-close aria-label="닫기">✕</button><div class="t">날씨 · 바다</div></div><div class="page" style="padding-top:0">'+tabs+body+'</div></div>';
