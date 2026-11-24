@@ -619,6 +619,7 @@ document.addEventListener("click",e=>{
   if(el=T("[data-dishimg]")){ const d=DISHP[el.dataset.dishimg]; VIEW.list=[{src:d.src,cap:"대표 이미지("+(GLOSS[el.dataset.dishimg]||el.dataset.dishimg)+") · 이 매장 메뉴 사진 아님 · 사진: "+(d.author||"")+" · "+(d.license||""),page:d.page}]; openViewer(0); return; }
   if(T("[data-gofx]")){ location.hash="info"; return; }
   if(el=T("[data-sos]")){ const [en,ko,pr]=SOS[0]; const d=$("#driver"); d.innerHTML='<p class="big">'+esc(en)+'</p><p class="mid" style="color:#B8532F;font-weight:700">'+esc(pr)+'</p><p class="ko2" style="font-size:16px">'+esc(ko)+'<br>긴급번호 911 · 티롤 병원 (036) 288-3041</p><div class="saybig"><button type="button" class="say" data-sayen="'+esc(en)+'">'+SPK+'<span>영어로 듣기</span></button></div><button type="button" data-closedriver>닫기</button>'; d.hidden=false; return; }
+  if(el=T("[data-nowpick]")){ openNowPick(el.dataset.nowpick); return; }
   if(T("[data-gonow]")){ S.ecat="meal"; S.efil=["open"]; S.sort="dist"; }
   if(T("[data-wxopen]")){ openWx(); return; }
   if(el=T("[data-wxd]")){ openWx(el.dataset.wxd); return; }
@@ -649,18 +650,37 @@ setInterval(()=>{ const c=document.getElementById("clock"); if(c) c.innerHTML=cl
 function menuPhotos(p,n){ if(!MENUS) return []; const out=[], seen={};
   for(const x of allItems(p.id)){ const k=dishKey(x.n+" "+(x.ko||"")); if(!k||seen[k]||!DISHP[k]) continue; seen[k]=1; out.push({x,ph:DISHP[k]}); if(out.length>=n) break; }
   return out; }
+function nowPickList(){
+  const base=VEN.filter(p=>isFood(p)&&p.cat!=="fruit"&&isOpen(p)&&p.route&&coverOf(p));
+  const sc=p=>(p.rating?wRating(p):3.6)*2+(p.krPop||0)*0.6+(p.hasMenu?0.4:0)-p.route.walk.min*0.05;
+  let L=base.filter(p=>p.route.walk.min<=12).sort((a,b)=>sc(b)-sc(a));
+  if(L.length<9) L=L.concat(base.filter(p=>p.route.walk.min>12&&p.route.walk.min<=20).sort((a,b)=>sc(b)-sc(a)));
+  return L.slice(0,9);
+}
 function nowPicksHTML(){
   if(manilaDay()<0) return "";
-  const L=VEN.filter(p=>isFood(p)&&p.cat!=="fruit"&&isOpen(p)&&p.route&&p.route.walk.min<=12&&coverOf(p)&&p.hasMenu)
-    .map(p=>({p,s:(p.rating?wRating(p):3.6)*2+(p.krPop||0)*0.6-p.route.walk.min*0.04})).sort((a,b)=>b.s-a.s).slice(0,3);
-  if(!L.length) return "";
+  const L=nowPickList(); if(!L.length) return "";
   const h=new Date(Date.now()+8*3600e3).getUTCHours(), meal=h<10?"아침 후 간식":h<15?"점심":h<17?"간식·카페":h<21?"저녁":"야식";
-  return '<div class="sec-h"><h2>📍 지금 갈 만한 곳</h2><a href="#eat" class="more-l" data-gonow>더 보기 →</a></div><p class="fine" style="margin:-4px 0 8px">'+meal+' · 지금 영업 중 · 도보 12분 안 · 평점과 한국인 추천 순</p><div class="nowcards">'+
-    L.map(({p})=>{ const cv=coverOf(p), mp=menuPhotos(p,3);
-      return '<article class="nowcard"><button type="button" class="nc-img" data-open="'+esc(p.id)+'" aria-label="'+esc(dname(p))+' 자세히"><img src="'+esc(cv.src)+'" alt="" loading="lazy">'+(cv.rep?'<i>대표 사진</i>':'')+'</button>'+
-        '<div class="nc-b"><h3><button type="button" data-open="'+esc(p.id)+'">'+esc(dname(p))+'</button></h3><div class="mt num">'+(p.rating?'<span class="stars">★ '+p.rating.score+'</span> · ':'')+'도보 '+p.route.walk.min+'분'+(p.pp?' · 1인 '+rng(p.pp[0],p.pp[1],php):'')+(p.krPop>=2?' · <span class="kr">🇰🇷 한국인 추천</span>':'')+'</div>'+
-        (mp.length?'<div class="nc-menu">'+mp.map(({x,ph})=>'<button type="button" data-open="'+esc(p.id)+'"><img src="'+esc(ph.src)+'" alt="" loading="lazy"><span class="mn">'+esc(x.ko||x.n)+'</span><span class="pr num">'+(x.php?php(x.php):'')+'</span></button>').join("")+'</div>':'')+
-        '<div class="acts2"><button type="button" class="mini" data-open="'+esc(p.id)+'">메뉴판 보기</button>'+(p.route?'<button type="button" class="mini alt" data-onmap="'+esc(p.id)+'">길찾기</button>':'')+'</div></div></article>'; }).join("")+'</div>';
+  return '<div class="sec-h"><h2>📍 지금 갈 만한 곳</h2><a href="#eat" class="more-l" data-gonow>더 보기 →</a></div><p class="fine" style="margin:-4px 0 8px">'+meal+' · 지금 영업 중 · 헤난 가든에서 가까운 곳 · 누르면 메뉴 사진</p><div class="nowgrid">'+
+    L.map(p=>{ const cv=coverOf(p), o=openState(p);
+      return '<button type="button" class="ng" data-nowpick="'+esc(p.id)+'"><span class="ng-img"><img src="'+esc(cv.src)+'" alt="" loading="lazy">'+(p.rating?'<i>★'+p.rating.score+'</i>':'')+'</span>'+
+        '<b class="ng-n">'+esc(dname(p))+'</b>'+
+        '<span class="ng-m num">'+(p.pp?'₱'+p.pp[0].toLocaleString()+'~':'가격 미확인')+'</span>'+
+        '<span class="ng-m">🚶 '+p.route.walk.min+'분</span>'+
+        '<span class="ng-m ng-o">⏰ '+esc(o.t.replace(/^영업 중\s*·\s*/,"").replace(" 마감","까지").replace(/\s*·\s*출처마다 다름/,""))+'</span></button>'; }).join("")+'</div>';
+}
+function openNowPick(id){
+  const p=BYID[id]; if(!p) return; const s=$("#sheet"), cv=coverOf(p);
+  const draw=()=>{ const mp=menuPhotos(p,9), items=allItems(p.id).filter(x=>x.php).slice(0,8);
+    s.innerHTML='<div class="wrap"><div class="bar"><button type="button" data-close aria-label="닫기">✕</button><div class="t">'+esc(dname(p))+'</div></div><div class="page" style="padding-top:0">'+
+      '<div class="np-hero"><img src="'+esc(cv.src)+'" alt="">'+(cv.rep?'<i>대표 사진</i>':'')+'</div>'+
+      '<div class="np-info num"><span>'+(p.rating?'<b class="stars">★ '+p.rating.score+'</b> ('+Number(p.rating.count||0).toLocaleString()+')':'평점 없음')+'</span><span>🚶 헤난 가든에서 도보 '+p.route.walk.min+'분</span><span>'+openBadge(p)+'</span>'+(p.pp?'<span>1인 '+rng(p.pp[0],p.pp[1],php)+' · '+S.n+'명 '+rng(p.pp[0]*S.n,p.pp[1]*S.n,php)+'</span>':'')+(p.krPop>=2?'<span class="kr">🇰🇷 한국인 추천</span>':'')+'</div>'+
+      (p.krReview?'<p class="np-rv"><b>한국인 후기</b> '+esc(p.krReview)+'</p>':'')+
+      '<h3 class="np-h">🍽️ 메뉴 사진</h3>'+(mp.length?'<div class="np-menu">'+mp.map(({x,ph})=>'<figure><img src="'+esc(ph.src)+'" alt="" loading="lazy"><figcaption><b>'+esc(x.ko||x.n)+'</b>'+(x.ko&&x.n!==x.ko?'<small>'+esc(x.n)+'</small>':'')+(x.php?'<span class="num">'+php(x.php)+' · '+krw(x.php)+'</span>':'')+'</figcaption></figure>').join("")+'</div><p class="fine">메뉴 이름에 맞는 대표 음식 사진이에요 (실제 가게 사진 아님).</p>':'<p class="fine">이 가게는 메뉴 사진이 없어요.</p>')+
+      (items.length?'<h3 class="np-h">💵 메뉴 가격</h3><div class="np-list">'+items.map(x=>'<div><span>'+esc(x.ko||x.n)+'</span><b class="num">'+php(x.php)+'</b></div>').join("")+'</div>':'')+
+      '<div class="b2" style="margin-top:12px"><button type="button" class="btn" data-open="'+esc(p.id)+'">메뉴판 · 주문서</button><button type="button" class="btn alt" data-onmap="'+esc(p.id)+'">길찾기</button></div></div></div>';
+    s.hidden=false; document.body.style.overflow="hidden"; };
+  draw(); s.scrollTop=0; if(!MENUS) loadMenus().then(()=>{ if(!s.hidden) draw(); });
 }
 /* 귀국 준비 카드: 11/27 15:00 ~ 11/28 */
 function returnCardHTML(){
