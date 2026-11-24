@@ -650,6 +650,16 @@ setInterval(()=>{ const c=document.getElementById("clock"); if(c) c.innerHTML=cl
 function menuPhotos(p,n){ if(!MENUS) return []; const out=[], seen={};
   for(const x of allItems(p.id)){ const k=dishKey(x.n+" "+(x.ko||"")); if(!k||seen[k]||!DISHP[k]) continue; seen[k]=1; out.push({x,ph:DISHP[k]}); if(out.length>=n) break; }
   return out; }
+const CUISINE=[[/buffet|뷔페|unlimited|무한/i,"🥘 뷔페"],[/korean|samgy|삼겹|한식|bulgogi|불고기/i,"🇰🇷 한식"],[/japanese|sushi|ramen|일식|라멘/i,"🍣 일식"],[/mexican|taco|fajita|burrito|quesadilla/i,"🌮 멕시칸"],[/italian|pizza|pasta|carbonara|lasagna/i,"🍝 이탈리안"],[/thai|pad thai|tom yum/i,"🍜 태국"],[/indian|curry|biryani|naan/i,"🍛 인도"],[/greek|gyros|souvlaki|meze|hummus|mediterranean/i,"🥙 지중해"],[/bbq|ribs|grill/i,"🍖 바비큐·그릴"],[/filipino|sisig|adobo|sinigang|lechon|inasal|kare/i,"🍲 필리핀식"],[/seafood|crab|shrimp|lobster|oyster/i,"🦐 해산물"],[/burger|chicken|jollibee|mcdonald|kfc/i,"🍔 버거·치킨"]];
+const CAFETYPE=[[/ice ?cream|아이스크림|gelato|빙수|halo|soft serve/i,"🍦 디저트"],[/\bshakes?\b|smoothie(?! bowl)|쉐이크|juice/i,"🥤 쉐이크"],[/smoothie bowl|brunch|브런치|pancake|breakfast|toast|meatball|bowl/i,"🍳 브런치 카페"],[/muffin|머핀|bakery|bread|pastry|cake|tart/i,"🧁 베이커리 카페"]];
+function cuisineOf(p){
+  const head=[p.name,(p.best||[]).slice(0,4).join(" ")].join(" ");
+  if(p.buffet) return "🥘 뷔페";
+  if(p.cat==="dessert") return "🍦 디저트";
+  if(p.cat==="bar") return "🍹 바";
+  if(p.cat==="cafe"){ for(const [r,l] of CAFETYPE) if(r.test(head)) return l; return "☕ 카페"; }
+  const t=(p.cuisineEn||"")+" "+head; for(const [r,l] of CUISINE) if(r.test(t)) return l; return "🍽️ 식당"; }
+function blurb(p){ let t=(p.krReview||p.desc||"").replace(/\s+/g," ").trim(); t=t.split(/(?<=[.!?。])\s|(?<=요)\.?\s|,\s/)[0]; return t.length>42?t.slice(0,40)+"…":t; }
 function nowPickList(){
   const base=VEN.filter(p=>isFood(p)&&p.cat!=="fruit"&&isOpen(p)&&p.route&&coverOf(p));
   const sc=p=>(p.rating?wRating(p):3.6)*2+(p.krPop||0)*0.6+(p.hasMenu?0.4:0)-p.route.walk.min*0.05;
@@ -665,6 +675,8 @@ function nowPicksHTML(){
     L.map(p=>{ const cv=coverOf(p), o=openState(p);
       return '<button type="button" class="ng" data-nowpick="'+esc(p.id)+'"><span class="ng-img"><img src="'+esc(cv.src)+'" alt="" loading="lazy">'+(p.rating?'<i>★'+p.rating.score+'</i>':'')+'</span>'+
         '<b class="ng-n">'+esc(dname(p))+'</b>'+
+        '<span class="ng-t">'+esc(cuisineOf(p))+'</span>'+
+        (blurb(p)?'<span class="ng-d">'+esc(blurb(p))+'</span>':'')+
         '<span class="ng-m num">'+(p.pp?'₱'+p.pp[0].toLocaleString()+'~':'가격 미확인')+'</span>'+
         '<span class="ng-m">🚶 '+p.route.walk.min+'분</span>'+
         '<span class="ng-m ng-o">⏰ '+esc(o.t.replace(/^영업 중\s*·\s*/,"").replace(" 마감","까지").replace(/\s*·\s*출처마다 다름/,""))+'</span></button>'; }).join("")+'</div>';

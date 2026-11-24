@@ -102,6 +102,7 @@ for fn, defcat in (("kr_restaurants.json", "restaurant"), ("kr_cafes.json", "caf
         cat = p.get("category") or defcat
         v.setdefault("cat", CATK.get(cat, defcat))
         if p.get("korean_review"): v["krReview"] = p["korean_review"]
+        if p.get("cuisine") and not v.get("cuisineEn"): v["cuisineEn"] = p["cuisine"]
         if p.get("korean_popularity"): v["krPop"] = max(v.get("krPop", 0), POP.get(str(p["korean_popularity"]).split()[0].lower(), 0))
         r = p.get("rating")
         if isinstance(r, dict) and r.get("score"):
