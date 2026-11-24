@@ -1,13 +1,335 @@
 [
- {"name":"La Fiesta (Mandarin Bay Resort) - dinner buffet","type":"호텔 디너 뷔페","pp":[1388,1499],"priceNote":"성인 ₱1,388 (일~목) / ₱1,499 (금·토) · 2025년 11월 기사 기준","hoursNote":"저녁 뷔페 · 19:00부터 라이브 밴드","desc":"스테이션 2 해변에서 일몰 보며 레촌·필리핀·인터내셔널 요리 뷔페."},
- {"name":"Shabu Khan Unlimited Boracay","type":"무제한 샤부샤부·고기","pp":null,"priceNote":"페소 가격 미확인 · 예약 사이트 1인 약 $10–13","hoursNote":"점심 11:00–16:00 · 저녁 17:30–24:00","desc":"디몰 근처 망고 빌딩. 고기·샤부샤부 무한리필, 호핑 후에 많이 가요."},
- {"name":"LA-UD","type":"호텔 뷔페","pp":[1455,1945],"priceNote":"점심 ₱1,455 / 저녁 ₱1,945 · 2024년 블로그 기준, 현장 확인","hoursNote":"아침·점심·저녁","desc":"휴 호텔(스테이션 X) 안 뷔페."},
- {"name":"Eight by the Beach","type":"필리핀·인터내셔널 뷔페","pp":null,"priceNote":"예약 사이트 1인 약 $14 · 현장 확인","hoursNote":"점심·저녁 · 19:00–21:00 라이브 밴드","desc":"스테이션 3 해변. 레촌·카레카레 등 필리핀 요리."},
- {"name":"Nalka Seafood Bar","type":"해산물 무제한 주문","pp":[1299,1299],"priceNote":"1인 ₱1,299 · 예전 자료, 현장 확인","hoursNote":"12:00–20:00","desc":"메뉴에서 해산물을 원하는 만큼 주문하는 방식."},
- {"name":"Sea Breeze Cafe (Henann Regency)","ko":"씨브리즈 카페 (헤난 리젠시)","type":"호텔 디너 뷔페","lat":11.9588324,"lon":121.9273157,"coordSrc":"OSM Nominatim (헤난 리젠시)","pp":[849,849],"priceNote":"저녁 약 ₱849 (무제한 음료 +₱210) · 날짜 미상 블로그, 현장 확인","hoursNote":"저녁 17:30–21:00 · 20:00쯤 셰프 댄스 공연","desc":"헤난 리젠시 해변 쪽. 해산물·고기·디저트가 다양하고 공연이 있어요.","krReview":"해산물·고기·디저트가 다양하고 셰프 댄스 공연과 라이브 밴드가 있어 가격 대비 만족도가 높다는 후기."},
- {"name":"Garden Cafe (Henann Garden, our hotel)","ko":"가든 카페 (헤난 가든, 우리 호텔)","type":"호텔 뷔페","lat":11.9596921,"lon":121.9268232,"coordSrc":"호텔 안","pp":null,"priceNote":"조식 포함 · 디너 뷔페 가격은 프런트에 문의","hoursNote":"아침·저녁 뷔페","desc":"우리 호텔 안 뷔페. 아침은 포함이고, 저녁 뷔페 가격·투숙객 할인은 프런트에서 확인."},
- {"name":"White Cafe (Astoria Boracay)","ko":"화이트 카페 (아스토리아)","type":"호텔 뷔페","lat":11.9650663,"lon":121.9227686,"coordSrc":"OSM Nominatim (아스토리아)","pp":[750,850],"priceNote":"점심 ₱750 / 저녁 ₱850 · 2023년 기준, 현장 확인","hoursNote":"점심 11:30–14:00 · 저녁 18:00–21:30","desc":"스테이션 1 해변 아스토리아 리조트 안."},
- {"name":"Sunset View Restobar","ko":"선셋 뷰 레스토바","type":"필리핀 뷔페","pp":[600,900],"priceNote":"점심 ₱600 / 저녁 ₱900 · 0~5세 무료, 6~10세 20% 할인 · 2023년 기준","hoursNote":"점심 11:30–15:00 · 저녁 18:00–22:00","desc":"스테이션 2 화이트비치. 저렴한 편인 필리핀식 뷔페."},
- {"name":"Orient Festival Buffet","ko":"오리엔트 페스티벌 뷔페","type":"아시안 뷔페","lat":11.9606528,"lon":121.9285936,"coordSrc":"근사: 세이브모어 건물 (보라카이 푸드 앨리 3층)","pp":null,"priceNote":"예약 사이트 1인 약 AUD 15 · 현장 확인","hoursNote":"점심 11:30–15:30 · 저녁 17:30–21:00","desc":"메인로드 보라카이 푸드 앨리 3층, 에어컨 홀 약 300석. 가성비 뷔페."},
- {"name":"Paradise Garden Resort buffet","ko":"파라다이스 가든 리조트 뷔페","type":"호텔 뷔페","pp":null,"priceNote":"예약 사이트 1인 약 $12–14 · 현장 확인","hoursNote":"점심 11:30–15:00","desc":"스테이션 2·3 경계. 바다 전망·불쇼·레촌.","krReview":"바다 전망, 라이브 공연, 밤 불쇼, 레촌과 무제한 음료가 장점이라는 소개."}
+ {
+  "name": "La Fiesta (Mandarin Bay Resort) - dinner buffet",
+  "type": "호텔 디너 뷔페",
+  "pp": [
+   1388,
+   1499
+  ],
+  "priceNote": "성인 ₱1,388 (일~목) / ₱1,499 (금·토) · 2025년 11월 기사 기준",
+  "hoursNote": "저녁 뷔페 · 19:00부터 라이브 밴드",
+  "desc": "스테이션 2 해변에서 일몰 보며 레촌·필리핀·인터내셔널 요리 뷔페."
+ },
+ {
+  "name": "Shabu Khan Unlimited Boracay",
+  "type": "무제한 샤부샤부·고기",
+  "pp": null,
+  "priceNote": "페소 가격 미확인 · 예약 사이트 1인 약 $10–13",
+  "hoursNote": "점심 11:00–16:00 · 저녁 17:30–24:00",
+  "desc": "디몰 근처 망고 빌딩. 고기·샤부샤부 무한리필, 호핑 후에 많이 가요."
+ },
+ {
+  "name": "LA-UD",
+  "type": "호텔 뷔페",
+  "pp": [
+   1455,
+   1945
+  ],
+  "priceNote": "점심 ₱1,455 / 저녁 ₱1,945 · 2024년 블로그 기준, 현장 확인",
+  "hoursNote": "아침·점심·저녁",
+  "desc": "휴 호텔(스테이션 X) 안 뷔페."
+ },
+ {
+  "name": "Eight by the Beach",
+  "type": "필리핀·인터내셔널 뷔페",
+  "pp": null,
+  "priceNote": "예약 사이트 1인 약 $14 · 현장 확인",
+  "hoursNote": "점심·저녁 · 19:00–21:00 라이브 밴드",
+  "desc": "스테이션 3 해변. 레촌·카레카레 등 필리핀 요리."
+ },
+ {
+  "name": "Nalka Seafood Bar",
+  "type": "해산물 무제한 주문",
+  "pp": [
+   1299,
+   1299
+  ],
+  "priceNote": "1인 ₱1,299 · 예전 자료, 현장 확인",
+  "hoursNote": "12:00–20:00",
+  "desc": "메뉴에서 해산물을 원하는 만큼 주문하는 방식."
+ },
+ {
+  "name": "Sea Breeze Cafe (Henann Regency)",
+  "ko": "씨브리즈 카페 (헤난 리젠시)",
+  "type": "호텔 디너 뷔페",
+  "lat": 11.9588324,
+  "lon": 121.9273157,
+  "coordSrc": "OSM Nominatim (헤난 리젠시)",
+  "pp": [
+   849,
+   849
+  ],
+  "priceNote": "저녁 약 ₱849 (무제한 음료 +₱210) · 날짜 미상 블로그, 현장 확인",
+  "hoursNote": "저녁 17:30–21:00 · 20:00쯤 셰프 댄스 공연",
+  "desc": "헤난 리젠시 해변 쪽. 해산물·고기·디저트가 다양하고 공연이 있어요.",
+  "krReview": "해산물·고기·디저트가 다양하고 셰프 댄스 공연과 라이브 밴드가 있어 가격 대비 만족도가 높다는 후기."
+ },
+ {
+  "name": "Garden Cafe (Henann Garden, our hotel)",
+  "ko": "가든 카페 (헤난 가든, 우리 호텔)",
+  "type": "호텔 뷔페",
+  "lat": 11.9596921,
+  "lon": 121.9268232,
+  "coordSrc": "호텔 안",
+  "pp": null,
+  "priceNote": "조식 포함 · 디너 뷔페 가격은 프런트에 문의",
+  "hoursNote": "아침·저녁 뷔페",
+  "desc": "우리 호텔 안 뷔페. 아침은 포함이고, 저녁 뷔페 가격·투숙객 할인은 프런트에서 확인."
+ },
+ {
+  "name": "White Cafe (Astoria Boracay)",
+  "ko": "화이트 카페 (아스토리아)",
+  "type": "호텔 뷔페",
+  "lat": 11.9650663,
+  "lon": 121.9227686,
+  "coordSrc": "OSM Nominatim (아스토리아)",
+  "pp": [
+   750,
+   850
+  ],
+  "priceNote": "점심 ₱750 / 저녁 ₱850 · 2023년 기준, 현장 확인",
+  "hoursNote": "점심 11:30–14:00 · 저녁 18:00–21:30",
+  "desc": "스테이션 1 해변 아스토리아 리조트 안."
+ },
+ {
+  "name": "Sunset View Restobar",
+  "ko": "선셋 뷰 레스토바",
+  "type": "필리핀 뷔페",
+  "pp": [
+   600,
+   900
+  ],
+  "priceNote": "점심 ₱600 / 저녁 ₱900 · 0~5세 무료, 6~10세 20% 할인 · 2023년 기준",
+  "hoursNote": "점심 11:30–15:00 · 저녁 18:00–22:00",
+  "desc": "스테이션 2 화이트비치. 저렴한 편인 필리핀식 뷔페."
+ },
+ {
+  "name": "Orient Festival Buffet",
+  "ko": "오리엔트 페스티벌 뷔페",
+  "type": "아시안 뷔페",
+  "lat": 11.9606528,
+  "lon": 121.9285936,
+  "coordSrc": "근사: 세이브모어 건물 (보라카이 푸드 앨리 3층)",
+  "pp": null,
+  "priceNote": "예약 사이트 1인 약 AUD 15 · 현장 확인",
+  "hoursNote": "점심 11:30–15:30 · 저녁 17:30–21:00",
+  "desc": "메인로드 보라카이 푸드 앨리 3층, 에어컨 홀 약 300석. 가성비 뷔페."
+ },
+ {
+  "name": "Paradise Garden Resort buffet",
+  "ko": "파라다이스 가든 리조트 뷔페",
+  "type": "호텔 뷔페",
+  "pp": null,
+  "priceNote": "예약 사이트 1인 약 $12–14 · 현장 확인",
+  "hoursNote": "점심 11:30–15:00",
+  "desc": "스테이션 2·3 경계. 바다 전망·불쇼·레촌.",
+  "krReview": "바다 전망, 라이브 공연, 밤 불쇼, 레촌과 무제한 음료가 장점이라는 소개."
+ },
+ {
+  "name": "Sapphire (Henann Crystal Sands)",
+  "ko": "사파이어 (헤난 크리스털 샌즈)",
+  "type": "호텔 뷔페",
+  "pp": [
+   799,
+   1149
+  ],
+  "priceNote": "2023 listing (via blog guides): lunch P799, seafood dinner buffet P1,149; a reviewer cites ~P1,200. Called the priciest Henann buffet. No current official rate found. Kids policy unknown. · 현장 확인",
+  "hoursNote": "Seafood buffet dinner 5:30-9:00 PM (official Henann page) · 외부 손님 가능",
+  "desc": "Station 1 · Lunch buffet; nightly dinner buffet / seafood dinner buffet (seafood on select days per some guides). Breakfast buffet i",
+  "krReview": null,
+  "lat": 11.96285,
+  "lon": 121.92402,
+  "coordSrc": "OSM 호텔 위치"
+ },
+ {
+  "name": "Palm Tree (Henann Palm Beach)",
+  "ko": "팜트리 (헤난 팜비치)",
+  "type": "호텔 뷔페",
+  "pp": [
+   899,
+   949
+  ],
+  "priceNote": "Blog guide (undated, ~2023-24): Sun-Thu P899, Fri-Sat P949. A 2025 Trip.com reviewer paid P949 + P250 unlimited drinks. Reviewer: senior citizen card not honored. Kids policy unknown. · 현장 확인",
+  "hoursNote": "Dinner 5:30-9:00 PM · 외부 손님 가능",
+  "desc": "Station 2 · Daily BBQ-night dinner buffet (grills, lechon, sisig, Japanese/Chinese/Italian/Mexican). Breakfast buffet for guests.",
+  "krReview": null,
+  "lat": 11.956689,
+  "lon": 121.927922,
+  "coordSrc": "OSM 호텔 위치"
+ },
+ {
+  "name": "Lagoon Cafe (Henann Lagoon)",
+  "ko": "라군 카페 (헤난 라군)",
+  "type": "호텔 뷔페",
+  "pp": null,
+  "priceNote": "No price found. Henann says five of its Boracay resorts run daily walk-in buffets; unconfirmed whether Lagoon Cafe is one. · 정보 적음, 프런트에 확인",
+  "hoursNote": "Breakfast 6:00-10:00 AM (Tiket.com); lunch/dinner hours unknown · 외부 손님 가능 여부 확인",
+  "desc": "Station 2 (behind beachfront) · Main restaurant serving buffet meals for breakfast, lunch and dinner (booking-site descriptions); mandatory common buffe",
+  "krReview": null,
+  "lat": 11.958426,
+  "lon": 121.929028,
+  "coordSrc": "OSM 호텔 위치"
+ },
+ {
+  "name": "Orchard Cafe (Henann Park)",
+  "ko": "오차드 카페 (헤난 파크)",
+  "type": "호텔 뷔페",
+  "pp": null,
+  "priceNote": "No price found; buffet dinner evidence only from room-package terms. · 정보 적음, 프런트에 확인",
+  "hoursNote": "외부 손님 가능 여부 확인",
+  "desc": "Station 2 (off-beach) · Buffet breakfast; common buffet dinner (packages / holiday mandatory).",
+  "krReview": null
+ },
+ {
+  "name": "Sea Salt (Henann Prime Beach)",
+  "ko": "씨솔트 (헤난 프라임 비치)",
+  "type": "호텔 뷔페",
+  "pp": null,
+  "priceNote": "No price found. · 정보 적음, 프런트에 확인",
+  "hoursNote": "외부 손님 가능 여부 확인",
+  "desc": "Station 1 · Asian-fusion restaurant; only evidence of a buffet is the mandatory common buffet dinner on NYE (Dec 31 2026) and Chines",
+  "krReview": null,
+  "lat": 11.9714915,
+  "lon": 121.9179735,
+  "coordSrc": "OSM 호텔 위치"
+ },
+ {
+  "name": "Sands Restaurant (Discovery Boracay)",
+  "ko": "샌즈 (디스커버리 쇼어스)",
+  "type": "호텔 뷔페",
+  "pp": [
+   850,
+   1800
+  ],
+  "priceNote": "Discovery announcement Jan 2025: weekend buffet P1,499 nett/person; Klook reviewer: P1,800 nett; Trip.com: breakfast buffet PHP 850/adult. 2017 holiday buffets were P1,250++. Kids policy unknown. · 현장 확인",
+  "hoursNote": "Weekend dinner (Fri/Sat-ish; exact days/hours unconfirmed) · 예약 권장",
+  "desc": "Station 1 · Weekend dinner buffet (Sands Weekend Buffet, sold on Klook); daily breakfast buffet (non-guest price listed). Holiday bu",
+  "krReview": null
+ },
+ {
+  "name": "Cha Cha's Beach Cafe (Coast Boracay)",
+  "ko": "차차스 비치 카페 (코스트)",
+  "type": "호텔 조식 뷔페",
+  "pp": [
+   550,
+   750
+  ],
+  "priceNote": "Lakad Pilipinas Apr 2023: P645, kids 0-5 free, 6-10 half price; 2017 blog: P550+ adult / P300+ kids; another guide cites P750 (undated). · 현장 확인",
+  "hoursNote": "6:00-10:30 AM (2023); other source 7-10 AM · 외부 손님 가능",
+  "desc": "Station 2 · Breakfast buffet (sushi counter, seafood) open to non-guests.",
+  "krReview": null,
+  "lat": 11.957619,
+  "lon": 121.927192,
+  "coordSrc": "OSM 호텔 위치"
+ },
+ {
+  "name": "La Carmela Hotel Buffet",
+  "ko": "라 카르멜라 호텔 뷔페",
+  "type": "호텔 뷔페",
+  "pp": null,
+  "priceNote": "Only reseller prices: WAUG KRW 8,891-9,534 list / KRW 5,891-6,534 coupon (2025-26 snapshots); WAUG EN ~USD 6. Very cheap; verify official rate. Kids policy unknown. · 현장 확인",
+  "hoursNote": "Lunch 11:30 AM-2:00 PM; dinner 6:00-9:00 PM · 예약 권장",
+  "desc": "Station 2 · Lunch and dinner buffet with unlimited drinks (Filipino), sold via WAUG/KKday/Pelago/Trip.com.",
+  "krReview": "와그 판매 페이지는 리조트 앞 해변에서 즐기는 가성비 좋은 뷔페로 소개(실제 후기 본문은 미확인).",
+  "lat": 11.955761,
+  "lon": 121.929151,
+  "coordSrc": "OSM 호텔 위치"
+ },
+ {
+  "name": "Ocean Club Korean BBQ Beach Buffet",
+  "ko": "오션클럽 해변 고기 뷔페",
+  "type": "해변 고기 뷔페 (호텔)",
+  "pp": null,
+  "priceNote": "WAUG: USD 15.20 list / USD 11.40 promo (2025-26 snapshot). No PHP price found. · 현장 확인",
+  "hoursNote": "Lunch 11:00 AM-2:00 PM; dinner 6:00-10:00 PM · 예약 권장",
+  "desc": "Station 1 · All-you-can-eat Korean-style BBQ buffet on the beach, lunch and dinner, with pool/bubble party.",
+  "krReview": null,
+  "lat": 11.951066,
+  "lon": 121.930668,
+  "coordSrc": "OSM 호텔 위치"
+ },
+ {
+  "name": "Pelican Sky Bar & Restaurant (The Tides Hotel)",
+  "ko": "펠리칸 스카이바 (더 타이즈)",
+  "type": "호텔 뷔페",
+  "pp": [
+   799,
+   799
+  ],
+  "priceNote": "Wanderlog listing (undated): grill buffet P799/pax. Klook calls it one of the most affordable buffets. · 정보 적음, 프런트에 확인",
+  "hoursNote": "Dinner 6:00-10:00 PM daily · 외부 손님 가능",
+  "desc": "Station 2 (main road, off-beach) · Rooftop grill buffet dinner; Mongolian dinner + unlimited cocktails package on Klook.",
+  "krReview": null,
+  "lat": 11.962183,
+  "lon": 121.925494,
+  "coordSrc": "OSM 호텔 위치"
+ },
+ {
+  "name": "Parasol (Astoria Current)",
+  "ko": "파라솔 (아스토리아 커런트)",
+  "type": "호텔 뷔페",
+  "pp": null,
+  "priceNote": "Pelago shows placeholder price only. Klook cites P750/person for White Cafe buffet (undated). · 현장 확인",
+  "hoursNote": "Lunch 11:30 AM-2:00 PM; dinner 6:00-9:30 PM · 예약 권장",
+  "desc": "Station 3 · Beachfront lunch buffet with unlimited juice and themed dinner buffet (packaged with White Cafe on Pelago).",
+  "krReview": null
+ },
+ {
+  "name": "Beach Cafe (Le Soleil de Boracay)",
+  "ko": "비치 카페 (르 솔레일)",
+  "type": "호텔 뷔페",
+  "pp": [
+   500,
+   500
+  ],
+  "priceNote": "2017 blog: ~P500/head. Very old; current operation unverified. · 정보 적음, 프런트에 확인",
+  "hoursNote": "외부 손님 가능 여부 확인",
+  "desc": "Station 2 · Filipino-themed dinner buffet.",
+  "krReview": null,
+  "lat": 11.959967,
+  "lon": 121.925787,
+  "coordSrc": "OSM 호텔 위치"
+ },
+ {
+  "name": "The District Boracay breakfast buffet",
+  "ko": "더 디스트릭트 조식 뷔페",
+  "type": "호텔 조식 뷔페",
+  "pp": [
+   620,
+   620
+  ],
+  "priceNote": "Travelocity listing (undated): PHP 620/person. · 정보 적음, 프런트에 확인",
+  "hoursNote": "7:00-10:00 AM · 외부 손님 가능 여부 확인",
+  "desc": "Station 2 · Buffet breakfast for a fee; older brunch buffet promo.",
+  "krReview": null,
+  "lat": 11.9628,
+  "lon": 121.924385,
+  "coordSrc": "OSM 호텔 위치"
+ },
+ {
+  "name": "Evolution (Four Points by Sheraton Boracay)",
+  "ko": "에볼루션 (포포인츠 쉐라톤)",
+  "type": "호텔 뷔페",
+  "pp": [
+   847,
+   950
+  ],
+  "priceNote": "Expedia listing: adults ~PHP 847-950, children ~PHP 423.50-475. · 정보 적음, 프런트에 확인",
+  "hoursNote": "6:00-10:00 AM · 외부 손님 가능 여부 확인",
+  "desc": "unverified (check map) · Buffet breakfast for a surcharge; no lunch/dinner buffet found.",
+  "krReview": null
+ },
+ {
+  "name": "Sea Wind Resort breakfast buffet",
+  "ko": "씨윈드 리조트 조식 뷔페",
+  "type": "호텔 조식 뷔페",
+  "pp": null,
+  "priceNote": "No price found. · 정보 적음, 프런트에 확인",
+  "hoursNote": "6:00-10:00 AM · 외부 손님 가능 여부 확인",
+  "desc": "Station 1 · Buffet breakfast for a fee.",
+  "krReview": null,
+  "lat": 11.970236,
+  "lon": 121.918316,
+  "coordSrc": "OSM 호텔 위치"
+ }
 ]

@@ -786,7 +786,7 @@ function rankVenues(list,sort){
   return list.slice().sort((a,b)=>key(a)-key(b));
 }
 function shortSite(s){ s=String(s||""); return /trip ?advisor/i.test(s)?"트립어드바이저":/google/i.test(s)?"구글":/trip\.com/i.test(s)?"Trip.com":/guru/i.test(s)?"레스토랑구루":s.slice(0,12); }
-function dname(p){ return p.name.replace(/\s*\([^)]*\)/g,"").replace(/\s+-\s+.*$/,"").trim()||p.name; }
+function dname(p){ if(p.buffet){ const m=p.name.match(/^(.*?)\s*\(([^)]+)\)/); if(m) return m[1].trim()+" · "+m[2].replace(/^(at|in)\s+/i,"").trim(); } return p.name.replace(/\s*\([^)]*\)/g,"").replace(/\s+-\s+.*$/,"").trim()||p.name; }
 function venueCard(p,rank){
   const gc=groupCost(p,S.n), cs=claudeScore(p), cv=coverOf(p);
   const rating=p.rating?'<span class="stars">★ '+p.rating.score+'</span>'+(p.rating.count?'<span class="rc">('+Number(p.rating.count).toLocaleString()+(p.rating.site?' · '+esc(shortSite(p.rating.site)):'')+')</span>':''):'<span class="rc">평점 없음</span>';
