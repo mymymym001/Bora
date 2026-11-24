@@ -165,7 +165,7 @@ async function postChat(kind,text,extra){
   catch(e){ chatError(e); return false; }
 }
 function chatError(e){ const m=$("#chatMsg"); if(!m) return;
-  m.textContent=e&&e.code==="invalid_argument"?"보기 전용 권한이라 글을 쓸 수 없어요. 소유자에게 편집자 초대를 요청하세요.":e&&e.code==="quota_exceeded"?"저장 공간이 가득 찼어요.":"전송하지 못했어요. 잠시 뒤 다시 시도하세요."; m.hidden=false; if(e&&e.code==="invalid_argument"){LIVE.canWrite=false;renderChat();} }
+  m.textContent=e&&e.code==="invalid_argument"?"보기 전용 권한이라 글을 쓸 수 없어요. 소유자에게 ‘보기 전용’이 아닌 권한으로 다시 초대해 달라고 하세요.":e&&e.code==="quota_exceeded"?"저장 공간이 가득 찼어요.":"전송하지 못했어요. 잠시 뒤 다시 시도하세요."; m.hidden=false; if(e&&e.code==="invalid_argument"){LIVE.canWrite=false;renderChat();} }
 async function shareLocation(x,y){
   if(!canPost()) return;
   const label=nearLabel(x,y);
@@ -277,11 +277,11 @@ function renderChat(scroll){
   const latestNotice=[...LIVE.chat].reverse().find(m=>m.kind==="notice");
   const me=LIVE.me;
   let body;
-  if(st==="off") body='<p class="chatmsg">채팅과 위치 공유는 claude.ai에 로그인하고 이 페이지에 <b>편집자로 초대받은</b> 가족만 쓸 수 있어요. 지금 보는 화면에서는 꺼져 있어요.</p>';
+  if(st==="off") body='<p class="chatmsg">채팅과 위치 공유는 claude.ai에 로그인하고 이 페이지에 <b>사용 권한(보기 전용 아님)으로 초대받은</b> 가족만 쓸 수 있어요. 지금 보는 화면에서는 꺼져 있어요.</p>';
   else body='<ol class="msgs" id="msgs" aria-live="polite">'+(LIVE.chat.length?LIVE.chat.map(msgHTML).join(""):'<li class="chatempty">'+(st==="live"?"아직 메시지가 없어요. 첫 인사를 남겨 보세요.":"메시지를 불러오는 중…")+'</li>')+'</ol>'+
     (writable?'<form class="chatform" id="chatForm">'+(true?'<button type="button" class="nt" id="noticeToggle" aria-pressed="'+noticeOn+'" title="공지로 고정">공지</button>':'')+'<label for="chatIn" class="sr" hidden>메시지</label><input id="chatIn" maxlength="500" autocomplete="off" placeholder="'+(noticeOn?"공지 내용 (채팅 위에 고정돼요)":"메시지 입력")+'"><button class="send" type="submit">보내기</button></form>'+
-      '<div class="chatbar"><button type="button" class="btn loc" data-pick>'+(myLoc()?"내 위치 다시 알리기":"내 위치 알리기")+'</button><button type="button" class="btn alt" data-profile>'+esc(me.char)+' '+esc(me.nick||"이름 정하기")+'</button></div>'
-     :(st==="live"||st==="slow"?'<p class="chatmsg">'+(LIVE.uid?"보기 전용이에요. 글쓰기와 위치 공유는 편집자로 초대받은 가족만 할 수 있어요.":"로그인하면 글을 쓸 수 있어요.")+'</p>':''));
+      '<div class="chatbar"><button type="button" class="btn loc" data-pick>'+(myLoc()?"내 위치 다시 알리기":"내 위치 알리기")+'</button><button type="button" class="btn alt" data-profile aria-label="내 이름·캐릭터 바꾸기">'+esc(me.char)+' '+esc(me.nick||"이름 정하기")+(me.nick?' <span class="edit-i">✏️ 바꾸기</span>':'')+'</button></div>'
+     :(st==="live"||st==="slow"?'<p class="chatmsg">'+(LIVE.uid?"보기 전용이에요. 글쓰기와 위치 공유는 사용 권한(보기 전용 아님)으로 초대받은 가족만 할 수 있어요.":"로그인하면 글을 쓸 수 있어요.")+'</p>':''));
   const keep=document.activeElement&&document.activeElement.id==="chatIn"; const val=keep?$("#chatIn").value:"";
   el.className="chat"+(chatBig?" big":"");
   el.innerHTML='<header><h2>가족 채팅</h2><span class="live'+(st==="live"?" on":"")+'"><i></i>'+stTxt+'</span>'+(st!=="off"?'<button type="button" class="tiny" data-chatsize>'+(chatBig?"작게":"크게")+'</button>':'')+'</header>'+
@@ -354,8 +354,8 @@ function renderPick(){
 /* ---------- profile ---------- */
 function openProfile(after,first){
   const s=$("#sheet"); const me=LIVE.me;
-  s.innerHTML='<div class="wrap"><div class="bar"><button type="button" data-close aria-label="닫기">✕</button><div class="t">내 캐릭터</div></div><div class="page" style="padding-top:0">'+
-   (first?'<h2 style="margin:0">환영해요! 먼저 이름과 캐릭터를 정해요</h2>':'')+'<p class="lead">지도와 채팅에 이 캐릭터와 이름으로 보여요.</p><div class="field"><label for="nick">이름 (가족이 알아볼 수 있게)</label><input id="nick" maxlength="10" value="'+esc(me.nick)+'" placeholder="예: 엄마, 수복"></div>'+
+  s.innerHTML='<div class="wrap"><div class="bar"><button type="button" data-close aria-label="닫기">✕</button><div class="t">내 이름 · 캐릭터</div></div><div class="page" style="padding-top:0">'+
+   (first?'<h2 style="margin:0">환영해요! 먼저 이름과 캐릭터를 정해요</h2>':'')+'<p class="lead">지도와 채팅에 이 캐릭터와 이름으로 보여요. 언제든 다시 바꿀 수 있어요 (채팅 아래 내 이름 버튼).</p><div class="field"><label for="nick">이름 (가족이 알아볼 수 있게)</label><input id="nick" maxlength="10" value="'+esc(me.nick)+'" placeholder="예: 엄마, 수복"></div>'+
    '<div class="chars" role="group" aria-label="캐릭터">'+CHARS.map(c=>'<button type="button" data-char="'+c+'" aria-pressed="'+(c===me.char)+'">'+c+'</button>').join("")+'</div>'+
    '<div class="field"><span>내 색깔 (채팅 말풍선·지도 테두리에 표시돼요)</span><div class="colors" role="group" aria-label="내 색깔">'+UCOLORS.map(([c,n])=>'<button type="button" data-ucolor="'+c+'" aria-label="'+n+'" aria-pressed="'+(c===ucolorOf(LIVE.uid,me.color))+'" style="--sw:'+c+'"></button>').join("")+'</div></div>'+
    '<button type="button" class="btn" data-saveprofile>저장</button><p class="fine">위치는 직접 알릴 때만 공유돼요. 휴대폰 GPS는 이 페이지에서 쓸 수 없어서 지도를 눌러 알리는 방식이에요.</p></div></div>';
@@ -439,7 +439,7 @@ async function uploadPhoto(p,file){
     const a=await LIVE.assets.upload(blob);
     await LIVE.db.collection("photos").add({place:p.id,asset:a.id,by:LIVE.uid,nick:LIVE.me.nick||"가족",char:LIVE.me.char,at:Date.now()});
     msg.textContent="올렸어요. 가족 모두에게 보여요.";
-  }catch(e){ msg.textContent=e&&e.code==="quota_exceeded"?"저장 공간이 가득 찼어요.":"올리지 못했어요. 편집자 권한이 있는지 확인하세요."; }
+  }catch(e){ msg.textContent=e&&e.code==="quota_exceeded"?"저장 공간이 가득 찼어요.":"올리지 못했어요. 보기 전용 권한인지 확인하세요."; }
 }
 function shrink(file,max){
   return new Promise((res,rej)=>{ const img=new Image(); const u=URL.createObjectURL(file);
@@ -533,7 +533,7 @@ function renderInfo(){
   '<div class="panel"><h3>숙소 — 헤난 가든 리조트</h3><dl class="kv num"><dt>객실</dt><dd>그랜드룸 3개 (방당 기본 2명, 최대 3명)</dd><dt>체크인/아웃</dt><dd>15:00 / 12:00</dd><dt>추가 1명</dt><dd>1박 ₱1,232 (조식 포함) × 4박 = <b>'+php(extra)+'</b> ('+krw(extra)+')</dd><dt>수영장</dt><dd>야외 4개 + 키즈풀, 08:00–22:00</dd><dt>위치</dt><dd>스테이션 2, 화이트비치에서 한 블록 안쪽</dd></dl>'+
    '<div class="callout warn"><b>체크인 때 1명 추가 등록</b>예약 시 인원을 추가하지 못했으니, 체크인할 때 3명이 쓰는 방에 1명을 추가해요. 요금은 헤난 예약 페이지 문구 기준이니 현장에서 다시 확인하세요.</div></div>'+
   '<div class="panel"><h3>환전 준비</h3><p>달러 현금을 가져가요. 환전소 기준 <b class="num">$100 ≈ '+php(100*FXC)+' ≈ '+krw(100*FXC)+'</b>. 계산은 이 탭 맨 위 환율 계산기로.</p></div>'+
-  '<div class="panel"><h3>채팅·위치 공유 쓰는 법</h3><ul class="clean"><li>이 페이지 소유자가 공유 메뉴에서 가족을 <b>이메일로 편집자 초대</b>해야 글쓰기·위치 공유가 돼요. 링크만 받은 사람은 볼 수만 있어요.</li><li>처음에 이름과 캐릭터를 정하고, ‘내 위치 알리기’ → 지도에서 있는 곳을 누르면 가족 지도에 캐릭터가 떠요.</li><li>휴대폰 GPS는 이 페이지에서 쓸 수 없어서 자동으로 따라가지 않아요. 움직이면 다시 알려 주세요.</li><li>가족 캐릭터를 누르고 ‘따라가기’를 누르면 그 사람까지 가는 길과 시간이 나와요.</li></ul></div>'+
+  '<div class="panel"><h3>채팅·위치 공유 쓰는 법</h3><ul class="clean"><li>이 페이지 소유자가 공유 메뉴에서 가족을 <b>이메일로 초대 (보기 전용 말고 사용 권한)</b>해야 글쓰기·위치 공유가 돼요. 링크만 받은 사람은 볼 수만 있어요.</li><li>처음에 이름과 캐릭터를 정하고, ‘내 위치 알리기’ → 지도에서 있는 곳을 누르면 가족 지도에 캐릭터가 떠요.</li><li>휴대폰 GPS는 이 페이지에서 쓸 수 없어서 자동으로 따라가지 않아요. 움직이면 다시 알려 주세요.</li><li>가족 캐릭터를 누르고 ‘따라가기’를 누르면 그 사람까지 가는 길과 시간이 나와요.</li></ul></div>'+
   '<div class="panel"><h3>날씨 · 시간</h3><ul class="clean"><li>11월 말은 북동풍(아미한) 시작 — 화이트비치(서쪽)는 잔잔, 불라복 비치(동쪽)는 바람이 세요.</li><li>일몰 약 17:25.</li><li>필리핀 = 한국 − 1시간.</li></ul></div>'+
   '<div class="panel"><h3>긴급 연락처</h3><dl class="kv num"><dt>국가 긴급번호</dt><dd>911</dd><dt>티롤 병원 (24시간 응급실)</dt><dd>(036) 288-3041 · '+plink("tirol","지도")+'</dd><dt>주필리핀 대사관 (긴급)</dt><dd>+63-917-817-5703</dd><dt>대사관 대표</dt><dd>+63-2-8856-9210</dd><dt>영사콜센터 (24시간)</dt><dd>+82-2-3210-0404</dd></dl><p class="fine">전화 링크는 앱 안에서 작동하지 않을 수 있어 번호를 글자로 적었어요. 티롤 병원은 간단한 응급만 가능하고 중증은 칼리보로 이송돼요.</p></div>'+
   '<div class="panel"><h3>지도에 표시하지 않은 곳</h3>'+D.unplaced.map(u=>'<p><b>'+esc(u.name)+' ('+esc(u.ko)+')</b> — '+esc(u.note)+' <a href="'+esc(u.gmaps)+'" target="_blank" rel="noopener">구글 지도 ↗</a></p>').join("")+'</div>'+
@@ -583,7 +583,7 @@ document.addEventListener("click",e=>{
   if(T("[data-chatsize]")){ chatBig=!chatBig; renderChat(); return; }
   if(T("#noticeToggle")){ noticeOn=!noticeOn; renderChat(); const i=$("#chatIn"); if(i) i.focus(); return; }
   if(el=T("[data-locx]")){ const x=+el.dataset.locx,y=+el.dataset.locy; if(MAP){ MAP.flyTo(x,y); $("#mapbox").scrollIntoView({block:"center",behavior:"smooth"}); } return; }
-  if(T("[data-expadd]")||T("[data-expadd2]")){ if(!canPost()){ const m=$("#chatMsg"); if(m){m.textContent="경비 기록은 편집자로 초대받은 가족만 할 수 있어요.";m.hidden=false;} return; } openExpForm(); return; }
+  if(T("[data-expadd]")||T("[data-expadd2]")){ if(!canPost()){ const m=$("#chatMsg"); if(m){m.textContent="경비 기록은 사용 권한으로 초대받은 가족만 할 수 있어요.";m.hidden=false;} return; } openExpForm(); return; }
   if(T("[data-expsave]")){ saveExp(); return; }
   if(T("[data-expall]")){ openExpAll(); return; }
   if(el=T("[data-expdel]")){ const id=el.dataset.expdel; LIVE.db.doc("expenses/"+id).delete().then(()=>{ setTimeout(()=>{ if((location.hash||"").slice(1)==="ledger"&&$("#sheet").hidden) renderLedger(); else openExpAll(); },150); }).catch(()=>{}); return; }
@@ -1021,7 +1021,7 @@ async function saveExp(){
   const v={by:LIVE.uid,payer,what,where:($("#ex-where").value||"").trim().slice(0,30),amt:a,cur:c,php:Math.round(p*100)/100,qty:Math.max(1,parseInt($("#ex-qty").value)||1),cat:$("#ex-cat").value,menu:$("#ex-menu").value||"",src:(document.querySelector("#ex-src [aria-pressed=true]")||{dataset:{src:"공금"}}).dataset.src,at:Date.now()};
   try{ await LIVE.db.collection("expenses").add(v); closeSheet(); const j=judge(v); postChat("msg","[지출] "+payer+" · "+what+" "+php(p)+" · "+v.src+(j?" ("+j.t+")":""));
     const h=(location.hash||"#home").slice(1)||"home"; if(h==="home") renderHome(); else if(h==="ledger") renderLedger(); }
-  catch(e){ $("#ex-conv").textContent="저장하지 못했어요. 편집자 권한이 있는지 확인하세요."; }
+  catch(e){ $("#ex-conv").textContent="저장하지 못했어요. 보기 전용 권한인지 확인하세요."; }
 }
 function openExpAll(){
   const t=expTotals(), s=$("#sheet"); const payers=Object.entries(t.by).sort((a,b)=>b[1]-a[1]);
@@ -1366,7 +1366,7 @@ async function quickSave(id){
     else { const v={by:LIVE.uid,payer:LIVE.me.nick||"가족",what:r.what,where:"",amt:r.amt,cur:r.cur,php:r.php,qty:r.qty,cat:r.cat,menu:r.menu,src:r.src,raw:inp.value.trim().slice(0,80),at:Date.now()};
       await LIVE.db.collection("expenses").add(v); const j=judge(v); postChat("msg","[지출] "+v.payer+" · "+v.what+" "+php(v.php)+(j?" ("+j.t+")":"")); }
     inp.value=""; quickPreview(inp); afterMoney();
-  }catch(e){ const box=document.querySelector('[data-qprev="'+id+'"]'); if(box) box.textContent="저장하지 못했어요. 편집자 권한이 있는지 확인하세요."; }
+  }catch(e){ const box=document.querySelector('[data-qprev="'+id+'"]'); if(box) box.textContent="저장하지 못했어요. 보기 전용 권한인지 확인하세요."; }
 }
 
 /* ================= 지출·예약 탭 ================= */
@@ -1393,7 +1393,7 @@ function expTableHTML(writable){
   const tot=ex.reduce((s,e)=>s+(+e.php||0),0);
   const who={}; ex.filter(e=>catBucket(e.cat,e.at)!=="자유경비 지급").forEach(e=>{ const k=e.payer||"?"; who[k]=who[k]||{c:0,f:0}; if(e.src==="자유경비") who[k].f+=(+e.php||0); else who[k].c+=(+e.php||0); });
   const days={}; ex.forEach(e=>{ const d=manilaDateLabel(e.at); (days[d]=days[d]||[]).push(e); });
-  let h='<div class="panel"><h3>편하게 적기</h3><p class="fine" style="margin:0 0 6px">“무엇 + 금액”만 적으면 분류·금액·평가를 표로 정리해요. 환전은 “200달러 12,400페소 환전”.</p>'+(writable?quickHTML("ql")+'<div class="b2" style="margin-top:8px"><button type="button" class="btn alt" data-expadd>자세히 입력</button><button type="button" class="btn alt" data-fxadd>환전 기록</button></div>':'<p class="fine">기록은 편집자로 초대받은 가족만 할 수 있어요.</p>')+'</div>'+
+  let h='<div class="panel"><h3>편하게 적기</h3><p class="fine" style="margin:0 0 6px">“무엇 + 금액”만 적으면 분류·금액·평가를 표로 정리해요. 환전은 “200달러 12,400페소 환전”.</p>'+(writable?quickHTML("ql")+'<div class="b2" style="margin-top:8px"><button type="button" class="btn alt" data-expadd>자세히 입력</button><button type="button" class="btn alt" data-fxadd>환전 기록</button></div>':'<p class="fine">기록은 사용 권한으로 초대받은 가족만 할 수 있어요.</p>')+'</div>'+
    '<div class="panel"><h3>공금</h3>'+purseHTML(false)+'</div>'+
    '<div class="panel"><h3>환전 기록</h3>'+fxListHTML()+'</div>';
   if(!ex.length) return h+'<div class="empty">아직 지출 기록이 없어요. 위 칸에 “점심 지보스 2,350페소”처럼 적어 보세요.</div>';
@@ -1480,7 +1480,7 @@ function likeBtn(p){
     (l.length?'<span class="likers">'+l.slice(0,7).map(x=>'<span title="'+esc(x.nick||"")+'">'+esc(x.char||"🙂")+'</span>').join("")+(maj?' <span class="badge sun">가족 다수 찜</span>':'')+'</span>':'');
 }
 async function toggleLike(id){
-  if(!canPost()){ alertMsg("찜은 편집자로 초대받은 가족만 할 수 있어요."); return; }
+  if(!canPost()){ alertMsg("찜은 사용 권한으로 초대받은 가족만 할 수 있어요."); return; }
   if(!LIVE.me.reg){ openProfile(()=>toggleLike(id)); return; }
   const cur=(LIVE.likes[LIVE.uid]&&LIVE.likes[LIVE.uid].ids)||[];
   const ids=cur.includes(id)?cur.filter(x=>x!==id):cur.concat([id]).slice(-200);
