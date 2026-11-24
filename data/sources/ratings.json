@@ -1,0 +1,338 @@
+[
+ {
+  "id": "starbucks",
+  "site": "TripAdvisor",
+  "score": 4.3,
+  "count": 361,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d2161310-Reviews-Starbucks-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Listing is 'Mito's Place, Boat Station 1' (beachfront, Station 1/2 border)"
+ },
+ {
+  "id": "summerplace",
+  "site": "TripAdvisor",
+  "score": 3.7,
+  "count": 112,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d1147573-Reviews-Summer_Place-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": null
+ },
+ {
+  "id": "v-muchos",
+  "site": "TripAdvisor",
+  "score": 4.7,
+  "count": 59,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d23825493-Reviews-Muchos-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Klook 4.9/161"
+ },
+ {
+  "id": "v-ol",
+  "site": "TripAdvisor",
+  "score": 3.8,
+  "count": 502,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d795822-Reviews-Ole_Spanish_Tapas_Bar_Restaurant-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Trip.com 4.5/187"
+ },
+ {
+  "id": "v-yellowcabpizzaco",
+  "site": "TripAdvisor",
+  "score": 4.0,
+  "count": 64,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d4288962-Reviews-Yellow_Cab_Pizza_Boracay_Station_3-Boracay_Malay_Aklan_Province_Panay_Island_Visa.html",
+  "note": "Station 3 listing, which one snapshot marks closed. A separate 'Yellow Cab Pizza Co.' Boracay listing shows 4.3/43."
+ },
+ {
+  "id": "v-twobrownboys",
+  "site": "TripAdvisor",
+  "score": 4.3,
+  "count": 89,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d8383219-Reviews-Two_Brown_Boys-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": null
+ },
+ {
+  "id": "v-giuseppepizzeriasicilianroast",
+  "site": "TripAdvisor",
+  "score": 4.3,
+  "count": 44,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g26259616-d25436904-Reviews-Giuseppe_Pizzeria_And_Sicilian_Roast_Boracay_Island-Manoc_Manoc_Boracay_Malay_.html",
+  "note": "Boracay Island (Manoc-Manoc/Station 3) listing"
+ },
+ {
+  "id": "v-littlewave",
+  "site": "TripAdvisor",
+  "score": 4.8,
+  "count": 54,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d12536383-Reviews-Little_Wave-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "One guide says it may be temporarily closed"
+ },
+ {
+  "id": "v-battutacocktaillounge",
+  "site": "TripAdvisor",
+  "score": 4.6,
+  "count": 5,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g1203055-d28002172-Reviews-Battuta_Boracay-Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Very small sample. Klook 5.0/3."
+ },
+ {
+  "id": "v-ariagelatodtalipapa",
+  "site": "TripAdvisor",
+  "score": 4.5,
+  "count": 128,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d7787414-Reviews-Aria_Gelato-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Generic 'Aria Gelato' Boracay listing, which may cover the D'Mall branch rather than D'Talipapa"
+ },
+ {
+  "id": "v-eightbybeach",
+  "site": "TripAdvisor",
+  "score": 4.8,
+  "count": 1248,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d19453689-Reviews-8_by_the_Beach-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Listed as '8 by the Beach'"
+ },
+ {
+  "id": "v-littletaj",
+  "site": "TripAdvisor",
+  "score": 4.3,
+  "count": 67,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g25412148-d22953554-Reviews-Little_Taj-Balabag_Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": null
+ },
+ {
+  "id": "v-mezewrap",
+  "site": "TripAdvisor",
+  "score": 4.9,
+  "count": 213,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d23147395-Reviews-Meze_Wrap-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": null
+ },
+ {
+  "id": "v-nalkaseafood",
+  "site": "TripAdvisor",
+  "score": 4.6,
+  "count": 110,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d17467762-Reviews-Nalka_Seafood_Restaurant-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Count varies by snapshot (102 to 110). Highest shown."
+ },
+ {
+  "id": "v-tacios",
+  "site": "TripAdvisor",
+  "score": 4.8,
+  "count": 9,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d26325038-Reviews-Tacio_s_Boracay-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Small sample"
+ },
+ {
+  "id": "v-tresamigos",
+  "site": "TripAdvisor",
+  "score": 3.8,
+  "count": 295,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d5792235-Reviews-Tres_Amigos_Boracay-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": null
+ },
+ {
+  "id": "epic",
+  "site": "Trip.com",
+  "score": 4.0,
+  "count": 75,
+  "url": "https://www.trip.com/travel-guide/nimes-1391-restaurant/epic-17772121/",
+  "note": "TripAdvisor d1993394 has 1,332 reviews and Travelers' Choice 2026, but the bubble score was not in snippets"
+ },
+ {
+  "id": "v-mesa",
+  "site": "Trip.com",
+  "score": 4.5,
+  "count": 6,
+  "url": "https://uk.trip.com/restaurant/philippines/boracay%20island/detail/Mesa-30784941",
+  "note": "Small sample"
+ },
+ {
+  "id": "v-ubemama",
+  "site": "Google",
+  "score": 4.4,
+  "count": 280,
+  "url": "https://spinach.guide/venues/ube-mama-8939/",
+  "note": "Google figure as shown on Spinach; Spinach's own score is 4.3 (287); HappyCow 4.71 (7)"
+ },
+ {
+  "id": "v-spiderhouse",
+  "site": "MyBoracayGuide",
+  "score": 4.2,
+  "count": 356,
+  "url": "https://myboracayguide.com/boracay/restaurants/spiderhouse",
+  "note": "Restaurant listing; site says it uses guest reviews, source probably Google. Not the hotel's 7.2/10"
+ },
+ {
+  "id": "v-alfresco",
+  "site": "Trip.com",
+  "score": 4.5,
+  "count": 17,
+  "url": "https://www.trip.com/restaurant/boracay-610/3/",
+  "note": "Listed as Ambassador's Al Fresco Restaurant (Ambassador in Paradise Resort); another snapshot shows 4.4"
+ },
+ {
+  "id": "v-losindiosbravos",
+  "site": "MyBoracayGuide",
+  "score": 4.3,
+  "count": 528,
+  "url": "https://myboracayguide.com/boracay/restaurants/los-indios-bravos",
+  "note": "Menuweb shows 4.2 (2837 reviews, aggregated)"
+ },
+ {
+  "id": "v-thaibasil",
+  "site": "Trip.com",
+  "score": 4.3,
+  "count": 7,
+  "url": "https://uk.trip.com/restaurant/philippines/boracay%20island/detail/Thai%20Basil%20Restaurant-17772127",
+  "note": "MyBoracayGuide shows 2.0 (10). HappyCow reported it closed Oct 2021"
+ },
+ {
+  "id": "laud",
+  "site": "TripAdvisor",
+  "score": 4.8,
+  "count": 456,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d21511573-Reviews-LA_UD_Restaurant_Boracay-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Count differs across snapshots (447-460); late-2026 snapshot ~456. Klook: 4.7/92."
+ },
+ {
+  "id": "mcdonalds",
+  "site": "TripAdvisor",
+  "score": 3.3,
+  "count": 21,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g298465-d4281764-Reviews-McDonalds_Boracay-Panay_Island_Visayas.html",
+  "note": "Listing 'McDonalds Boracay, Station 2 Balabag'. A second Boracay listing (Boracay Hwy Central, d6456659) is also 3.3 with 66 reviews; which one is the D'Mall branch is unclear."
+ },
+ {
+  "id": "exitbar",
+  "site": "TripAdvisor",
+  "score": 4.7,
+  "count": 97,
+  "url": "https://www.tripadvisor.com/Attraction_Review-g294260-d4556175-Reviews-Exit_Bar-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Listed as an attraction (bar); reviews mostly old (2014-2018)."
+ },
+ {
+  "id": "v-cocomama",
+  "site": "TripAdvisor",
+  "score": 4.5,
+  "count": 220,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d10250483-Reviews-Coco_Mama-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Single listing covering the brand in Boracay (D'Mall). Trip.com: 4.5/39."
+ },
+ {
+  "id": "v-munimuni",
+  "site": "TripAdvisor",
+  "score": 4.8,
+  "count": 905,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d25008244-Reviews-Munimuni_Restaurant-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "TripAdvisor gives the address as Station 1 Balabag; other sources say Station 2 near D'Mall. Appears to be one listing. Count ~901-905."
+ },
+ {
+  "id": "v-pamanabbq",
+  "site": "TripAdvisor",
+  "score": 4.1,
+  "count": 249,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d4473259-Reviews-Pamana_Restaurant-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Listing 'Pamana Restaurant' (Filipino), Station 1 beachfront per TripAdvisor/MyBoracayGuide, not Station 2; name 'Pamana BBQ' not confirmed. Trip.com lists a Henann Regency (Station 2) Pamana at 3.7/8."
+ },
+ {
+  "id": "v-jumbocrab",
+  "site": "TripAdvisor",
+  "score": 5.0,
+  "count": 21,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d25029179-Reviews-Jumbo_Crab_Boracay-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Station 2 Mainroad listing; snapshots show 4.9-5.0 with 19-25 reviews. A separate 'Jumbo Crab Boracay Seafood' listing (5.0/23) has many Bohol-related reviews."
+ },
+ {
+  "id": "v-jollibee",
+  "site": "TripAdvisor",
+  "score": 2.6,
+  "count": 12,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d19265235-Reviews-Jollibee-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Listing 'Jollibee, Boracay - Main Rd' (Balabag main road). Small sample."
+ },
+ {
+  "id": "v-hama",
+  "site": "TripAdvisor",
+  "score": 3.6,
+  "count": 376,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d1978139-Reviews-Hama_Japanese_Restaurant-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Count differs across snapshots (360-376). MyBoracayGuide shows 4.1/829, likely Google."
+ },
+ {
+  "id": "v-lafiestadinnerbuffet",
+  "site": "TripAdvisor",
+  "score": 4.8,
+  "count": 1380,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d26501682-Reviews-La_Fiesta_At_Mandarin_Bay-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Count varies widely across snapshots (713-1,380); 1,380 is the most recent. Covers all meals, not only the dinner buffet."
+ },
+ {
+  "id": "v-suluplazathai",
+  "site": "TripAdvisor",
+  "score": 3.4,
+  "count": 42,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d1147337-Reviews-Sulu_Thai_Restaurant-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Listing 'Sulu Thai Restaurant', White Beach near Station 3; reviews 2015-2025."
+ },
+ {
+  "id": "v-delsol",
+  "site": "TripAdvisor",
+  "score": 4.2,
+  "count": 394,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g25412148-d1147268-Reviews-Cafe_del_Sol_Boracay-Balabag_Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Count 392-395 across snapshots."
+ },
+ {
+  "id": "v-maanamexican",
+  "site": "TripAdvisor",
+  "score": 3.5,
+  "count": 268,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d1147312-Reviews-Manana_Mexican_Cuisine-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "One TripAdvisor listing is tagged CLOSED; newest reviews ~2020. May no longer be operating."
+ },
+ {
+  "id": "v-sirenaclifftop",
+  "site": "TripAdvisor",
+  "score": 4.6,
+  "count": 711,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d1607174-Reviews-Sirena-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "711 is the count cited on the Shangri-La page; a TripAdvisor snapshot shows 654. Restaurant and bar share one listing."
+ },
+ {
+  "id": "v-alohaisland",
+  "site": "TripAdvisor",
+  "score": 4.7,
+  "count": 190,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d8812357-Reviews-Aloha_Boracay_Island_Grill-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Some snapshots show 4.5. Trip.com: 4.5/8."
+ },
+ {
+  "id": "v-donvito",
+  "site": "TripAdvisor",
+  "score": 4.6,
+  "count": 2558,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d1756179-Reviews-Don_Vito_Boracay-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Oct 2026 snapshot; earlier snapshots show 2,279-2,357."
+ },
+ {
+  "id": "v-islandchickeninasal",
+  "site": "TripAdvisor",
+  "score": 4.2,
+  "count": 86,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d3501956-Reviews-Island_Chicken_Inasal-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "D'Mall branch listing; reviews mostly 2013-2018."
+ },
+ {
+  "id": "v-nagisa",
+  "site": "TripAdvisor",
+  "score": 4.1,
+  "count": 220,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d1818031-Reviews-Nagisa_Coffee_Shop-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Listed as 'Nagisa Coffee Shop' (Japanese, Surfside Resort, Station 3); assumed to be the same place. Count 220-221."
+ },
+ {
+  "id": "v-sensiitalian",
+  "site": "TripAdvisor",
+  "score": 3.9,
+  "count": 200,
+  "url": "https://www.tripadvisor.com/Restaurant_Review-g294260-d8096852-Reviews-Sensi-Boracay_Malay_Aklan_Province_Panay_Island_Visayas.html",
+  "note": "Station 2 White Beach Path listing (Calypso resort). A duplicate 'Sensi' listing has a single 2.0 review."
+ }
+]
