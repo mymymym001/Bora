@@ -681,13 +681,13 @@ function bindParty(){ const sg=$(".seg"); if(sg) sg.addEventListener("click",e=>
   document.querySelectorAll(".seg button").forEach(x=>x.setAttribute("aria-pressed",x===b)); const h=(location.hash||"#home").slice(1); if(h==="eat") drawEat(); else if(h==="info"||h==="prices"){const y=window.scrollY; renderInfo(); window.scrollTo(0,y);} else if(h==="home"||!h){const y=window.scrollY; renderHome(); window.scrollTo(0,y);} }); }
 
 /* ================= eat (restaurants) ================= */
-const ECATS=[["all","전체"],["meal","식사"],["cafe","카페·디저트"],["korean","한식"],["bar","바"],["fruit","과일"]];
+const ECATS=[["all","전체","🍽️"],["meal","식사","🍛"],["cafe","카페","☕"],["korean","한식","🇰🇷"],["buffet","뷔페","🥘"],["bar","바","🍹"],["fruit","과일","🥭"]];
 const EFILS=[["open","지금 영업 중"],["krpop","한국인 인기"],["mine","❤️ 내 찜"],["fam","가족 찜"]];
 S.efil=S.efil||[];
 const SORTS=[["claude","추천순"],["kr","한국인 추천순"],["rating","전체 평점순"],["likes","찜순"],["dist","거리순"],["price","가격순"]];
 function eMatch(p,c){ if(!isFood(p)||/Talipapa Bukid/.test(p.name)) return false;
   return c==="all"||(c==="mine"&&iLike(p.id))||(c==="fam"&&likeCount(p.id)>0)||(c==="open"&&isOpen(p))||(c==="fruit"&&p.cat==="fruit")||(c==="meal"&&p.cat==="restaurant")||(c==="cafe"&&(p.cat==="cafe"||p.cat==="dessert"))||(c==="bar"&&(p.cat==="bar"||p.cat==="pub"))||
-    (c==="korean"&&/한식|한국|korean/i.test((p.cuisine||"")+p.name+(p.ko||"")))||(c==="krpop"&&(p.krPop||0)>=2)||(c==="menu"&&p.hasMenu); }
+    (c==="buffet"&&!!p.buffet)||(c==="korean"&&/한식|한국|korean/i.test((p.cuisine||"")+p.name+(p.ko||"")))||(c==="krpop"&&(p.krPop||0)>=2)||(c==="menu"&&p.hasMenu); }
 function claudeScore(p){
   const r=[]; let s=0;
   if(p.krPop){ s+=p.krPop*2.2; r.push(p.krPop>=3?"한국인 후기 많음":p.krPop>=2?"한국인 후기 있음":"한국인 후기 조금"); }
@@ -719,6 +719,7 @@ function venueCard(p,rank){
     '<div class="vb"><h3 class="tt"><button type="button" data-open="'+esc(p.id)+'"><span class="rank num">'+(rank||"")+'</span>'+esc(dname(p))+'</button></h3>'+
       '<div class="meta"><span>'+esc(catText(p))+'</span>'+rating+'<span class="num">'+(p.route?'도보 '+p.route.walk.min+'분':'위치 미확인')+'</span></div>'+
       '<div class="meta">'+openBadge(p)+pop+'</div>'+
+      (p.buffet?'<div class="bufnote"><b>🥘 '+esc(p.buffet.type||"뷔페")+'</b>'+(p.buffet.price?' · '+esc(p.buffet.price):'')+(p.buffet.hours?'<br>'+esc(p.buffet.hours):'')+'</div>':'')+
       (gc?'<div class="money num">1인 '+rng(p.pp[0],p.pp[1],php)+' <small>· '+S.n+'명 '+rng(gc[0],gc[1],php)+'</small></div>':'<div class="money"><small>가격 정보 없음</small></div>')+
     '</div>'+
     (rv?'<p class="rv2">'+(p.krReview?'<b>한국인 후기</b> ':'')+esc(rv)+'</p>':'')+
@@ -730,8 +731,8 @@ function renderEat(){
   $("#app").innerHTML='<div class="page eatpage" style="padding-top:8px"><div class="hrow"><h2 style="margin-top:0">맛집 · 카페 <small class="hcount">'+VEN.filter(p=>eMatch(p,"all")).length+'곳</small></h2><div class="hbtns">'+partyMini()+themeBtn()+'</div></div>'+
    '<div class="eattop">'+
    '<label class="search" for="q"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="식당·메뉴 찾기 (망고, 삼겹살…)" value="'+esc(S.q)+'" autocomplete="off"></label></div>'+
-   '<div class="sortbar"><div class="ecat" id="ecats" role="group" aria-label="종류">'+ECATS.map(([k,l])=>'<button type="button" data-ecat="'+k+'" aria-pressed="'+(S.ecat===k)+'">'+l+'<small>'+VEN.filter(p=>eMatch(p,k)).length+'</small></button>').join("")+'</div>'+
-   '<div class="efrow"><label class="esort"><span class="sr">정렬</span><select id="esort" aria-label="정렬">'+SORTS.map(([k,l])=>'<option value="'+k+'"'+(S.sort===k?' selected':'')+'>'+l+'</option>').join("")+'</select></label>'+
+   '<div class="sortbar"><div class="ecat" id="ecats" role="group" aria-label="종류">'+ECATS.map(([k,l,ic])=>'<button type="button" data-ecat="'+k+'" aria-pressed="'+(S.ecat===k)+'"><span class="el"><span class="ei" aria-hidden="true">'+ic+'</span>'+l+'</span><small>'+VEN.filter(p=>eMatch(p,k)).length+'</small></button>').join("")+'</div>'+
+   '<div class="efrow"><span class="eflab">정렬·조건</span><label class="esort"><span class="sr">정렬</span><select id="esort" aria-label="정렬">'+SORTS.map(([k,l])=>'<option value="'+k+'"'+(S.sort===k?' selected':'')+'>'+l+'</option>').join("")+'</select></label>'+
    '<div class="chips efil" id="efils">'+EFILS.map(([k,l])=>'<button type="button" class="chip" data-efil="'+k+'" aria-pressed="'+S.efil.includes(k)+'">'+l+'</button>').join("")+'</div></div></div>'+
    '<div id="sortNote" class="fine"></div><div id="dishes"></div><div class="vlist" id="vlist"></div></div>';
   bindParty();

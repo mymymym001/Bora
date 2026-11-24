@@ -79,6 +79,17 @@ for ph in gpt.get("photos", []):
     if tgt is not None: tgt["photos"].append(item)
     else: print("photo venue not matched:", ph.get("venue"))
 
+# 2c) 뷔페 조사 (data/sources/buffets.json) — 기존 식당은 표시만, 없으면 새로 추가
+for b in load("buffets.json", []) or []:
+    v = V_(b["name"])
+    v["buffet"] = dict(type=b.get("type"), price=b.get("priceNote"), hours=b.get("hoursNote"))
+    v.setdefault("cat", "restaurant")
+    for k in ("ko", "lat", "lon", "coordSrc", "desc", "krReview"):
+        if b.get(k) and not v.get(k): v[k] = b[k]
+    if b.get("lat") and not v.get("coordConf"): v["coordConf"] = "medium"
+    if b.get("pp"): v["pp"] = b["pp"]  # 뷔페 가격이 우선
+    if "뷔페 조사 (2026-11-24)" not in v["sources"]: v["sources"].append("뷔페 조사 (2026-11-24)")
+
 # 3) 한국인 후기 조사
 POP = {"high": 3, "medium": 2, "low": 1}
 for fn, defcat in (("kr_restaurants.json", "restaurant"), ("kr_cafes.json", "cafe")):
