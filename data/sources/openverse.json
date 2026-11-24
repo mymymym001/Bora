@@ -599,6 +599,38 @@
    "license": "CC BY 2.0",
    "page": "https://www.flickr.com/photos/76135747@N00/4374289867",
    "provider": "flickr"
+  },
+  "samgyeopsal": {
+   "src": "img/ov/dish-samgyeopsal.jpg",
+   "title": "Samgyeopsal-at-Jeju-10",
+   "author": "Cecil Lee",
+   "license": "CC BY-NC-ND 2.0",
+   "page": "https://www.flickr.com/photos/27954114@N05/15800783178",
+   "provider": "flickr"
+  },
+  "smoothie": {
+   "src": "img/ov/dish-smoothie.jpg",
+   "title": "smoothie bowl breakfast in bed",
+   "author": "Berries.com",
+   "license": "CC BY 2.0",
+   "page": "https://www.flickr.com/photos/126560659@N06/33343287432",
+   "provider": "flickr"
+  },
+  "waffle": {
+   "src": "img/ov/dish-waffle.jpg",
+   "title": "Chocolate Cake Batter Waffles",
+   "author": "Jocelyn | McAuliflower",
+   "license": "CC BY-NC-SA 2.0",
+   "page": "https://www.flickr.com/photos/24783887@N00/248668490",
+   "provider": "flickr"
+  },
+  "wrap": {
+   "src": "img/ov/dish-wrap.jpg",
+   "title": "Wrap Sandwiches",
+   "author": "Tracy Hunter",
+   "license": "CC BY 2.0",
+   "page": "https://www.flickr.com/photos/11121785@N00/3683837523",
+   "provider": "flickr"
   }
  },
  "venue": {
@@ -676,6 +708,100 @@
   "McDonald's D'Mall": [],
   "HaloMango": [],
   "Lemoni Café": [],
-  "Real Coffee & Tea Café": []
+  "Real Coffee & Tea Café": [],
+  "Starbucks": [
+   {
+    "src": "img/ov/v-starbucks-0.jpg",
+    "title": "Starbucks, Boracay",
+    "author": "Rick McCharles",
+    "license": "CC BY 2.0",
+    "page": "https://www.flickr.com/photos/71035721@N00/6476039089",
+    "provider": "flickr"
+   },
+   {
+    "src": "img/ov/v-starbucks-1.jpg",
+    "title": "Starbucks Boracay, Philippines",
+    "author": "Rick McCharles",
+    "license": "CC BY 2.0",
+    "page": "https://www.flickr.com/photos/71035721@N00/6476052895",
+    "provider": "flickr"
+   }
+  ],
+  "Epic": [],
+  "Exit Bar": [],
+  "Summer Place": [],
+  "Cork Wine Bar": [],
+  "Coco Mama": [],
+  "Cyma Greek Taverna": [],
+  "Quara Korean Restaurant (꽐라 한식당 / 꽐라식당)": [],
+  "Shabu Khan Unlimited Boracay": [],
+  "Midamjeong Korean Restaurant": [],
+  "Donenoo Korean BBQ (Boracay)": [],
+  "Mukbang (Korean restaurant)": [],
+  "Mesa (Henann Regency)": [],
+  "I Love Backyard BBQ (I Luv Backyard BBQ)": [
+   {
+    "src": "img/ov/v-i-love-backyard-bbq-0.jpg",
+    "title": "I Love Backyard BBQ",
+    "author": "lhongchou's photography",
+    "license": "CC BY-NC-ND 2.0",
+    "page": "https://www.flickr.com/photos/73199446@N00/5823657551",
+    "provider": "flickr"
+   }
+  ],
+  "Munimuni Boracay": [],
+  "Sababi (spelling unverified)": [],
+  "Red Crab (Redcrab Boracay)": [
+   {
+    "src": "img/ov/v-red-crab-0.jpg",
+    "title": "Alimango, Aligue, Alimango",
+    "author": "canlasa",
+    "license": "CC BY-NC-ND 2.0",
+    "page": "https://www.flickr.com/photos/73158818@N00/291468040",
+    "provider": "flickr"
+   }
+  ],
+  "Crab & Crab": [],
+  "Jollibee (Boracay Station 2)": [],
+  "Yellow Cab Pizza Co. (Boracay)": [],
+  "Shakey's Pizza (Boracay)": [],
+  "The Original Hawaiian Bar-B-Que": [],
+  "The Sunny Side Cafe": [],
+  "Cha Cha's Beach Cafe (Coast Boracay)": [],
+  "Steam Punk (Steampunk Burgers)": [],
+  "Spicebird": [],
+  "Mayas Filipino & Mexican Cuisine": [],
+  "Kasbah": [
+   {
+    "src": "img/ov/v-kasbah-0.jpg",
+    "title": "Kasbah Boracay Menu",
+    "author": "Shoot First, Eat Later",
+    "license": "CC BY-NC 2.0",
+    "page": "https://www.flickr.com/photos/93045861@N00/7724793992",
+    "provider": "flickr"
+   },
+   {
+    "src": "img/ov/v-kasbah-1.jpg",
+    "title": "Kasbah Boracay Menu-003",
+    "author": "Shoot First, Eat Later",
+    "license": "CC BY-NC 2.0",
+    "page": "https://www.flickr.com/photos/93045861@N00/7724800282",
+    "provider": "flickr"
+   }
+  ],
+  "Giuseppe Pizzeria & Sicilian Roast (Boracay)": [],
+  "Hobbit Tavern": [],
+  "Jonah's Fruit Shake & Snack Bar": [],
+  "Ice Flakes Boracay": [],
+  "Aria Gelato": [],
+  "Henann Garden Resort mango shake (in-hotel)": [],
+  "Café del Sol": [],
+  "Café Maruja": [],
+  "Little Wave Café": [],
+  "House Brew Café (The District)": [],
+  "Mañana Mexican Restaurant": [],
+  "Aplaya the Beach Bar": [],
+  "Coco Bar": [],
+  "Spider House": []
  }
 }
