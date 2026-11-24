@@ -9,7 +9,7 @@ const { chromium, devices } = require('playwright');
   const ok=(c,m)=>console.log((c?'PASS ':'FAIL ')+m);
   await pg.goto('http://localhost:8765/_test_live.html#home'); await pg.waitForSelector('.vc'); await pg.waitForTimeout(400);
   ok((await pg.$eval('.when',e=>e.textContent)).includes('2일차'),'home date = day 2 at fixed clock');
-  ok((await pg.$$eval('.quick > *',e=>e.length))===4,'4 quick actions');
+  ok((await pg.$$eval('.quick > *',e=>e.length))===5,'5 quick actions (weather first)');
   // phrases
   await pg.click('[data-phrases]'); await pg.waitForSelector('[data-phrase]'); const np=await pg.$$eval('[data-phrase]',e=>e.length); ok(np>=30,'phrase cards '+np);
   await pg.click('[data-phrase="0-2"]'); ok((await pg.$eval('#driver .big',e=>e.textContent))==='No ice, please.','phrase fullscreen'); await pg.screenshot({path:'test/f-phrase.png'});

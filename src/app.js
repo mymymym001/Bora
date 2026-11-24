@@ -598,6 +598,8 @@ document.addEventListener("click",e=>{
   if(el=T("[data-dishimg]")){ const d=DISHP[el.dataset.dishimg]; VIEW.list=[{src:d.src,cap:"대표 이미지("+(GLOSS[el.dataset.dishimg]||el.dataset.dishimg)+") · 이 매장 메뉴 사진 아님 · 사진: "+(d.author||"")+" · "+(d.license||""),page:d.page}]; openViewer(0); return; }
   if(T("[data-gofx]")){ location.hash="info"; return; }
   if(el=T("[data-sos]")){ const [en,ko,pr]=SOS[0]; const d=$("#driver"); d.innerHTML='<p class="big">'+esc(en)+'</p><p class="mid" style="color:#B8532F;font-weight:700">'+esc(pr)+'</p><p class="ko2" style="font-size:16px">'+esc(ko)+'<br>긴급번호 911 · 티롤 병원 (036) 288-3041</p><div class="saybig"><button type="button" class="say" data-sayen="'+esc(en)+'">'+SPK+'<span>영어로 듣기</span></button></div><button type="button" data-closedriver>닫기</button>'; d.hidden=false; return; }
+  if(T("[data-wxopen]")){ openWx(); return; }
+  if(el=T("[data-wxd]")){ openWx(el.dataset.wxd); return; }
   if(T("[data-phrases]")){ openPhrases(); return; }
   if(el=T("[data-sayen]")){ sayEN(el.dataset.sayen,false,el); return; }
   if(el=T("[data-say]")){ const p=phraseAt(el.dataset.say); sayEN(p[0],!!el.dataset.slow,el); return; }
@@ -637,7 +639,8 @@ function renderHome(){
    '<div class="hero2"><div class="hrow"><h1>보라카이 가족 가이드</h1>'+themeBtn()+'</div><div class="when">'+when+'</div><div class="clock num" id="clock">'+clockText()+'</div></div>'+
    ((EXTRA.scenic||[]).length?'<div class="gal hero-sea" id="scenic">'+EXTRA.scenic.map((x,i)=>'<button type="button" data-scenic="'+i+'" aria-label="사진 크게 보기"><img src="'+esc(x.src)+'" alt="'+esc(x.caption||"보라카이 바다")+'"'+(i?' loading="lazy"':'')+'><span class="cap">'+esc(x.caption||"")+' · '+esc(x.author||"")+' · '+esc(x.license||"")+'</span></button>').join("")+'</div>':'')+
    '<div id="pin">'+pinHTML()+'</div>'+wxHomeHTML()+
-   '<div class="quick q4">'+
+   '<div class="quick q5">'+
+     Q('data-wxopen','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18h10a4 4 0 0 0 .5-7.97A6 6 0 0 0 6.2 11 3.5 3.5 0 0 0 7 18z"/></svg>','날씨·물때')+
      Q('data-phrases','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg>','회화 카드')+
      Q('data-expadd2',ICON.money,'지출 적기')+
      Q('data-driver="1"',ICON.hotel,'기사님 카드')+
@@ -1389,8 +1392,10 @@ function slotWx(day,it){
 }
 function dayWx(day){ if(!WX) return ""; const d=WX.days[DAYDATE[day.k]]; if(!d) return ""; const [ic,lb]=wxIcon(d.code,1), u=uvLevel(d.uv);
   return '<div class="wxday">'+ic+' '+lb+' · '+d.tmin+'–'+d.tmax+'° · ☔ '+d.rain+'% · <span class="uv '+u[1]+'">자외선 '+Math.round(d.uv)+' '+u[0]+'</span> · 일몰 '+esc(d.sunset)+'</div>'; }
+function wxBeachLine(date){ const bp=beachPlan(date), ex=tideList().filter(e=>e.date===date);
+  return '<button type="button" class="wxmore" data-wxopen><span>'+(bp.none?'🌊 물때':'🏖️ 놀기 좋은 시간 <b class="num">'+(bp.pick.length?bp.pick.map(w=>hhmm(w.a)+'–'+hhmm(w.b)).join(', '):'실내 추천')+'</b>')+'<br><small>'+ex.map(e=>(e.hi?'만조 ':'간조 ')+hhmm(e.t)).join(' · ')+'</small></span><span class="w">시간별·물때 ›</span></button>'; }
 function wxHomeHTML(){
-  if(!WX) return '<div class="wx panel" id="wxCard"><div class="wxh"><b>보라카이 날씨</b><span class="fine">예보를 불러오는 중이에요 · 매일 아침 갱신</span></div></div>';
+  if(!WX) return '<div class="wx panel" id="wxCard"><div class="wxh"><b>보라카이 날씨</b><span class="fine">예보를 불러오는 중이에요 · 매일 아침 갱신</span></div><button type="button" class="wxmore" data-wxopen><span>시간별 날씨 · 밀물/썰물 · 놀기 좋은 시간</span><span class="w">열기 ›</span></button></div>';
   const n=new Date(Date.now()+8*3600e3), ds=n.toISOString().slice(0,10); const trip=Object.values(DAYDATE);
   const date=trip.includes(ds)?ds:(ds<trip[0]?trip[0]:trip[trip.length-1]); const live=date===ds;
   const hr=live?n.getUTCHours():9; const w=wxAt(date,hr), d=WX.days[date]; if(!w||!d) return '';
@@ -1400,7 +1405,80 @@ function wxHomeHTML(){
   return '<div class="wx panel" id="wxCard"><div class="wxh"><b>'+md+'('+wd+') '+(live?String(hr).padStart(2,"0")+':00 보라카이':'보라카이 예보')+'</b><span class="fine">업데이트 '+esc(WX.updated.slice(5).replace("-","/"))+' · Open-Meteo</span></div>'+
     '<div class="wxnow"><span class="big">'+ic+'</span><div><b class="num">'+w.t+'°</b> <span>'+lb+' · 체감 '+w.feel+'°</span><br><span class="fine num">오늘 '+d.tmin+'–'+d.tmax+'° · 비 '+d.rain+'% · 바람 '+w.wind+'km/h · 일몰 '+esc(d.sunset)+'</span></div>'+
     '<div class="uvbox '+du[1]+'"><small>자외선 최고</small><b>'+Math.round(d.uv)+'</b><small>'+du[0]+'</small></div></div>'+
-    '<div class="wxstrip">'+strip+'</div>'+(d.uv>=8?'<p class="fine" style="margin:6px 0 0">자외선이 매우 강해요. 10~15시엔 그늘·선크림(2시간마다)·모자·래시가드 챙기기.</p>':'')+'</div>';
+    '<div class="wxstrip">'+strip+'</div>'+wxBeachLine(date)+(d.uv>=8?'<p class="fine" style="margin:6px 0 0">자외선이 매우 강해요. 10~15시엔 그늘·선크림(2시간마다)·모자·래시가드 챙기기.</p>':'')+'</div>';
+}
+/* ================= 날씨·바다 상세 (시간별 · 밀물/썰물 · 놀기 좋은 시간) ================= */
+function hhmm(x){ x=((x%24)+24)%24; let h=Math.floor(x), m=Math.round((x-h)*60); if(m===60){h=(h+1)%24;m=0;} return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0"); }
+function seaAt(date,h){ if(!WX||!WX.marine) return null; const r=WX.marine[date+"T"+String(h).padStart(2,"0")+":00"]; return r&&r[0]!=null?{lvl:r[0],wave:r[1],sst:r[2]}:null; }
+function tideList(){ /* 전체 기간의 만조·간조 (시간별 값을 포물선 보간) */
+  if(!WX||!WX.marine) return []; const ks=Object.keys(WX.marine).sort(), v=ks.map(k=>WX.marine[k][0]); const out=[];
+  for(let i=1;i<v.length-1;i++){ const a=v[i-1],b=v[i],c=v[i+1]; if(a==null||b==null||c==null) continue;
+    const hi=b>a&&b>=c, lo=b<a&&b<=c; if(!hi&&!lo) continue;
+    const den=a-2*b+c, off=den?0.5*(a-c)/den:0, lvl=b-0.25*(a-c)*off;
+    const d=ks[i].slice(0,10), t=+ks[i].slice(11,13)+off; out.push({date:d,t,hi,lvl}); }
+  return out; }
+function tideState(date,h){ const a=seaAt(date,h), b=seaAt(date,Math.min(23,h+1)); if(!a||!b) return null; return b.lvl>a.lvl+0.03?"in":b.lvl<a.lvl-0.03?"out":"turn"; }
+function sunHours(date){ const d=WX&&WX.days[date]; const f=s=>{const m=String(s||"").match(/(\d+):(\d+)/); return m?+m[1]+(+m[2])/60:null;}; return [f(d&&d.sunrise)||5.9,f(d&&d.sunset)||17.4]; }
+function beachPlan(date){
+  const [sr,ss]=sunHours(date); let from=Math.ceil(sr+0.3), to=Math.floor(ss);
+  if(date===DAYDATE.d1) from=Math.max(from,15); if(date===DAYDATE.d5) to=Math.min(to,7);
+  if(to-from<1) return {none:true};
+  const lv=[]; for(let h=0;h<24;h++){ const s=seaAt(date,h); if(s) lv.push(s.lvl); } if(!lv.length) lv.push(0);
+  const lo=Math.min(...lv), hi=Math.max(...lv), span=Math.max(0.3,hi-lo);
+  const hs=[]; for(let h=from;h<to;h++){ const w=wxAt(date,h), s=seaAt(date,h); if(!w) continue;
+    let sc=100, why=[]; sc-=w.rain*0.6; if(w.code>=95) sc-=60;
+    if(w.uv>=8){sc-=25;} else if(w.uv>=6){sc-=10;} else why.push("자외선 "+Math.round(w.uv));
+    if(h<8) sc-=6;
+    if(s){ const r=(s.lvl-lo)/span, st=tideState(date,h); sc+=30*r-12; why.unshift(r>=0.65?"밀물 · 수영하기 좋음":r<=0.3?"썰물 · 얕은 물놀이":(st==="in"?"물 들어오는 중":st==="out"?"물 빠지는 중":"중간 물때")); if(s.wave>1) sc-=20; else if(s.wave>0.7) sc-=8; else why.push("파도 "+s.wave.toFixed(1)+"m"); }
+    if(w.feel>=35) sc-=5; if(w.rain<30) why.push("비 "+w.rain+"%");
+    hs.push({h,sc,why,w,s}); }
+  const win=[]; for(let i=0;i+1<hs.length;i++) if(hs[i+1].h===hs[i].h+1) win.push({a:hs[i].h,b:hs[i].h+2,sc:(hs[i].sc+hs[i+1].sc)/2,why:hs[i].why});
+  if(!win.length&&hs.length) win.push({a:hs[0].h,b:hs[0].h+1,sc:hs[0].sc,why:hs[0].why});
+  win.sort((x,y)=>y.sc-x.sc); const pick=[]; for(const w of win){ if(pick.length>=2) break; if(pick.some(p=>w.a<p.b&&p.a<w.b)) continue; if(pick.length&&w.sc<45) break; pick.push(w); }
+  pick.sort((x,y)=>x.a-y.a);
+  const uvHigh=hs.filter(x=>x.w.uv>=8).map(x=>x.h); const rainy=hs.filter(x=>x.w.rain>=60).map(x=>x.h);
+  return {from,to,pick,hs,uvHigh,rainy,sunset:ss};
+}
+function rangeTxt(hs){ if(!hs.length) return ""; const out=[]; let a=hs[0],p=hs[0]; for(const h of hs.slice(1)){ if(h===p+1){p=h;continue;} out.push(a+"–"+(p+1)+"시"); a=p=h; } out.push(a+"–"+(p+1)+"시"); return out.join(", "); }
+function tideSVG(date){
+  const pts=[]; for(let h=0;h<24;h++){ const s=seaAt(date,h); if(s) pts.push([h,s.lvl]); } if(pts.length<6) return "";
+  const W=340,H=120,P=14, all=pts.map(p=>p[1]), mn=Math.min(...all)-0.15, mx=Math.max(...all)+0.15;
+  const X=h=>P+(W-2*P)*h/23, Y=v=>H-22-(H-40)*(v-mn)/(mx-mn);
+  const [sr,ss]=sunHours(date); const path=pts.map((p,i)=>(i?"L":"M")+X(p[0]).toFixed(1)+" "+Y(p[1]).toFixed(1)).join(" ");
+  const ex=tideList().filter(e=>e.date===date);
+  const n=new Date(Date.now()+8*3600e3), live=n.toISOString().slice(0,10)===date, nh=n.getUTCHours()+n.getUTCMinutes()/60;
+  return '<svg class="tide" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(+date.slice(5,7)+'/'+(+date.slice(8))+' 물때 그래프')+'">'+
+    '<rect x="'+X(sr)+'" y="4" width="'+(X(ss)-X(sr))+'" height="'+(H-26)+'" class="tday"/>'+
+    '<path d="'+path+' L'+X(pts[pts.length-1][0])+' '+(H-22)+' L'+X(pts[0][0])+' '+(H-22)+'Z" class="tfill"/><path d="'+path+'" class="tline"/>'+
+    ex.map(e=>'<circle cx="'+X(e.t)+'" cy="'+Y(e.lvl)+'" r="4" class="'+(e.hi?'thi':'tlo')+'"/><text x="'+Math.min(W-30,Math.max(30,X(e.t)))+'" y="'+(e.hi?Y(e.lvl)-8:Math.min(H-26,Y(e.lvl)+16))+'" text-anchor="middle" class="tlab">'+(e.hi?'만조 ':'간조 ')+hhmm(e.t)+'</text>').join("")+
+    (live?'<line x1="'+X(nh)+'" x2="'+X(nh)+'" y1="4" y2="'+(H-22)+'" class="tnow"/>':'')+
+    [0,6,12,18].map(h=>'<text x="'+X(h)+'" y="'+(H-6)+'" text-anchor="middle" class="tax">'+h+'시</text>').join("")+'</svg>';
+}
+function openWx(date){
+  const trip=Object.values(DAYDATE), today=new Date(Date.now()+8*3600e3).toISOString().slice(0,10);
+  date=date||(trip.includes(today)?today:trip[0]); S.wxd=date;
+  const s=$("#sheet"), tabs='<div class="wxtabs" role="tablist">'+trip.map(d=>{const w=WX&&WX.days[d]; const wd=["일","월","화","수","목","금","토"][new Date(d+"T00:00:00Z").getUTCDay()];
+    return '<button type="button" role="tab" data-wxd="'+d+'" aria-selected="'+(d===date)+'"><span>'+(+d.slice(5,7))+'/'+(+d.slice(8))+' '+wd+'</span><b>'+(w?wxIcon(w.code,1)[0]:'·')+'</b><small>'+(w?w.tmax+'°':'')+'</small></button>';}).join("")+'</div>';
+  let body;
+  if(!WX){ body='<div class="panel"><p class="fine">예보를 불러오는 중이에요. 잠시 후 다시 열어 주세요.</p></div>'; }
+  else { const d=WX.days[date], bp=beachPlan(date), [ic,lb]=wxIcon(d.code,1), u=uvLevel(d.uv), ex=tideList().filter(e=>e.date===date);
+    const pick=bp.none?'<p>'+(date===DAYDATE.d5?'출국일이라 아침 일찍 공항으로 이동해요. 물놀이 시간은 없어요.':'오늘은 해변 시간이 거의 없어요.')+'</p>':
+      (bp.pick.length?bp.pick.map((w,i)=>'<div class="bpick"><b class="num">'+hhmm(w.a)+'–'+hhmm(w.b)+'</b><span>'+(i===0&&bp.pick.length>1?'':'')+esc(w.why.slice(0,3).join(' · '))+'</span></div>').join(""):'<p>비가 많이 올 예정이라 실내 일정을 추천해요.</p>');
+    const sunsetH=bp.sunset;
+    body='<div class="panel wxsum"><div class="wxnow"><span class="big">'+ic+'</span><div><b class="num">'+d.tmin+'–'+d.tmax+'°</b> <span>'+lb+'</span><br><span class="fine num">비 '+d.rain+'% · 바람 최대 '+d.wind+'km/h · 일출 '+esc(d.sunrise)+' · 일몰 '+esc(d.sunset)+'</span></div><div class="uvbox '+u[1]+'"><small>자외선 최고</small><b>'+Math.round(d.uv)+'</b><small>'+u[0]+'</small></div></div></div>'+
+      '<div class="panel bplan"><h3>🏖️ 놀기 좋은 시간</h3>'+pick+
+      (bp.none?'':'<ul class="clean">'+(bp.uvHigh.length?'<li><b>피할 시간 '+rangeTxt(bp.uvHigh)+'</b> — 자외선 매우 강함. 그늘·래시가드·선크림 2시간마다.</li>':'')+(bp.rainy.length?'<li>☔ 비 올 확률 높은 시간: '+rangeTxt(bp.rainy)+'</li>':'')+
+      '<li>🌅 노을 사진: <b class="num">'+hhmm(sunsetH-0.75)+'–'+hhmm(sunsetH)+'</b> (화이트비치 서쪽 바다)</li></ul>')+
+      '<p class="fine">밀물·비·자외선·파도를 같이 따져서 고른 시간이에요. 화이트비치는 썰물 때 물이 얕아지고 해초가 드러나서, 수영은 밀물 앞뒤가 좋아요. 아이들 얕은 물놀이는 물이 빠지는 중간 시간도 괜찮아요.</p></div>'+
+      '<div class="panel"><h3>🌊 밀물 · 썰물</h3>'+(ex.length?'<div class="tides">'+ex.map(e=>'<div class="'+(e.hi?'hi':'lo')+'"><small>'+(e.hi?'만조 (물 가장 높음)':'간조 (물 가장 낮음)')+'</small><b class="num">'+hhmm(e.t)+'</b><small class="num">'+(e.lvl>=0?'+':'')+e.lvl.toFixed(1)+'m</small></div>').join("")+'</div>'+tideSVG(date):'<p class="fine">바다 예보를 아직 받지 못했어요.</p>')+
+      '<p class="fine">Open-Meteo 바다 예측 모델(화이트비치 앞바다) 기준이라 실제와 30분~1시간 차이 날 수 있어요. 노란 칸은 해 떠 있는 시간.</p></div>'+
+      '<div class="panel"><h3>시간별</h3><div class="tbl"><table class="wxtbl"><thead><tr><th>시각</th><th>날씨</th><th>비</th><th>UV</th><th>물때</th><th>파도</th></tr></thead><tbody>'+
+      Array.from({length:17},(_,i)=>i+6).map(h=>{const w=wxAt(date,h), sa=seaAt(date,h), ts=tideState(date,h); if(!w) return ''; const best=!bp.none&&bp.pick.some(p=>h>=p.a&&h<p.b);
+        return '<tr class="'+(best?'best':'')+'"><td class="num">'+h+'시'+(best?' 🏖️':'')+'</td><td>'+wxIcon(w.code,w.day)[0]+' <span class="num">'+w.t+'°</span></td><td class="num">'+(w.rain>=50?'<b class="warnt">'+w.rain+'%</b>':w.rain+'%')+'</td><td><span class="uv '+uvLevel(w.uv)[1]+'">'+Math.round(w.uv)+'</span></td><td>'+(ts==="in"?'↑ 밀물':ts==="out"?'↓ 썰물':'— 정조')+'</td><td class="num">'+(sa&&sa.wave!=null?sa.wave.toFixed(1)+'m':'')+'</td></tr>';}).join("")+
+      '</tbody></table></div><p class="fine">업데이트 '+esc(WX.updated.slice(5).replace("-","/"))+' (필리핀 시각) · 매일 아침 갱신 · 바다 수온 '+(seaAt(date,12)?Math.round(seaAt(date,12).sst)+'°':'-')+'</p></div>';
+  }
+  s.innerHTML='<div class="wrap"><div class="bar"><button type="button" data-close aria-label="닫기">✕</button><div class="t">날씨 · 바다</div></div><div class="page" style="padding-top:0">'+tabs+body+'</div></div>';
+  s.hidden=false; s.scrollTop=0; document.body.style.overflow="hidden";
 }
 function loadWx(){ return fetch("weather.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{ if(j&&j.hours){ WX=j; const c=$("#wxCard"); if(c) c.outerHTML=wxHomeHTML(); const h=(location.hash||"#home").slice(1); if(h==="course"&&$("#sheet").hidden) renderCourse(); } }).catch(()=>{}); }
 

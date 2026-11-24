@@ -487,6 +487,38 @@
    "license": "CC BY-ND 2.0",
    "page": "https://www.flickr.com/photos/66358983@N07/37517527504",
    "provider": "flickr"
+  },
+  "ice cream": {
+   "src": "img/ov/dish-ice-cream.jpg",
+   "title": "Ice Cream Break",
+   "author": "leosaumurejr",
+   "license": "CC BY-SA 2.0",
+   "page": "https://www.flickr.com/photos/18325571@N00/4343142522",
+   "provider": "flickr"
+  },
+  "gelato": {
+   "src": "img/ov/dish-gelato.jpg",
+   "title": "Gelato <3",
+   "author": "ohdearbarb",
+   "license": "CC BY-NC 2.0",
+   "page": "https://www.flickr.com/photos/22544794@N06/4630808509",
+   "provider": "flickr"
+  },
+  "cake": {
+   "src": "img/ov/dish-cake.jpg",
+   "title": "lemon genoise cake slice",
+   "author": "foonus",
+   "license": "CC BY-NC-SA 2.0",
+   "page": "https://www.flickr.com/photos/31418118@N00/2961117465",
+   "provider": "flickr"
+  },
+  "pancake": {
+   "src": "img/ov/dish-pancake.jpg",
+   "title": "Pancakes",
+   "author": "Creativity+ Timothy K Hamilton",
+   "license": "CC BY-NC-ND 2.0",
+   "page": "https://www.flickr.com/photos/22017189@N00/5957784608",
+   "provider": "flickr"
   }
  },
  "venue": {}
