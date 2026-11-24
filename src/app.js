@@ -1139,12 +1139,12 @@ function openSchedPick(){
 const CASH_USD=1200, FX_CAP_USD=1200, HOLDER="공금";
 const BUDGET=[
   {k:"extra",when:"d1",label:"호텔 1인 추가비",php:4928,cats:["숙소 추가비"],note:"체크인 때 페소 현금 (₱1,232×4박)"},
-  {k:"lunch",label:"점심",php:12600,cats:["점심"],note:"1인 한 끼 ~₱450 × 4번 (11/24~27)"},
-  {k:"dinner",label:"저녁",php:18200,cats:["저녁"],note:"1인 한 끼 ~₱650 × 4번 (11/24~27)"},
-  {k:"dessert",label:"디저트·카페·음료",php:7000,cats:["디저트·음료"],note:"1인 하루 ~₱250 × 4일 (쉐이크·커피·아이스크림·물)"},
-  {k:"trike",label:"교통 (트라이크)",php:2400,cats:["교통(트라이크 등)"],note:"2대 × 하루 2번 × 4일"},
+  {k:"lunch",days:4,label:"점심",php:12600,cats:["점심"],note:"1인 한 끼 ~₱450 · 11/24~27 (4일)"},
+  {k:"dinner",days:4,label:"저녁",php:18200,cats:["저녁"],note:"1인 한 끼 ~₱650 · 11/24~27 (4일)"},
+  {k:"dessert",days:4,label:"디저트·카페·음료",php:7000,cats:["디저트·음료"],note:"쉐이크·커피·아이스크림·물 · 4일"},
+  {k:"trike",days:4,label:"교통 (트라이크)",php:2400,cats:["교통(트라이크 등)"],note:"2대 × 하루 2번 · 4일"},
   {k:"leisure",label:"레저 (최소)",php:3500,cats:["레저(투어·마사지)"],note:"예: 마사지 한 번"},
-  {k:"free",label:"자유경비 지급 (상한)",php:14000,cats:["자유경비 지급"],note:"$222 상한 · 날마다 유동, 안 주는 날도 있음",cap:true},
+  {k:"free",days:4,label:"자유경비 지급 (상한)",php:14000,cats:["자유경비 지급"],note:"상한 $222 · 날마다 유동, 안 주는 날도 있음 · 4일",cap:true},
   {k:"tip",label:"팁·기타·쇼핑",php:3000,cats:["팁·기타","쇼핑·기념품","환전 수수료"],note:""},
   {k:"airport",when:"d5",label:"칼리보 공항세",php:6300,cats:["공항세"],note:"출국 때 공항에서 ₱900×7 — 미리 떼어 두기"}
 ];
@@ -1352,13 +1352,16 @@ async function saveBook(){
 function alertMsg(t){ const m=$("#chatMsg"); if(m){m.textContent=t;m.hidden=false;} }
 
 /* ================= 환전 계획 ================= */
+function per7d(v,fx,days){ const d=v/days; const cell=(x,cls)=>'<span class="dv'+cls+'"><b>'+php(x)+'</b><small>'+krw(x)+'</small></span>';
+  return '<div class="ppd num"><span></span><span class="dh">하루</span><span class="dh">'+days+'일 합계</span>'+
+    '<span class="pl">1인</span>'+cell(d/7,"")+cell(v/7,"")+'<span class="pl">7인</span>'+cell(d," tot")+cell(v," tot")+'</div>'; }
 function per7(v,fx,extra){ const one=Math.round(v/7); const r=(t,x,cls)=>'<span class="pl">'+t+'</span><span class="pv'+cls+'">'+php(x)+'</span><span class="pw'+cls+'">'+krw(x)+'</span><span class="pd'+cls+'">$'+Math.round(x/fx).toLocaleString()+'</span>'; return '<div class="ppg num">'+r("1인",one,"")+r("7인",v," tot")+'</div>'+(extra?'<div class="src" style="text-align:right">'+extra+'</div>':''); }
 function exchangePlanHTML(){
   const fx=63, p=purse();
   return '<div class="panel"><h3>예산 · 환전 계획</h3>'+
    '<p class="fine" style="margin:0 0 6px">모두 적정 예상 금액이에요. 1인은 7명으로 똑같이 나눈 몫이에요. 원화는 ₱1 ≈ ₩'+(Math.round(D.fx.krw_per_php*10)/10)+'로 계산했어요.</p><div class="tbl"><table><tbody>'+[["d1","11/24 (화) · 도착일"],["daily","11/24 ~ 11/28 · 여행 중 매일"],["d5","11/28 (토) · 출국일"]].map(([g,h])=>
       '<tr class="bgrp"><th colspan="2">'+h+'</th></tr>'+(g==="d1"?'<tr><td colspan="2">항구 요금 (터미널피·환경세·보트)<br><span class="src">칼리보 → 카티클란 이동 중 · 4U 포함</span>'+per7(0,fx)+'</td></tr>':'')+
-      BUDGET.filter(b=>(b.when||"daily")===g).map(b=>'<tr><td colspan="2">'+esc(b.label)+(b.note?'<br><span class="src">'+esc(b.note)+'</span>':'')+per7(b.php,fx)+'</td></tr>').join("")).join("")+
+      BUDGET.filter(b=>(b.when||"daily")===g).map(b=>'<tr><td colspan="2">'+esc(b.label)+(b.note?'<br><span class="src">'+esc(b.note)+'</span>':'')+(b.days?per7d(b.php,fx,b.days):per7(b.php,fx))+'</td></tr>').join("")).join("")+
    '<tr class="btot"><td colspan="2"><b>합계</b><br><span class="src">자유경비는 상한으로 계산</span>'+per7(BUDGET_TOTAL,fx)+'</td></tr></tbody></table></div>'+
    '<div class="callout ok"><b>가져온 돈 $'+CASH_USD.toLocaleString()+' 기준</b>예산 합계 약 $'+Math.round(BUDGET_TOTAL/fx).toLocaleString()+' + 여유분. 환율은 환전소 기준 ₱63/$로 계산했어요.</div>'+
    '<ul class="clean" style="margin-top:8px"><li><b>1차 · 11/24 체크인 후 디몰 $300</b> — 체크인 추가비 ₱4,928, 첫날 이른 저녁, 다음 날 점심 몫. 이동 중 간식용으로 공항에서 $20~30만 따로 바꿔도 돼요.</li>'+
