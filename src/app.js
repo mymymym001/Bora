@@ -132,7 +132,7 @@ async function initLive(){
     LIVE.unsub.push(db.collection("people").onSnapshot(snap=>{
       const o={}; snap.docs.forEach(d=>{const v=d.data(); if(v&&typeof v.x==="number"&&typeof v.y==="number") o[d.id]=v;}); LIVE.people=o;
       if(LIVE.status!=="live"){LIVE.status="live";clearTimeout(timer);renderChat(); if(!LIVE.me.reg&&$("#sheet").hidden) openProfile(null,true);}
-      if(MAP) MAP.setPeople(); renderFollow();
+      if(MAP) MAP.setPeople(); renderFollow(); { const fl=$("#famLoc"); if(fl) fl.innerHTML=famLocHTML(); }
       if(((location.hash||"#home").slice(1)||"home")==="home"&&$("#sheet").hidden&&!document.activeElement.closest("#chat")) { const y=window.scrollY; renderHome(); window.scrollTo(0,y); }
     },err=>{LIVE.status="err";clearTimeout(timer);renderChat();}));
     LIVE.unsub.push(db.collection("expenses").orderBy("at","asc").limit(500).onSnapshot(snap=>{
@@ -716,14 +716,21 @@ function renderHome(){
      Q('data-gofx','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg>','환율 계산')+'</div>'+
    returnCardHTML()+
    '<section class="chat" id="chat" aria-label="가족 채팅"></section>'+
+   '<div id="famLoc">'+famLocHTML()+'</div>'+
    upNextHTML(day,d<0?"첫날 미리보기":"오늘 일정")+checksHTML(day.k)+
-   (ppl.length?'<div class="panel"><h3>가족 위치</h3><div class="ppl">'+ppl.map(([id,p])=>'<button type="button" data-gotoperson="'+esc(id)+'"><span class="f">'+esc(p.char)+'</span><span><b>'+esc(p.nick||"가족")+'</b><br><span class="fine">'+esc(p.label||"")+' · '+ago(p.at)+'</span></span></button>').join("")+'</div></div>':'')+
    '<div id="nowPicks">'+nowPicksHTML()+'</div>'+
 
    ''+
    '</div>';
   renderChat();
   loadMenus().then(()=>{ const n=$("#nowPicks"); if(n&&(location.hash||"#home").slice(1).replace(/^$/,"home")==="home") n.innerHTML=nowPicksHTML(); });
+}
+function famLocHTML(){
+  const ppl=Object.entries(LIVE.people||{}).filter(([,p])=>p&&p.at).sort((a,b)=>b[1].at-a[1].at);
+  if(!LIVE.db) return "";
+  return '<div class="famloc"><div class="fl-h"><b>📍 가족 위치</b><a href="#map" class="more-l">지도 →</a></div>'+
+    (ppl.length?'<div class="fl-list">'+ppl.map(([id,p])=>'<button type="button" data-gotoperson="'+esc(id)+'"><span class="f">'+esc(p.char||"🙂")+'</span><b>'+esc(p.nick||"가족")+'</b><span class="pl">'+esc((p.label||"위치 없음").replace(/\s*근처$/,"")) +'</span><span class="ag">'+ago(p.at)+'</span></button>').join("")+'</div>'
+    :'<p class="fine" style="margin:0">아직 위치를 알린 가족이 없어요. 채팅 아래 ‘내 위치 알리기’를 눌러 보세요.</p>')+'</div>';
 }
 function partyMini(){ let o=""; for(let i=1;i<=7;i++) o+='<option value="'+i+'"'+(i===S.n?' selected':'')+'>'+i+'명</option>'; return '<label class="pmini"><span class="sr">인원</span><select data-party aria-label="인원">'+o+'</select></label>'; }
 document.addEventListener("change",e=>{ const sl=e.target.closest&&e.target.closest("select[data-party]"); if(!sl) return; S.n=+sl.value; save(); const h=(location.hash||"#home").slice(1)||"home"; const y=window.scrollY;
