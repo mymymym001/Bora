@@ -594,12 +594,25 @@ html.big #app,html.big .sheet .wrap,html.big .driver,html.big .nav{zoom:1.13}
 .nav a{font-size:11px}
 #sortNote{display:none}
 .lead{font-size:14.5px}
-.ecat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
-.ecat button{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:10px 4px;font-size:15px;font-weight:700;display:flex;justify-content:center;align-items:baseline;gap:5px;white-space:nowrap}
+.hcount{font-size:14px;font-weight:600;color:var(--muted);margin-left:4px}
+.eattop{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+.eatpage .party{padding:3px 4px 3px 12px;border-radius:12px}
+.eatpage .party .seg button{padding-block:5px}
+.eatpage .search{padding:2px 6px 2px 12px;border-radius:12px}
+.eatpage .search input{padding:7px 0;font-size:16px}
+.eatpage .sortbar{margin-top:2px;padding:6px 0 8px;gap:8px;border-bottom:1px solid var(--line);box-shadow:-16px 0 0 var(--bg),16px 0 0 var(--bg)}
+.ecat{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.ecat::-webkit-scrollbar{display:none}
+.ecat button{flex:none;display:flex;align-items:baseline;gap:4px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 13px;font-size:14.5px;font-weight:700;white-space:nowrap}
 .ecat button small{font-size:11.5px;font-weight:500;color:var(--muted)}
 .ecat button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
-.ecat button[aria-pressed="true"] small{color:inherit;opacity:.8}
-.efil .chip{font-size:13px;padding:5px 11px}
+.ecat button[aria-pressed="true"] small{color:inherit;opacity:.85}
+.efrow{display:flex;gap:6px;align-items:center;min-width:0}
+.efrow .efil{flex:1;min-width:0;margin:0;padding:0}
+.efil .chip{font-size:12.5px;padding:4px 10px;white-space:nowrap}
+.esort{flex:none;position:relative}
+.esort .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.esort select{appearance:none;-webkit-appearance:none;border:1px solid var(--accent);background:var(--surface);color:var(--accent);font:inherit;font-size:12.5px;font-weight:700;border-radius:999px;padding:4px 24px 4px 10px;background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);background-position:calc(100% - 13px) 52%,calc(100% - 9px) 52%;background-size:4px 4px;background-repeat:no-repeat}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 @media (min-width:760px){.card{flex-basis:280px}}
 </style>

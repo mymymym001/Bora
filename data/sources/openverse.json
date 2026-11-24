@@ -519,6 +519,14 @@
    "license": "CC BY-NC-ND 2.0",
    "page": "https://www.flickr.com/photos/22017189@N00/5957784608",
    "provider": "flickr"
+  },
+  "benedict": {
+   "src": "img/ov/dish-benedict.jpg",
+   "title": "Eggs Benedict with ham and spinach at Speakeasy Kitchen in South Yarra",
+   "author": "ultrakml",
+   "license": "CC BY 2.0",
+   "page": "https://www.flickr.com/photos/34948727@N00/8374264077",
+   "provider": "flickr"
   }
  },
  "venue": {}

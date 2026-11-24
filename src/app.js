@@ -702,19 +702,18 @@ function venueCard(p,rank){
       '<button type="button" class="mini" data-open="'+esc(p.id)+'">'+(p.hasMenu?'메뉴판':'자세히')+'</button>'+(p.route?'<button type="button" class="mini alt" data-onmap="'+esc(p.id)+'">길찾기</button>':'')+'</div></article>';
 }
 function renderEat(){
-  $("#app").innerHTML='<div class="page" style="padding-top:8px"><div class="hrow"><h2 style="margin-top:0">맛집 · 카페</h2>'+themeBtn()+'</div>'+
-   '<p class="lead">'+VEN.filter(isFood).length+'곳 · 메뉴판에서 담고 주문서를 직원에게 보여 주세요.</p>'+
-   partyHTML()+
-   '<label class="search" for="q"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="식당 이름이나 메뉴로 찾기 (예: 망고, 삼겹살, pizza)" value="'+esc(S.q)+'" autocomplete="off"></label>'+
-   '<div class="ecat" id="ecats" role="group" aria-label="종류">'+ECATS.map(([k,l])=>'<button type="button" data-ecat="'+k+'" aria-pressed="'+(S.ecat===k)+'">'+l+'<small>'+VEN.filter(p=>eMatch(p,k)).length+'</small></button>').join("")+'</div>'+
-   '<div class="chips efil" id="efils">'+EFILS.map(([k,l])=>'<button type="button" class="chip" data-efil="'+k+'" aria-pressed="'+S.efil.includes(k)+'">'+l+'</button>').join("")+'</div>'+
-   '<div class="sortbar"><span class="sl">정렬</span><div class="sorts s5" role="group" aria-label="정렬">'+SORTS.map(([k,l])=>'<button type="button" data-sort="'+k+'" aria-pressed="'+(S.sort===k)+'">'+l+'</button>').join("")+'</div></div>'+
+  $("#app").innerHTML='<div class="page eatpage" style="padding-top:8px"><div class="hrow"><h2 style="margin-top:0">맛집 · 카페 <small class="hcount">'+VEN.filter(p=>eMatch(p,"all")).length+'곳</small></h2>'+themeBtn()+'</div>'+
+   '<div class="eattop">'+partyHTML()+
+   '<label class="search" for="q"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="식당·메뉴 찾기 (망고, 삼겹살…)" value="'+esc(S.q)+'" autocomplete="off"></label></div>'+
+   '<div class="sortbar"><div class="ecat" id="ecats" role="group" aria-label="종류">'+ECATS.map(([k,l])=>'<button type="button" data-ecat="'+k+'" aria-pressed="'+(S.ecat===k)+'">'+l+'<small>'+VEN.filter(p=>eMatch(p,k)).length+'</small></button>').join("")+'</div>'+
+   '<div class="efrow"><label class="esort"><span class="sr">정렬</span><select id="esort" aria-label="정렬">'+SORTS.map(([k,l])=>'<option value="'+k+'"'+(S.sort===k?' selected':'')+'>'+l+'</option>').join("")+'</select></label>'+
+   '<div class="chips efil" id="efils">'+EFILS.map(([k,l])=>'<button type="button" class="chip" data-efil="'+k+'" aria-pressed="'+S.efil.includes(k)+'">'+l+'</button>').join("")+'</div></div></div>'+
    '<div id="sortNote" class="fine"></div><div id="dishes"></div><div class="vlist" id="vlist"></div></div>';
   bindParty();
   $("#q").addEventListener("input",e=>{S.q=e.target.value; drawEat();});
   $("#ecats").addEventListener("click",e=>{const b=e.target.closest("[data-ecat]"); if(!b) return; S.ecat=b.dataset.ecat; document.querySelectorAll("#ecats button").forEach(x=>x.setAttribute("aria-pressed",x===b)); drawEat();});
   $("#efils").addEventListener("click",e=>{const b=e.target.closest("[data-efil]"); if(!b) return; const k=b.dataset.efil; S.efil=S.efil.includes(k)?S.efil.filter(x=>x!==k):S.efil.concat([k]); b.setAttribute("aria-pressed",S.efil.includes(k)); drawEat();});
-  document.querySelector(".sorts").addEventListener("click",e=>{const b=e.target.closest("[data-sort]"); if(!b) return; S.sort=b.dataset.sort; save(); document.querySelectorAll(".sorts button").forEach(x=>x.setAttribute("aria-pressed",x===b)); drawEat();});
+  $("#esort").addEventListener("change",e=>{S.sort=e.target.value; save(); drawEat();});
   drawEat(); loadMenus().then(()=>{ if(S.q) drawEat(); });
 }
 function drawEat(){
