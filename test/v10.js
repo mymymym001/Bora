@@ -17,7 +17,7 @@ const { chromium, devices } = require('playwright');
   // theme
   await pg.click('[data-themetoggle]'); await pg.waitForTimeout(200);
   ok(await pg.evaluate(()=>getComputedStyle(document.body).backgroundColor)==='rgb(243, 246, 245)','toggle from default dark to light'); await pg.screenshot({path:'test/v-dark.png'});
-  await pg.reload(); await pg.waitForSelector('.vc'); ok(!(await pg.evaluate(()=>document.documentElement.classList.contains('dark'))),'light choice remembered');
+  await pg.reload(); await pg.waitForSelector('#chat'); ok(!(await pg.evaluate(()=>document.documentElement.classList.contains('dark'))),'light choice remembered');
   await pg.click('[data-themetoggle]'); ok(await pg.evaluate(()=>document.documentElement.classList.contains('dark')),'back to dark');
   // nav
   const tabs=await pg.$$eval('.nav a',e=>e.map(x=>x.textContent.replace(/[0-9+]/g,'').trim())); ok(tabs.join(',')==='홈,돈·정보,지출·예약,맛집,지도,코스,회화','nav: '+tabs.join(','));

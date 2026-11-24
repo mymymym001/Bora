@@ -7,7 +7,7 @@ const { chromium, devices } = require('playwright');
   const pg = await ctx.newPage();
   const errs=[]; pg.on('pageerror',e=>errs.push(e.message)); pg.on('console',m=>{if(m.type()==='error')errs.push(m.text())});
   const ok=(c,m)=>console.log((c?'PASS ':'FAIL ')+m);
-  await pg.goto('http://localhost:8765/_test_live.html#home'); await pg.waitForSelector('.vc'); await pg.waitForTimeout(400);
+  await pg.goto('http://localhost:8765/_test_live.html#home'); await pg.waitForSelector('#chat'); await pg.waitForTimeout(400);
   ok((await pg.$eval('.when',e=>e.textContent)).includes('2일차'),'home date = day 2 at fixed clock');
   ok((await pg.$$eval('.quick > *',e=>e.length))===5,'5 quick actions (weather first)');
   // phrases
@@ -20,7 +20,7 @@ const { chromium, devices } = require('playwright');
   await pg.click('[data-expadd2]'); await pg.fill('#ex-what','환전 전 택시'); await pg.fill('#ex-amt','20'); await pg.click('[data-cur="USD"]'); await pg.fill('#ex-payer','엄마'); await pg.click('[data-expsave]'); await pg.waitForTimeout(400);
   const ep=await pg.$eval('#expPanel',e=>e.innerText); ok(/7,278/.test(ep),'expense total ₱6,000 + $20(₱1,278) = ₱7,278: '+ep.split('\n').slice(1,3).join(' '));
   await pg.goto('http://localhost:8765/_test_live.html#ledger'); await pg.waitForSelector('#lbody table'); const st=await pg.$eval('#lbody',e=>e.innerText); console.log('  ledger:', st.split('\n').slice(1,8).join(' | '));
-  ok(/수복/.test(st)&&/엄마/.test(st)&&/₱7,278/.test(st),'who-spent table and total ₱7,278'); await pg.screenshot({path:'test/f-settle.png'}); await pg.goto('http://localhost:8765/_test_live.html#home'); await pg.waitForSelector('.vc');
+  ok(/수복/.test(st)&&/엄마/.test(st)&&/₱7,278/.test(st),'who-spent table and total ₱7,278'); await pg.screenshot({path:'test/f-settle.png'}); await pg.goto('http://localhost:8765/_test_live.html#home'); await pg.waitForSelector('#chat');
   await pg.screenshot({path:'test/f-home.png',fullPage:true});
   // eat: open filter + badges
   await pg.click('.nav a[data-tab="eat"]'); await pg.waitForSelector('#vlist .vc');
