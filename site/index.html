@@ -287,6 +287,17 @@ svg.tide .tnow{stroke:#E5484D;stroke-width:2;stroke-dasharray:3 3}
 .pglegend{display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-bottom:2px}
 .pglegend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:1px}
 .pglegend i.ok{background:var(--ok,#2E9E5B)}.pglegend i.hi{background:var(--warn,#E0442E)}
+.calc h3 .fine{font-weight:400;margin-left:4px}
+.cdisp{background:var(--surface-2);border-radius:12px;padding:8px 12px;margin:4px 0 8px;text-align:right}
+.cexp{font-size:14px;color:var(--muted);min-height:20px;word-break:break-all}
+.cres b{display:block;font-size:30px;line-height:1.15;word-break:break-all}
+.cres small{display:block;font-size:13px;color:var(--muted);min-height:18px}
+.ckeys{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.ckeys button{height:46px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:20px;font-weight:600;cursor:pointer;padding:0}
+.ckeys button.fn{font-size:15px;background:var(--surface-2)}
+.ckeys button.op{background:var(--accent-soft);color:var(--accent);font-size:22px}
+.ckeys button.eq{background:var(--accent);color:var(--on-accent);border-color:var(--accent);font-size:22px}
+.ckeys button:active{transform:scale(.96)}
 details.fold.dday>summary{padding:11px 12px}
 .dday .dd-t,.dday .dd-v{display:flex;flex-direction:column;gap:1px}
 .dday .dd-t small,.dday .dd-v small{font-size:12px;color:var(--muted);font-weight:400}
@@ -903,6 +914,20 @@ const catText=p=>p.osm?(KINDLABEL[p.kind]||CATLABEL[p.cat]):p.sub==="hospital"?"
 const LIVE={db:null,user:null,assets:null,uid:null,canWrite:null,status:"loading",people:{},chat:[],me:{nick:"",char:"🐢"},unsub:[]};
 try{const m=JSON.parse(localStorage.getItem("bora-me")||"null"); if(m&&m.char) LIVE.me=m;}catch(e){}
 function saveMe(){try{localStorage.setItem("bora-me",JSON.stringify(LIVE.me))}catch(e){}}
+/* 이름·캐릭터를 db(profiles/{uid})에도 저장 → 휴대폰 저장소가 지워져도 다시 묻지 않음 */
+async function restoreProfile(db){
+  if(!LIVE.uid) return;
+  const ok=v=>v&&typeof v.nick==="string"&&v.nick.trim();
+  let v=null, fromDb=false;
+  try{ const d=await db.doc("profiles/"+LIVE.uid).get(); if(d&&d.exists&&ok(d.data())){ v=d.data(); fromDb=true; } }catch(e){}
+  if(!v&&LIVE.me.reg){ syncProfile(db); return; }
+  if(!v) for(const path of ["people/","likes/"]){ try{ const d=await db.doc(path+LIVE.uid).get(); if(d&&d.exists&&ok(d.data())){ v=d.data(); break; } }catch(e){} }
+  if(!v){ try{ const q=await db.collection("chat").orderBy("at","desc").limit(300).get(); const d=q.docs.map(x=>x.data()).find(x=>x&&x.by===LIVE.uid&&ok(x)); if(d) v=d; }catch(e){} }
+  if(!v) return;
+  LIVE.me={nick:String(v.nick).slice(0,10),char:v.char||LIVE.me.char||"🐢",color:v.color||LIVE.me.color,reg:true}; saveMe();
+  if(!fromDb) syncProfile(db);
+}
+function syncProfile(db){ db=db||LIVE.db; if(!db||!LIVE.uid||!LIVE.me.reg||LIVE.canWrite===false) return; try{ db.doc("profiles/"+LIVE.uid).set({nick:LIVE.me.nick,char:LIVE.me.char,color:LIVE.me.color||"",at:Date.now()}).catch(()=>{}); }catch(e){} }
 async function initLive(){
   const c=window.claude;
   if(!c||!c.use){LIVE.status="off";renderChat();return}
@@ -912,6 +937,7 @@ async function initLive(){
     LIVE.db=db; LIVE.user=user; LIVE.assets=assets;
     if(!db){clearTimeout(timer);LIVE.status="off";renderChat();return}
     if(user){LIVE.uid=await user.id(); LIVE.canWrite=await user.can("data.write"); LIVE.isOwner=!!(await user.isOwner());
+      await restoreProfile(db);
       if(!LIVE.me.nick){const me=await user.me(); if(me.name){LIVE.me.nick=me.name.split(" ")[0].slice(0,10); saveMe();}}}
     LIVE.unsub.push(db.collection("people").onSnapshot(snap=>{
       const o={}; snap.docs.forEach(d=>{const v=d.data(); if(v&&typeof v.x==="number"&&typeof v.y==="number") o[d.id]=v;}); LIVE.people=o;
@@ -1150,6 +1176,7 @@ async function saveProfile(){
   const ch=(document.querySelector(".chars [aria-pressed=true]")||{}).dataset; const co=(document.querySelector(".colors [aria-pressed=true]")||{}).dataset; LIVE.me={nick,char:(ch&&ch.char)||LIVE.me.char,color:(co&&co.ucolor)||ucolorOf(LIVE.uid,LIVE.me.color),reg:true}; saveMe();
   const mine=LIVE.uid&&LIVE.people[LIVE.uid];
   if(mine&&canPost()){ try{ await LIVE.db.doc("people/"+LIVE.uid).update({nick:LIVE.me.nick,char:LIVE.me.char,color:LIVE.me.color}); }catch(e){} }
+  syncProfile();
   closeSheet(); renderChat(); const a=S._afterProfile; S._afterProfile=null; if(a) a();
 }
 
@@ -1268,6 +1295,39 @@ function bindFxCalc(){
   $("#fx-chips").addEventListener("click",e=>{ const b=e.target.closest("[data-fxv]"); if(b){ inp.value=(+b.dataset.fxv).toLocaleString("en-US"); draw(); } });
   setMode(mode);
 }
+/* 일반 계산기 (페소 기준, 원화·달러 같이 표시) */
+function calcHTML(){
+  const K=[["C","c","fn"],["⌫","b","fn"],["+10%","sc","fn"],["÷","/","op"],["7"],["8"],["9"],["×","*","op"],["4"],["5"],["6"],["−","-","op"],["1"],["2"],["3"],["+","+","op"],["÷"+S.n+"명","pp","fn"],["0"],["."],["=","=","eq"]];
+  return '<div class="panel calc"><h3>계산기 <span class="fine">페소로 계산 · 원화 같이 보기</span></h3>'+
+   '<div class="cdisp" aria-live="polite"><div class="cexp num" id="c-exp">&nbsp;</div><div class="cres num"><b id="c-res">₱0</b><small id="c-sub">&nbsp;</small></div></div>'+
+   '<div class="ckeys">'+K.map(([l,v,c])=>'<button type="button" class="'+(c||"")+'" data-ck="'+esc(v||l)+'"'+(v==="b"?' aria-label="지우기"':v==="pp"?' aria-label="'+S.n+'명으로 나누기"':v==="sc"?' aria-label="서비스차지 10% 더하기"':'')+'>'+esc(l)+'</button>').join("")+'</div>'+
+   '<p class="fine" style="margin:6px 0 0">+10% = 서비스차지 더하기 · ÷'+S.n+'명 = 1인당 금액</p></div>';
+}
+function calcEval(s){
+  const t=s.match(/\d+\.?\d*|\.\d+|[-+*/]/g)||[]; if(!t.length) return 0;
+  const out=[], ops=[], pr={"+":1,"-":1,"*":2,"/":2}, ap=()=>{ const o=ops.pop(), b=out.pop(), a=out.pop(); out.push(o==="+"?a+b:o==="-"?a-b:o==="*"?a*b:b===0?NaN:a/b); };
+  let expectNum=true;
+  for(const x of t){ if(/[-+*/]/.test(x)){ if(expectNum){ if(x==="-"){ out.push(0); ops.push("-"); } continue; } while(ops.length&&pr[ops[ops.length-1]]>=pr[x]) ap(); ops.push(x); expectNum=true; } else { out.push(parseFloat(x)); expectNum=false; } }
+  if(expectNum&&ops.length) ops.pop(); while(ops.length&&out.length>1) ap(); return out[0];
+}
+function bindCalc(){
+  const box=document.querySelector(".calc"); if(!box) return; let e=S.calcE||"";
+  const show=s=>s.replace(/\*/g,"×").replace(/\//g,"÷").replace(/-/g,"−").replace(/\+/g," + ").replace(/([×÷−])/g," $1 ").replace(/\d+(\.\d*)?/g,m=>{ const [a,b]=m.split("."); return (+a).toLocaleString("en-US")+(b!==undefined?"."+b:""); });
+  const draw=()=>{ S.calcE=e; const v=calcEval(e); $("#c-exp").innerHTML=e?esc(show(e)):"&nbsp;";
+    if(!isFinite(v)){ $("#c-res").textContent="계산할 수 없어요"; $("#c-sub").innerHTML="&nbsp;"; return; }
+    const r=Math.round(v*100)/100; $("#c-res").textContent="₱"+r.toLocaleString("en-US",{maximumFractionDigits:2}); $("#c-sub").textContent=r?"≈ "+krw(r)+" · $"+(Math.round(r/FXC*10)/10).toLocaleString("en-US"):" "; };
+  const fin=()=>{ const v=calcEval(e); return isFinite(v)?String(Math.round(v*100)/100):""; };
+  box.addEventListener("click",ev=>{ const b=ev.target.closest("[data-ck]"); if(!b) return; const k=b.dataset.ck, last=e.slice(-1);
+    if(k==="c") e=""; else if(k==="b") e=e.slice(0,-1);
+    else if(k==="=") e=fin();
+    else if(k==="sc") e=e?String(Math.round(calcEval(e)*1.1*100)/100):"";
+    else if(k==="pp") e=e?String(Math.round(calcEval(e)/S.n*100)/100):"";
+    else if(/[-+*/]/.test(k)){ if(!e&&k!=="-") return; e=/[-+*/]/.test(last)?e.slice(0,-1)+k:e+k; }
+    else if(k==="."){ const seg=e.split(/[-+*/]/).pop(); if(seg.includes(".")) return; e+=seg?".":"0."; }
+    else { if(e.length>40) return; e+=k; }
+    draw(); });
+  draw();
+}
 function renderPrices(){
   const fx=D.fx, n=S.n;
   $("#app").innerHTML='<div class="page"><div class="hrow"><h2>돈 · 정보</h2>'+themeBtn()+'</div>'+
@@ -1278,7 +1338,7 @@ function renderPrices(){
    '<div class="fxbox fxout" aria-live="polite"><span class="fxcur"><b id="fx-ocur">₩</b><small id="fx-ocurl">원</small></span><b class="num" id="fx-main">0</b></div>'+
    '<p class="fxsub num" id="fx-sub"></p>'+
    '<div class="fxchips" id="fx-chips"></div>'+
-   '<p class="fxrate num">$1 ≈ ₱'+FXC+' (환전소 기준) · ₱1 ≈ ₩'+(Math.round(fx.krw_per_php*10)/10)+'</p></div>'+
+   '<p class="fxrate num">$1 ≈ ₱'+FXC+' (환전소 기준) · ₱1 ≈ ₩'+(Math.round(fx.krw_per_php*10)/10)+'</p></div>'+calcHTML()+
   '<div class="panel"><h3>계산서 읽는 법</h3><ul class="clean"><li><b>VAT 12%</b>: 메뉴판 아래 "VAT inclusive"(포함) / "exclusive"(별도) 표기를 확인해요.</li><li><b>서비스차지 10%</b>: 필리핀에서 흔하고 정상이에요(의무는 아님). 붙어 있으면 팁은 따로 안 줘도 돼요.</li><li>예) Aria는 메뉴에 "VAT 포함, 서비스차지 10% 별도" — 음식 ₱5,000이면 계산서 ₱5,500이 정상이에요.</li><li>서비스차지가 없으면 팁은 10% 안팎이면 충분해요.</li></ul></div>'+
   priceGuideHTML()+'<div class="panel"><h3>e-트라이크 타기 전에</h3><ul class="clean"><li>보라카이엔 미터 택시도 Grab 차량 호출도 없어요. 이동은 걷기 아니면 e-트라이크예요.</li><li>타기 전에 <b>"How much in total?"</b> — 1대 전체 요금인지, 1인당인지 확인해요.</li><li>합승(shared)이면 1인 약 ₱15–30, 전세(special)면 가까운 거리 1대 약 ₱100–150.</li><li>7명이면 2대가 편해요 (1대 약 6명까지, 편하게는 4~5명).</li><li>공식 요금표(말레이 조례)가 있지만 원문은 확인 못 했어요 — 아래는 블로그 기준 참고가예요.</li></ul>'+
    '<div class="tbl"><table><thead><tr><th>구간 (전세 1대)</th><th class="r">참고가</th></tr></thead><tbody>'+
@@ -1288,13 +1348,13 @@ function renderPrices(){
    [["아일랜드 호핑 + 헬멧다이빙 + 점심","약 US$58–61 / 1인"],["헬멧다이빙만 (20분)","약 US$21 / 1인"],["아일랜드 호핑 + 패러세일링","약 US$41–72 / 1인"],["섬 입장료 (보통 불포함)","₱100–300 / 1인"]].map(r=>'<tr><td>'+r[0]+'</td><td class="r num">'+r[1]+'</td></tr>').join("")+
    '</tbody></table></div><p class="fine">포함 항목(점심·픽업·입장료)이 다르니 비교해서 고르세요. 해변 현장 가격은 확인 못 했어요. 공인(DOT 인증) 업체를 이용하세요.</p></div>'+
   exchangePlanHTML()+moneyFruitHTML()+'<div class="panel"><h3>환전 · ATM</h3><ul class="clean"><li>구김·낙서 없는 새 달러를 준비해요. 손상된 지폐는 거절되거나 낮게 쳐줘요.</li><li>창구 앞에서 바로 세어 보고 떠나요. "No commission" 문구만 믿지 말고 환율을 비교해요.</li><li>디몰에 M Lhuillier 등 환전소가 있어요. 호텔 프런트도 되지만 조금 불리해요.</li><li>BDO ATM은 해외카드 1회 ₱250 수수료가 붙어요.</li><li>노점·트라이크·시장은 현금, 큰 식당·리조트는 카드 가능.</li></ul></div></div>';
-  bindFxCalc(); bindChecker();
+  bindFxCalc(); bindCalc(); bindChecker();
 }
 function arrangeInfo(){
   const page=$("#app .page"); if(!page) return;
   const panels=[...page.querySelectorAll(":scope > .panel")];
   const byTitle=t=>panels.find(p=>{const h=p.querySelector("h3"); return h&&h.textContent.trim().startsWith(t);});
-  const order=["환율 계산기","이 가격 적정한가요?","예산 · 환전 계획"];
+  const order=["환율 계산기","계산기","이 가격 적정한가요?","예산 · 환전 계획"];
   const first=page.querySelector(":scope > .hrow")||page.querySelector(":scope > h2");
   let anchor=first;
   order.forEach(t=>{ const p=byTitle(t); if(p){ anchor.after(p); anchor=p; } });
