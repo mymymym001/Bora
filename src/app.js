@@ -586,6 +586,7 @@ document.addEventListener("click",e=>{
   if(T("[data-expadd]")||T("[data-expadd2]")){ if(!canPost()){ const m=$("#chatMsg"); if(m){m.textContent="경비 기록은 사용 권한으로 초대받은 가족만 할 수 있어요.";m.hidden=false;} return; } openExpForm(); return; }
   if(T("[data-expsave]")){ saveExp(); return; }
   if(T("[data-expall]")){ openExpAll(); return; }
+  if(el=T("[data-dayjump]")){ const t=document.getElementById("dl-"+el.dataset.dayjump.replace("/","-")); if(t){ t.open=true; t.scrollIntoView({behavior:"smooth",block:"start"}); } return; }
   if(el=T("[data-expdel]")){ const id=el.dataset.expdel; LIVE.db.doc("expenses/"+id).delete().then(()=>{ setTimeout(()=>{ if((location.hash||"").slice(1)==="ledger"&&$("#sheet").hidden) renderLedger(); else openExpAll(); },150); }).catch(()=>{}); return; }
   if(el=T("[data-orderexp]")){ const p=BYID[el.dataset.orderexp], t=orderTotals(p); $("#driver").hidden=true; openExpForm({what:dname(p),amt:Math.round(t.tot)}); return; }
   if(el=T("[data-msgdel]")){ const id=el.dataset.msgdel; if(el.dataset.confirm!=="1"){ el.dataset.confirm="1"; el.textContent="한 번 더 누르면 삭제"; setTimeout(()=>{ if(el.isConnected){ el.dataset.confirm=""; el.textContent="삭제"; } },3000); return; } LIVE.db.doc("chat/"+id).delete().catch(()=>alertMsg("삭제하지 못했어요.")); return; }
@@ -1394,17 +1395,30 @@ function expTableHTML(writable){
   const who={}; ex.filter(e=>catBucket(e.cat,e.at)!=="자유경비 지급").forEach(e=>{ const k=e.payer||"?"; who[k]=who[k]||{c:0,f:0}; if(e.src==="자유경비") who[k].f+=(+e.php||0); else who[k].c+=(+e.php||0); });
   const days={}; ex.forEach(e=>{ const d=manilaDateLabel(e.at); (days[d]=days[d]||[]).push(e); });
   let h='<div class="panel"><h3>편하게 적기</h3><p class="fine" style="margin:0 0 6px">“무엇 + 금액”만 적으면 분류·금액·평가를 표로 정리해요. 환전은 “200달러 12,400페소 환전”.</p>'+(writable?quickHTML("ql")+'<div class="b2" style="margin-top:8px"><button type="button" class="btn alt" data-expadd>자세히 입력</button><button type="button" class="btn alt" data-fxadd>환전 기록</button></div>':'<p class="fine">기록은 사용 권한으로 초대받은 가족만 할 수 있어요.</p>')+'</div>'+
-   '<div class="panel"><h3>공금</h3>'+purseHTML(false)+'</div>'+
-   '<div class="panel"><h3>환전 기록</h3>'+fxListHTML()+'</div>';
-  if(!ex.length) return h+'<div class="empty">아직 지출 기록이 없어요. 위 칸에 “점심 지보스 2,350페소”처럼 적어 보세요.</div>';
+   '<div class="panel"><h3>공금</h3>'+purseHTML(false)+'</div>';
+  if(!ex.length) return h+'<div class="panel"><h3>환전 기록</h3>'+fxListHTML()+'</div><div class="empty">아직 지출 기록이 없어요. 위 칸에 “점심 지보스 2,350페소”처럼 적어 보세요.</div>';
+  h+=dayLedgerHTML(days)+'<div class="panel"><h3>환전 기록</h3>'+fxListHTML()+'</div>';
   h+='<div class="panel num"><h3>누가 얼마 썼나</h3><div class="tbl"><table><thead><tr><th>쓴 사람</th><th class="r">공금</th><th class="r">자유경비</th></tr></thead><tbody>'+
      Object.entries(who).sort((a,b)=>(b[1].c+b[1].f)-(a[1].c+a[1].f)).map(([n,v])=>'<tr><td>'+esc(n)+'</td><td class="r">'+php(v.c)+'</td><td class="r">'+php(v.f)+'</td></tr>').join("")+'</tbody></table></div>'+
      '<p class="fine">전체 기록 '+php(tot)+' ('+krw(tot)+'). 자유경비로 산 것은 이미 지급한 돈이라 공금에서 다시 빼지 않아요.</p></div>';
-  Object.keys(days).forEach(d=>{ const list=days[d], dt=list.filter(e=>(e.src||"공금")==="공금").reduce((s,e)=>s+(+e.php||0),0);
-    h+='<div class="panel"><h3>'+esc(d)+' <span class="fine num">공금 '+php(dt)+' · '+krw(dt)+'</span></h3><div class="tbl"><table class="xt"><thead><tr><th>품목 · 평가</th><th class="r">금액</th></tr></thead><tbody>'+
-      list.map(e=>{ const j=judge(e); return '<tr><td><b>'+esc(e.what)+'</b>'+(e.qty>1?' ×'+e.qty:'')+' '+(j?'<span class="badge '+j.cls+'">'+j.t+'</span><br><span class="src">'+esc(j.note)+'</span>':'')+'<br><span class="src">'+esc(e.payer||"")+' · '+hhmm(e.at)+' · '+esc(catBucket(e.cat,e.at))+' · <b>'+esc(e.src||"공금")+'</b>'+(e.where?' · '+esc(e.where):'')+'</span>'+(e.by===LIVE.uid?' <button type="button" class="tiny" data-expdel="'+esc(e.id)+'">삭제</button>':'')+'</td>'+
-        '<td class="r num"><b>'+php(e.php)+'</b><br><span class="src">'+krw(e.php)+(e.cur&&e.cur!=="PHP"?'<br>'+esc(e.cur)+' '+Number(e.amt).toLocaleString():'')+'</span></td></tr>'; }).join("")+'</tbody></table></div></div>'; });
   return h;
+}
+const commonSum=l=>l.filter(e=>(e.src||"공금")==="공금").reduce((s,e)=>s+(+e.php||0),0);
+function dayName(d){ const [m,dd]=d.split("/").map(Number); const i=TRIP_DAYS.indexOf(d); const w="일월화수목금토"[new Date(Date.UTC(2026,m-1,dd)).getUTCDay()]; return d+' ('+w+')'+(i>=0?' · '+(i+1)+'일차':''); }
+function dayLedgerHTML(days){
+  const today=manilaDateLabel(Date.now());
+  const keys=TRIP_DAYS.concat(Object.keys(days).filter(d=>!TRIP_DAYS.includes(d)));
+  const sum='<div class="tbl"><table class="dsum num"><thead><tr><th>날짜</th><th class="r">공금 쓴 돈</th><th class="r">1인 ('+S.n+'명)</th></tr></thead><tbody>'+
+    keys.map(d=>{ const l=days[d]||[], t=commonSum(l); return '<tr'+(d===today?' class="today"':'')+'><td>'+(l.length?'<button type="button" class="dj" data-dayjump="'+d+'">'+esc(dayName(d).split(" · ")[0])+' ›</button>':esc(dayName(d).split(" · ")[0]))+(d===today?' <span class="badge ok">오늘</span>':'')+'</td><td class="r">'+(l.length?'<b>'+php(t)+'</b><br><span class="src">'+krw(t)+'</span>':'<span class="src">기록 없음</span>')+'</td><td class="r">'+(l.length?php(t/S.n):'-')+'</td></tr>'; }).join("")+
+    '</tbody></table></div>';
+  const blocks=keys.map(d=>{ const l=days[d]||[]; if(!l.length) return ''; const t=commonSum(l);
+    const bc={}; l.filter(e=>(e.src||"공금")==="공금").forEach(e=>{ const c=catBucket(e.cat,e.at); bc[c]=(bc[c]||0)+(+e.php||0); });
+    return '<details class="panel fold dday" id="dl-'+d.replace("/","-")+'"'+(d===today||(!days[today]&&d===keys.filter(k=>days[k]).slice(-1)[0])?' open':'')+'><summary><span class="dd-t"><b>'+esc(dayName(d))+'</b><small>'+l.length+'건</small></span><span class="dd-v num"><b>'+php(t)+'</b><small>'+krw(t)+'</small></span></summary>'+
+      '<div class="dcats num">'+EXP_CATS.concat(Object.keys(bc).filter(c=>!EXP_CATS.includes(c))).filter(c=>bc[c]).map(c=>'<span>'+esc(c)+' <b>'+php(bc[c])+'</b></span>').join("")+'</div>'+
+      '<div class="tbl"><table class="xt"><thead><tr><th>품목 · 평가</th><th class="r">금액</th></tr></thead><tbody>'+
+      l.map(e=>{ const j=judge(e); return '<tr><td><b>'+esc(e.what)+'</b>'+(e.qty>1?' ×'+e.qty:'')+' '+(j?'<span class="badge '+j.cls+'">'+j.t+'</span><br><span class="src">'+esc(j.note)+'</span>':'')+'<br><span class="src">'+hhmm(e.at)+' · '+esc(catBucket(e.cat,e.at))+' · '+esc(e.payer||"")+' · <b>'+esc(e.src||"공금")+'</b>'+(e.where?' · '+esc(e.where):'')+'</span>'+(e.by===LIVE.uid?' <button type="button" class="tiny" data-expdel="'+esc(e.id)+'">삭제</button>':'')+'</td>'+
+        '<td class="r num"><b>'+php(e.php)+'</b><br><span class="src">'+krw(e.php)+(e.cur&&e.cur!=="PHP"?'<br>'+esc(e.cur)+' '+Number(e.amt).toLocaleString():'')+'</span></td></tr>'; }).join("")+'</tbody></table></div></details>'; }).join("");
+  return '<div class="panel"><h3>날짜별 지출</h3>'+sum+'<p class="fine" style="margin-top:6px">날짜를 누르면 그날 기록으로 가요. 자유경비로 산 것은 공금 합계에 넣지 않아요.</p></div>'+blocks;
 }
 /* 예약 */
 LIVE.book=[];
